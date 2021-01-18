@@ -2,6 +2,17 @@
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+ <!-- 사용자 화면 레이아웃 -->
+<tiles-definitions>      
+	<definition name="home.*.*" template="/WEB-INF/view/inc/layout.jsp">
+	    <put-attribute name="title" value="Tiles tutorial homepage" />
+	    <put-attribute name="header" value="/WEB-INF/view/inc/header.jsp" />
+	    <put-attribute name="main" value="/WEB-INF/view/{1}/{2}.jsp" />
+	    <put-attribute name="footer" value="/WEB-INF/view/inc/footer.jsp" />
+	  </definition>
+</tiles-definitions>
+
 <!-- <tiles-definitions>
   <definition name="home.*.*" template="/WEB-INF/view/{1}/inc/layout.jsp">
     <put-attribute name="title" value="Tiles tutorial homepage" />

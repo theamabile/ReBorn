@@ -1,0 +1,14 @@
+@charset "UTF-8";
+@IMPORT url("reset.css");
+@IMPORT url("style.css");		/* 공통 스타일 */
+@IMPORT url("header.css");		/* 헤더 스타일 */
+@IMPORT url("footer.css");		/* 풋터 스타일 */
+
+
+/*----------------- 레이아웃 구성요소 -----------------*/
+
+main > .main-container {
+    width: 1200px;
+    padding: 30px;
+    margin: auto;
+}
