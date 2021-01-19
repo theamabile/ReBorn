@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <script type="module" src="/js/common/inc/header.js"></script>
 	
  <h1 class="d-none">메인</h1>
     <section id="animal"> 
