@@ -46,10 +46,17 @@
                            </ul>
                        </div>
                    </li>
-                   <li>
+                   <li class="drop">
                        <div class="menu-btn">
                            <a href="">정보</a>
-                           <div class="hover-line"></div>
+                       </div>
+                        <div class="hover-line"></div>
+                        <div class="dropdown-menu">
+                        <ul>
+                            <li><a href="#">리본 소개</a></li>
+                            <li><a href="#">동물 기본상식</a></li>
+                        </ul>
+                    
                        </div>
                    </li>
                </ul> 

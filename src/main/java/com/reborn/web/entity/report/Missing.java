@@ -1,4 +1,4 @@
-package com.reborn.web.entity.community;
+package com.reborn.web.entity.report;
 
 import java.util.Date;
 
@@ -21,7 +21,6 @@ public class Missing {
 
 	public Missing(int id, int memberId, String title, String content, Date regDate, int hitCnt, String missingDate,
 			String feature, String location, String breed, String files) {
-		super();
 		this.id = id;
 		this.memberId = memberId;
 		this.title = title;

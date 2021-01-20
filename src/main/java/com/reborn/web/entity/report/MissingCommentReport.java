@@ -1,31 +1,31 @@
-package com.reborn.web.entity.community;
+package com.reborn.web.entity.report;
 
 import java.util.Date;
 
-public class MissingComment {
+public class MissingCommentReport {
+	
 	private int id;
 	private int memberId;
 	private int missingId;
+	private String reason;
 	private Date regDate;
-	private String content;
 	
-	public MissingComment() {
+	public MissingCommentReport() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MissingComment(int id, int memberId, int missingId, Date regDate, String content) {
-		super();
+	public MissingCommentReport(int id, int memberId, int missingId, String reason, Date regDate) {
 		this.id = id;
 		this.memberId = memberId;
 		this.missingId = missingId;
+		this.reason = reason;
 		this.regDate = regDate;
-		this.content = content;
 	}
 
 	@Override
 	public String toString() {
-		return "MissingComment [id=" + id + ", memberId=" + memberId + ", missingId=" + missingId + ", regDate="
-				+ regDate + ", content=" + content + "]";
+		return "MissingCommentReport [id=" + id + ", memberId=" + memberId + ", missingId=" + missingId + ", reason="
+				+ reason + ", regDate=" + regDate + "]";
 	}
 
 	public int getId() {
@@ -52,6 +52,14 @@ public class MissingComment {
 		this.missingId = missingId;
 	}
 
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
 	public Date getRegDate() {
 		return regDate;
 	}
@@ -59,16 +67,6 @@ public class MissingComment {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
+	
 
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-	
-	
-	
-	
 }
