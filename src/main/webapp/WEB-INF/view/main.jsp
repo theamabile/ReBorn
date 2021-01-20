@@ -5,7 +5,7 @@
     <!-- 자바스크립트 로드 안하면 투명 스크롤 적용 안됨, 메인에서만 사용해야함!(흰배경X)-->
     <script type="module" src="/js/inc/header.js"></script> 
     <script type="module" src="/js/main.js"></script> 
-	
+    
 	 <h1 class="d-none">메인</h1>
 	    <section id="animal"> 
 	        <h1 class="d-none">유기동물</h1>
