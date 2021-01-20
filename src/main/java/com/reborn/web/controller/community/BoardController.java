@@ -10,7 +10,7 @@ import com.reborn.web.service.community.BoardService;
 @RequestMapping("/community")
 public class BoardController {
 	
-//	@Autowired
+	@Autowired
 	private BoardService service;
 	
 	@RequestMapping("list")
