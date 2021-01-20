@@ -1,14 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <script type="module" src="/js/common/inc/header.js"></script>
-	
-	
+
     <link rel= "stylesheet" type="text/css" href="/css/main.css">
-    
     <!-- 자바스크립트 로드 안하면 투명 스크롤 적용 안됨, 메인에서만 사용해야함!(흰배경X)-->
-    <script type="module" src="/js/common/inc/header.js"></script> 
-    <script type="module" src="/js/common/main.js"></script> 
-    
+    <script type="module" src="/js/inc/header.js"></script> 
+    <script type="module" src="/js/main.js"></script> 
+	
 	 <h1 class="d-none">메인</h1>
 	    <section id="animal"> 
 	        <h1 class="d-none">유기동물</h1>
@@ -30,3 +27,6 @@
 	    <section id="lost"> 
 	        <h1 class="d-none">실종 공고</h1>
 	    </section>
+	    
+</body>
+</html>
