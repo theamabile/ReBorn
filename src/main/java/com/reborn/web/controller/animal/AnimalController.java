@@ -1,16 +1,15 @@
-package com.reborn.web.controller;
+package com.reborn.web.controller.animal;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")       // 루트 컨트롤러
-public class HomeController {
+@RequestMapping("/animal/")
+public class AnimalController {
 	
-	@RequestMapping("main")
+	@RequestMapping("list")
 	public String home() {
 		System.out.println("ㅎㅇㅎㅇ");
-		return "home.main";
+		return "home.animal.list";
 	}
-	
 }
