@@ -15,5 +15,6 @@ public interface CareDao {
 	
 	int insert(Care care);
 	int update(Care care);
+	int getCount(String field, String query);
 
 }

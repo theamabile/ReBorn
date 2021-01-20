@@ -23,7 +23,6 @@ public class Care {
 
 	public Care(String careRegNo, String name, boolean auth, String tel, String addr, String jibunAddr, String latitude,
 			String longitude, Date dataStdDt, String thumb, int uprCd, int orgCd) {
-		super();
 		this.careRegNo = careRegNo;
 		this.name = name;
 		this.auth = auth;

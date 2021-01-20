@@ -55,8 +55,17 @@
 			dataStdDt = #{dataStdDt,javaType=java.util.Date,jdbcType=TIMESTAMP},
 			thumb = #{thumb}
 		WHERE careRegNo = #{careRegNo}
-		
 	</update>
+	
+	<select id="getCount" resultType="int">
+		SELECT count(careRegNo) cnt FROM Care
+		<where>
+			<if test="param1 != null and param1.equals('')">
+				BINARY ${param1} LIKE '%${param2}%'
+			</if>
+		</where>
+	</select>
+	
 		<!-- UPDATE Care
 		<set>
 	    	<if test="tel != null and !tel.equals('')">tel = #{tel}</if>

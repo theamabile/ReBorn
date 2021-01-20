@@ -11,12 +11,14 @@ public interface CareService {
 	Care getCareByCareRegNo(String careRegNo);
 	CareView getCareViewByCareRegNo(String careRegNo);
 	
-	List<Care> getList(int offset, int size, String field, String query);
-	List<CareView> getViewList(int offset, int size, String field, String query);
+	List<Care> getList(int page, int size, String field, String query);
+	List<CareView> getViewList(int page, int size, String field, String query);
 	
 	int insert(Care care);
 	int insertCareList(List<Care> careList);
 
 	int update(Care care);
+	
+	int getCount(String field, String query);
 	
 }

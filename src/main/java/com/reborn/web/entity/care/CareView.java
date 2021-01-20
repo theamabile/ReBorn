@@ -11,13 +11,7 @@ public class CareView extends Care{
 	public CareView() {
 		
 	}
-	
-	public CareView(int wishCnt, int evaluationCnt, int animalCnt) {
-		this.wishCnt = wishCnt;
-		this.evaluationCnt = evaluationCnt;
-		this.animalCnt = animalCnt;
-	}
-	
+
 	public CareView(String careRegNo, String name, boolean auth, String tel, String addr, String jibunAddr, String latitude,
 			String longitude, Date dataStdDt, String thumb, int uprCd, int orgCd, int wishCnt, int evaluationCnt, int animalCnt) {
 		super(careRegNo, name, auth, tel, addr, jibunAddr, latitude, longitude, dataStdDt, thumb, uprCd, orgCd);
@@ -25,6 +19,13 @@ public class CareView extends Care{
 		this.evaluationCnt = evaluationCnt;
 		this.animalCnt = animalCnt;
 	}
+	
+	public CareView(int wishCnt, int evaluationCnt, int animalCnt) {
+		this.wishCnt = wishCnt;
+		this.evaluationCnt = evaluationCnt;
+		this.animalCnt = animalCnt;
+	}
+	
 
 	public int getWishCnt() {
 		return wishCnt;

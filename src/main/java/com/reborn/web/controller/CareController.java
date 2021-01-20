@@ -17,9 +17,13 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -28,10 +32,11 @@ import org.xml.sax.SAXException;
 import com.google.gson.Gson;
 import com.reborn.web.entity.area.AreaView;
 import com.reborn.web.entity.care.Care;
+import com.reborn.web.entity.care.CareView;
 import com.reborn.web.service.area.AreaService;
 import com.reborn.web.service.care.CareService;
 
-@RestController("careController")
+@Controller("careController")
 @RequestMapping("/care/")
 public class CareController {
 
@@ -43,8 +48,30 @@ public class CareController {
 		this.careService = careService;
 		this.areaService = areaService;
 	}
+	
+	@GetMapping("list")
+	public String rebuildList(
+			@RequestParam(name = "p", defaultValue = "1") Integer page,
+			@RequestParam(name = "f", required = false) String field,
+			@RequestParam(name = "q", defaultValue = "") String query,
+			Model model){
+		
+		int size = 20;
+		List<CareView> list = careService.getViewList(page, size, field, query);
+
+		int count = careService.getCount(field, query);
+
+		model.addAttribute("currentPage", page);
+		model.addAttribute("list", list);
+		
+		int pageCount = (int)Math.ceil( count / (float)size );
+		model.addAttribute("pageCount", pageCount);
+		
+		return "home.care.list";
+	}
 
 	@PostMapping("rebuildList")
+	@ResponseBody
 	public String rebuildList() throws SAXException, IOException, ParserConfigurationException, XPathExpressionException {
 		
 		
@@ -152,7 +179,8 @@ public class CareController {
 	}
 	
 
-	@RequestMapping("rebuildDetail")
+	@PostMapping("rebuildDetail")
+	@ResponseBody
 	public String rebuildDetail() throws SAXException, IOException, ParserConfigurationException, XPathExpressionException, ParseException {
 
 		

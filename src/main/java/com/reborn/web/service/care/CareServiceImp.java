@@ -34,9 +34,11 @@ public class CareServiceImp implements CareService {
 	}
 
 	@Override
-	public List<Care> getList(int offset, int size, String field, String query) {
+	public List<Care> getList(int page, int size, String field, String query) {
 
 		List<Care> list = null;
+		
+		int offset = (page-1)*size;//10,20,30,40,50,60...
 		
 		list = careDao.getList(offset, size, field, query);	
 		
@@ -44,8 +46,10 @@ public class CareServiceImp implements CareService {
 	}
 	
 	@Override
-	public List<CareView> getViewList(int offset, int size, String field, String query) {
+	public List<CareView> getViewList(int page, int size, String field, String query) {
 		List<CareView> list = null;
+
+		int offset = (page-1)*size;//10,20,30,40,50,60...
 		
 		list = careDao.getViewList(offset, size, field, query);	
 		
@@ -77,6 +81,15 @@ public class CareServiceImp implements CareService {
 		
 		result = careDao.update(care);	
 		
+		return result;
+	}
+
+	@Override
+	public int getCount(String field, String query) {
+		int result = 0;
+		
+		result = careDao.getCount(field, query);	
+
 		return result;
 	}
 

@@ -75,6 +75,15 @@ public class MyBatisCareDao implements CareDao {
 		return result;
 	}
 
+	@Override
+	public int getCount(String field, String query) {
+		int result = 0;
+		
+		result = mapper.getCount(field, query);
+		
+		return result;
+	}
+
 
 	
 //	@Override
