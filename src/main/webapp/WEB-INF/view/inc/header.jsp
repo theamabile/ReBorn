@@ -13,7 +13,7 @@
         <nav class="main-menu">
             <h1 class="d-none">메인 메뉴</h1>
             <div class="menu-container">
-                <img src="../images/logo.svg">
+                <img src="/images/logo.svg">
                 <ul class="menu-list">
                     <li>
                         <div class="menu-btn">
