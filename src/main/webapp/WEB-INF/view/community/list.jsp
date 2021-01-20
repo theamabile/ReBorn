@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- <link href="/css/community/community-style.css" type="text/css" rel="stylesheet" /> -->
 <link href="/css/community/list.css" type="text/css" rel="stylesheet" />
+<c:set var ="page" value="${param.p}" />
+<c:if test = "${empty param.p}">
+	<c:set var = "page" value="1" />
+</c:if>	
+
 
 	<section class="main-container">
             <!-- <div class="major-subject mt20">
@@ -11,7 +18,7 @@
                 <div class="align-wrap">
                     <div class="align mt60">
                         <h2 class="hidden">게시판 정렬폼</h2>
-                        <form class="category-align" action="post">
+                        <form class="category-align">
                             <fieldset>
                                 <legend class="hidden">카테고리 정렬 필드</legend>
                                 <select class="select-box" name="c">
@@ -23,7 +30,7 @@
                                 </select>
                             </fieldset>
                         </form>
-                        <form class="view-align" action="post">
+                        <form class="view-align">
                             <fieldset>
                                 <legend class="hidden">View 정렬 필드</legend>
                                 <select class="select-box" name="v">
@@ -42,20 +49,16 @@
                         <li class="list-article mt20">
                             <a class="list-link" href="">
                                 <div class="post-content has-image">
-                                    <strong class="subject bold">우리집 뿌까</strong>
-                                    <div class="content mt10">기가바이트의 디자인과 마찬가지로 WRX80 PRO W
-                                        S SAGE SE에는 7개의 PCIe x16 슬롯이 있으며 sWRX8 소켓 기반 
-                                        프로세서에는 비 PRO 스레드리퍼 시리즈의 두 배인 128 PCIe 
-                                        레인이 있습니다.기가바이트의 디자인과 마찬가지로 WRX80 PRO W
-                                        S SAGE SE에는 7개의 PCIe x16 슬롯이 있으며 sWRX8 소켓 기반 
-                                        프로세서에는 비 PRO 스레드리퍼 시리즈의 두 배인 128 PCIe 
-                                        레인이 있습니다.비 PRO 스비 PRO 스
+                                    <strong class="subject bold">제목</strong>
+                                    <div class="content mt10">컨텐트
                                     </div>    
                                     <span class="meta pt15">
                                         <span class="name-txt">댓글 </span>
                                         <span class="num-txt dot bold">6 </span>
                                         <span class="name-txt">좋아요 </span>
                                         <span class="num-txt dot bold">7</span>
+                                        <span class="hit">조회수</span>
+                                        <span class="num-txt bold">5</span>
                                         <span class="ico">by</span>
                                         <span class="num-txt bold">코기언니</span>
                                     </span>
@@ -64,28 +67,7 @@
                                     <img src="/images/community/dog.png" alt="">
                                 </div>
                             </a>
-                        </li>
-                        <li class="list-article mt20">
-                            <a class="list-link" href="">
-                                <div class="post-content has-image">
-                                    <strong class="subject bold">우리집 뿌까</strong>
-                                    <div class="content mt10">기가바이트의 디자인과 마찬가지로 WRX80 PRO W
-                                        S SAGE SE에는 7개의 PC
-                                    </div>    
-                                    <span class="meta pt15">
-                                        <span class="name-txt">댓글 </span>
-                                        <span class="num-txt dot bold">6 </span>
-                                        <span class="name-txt">좋아요 </span>
-                                        <span class="num-txt dot bold">7</span>
-                                        <span class="ico">by</span>
-                                        <span class="num-txt bold">코기언니</span>
-                                    </span>
-                                </div>
-                                <div class="post-image">
-                                    <img src="/images/community/dog.png" alt="">
-                                </div>
-                            </a>
-                        </li>
+                        </li>                       
                     </ul>
                 </div>
                 <div class="write-common pt15">                

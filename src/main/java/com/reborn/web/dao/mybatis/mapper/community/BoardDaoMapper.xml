@@ -5,8 +5,19 @@
     
 <mapper namespace="com.reborn.web.dao.community.BoardDao">
      
-
-
+	<select id="getViewList" resultType="com.reborn.web.entity.community.BoardDaoView">
+	  SELECT * FROM BoardView
+      <if test="param3 != null and param3 != ''">
+         where BINARY ${param3} like '%${param4}%'
+      </if>
+      order by regdate desc
+      limit #{param2} offset #{param1}
+	</select>
+	
+ <select id="getList">
+ 	
+ 
+ </select>
 
 
 </mapper> 

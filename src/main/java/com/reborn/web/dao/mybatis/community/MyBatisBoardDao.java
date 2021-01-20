@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.reborn.web.dao.community.BoardDao;
 import com.reborn.web.entity.community.Board;
+import com.reborn.web.entity.community.BoardView;
 @Repository
 public class MyBatisBoardDao implements BoardDao{
 	
-	@Autowired
 	private SqlSession session;
 	
 	private BoardDao mapper;
@@ -41,20 +41,6 @@ public class MyBatisBoardDao implements BoardDao{
 		return mapper.get(id);
 	}
 
-	@Override
-	public List<Board> getList() {
-		return mapper.getList();
-	}
-
-	@Override
-	public List<Board> getList(int offset) {
-		return mapper.getList(1);
-	}
-
-	@Override
-	public List<Board> getList(int offset, int size, String field, String query) {
-		return mapper.getList(offset, size, field, query);
-	}
 
 	@Override
 	public Board getLast() {
@@ -78,6 +64,34 @@ public class MyBatisBoardDao implements BoardDao{
 	public Board getnext(int id) {
 		return mapper.getnext(id);
 	}
+	@Override
+	public List<Board> getList() {
+		return mapper.getList();
+	}
+	
+	@Override
+	public List<Board> getList(int offset) {
+		return mapper.getList(1);
+	}
+	
+	@Override
+	public List<Board> getList(int offset, int size, String field, String query) {
+		return mapper.getList(offset, size, field, query);
+	}
+
+	@Override
+	public List<BoardView> getViewList(int offset, int size, String field, String query) {
+		// TODO Auto-generated method stub
+		return mapper.getViewList(offset, size, field, query);
+	}
+
+	@Override
+	public List<BoardView> getViewList(int offset, int size) {
+
+		return mapper.getViewList(offset, size);
+	}
+	
+	
 	
 	
 }

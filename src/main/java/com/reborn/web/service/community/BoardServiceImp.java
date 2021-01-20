@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.community.BoardDao;
 import com.reborn.web.entity.community.Board;
+import com.reborn.web.entity.community.BoardView;
 
 @Service
 public class BoardServiceImp implements BoardService{
@@ -21,6 +22,21 @@ public class BoardServiceImp implements BoardService{
 		
 		return boardDao.getList(startIndex, endIndex, field, query);
 	}
+	
+	@Override
+	public List<BoardView> getViewList(int page, int size, String field, String query) {
+		
+		int offset = (page-1)*10;
+		
+		return boardDao.getViewList(offset, size, field, query);
+	}
+
+	@Override
+	public List<BoardView> getViewList(int page, int size) {
+		int offset = (page-1)*10;
+		return boardDao.getViewList(offset, size);
+	}
+	
 
 	@Override
 	public int hitUp(int id) {
@@ -77,6 +93,8 @@ public class BoardServiceImp implements BoardService{
 	public Board getNext(int id) {
 		return boardDao.getnext(id);
 	}
+
+
 	
 	
 }
