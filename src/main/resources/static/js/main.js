@@ -1,6 +1,6 @@
 
 /* 메인 페이지 */
-import CSS from "../modules/CSS.js";
+import CSS from "/js/modules/CSS.js";
 
 /* 메인 - animal 섹션 코드 */
 window.addEventListener("load", (e)=>{
