@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 
-    <link rel= "stylesheet" type="text/css" href="/css/common/main.css">
+    <link rel= "stylesheet" type="text/css" href="/css/main.css">
     
     <!-- 자바스크립트 로드 안하면 투명 스크롤 적용 안됨, 메인에서만 사용해야함!(흰배경X)-->
     <script type="module" src="/js/common/inc/header.js"></script> 
