@@ -44,8 +44,8 @@
 }
 
 .introduce-list .introduce-img-inner-box {
-    width: 440px;
-    height: 300px;
+    width: 380px;
+    height: 260px;
     z-index: 10;
     overflow: hidden;
 }
@@ -62,7 +62,7 @@
 
 .introduce-txt-box .introduce-tit {
 	display:block;
-    font-size: 24px;
+    font-size: 22px;
     margin-bottom: 14px;
     font-family: var(--font-title);
     font-weight: 700;

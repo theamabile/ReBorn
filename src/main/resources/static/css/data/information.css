@@ -31,7 +31,7 @@ a:hover {
 
 .info-tab ul li>a {
     display: block;
-    line-height: 50px;
+    line-height: 44px;
     font-size: 17px;
     font-weight: 600;
 }
@@ -54,8 +54,8 @@ a:hover {
 }
 
 .info-img-box {
-    min-width: 350px;
-    height: 200px;
+    min-width: 320px;
+    height: 180px;
     margin-right: 30px;
     background: #e4e4e4;
     background-size: cover;
@@ -77,11 +77,11 @@ a:hover {
 }
 
 .info-tit {
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 600;
 }
 

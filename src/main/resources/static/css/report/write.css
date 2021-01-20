@@ -52,6 +52,7 @@
 
 .attach-btn {
     width: 100px;
+    margin-right:5px;
 }
 
 .attach-cancel-btn {
@@ -62,10 +63,11 @@
     width: 100%;
     line-height: 34px;
     padding: 0 10px;
+    margin-right:5px;
 }
 
 .file-form-add {
-    padding: 5px 20px;
+    padding: 10px 20px;
 }
 
 .data-table-textarea {
