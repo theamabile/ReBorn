@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.reborn.web.dao.care.CareDao">
+
+	<!-- <select id="test" resultType="int">
+		SELECT count(content) FROM ConnectTest
+	</select> -->
+
+	<select id="getCareByCareRegNo" resultType="com.reborn.web.entity.care.Care">
+		SELECT * FROM Care WHERE careRegNo = #{param1};
+	</select>
+	
+	<select id="getCareViewByCareRegNo" resultType="com.reborn.web.entity.care.CareView">
+		SELECT * FROM CareView WHERE careRegNo = #{param1};
+	</select>
+	
+	<select id="getList" resultType="com.reborn.web.entity.care.Care">
+		SELECT * FROM Care
+		<where>
+			<if test="param3 != null and param3.equals('')">
+				BINARY ${param3} LIKE '%${param4}%'
+			</if>
+		</where>
+		ORDER BY name ASC
+		LIMIT #{param2} OFFSET #{param1}
+	</select>
+	
+	<select id="getViewList" resultType="com.reborn.web.entity.care.CareView">
+		SELECT * FROM CareView
+		<where>
+			<if test="param3 != null and param3.equals('')">
+				BINARY ${param3} LIKE '%${param4}%'
+			</if>
+		</where>
+		ORDER BY name ASC
+		LIMIT #{param2} OFFSET #{param1}
+	</select>
+	
+	<insert id="insert" parameterType="com.reborn.web.entity.care.Care">
+		INSERT INTO Care(careRegNo, name, orgCd, uprCd) VALUES(#{careRegNo}, #{name}, #{orgCd}, #{uprCd});
+	</insert>
+	
+	<update id="update" parameterType="com.reborn.web.entity.care.Care">
+		UPDATE Care SET
+			name = #{name},
+			auth = #{auth},
+			tel = #{tel},
+			addr = #{addr},
+			jibunAddr = #{jibunAddr},
+			latitude = #{latitude},
+			longitude = #{longitude},
+			dataStdDt = #{dataStdDt,javaType=java.util.Date,jdbcType=TIMESTAMP},
+			thumb = #{thumb}
+		WHERE careRegNo = #{careRegNo}
+	</update>
+	
+	<select id="getCount" resultType="int">
+		SELECT count(careRegNo) cnt FROM Care
+		<where>
+			<if test="param1 != null and param1.equals('')">
+				BINARY ${param1} LIKE '%${param2}%'
+			</if>
+		</where>
+	</select>
+	
+		<!-- UPDATE Care
+		<set>
+	    	<if test="tel != null and !tel.equals('')">tel = #{tel}</if>
+	    	<if test="addr != null and !addr.equals('')">addr = #{addr}</if>
+	    	<if test="addr != null and !addr.equals('')">addr = #{addr}</if>
+	    	<if test="latitude != null and !latitude.equals('')">latitude = #{latitude}</if>
+	    	<if test="longitude != null and !longitude.equals('')">longitude = #{longitude}</if>
+	    	<if test="dataStdDt != null and !dataStdDt.equals('')">dataStdDt = #{dataStdDt}</if>
+	    	
+	    	<if test="uprCd != null">uprCd = #{uprCd}</if>
+	    	<if test="orgCd != null">orgCd = #{orgCd}</if>
+		</set> 
+		<where>careRegNo = #{careRegNo}</where>
+		-->
+</mapper>

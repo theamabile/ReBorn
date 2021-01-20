@@ -1,4 +1,4 @@
-import CSS from "../modules/CSS.js";
+import CSS from "/js/modules/CSS.js";
 
 class ScrollHeader {
     #header;
@@ -18,7 +18,6 @@ class ScrollHeader {
     }
 
     #scrollHandler(e) {
-        console.log("window.scrollY : "+window.scrollY);
         if(window.scrollY > 80) {
             if(this.#isTop == true) {
                 this.#isTop = false;

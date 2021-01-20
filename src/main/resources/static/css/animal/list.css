@@ -1,0 +1,231 @@
+@charset "UTF-8";
+
+
+:root {
+    /*---------- 색상 -------------*/
+    --border: #d1d1d1;
+}
+
+
+* {
+	box-sizing:border-box;
+}
+
+input[type="text"],
+input[type="date"],
+select{
+	height: 40px;
+	border: solid 1px var(--border);
+	border-radius: 5px;
+	margin-right: 10px;
+}
+
+
+.animal-box {
+	width: 300px;
+	height: 380px;
+	--background: lightgreen;
+	display: flex;
+	flex-direction: column;
+	border: solid 1px var(--border);
+}	
+	.animal-box > *{
+		flex-grow: 1;
+		border-bottom: solid 1px var(--border);
+	}	
+	.animal-box > *:last-child{
+		border-bottom: none;
+	}	
+	
+	.animal-box img{
+		width: 100%; /*300*/
+		height: 65%; /*250*/
+		flex-grow: 0;
+		background-size:cover;
+	}	
+
+.animal-box .title-box{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+	.animal-box .title-box > span{
+		font-size: 24px;
+		font-weight: bold;
+		color: var(--main);
+	}
+
+.animal-box .main-info-box{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	font-size: 13px;
+}
+	.animal-box .main-info-box *:nth-child(2){
+		font-weight: bold;
+	}
+	
+.animal-box .sub-info-box {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+	.animal-box .sub-info-box *{
+		font-size: 14px;
+		flex-grow: 0;
+	}
+	
+
+/* 검색 도구 - table */
+.search-box {
+	width: 100%;
+	border: solid 1px var(--border);
+	box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+	margin-bottom: 30px;
+	padding: 30px;
+}
+	.search-box table {
+		width: 100%;
+	}
+		.search-box .name-box {
+			display: table-cell;
+		}
+		
+		/* .search-box table td{
+			display: flex;
+		} */
+		/* 	.search-box table td *{
+				flex-grow: 1;
+			} */
+	
+		.search-box table th {
+			width: 100px;
+		}
+		
+	
+.table-td-l {
+	width: 50%;	
+}
+
+.table-td-m {
+	width: 30%;	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* 검색 도구 - div */
+/*
+.search-box {
+	--width: 100%;
+	display: flex;
+	flex-direction: column;
+	border: solid 1px var(--border);
+	box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+	margin-bottom: 30px;
+	padding: 20px;
+}
+	.search-box label {
+		font-weight: bold;
+		--font-size: 14px;	
+		--width: content-fit;
+		width:100px;
+		text-align: center;
+		margin-right: 10px;
+	}
+	
+	.search-box > * {
+		margin-bottom: 20px;
+	}
+	
+	.search-box  > *:last-child {
+		margin-bottom: 0px;
+	}
+	
+	.search-box .name-box {
+		display: flex;
+		align-items: center;
+	}
+		.search-box .name-box input[type="text"]{
+			flex-grow: 1;
+		}
+		
+	.search-box > div,
+	.search-box .exist-name,
+	.search-box .regdate,
+	.search-box .kind,
+	.search-box .neuter,
+	.search-box .exist-name .radio-btns
+	 {
+		display: flex;
+		align-items: center;
+		flex-grow: 1;
+	}
+	
+	.search-box .exist-name .radio-btns {
+		justify-content: space-between;
+	}
+		
+	.search-box .regdate input{
+		flex-grow: 1;
+	}
+			
+	
+	.search-box .kind {
+		flex-basis: 300px;
+	}	
+			
+	.search-box .neuter {
+		margin-left: 10px;
+	}
+	
+	.search-box .neuter select,
+	.search-box .kind select,
+	.search-box .kind span {
+		flex-grow: 1;
+	}
+			
+*/			
+/*
+.search-box .detail-box .exist-name,
+		.search-box .detail-box .regdate {
+			align-items: center;
+		}
+			.search-box .detail-box .exist-name {
+				justify-content: space-between;
+			}
+			
+			.search-box .detail-box .regdate input{
+				flex-grow: 1;
+			}
+			
+		
+		.search-box .detail-box .kind,
+		.search-box .detail-box .neuter {
+			flex-grow: 1;
+			display: flex;
+			align-items: center;
+		}
+			.search-box .detail-box .neuter {
+				margin-left: 10px;
+			}
+			
+			.search-box .detail-box .neuter select,
+			.search-box .detail-box .kind select,
+			.search-box .detail-box .kind span {
+				flex-grow: 1;
+			}
+
+
+*/	
+
+

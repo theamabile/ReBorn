@@ -4,20 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.reborn.web.service.shelter.ShelterService;
+import com.reborn.web.service.care.CareService;
 
 @RestController()
 @RequestMapping("/")
 public class TestController {
 
-	@Autowired
-	private ShelterService service;
+//	@Autowired
+//	private CareService service;
 	
 	@RequestMapping("test")
 	public String test() {
 		
-		return "connectText Table record count: " + service.test();
-//		return 13841079;
+//		return "connectText Table record count: " + service.test();
+		return "test";
 	}
 	
 }

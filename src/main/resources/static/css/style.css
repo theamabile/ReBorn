@@ -12,7 +12,7 @@
     --font-normal: 'GoyangIlsan';
     --font-title: 'GoyangDeogyang';
     /*---------- 사이즈 -------------*/
-    --content-w-size : 1200px;
+    --content-w-size : 1000px;
 }
 
 /* 기본 폰트 */
@@ -191,4 +191,26 @@ h3 {
     .white-button-s:active{
         background:#e7e2eb;
     }
+    
+    
+ .pager-list {
+    display: flex;
+    justify-content: center;
+}
+
+.pager-list>li>a {
+    display: block;
+    min-width: 40px;
+    text-align: center;
+}
+
+.pager-list>li.active>a {
+    color: var(--text-mark-up);
+    font-weight: bold;
+}
+
+.pager-list>li:hover>a {
+    color: var(--text-mark-up);
+    font-weight: bold;
+}
         
