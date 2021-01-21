@@ -3,7 +3,7 @@
 <link href="/css/report/detail.css" type="text/css" rel="stylesheet" />
 
 <section class="main-container">
-	<h1>반려동물실종신고</h1>
+	<h1>반려동물 실종 신고</h1>
 	        <div class="data-table-box">
             <form action="" class="data-table-form">
                 <table class="data-table">
@@ -12,19 +12,7 @@
                         <col style="width:auto;">
                     </colgroup>
                     <tbody>
-                        <tr>
-                            <td colspan="2">
-                                <div class="detail-img-box">
-                                    <ul>
-                                        <li style="background-image:url('/images/data/img1.jpg')"></li>
-									 	<li style="background-image:url('/images/data/img1.jpg')"></li>
-									  	<li style="background-image:url('/images/data/img1.jpg')"></li>
-									  	<li style="background-image:url('/images/data/img1.jpg')"></li>
-									    <li style="background-image:url('/images/data/img1.jpg')"></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr> 
+                       
 
                         <tr>
                             <th>제목</th>
@@ -76,6 +64,17 @@
                                 </div>
                             </td>
                         </tr>
+                        
+                         <tr>
+                            <td colspan="2" class="detail-img-td">
+                                <div class="detail-img-box">
+                                    <ul>
+                                        <li style="background-image:url('/images/data/img1.jpg')"></li>
+									 	<li style="background-image:url('/images/data/img1.jpg')"></li>
+									  	<li style="background-image:url('/images/data/img1.jpg')"></li>
+                                </div>
+                            </td>
+                        </tr> 
                     </tbody>
                 </table>
             </form>
