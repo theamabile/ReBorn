@@ -5,7 +5,7 @@
     
 <mapper namespace="com.reborn.web.dao.community.BoardDao">
      
-	<select id="getViewList" resultType="com.reborn.web.entity.community.BoardDaoView">
+	<select id="getViewList" resultType="com.reborn.web.entity.community.BoardView">
 	  SELECT * FROM BoardView
       <if test="param3 != null and param3 != ''">
          where BINARY ${param3} like '%${param4}%'
@@ -15,9 +15,18 @@
 	</select>
 	
  <select id="getList">
- 	
+ 	SELECT * FROM Board
+ 	<if test="param3 != null and param3 != ''">
+         where BINARY ${param3} like '%${param4}%'
+      </if>
+      order by regdate desc
+      limit #{param2} offset #{param1}
+   </select>
  
- </select>
-
-
+ <select id="getCount" resultType="int">
+      SELECT count(id) FROM Board
+      <if test="param1 != null and param1 != ''">
+         where BINARY ${param1} like '%${param2}%'
+      </if>
+   </select> 
 </mapper> 

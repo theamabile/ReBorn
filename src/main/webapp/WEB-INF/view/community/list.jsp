@@ -1,14 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- <link href="/css/community/community-style.css" type="text/css" rel="stylesheet" /> -->
 <link href="/css/community/list.css" type="text/css" rel="stylesheet" />
-<c:set var ="page" value="${param.p}" />
+
+<%-- <c:set var ="page" value="${param.p}" />
 <c:if test = "${empty param.p}">
 	<c:set var = "page" value="1" />
 </c:if>	
 
+<c:set var="offset" value="${(page-1)%5}"> </c:set>
+<c:set var="startNum" value="${page-offset}"> </c:set>
+<div>
+	offset: ${offset} </br>
+	startNum: ${startNum} </br>
+	param.p: ${param.p}
+</div> --%>
 
 	<section class="main-container">
             <!-- <div class="major-subject mt20">
@@ -46,28 +54,30 @@
                 <div class="list-common mt30">
                     <h2 class="hidden">목록</h2>
                     <ul>
-                        <li class="list-article mt20">
-                            <a class="list-link" href="">
-                                <div class="post-content has-image">
-                                    <strong class="subject bold">제목</strong>
-                                    <div class="content mt10">컨텐트
-                                    </div>    
-                                    <span class="meta pt15">
-                                        <span class="name-txt">댓글 </span>
-                                        <span class="num-txt dot bold">6 </span>
-                                        <span class="name-txt">좋아요 </span>
-                                        <span class="num-txt dot bold">7</span>
-                                        <span class="hit">조회수</span>
-                                        <span class="num-txt bold">5</span>
-                                        <span class="ico">by</span>
-                                        <span class="num-txt bold">코기언니</span>
-                                    </span>
-                                </div>
-                                <div class="post-image">
-                                    <img src="/images/community/dog.png" alt="">
-                                </div>
-                            </a>
-                        </li>                       
+                    	<c:forEach var="n" items="${list}">
+	                        <li class="list-article mt20">
+	                            <a class="list-link" href="">
+	                                <div class="post-content has-image">
+	                                    <strong class="subject bold">${n.title}</strong>
+	                                    <div class="content mt10">${n.content}
+	                                    </div>    
+	                                    <span class="meta pt15">
+	                                        <span class="name-txt">댓글 </span>
+	                                        <span class="num-txt dot bold">${n.comment} </span>
+	                                        <span class="name-txt">좋아요 </span>
+	                                        <span class="num-txt dot bold">${n.like}</span>
+	                                        <span class="hit">조회수</span>
+	                                        <span class="num-txt bold">${n.hitCnt}</span>
+	                                        <span class="ico">by</span>
+	                                        <span class="num-txt bold">${n.nickname}</span>
+	                                    </span>
+	                                </div>
+	                                <div class="post-image">
+	                                    <img src="/images/community/dog.png" alt="">
+	                                </div>
+	                            </a>
+	                        </li>
+                        </c:forEach>                       
                     </ul>
                 </div>
                 <div class="write-common pt15">                
@@ -103,7 +113,7 @@
                                 <option value="writerId">작성자</option>
                             </select>
                             <label class="hidden">검색어</label>
-                            <input class="input-text"  type="text" name="q" value=""/>
+                            <input class="input-text"  type="text" name="q" value="${param.q}"/>
                             <input class="btn btn-search" type="submit" value="검색" />
                         </fieldset>
                     </form>
