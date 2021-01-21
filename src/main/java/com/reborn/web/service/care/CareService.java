@@ -21,4 +21,6 @@ public interface CareService {
 	
 	int getCount(String field, String query);
 	
+	void setWish(List<CareView> list);
+	
 }

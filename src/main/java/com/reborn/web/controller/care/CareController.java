@@ -1,7 +1,8 @@
-package com.reborn.web.controller;
+package com.reborn.web.controller.care;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,9 +18,11 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +43,18 @@ import com.reborn.web.service.care.CareService;
 @RequestMapping("/care/")
 public class CareController {
 
+	@Value("${care.listApiUrl}")
+	private String listApiUrl;
+	
+	@Value("${animal.apiKey}")
+	private String listApiKey;
+	
+	@Value("${care.listApiUrl}")
+	private String infoApiUrl;
+	
+	@Value("${care.infoApiKey}")
+	private String infoApiKey;
+
 	private CareService careService;
 	private AreaService areaService;
 	
@@ -50,37 +65,55 @@ public class CareController {
 	}
 	
 	@GetMapping("list")
-	public String rebuildList(
+	public String list(
 			@RequestParam(name = "p", defaultValue = "1") Integer page,
 			@RequestParam(name = "f", required = false) String field,
 			@RequestParam(name = "q", defaultValue = "") String query,
-			Model model){
+			Model model, Principal principal){
 		
 		int size = 20;
-		List<CareView> list = careService.getViewList(page, size, field, query);
-
+		
+		// DATA LOAD ==================================================
+		List<CareView> careList = careService.getViewList(page, size, field, query);
 		int count = careService.getCount(field, query);
-
+		
+		// WISH LOAD ==================================================
+		
+		// ============================================================
+		// ============================================================
+		// 테스트용 아이디, careService에서도 있음
+		int memberId = 3;
+		// ============================================================
+		// ============================================================
+		
+		if( memberId != 0)
+			careService.setWish(careList);
+		
 		model.addAttribute("currentPage", page);
-		model.addAttribute("list", list);
+		model.addAttribute("list", careList);
 		
 		int pageCount = (int)Math.ceil( count / (float)size );
 		model.addAttribute("pageCount", pageCount);
 		
 		return "home.care.list";
 	}
+	
+	@GetMapping("{careRegNo}")
+	public String detail( @PathVariable("careRegNo") String careRegNo,
+			Model model){
+		
+		Care care = careService.getCareByCareRegNo(careRegNo);
+		
+		model.addAttribute("care", care);
+		
+		return "home.care.detail";
+	}
 
 	@PostMapping("rebuildList")
 	@ResponseBody
 	public String rebuildList() throws SAXException, IOException, ParserConfigurationException, XPathExpressionException {
 		
-		
 		// 보호소 목록 API로 불러오기 ========================================================================================
-		
-		// 보호소
-		String apiUrl = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/shelter";
-		// apiKey
-		String apiKey = "EQTmsEInR3oGqKRwJPqEQfFj9RF5ljGYfS4qLKNPxyTbMh1e0GWCPIyN%2F3gAmmXjhC5xlM0E6zp4LK3vxUAqEw%3D%3D";
 		List<AreaView> areaList = areaService.getAreaViewList();
 		List<Care> careList = new ArrayList<>();
 		
@@ -89,8 +122,8 @@ public class CareController {
 			int uprCd = av.getUprCd();
 			
 			// URL 합치기
-			StringBuilder urlBuilder = new StringBuilder(apiUrl);
-			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + apiKey);
+			StringBuilder urlBuilder = new StringBuilder(listApiUrl);
+			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + listApiKey);
 			urlBuilder.append("&" + URLEncoder.encode("upr_cd","UTF-8") + "=" + uprCd);
 			urlBuilder.append("&" + URLEncoder.encode("org_cd","UTF-8") + "=" + orgCd);
 			
@@ -188,8 +221,6 @@ public class CareController {
 		List<Care> careList = careService.getList(0, 999999, null, null);
 		
 		// 보호소 정보 API로 불러오기 ========================================================================================
-		String detailURL = "http://openapi.animal.go.kr/openapi/service/rest/animalShelterSrvc/shelterInfo";
-		String detailKey = "qI9VC1hzBT8RhgLR68VVG%2BKLF3rq%2BKBEJ0zgQHHI4Ofwz%2FNKeFCcM%2BfhDXHkJUyBrqiAOyYyzMN44WxDfR6Wsg%3D%3D";
 		List<Care> sussessList = new ArrayList<>();
 		List<Care> failList = new ArrayList<>();
 		
@@ -199,8 +230,8 @@ public class CareController {
 			String care_nm = care.getName();
 			
 			// URL 합치기
-			StringBuilder urlBuilder = new StringBuilder(detailURL);
-			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + detailKey);
+			StringBuilder urlBuilder = new StringBuilder(infoApiUrl);
+			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + infoApiKey);
 			urlBuilder.append("&" + URLEncoder.encode("care_reg_no","UTF-8") + "=" + URLEncoder.encode(care_reg_no,"UTF-8"));
 			urlBuilder.append("&" + URLEncoder.encode("care_nm","UTF-8") + "=" + URLEncoder.encode(care_nm,"UTF-8"));
 			
