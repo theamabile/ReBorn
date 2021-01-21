@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link href="/css/report/write.css" type="text/css" rel="stylesheet" />
+<link href="/css/report/edit.css" type="text/css" rel="stylesheet" />
 
 <section class="main-container">
-	<h1>반려동물 실종 신고</h1>
-    <div class="data-table-box">
+	<h1>반려동물 실종 신고 수정</h1>
+      <div class="data-table-box">
         <form action="" class="data-table-form">
             <table class="data-table">
                 <colgroup>
@@ -16,7 +16,7 @@
                         <th>제목</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="text" placeholder="제목을 입력해주세요.">
+                                <input type="text" placeholder="제목을 입력해주세요." value="제목">
                             </div>
                         </td>
                     </tr> 
@@ -24,7 +24,7 @@
                         <th>실종 일자</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="date">
+                                <input type="date" value="2011-11-22">
                             </div>
                         </td>
                     </tr>
@@ -33,7 +33,7 @@
                         <th>실종 장소</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="text" placeholder="ex) 서울시 마포구 연남동 성산중학교 앞">
+                                <input type="text" placeholder="ex) 서울시 마포구 연남동 성산중학교 앞" value="서울시">
                             </div>
                         </td>
                     </tr>
@@ -43,7 +43,7 @@
                         <th>품종</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="text" placeholder="ex)믹스견입니다."">
+                                <input type="text" placeholder="ex)믹스견입니다." value="믹스견">
                             </div>
                         </td>
                     </tr>
@@ -51,7 +51,7 @@
                         <th>특징</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="text" placeholder="ex) 털이 갈색이고 눈색이 갈색이입니다.">
+                                <input type="text" placeholder="ex) 털이 갈색이고 눈색이 갈색이입니다." value="털이 갈색">
                             </div>
                         </td>
                     </tr>
@@ -60,9 +60,7 @@
                         <td>
                             <div class="attach-box-list">
                                 <div class="attach-box">
-                                    <input class="attach-input" type="file" name="file" accept="image/*">
                                     <div class="attach-box-inner">
-                                        <button class="attach-btn" type="button" onclick ="fileInputClick();">파일선택</button>
                                         <input class="attach-read" type="text" title="첨부파일명 보기" readonly value="파일명">
                                         <button class="attach-cancel-btn" type="button" onclick="fileInputDel();">삭제</button>
                                     </div>
@@ -75,16 +73,15 @@
                     <tr>
                         <th>내용</th>
                         <td>
-                            <textarea  class="data-table-textarea" class="" name="" id=""></textarea>
+                            <textarea  class="data-table-textarea" class="" name="" id="">테스트</textarea>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </form>
     </div>
-   
     <div class="data-btn-box">
-        <a href="#" class="main-button-m">작성</a>
+        <a href="#" class="main-button-m">수정</a>
         <a href="#" class="gray-button-m">취소</a>
     </div>
 </section>
@@ -156,7 +153,4 @@ window.addEventListener('load', ()=>{
          }
      })                    
  })
- 
- 
- 
  </script>	
