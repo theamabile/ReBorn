@@ -21,26 +21,33 @@
 	    <section class="adoption-center-list position-relative">
 	        <div class="adoption-center-list-inner">
 	            <ul>
-	            <c:forEach var="care" items="${list}">
+	            <c:forEach var="cv" items="${list}">
 	            	<li>
 	                    <div>
 	                        <div class="thumb">
-	                            <img src="/images/care/thumb/1d47dc4b58bd0023f49152347e221051_20160513111715_srgxlzpg.jpg">
+	                            <a href="${cv.careRegNo}"><img src="/images/care/thumb/1d47dc4b58bd0023f49152347e221051_20160513111715_srgxlzpg.jpg"></a>
 	                        </div>
 	                        <div class="name">
-	                            <div class="bold"><c:if test="${care.auth}"><i class="fas fa-check"></i> </c:if>${care.name}</div>
-	                            <div>${care.addr}</div>
-	                            <div>${care.tel}</div>
+	                            <div class="bold"><c:if test="${cv.auth}"><i class="fas fa-check"></i> </c:if><a href="${cv.careRegNo}">${cv.name}</a></div>
+	                            <div>${cv.addr}</div>
+	                            <div>${cv.tel}</div>
 	                        </div>
 	                        <div class="current-animals-num">
 	                            <div class="bold">보호중인 동물 수</div>
-	                            <div></div>
+	                            <div>${cv.animalCnt}</div>
 	                        </div>
 	                        <div class="interest">
 	                            <div>
-	                                <i class="far fa-heart"></i>
+	                                <c:choose>
+	                                	<c:when test="${cv.wish}">
+	                                		<i class="fas fa-heart"></i>
+	                                	</c:when>
+	                                	<c:otherwise>
+	                                		<i class="far fa-heart"></i>
+	                                	</c:otherwise>
+	                                </c:choose>
 	                            </div>
-	                            <div>${care.wishCnt}</div>
+	                            <div>${cv.wishCnt}</div>
 	                        </div>
 	                    </div>
 	                </li>
