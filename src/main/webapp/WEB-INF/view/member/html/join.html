@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<body>
+	<section class="content">
+		<div class="join-container">
+			<h4>회원 가입</h4>
+			<form action="join" name="member" method="post" class="joinForm"
+				enctype="multipart/form-data">
+				<div class="form-group">
+					<div class="id-box input-box">
+						<label>아이디<span class="required-text">*</span></label> <input
+							type="text" name="loginId" class="loginId" placeholder="아이디"
+							required>
+					</div>
+					<div class="pw-box input-box">
+						<label>비밀번호<span class="required-text">*</span></label> <input
+							type="password" name="pw" placeholder="비밀번호" required>
+					</div>
+					<div class="pw-box input-box">
+						<label>비밀번호 확인<span class="required-text">*</span></label> <input
+							type="password" name="pw" placeholder="비밀번호 확인" required>
+					</div>
+					<div class="input-box">
+						<label>이름<span class="required-text">*</span></label> <input
+							type="text" name="name" placeholder="이름" autofocus required>
+					</div>
+
+					<div class="input-btn-box">
+						<label>닉네임<span class="required-text">*</span></label> <input
+							type="text" name="nickname" class="nickname" placeholder="닉네임"
+							required> <input type="hidden" class="nicknameConfirm"
+							value="n">
+					</div>
+					<div class="input-box">
+						<label>이메일<span class="required-text">*</span></label>
+						<div class="email-box">
+							<input type="text" name="emailId" placeholder="이메일"
+								list="emailAddress" required> @ <select
+								name="emailAddress">
+								<option value="naver.com">naver.com</option>
+								<option value="daum.net">daum.net</option>
+								<option value="hanmail.net">hanmail.net</option>
+								<option value="gmail.com">gmail.com</option>
+								<option value="none">직접입력</option>
+							</select> <input type="text" name="customAddress" class="customAddress"
+								placeholder="naver.com" disabled="true">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="input-box">
+							<label>휴대전화<span class="required-text">*</span></label> <input
+								type="number" name="phoneNumber"
+								pattern="01[016789]\d{3,4}\d{4}" placeholder="01088886666"
+								required>
+						</div>
+						<div>
+							<input type="number" class="phoneConfirm"> <input
+								type="button" value="인증번호 발송">
+						</div>
+					</div>
+					
+					<div class="input-box">
+						<label>성별</label>
+						<div class="radio-group">
+							<input type="radio" value="man" name="gender" class="radio-item">남자</input>
+							<input type="radio" value="girl" name="gender" class="radio-item">여자</input>
+							<input type="radio" value="none" name="gender" class="radio-item">선택안함</input>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="input-box">
+							<label>생년월일</label>
+							<div class="birth-box">
+								<input type="number" name="year" list="year" placeholder="1997">
+								<datalist id="year">
+									<c:forEach var="year" begin="1900" end="2020">
+										<option value="${year}">${year}</option>
+									</c:forEach>
+								</datalist>
+
+								<input type="number" name="month" list="month" pattern="[1-12]"
+									placeholder="6">
+								<datalist id="month">
+									<c:forEach var="month" begin="1" end="12">
+										<option value="${month}">${month}</option>
+									</c:forEach>
+								</datalist>
+
+								<input type="number" name="day" list="day" placeholder="18">
+								<datalist id="day">
+									<c:forEach var="day" begin="1" end="31">
+										<option value="${day}">${day}</option>
+									</c:forEach>
+								</datalist>
+							</div>
+						</div>
+
+
+
+					</div>
+
+					<div class="button-area">
+						<input type="submit" value="회원가입"
+							class="puple-button-wf submit-button">
+					</div>
+			</form>
+		</div>
+	</section>
+</body>
+</html>
