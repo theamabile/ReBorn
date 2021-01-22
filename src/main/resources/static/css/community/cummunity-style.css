@@ -1,0 +1,133 @@
+/* 怨듯넻 css �젙�쓽 */
+.hidden {
+    display: none;
+}
+/* �뙣�뵫 �깙 */
+.pt15{
+    padding-top: 15px;
+}
+.padding10{
+    padding: 10px;
+}
+
+/* 留덉쭊 �깙 */
+.mt5{
+    margin-top: 5px;
+}
+.mt10{
+    margin-top: 10px;
+}
+.mt20{
+    margin-top: 20px;
+}
+.mt30{
+    margin-top: 30px;
+}
+.mt50{
+    margin-top: 50px;
+}
+
+.mt60{
+    margin-top: 60px;
+}
+/* 留덉쭊 right */
+.mr15{
+    margin-right: 15px;
+}
+.mr10{
+    margin-right: 10px;
+}
+/* text - bold */
+.bold{
+    font-weight: bold;
+}
+
+.fz24{
+    font-size: 24px;
+}
+.fz20{
+    font-size: 20px;
+}
+.fz18{
+    font-size: 18px;
+}
+/* 버튼 */
+input[type="button"]{
+	border:none;
+	text-decoration: none;
+	outline:0;
+}
+button{
+	border:none;
+	text-decoration: none;
+	outline:0;
+}
+input[type="text"], input[type="text"]:focus, input[type="submit"]{
+    outline: 0;
+}
+
+textarea{
+	resize:none;
+	outline: 0;
+}
+
+.text-red{
+    color: #1a7a7e;
+}
+.dot:after{
+    content: "ㆍ";  
+    color:  rgb(146, 146, 146);
+}
+.bar:after{
+    content: "|";
+    color:  rgb(146, 146, 146);
+    margin-left: 10px;
+}
+.button{
+        width: 70px;
+        height: 35px;
+        font-size: 17px;
+        background: #1a7a7e;
+        color:lavender;
+        box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2); 
+}
+
+select{
+    width: 100px;
+    height: 25px;
+    padding-left: 5px;
+    background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 100% 50%; /* �꽕�씠�떚釉� �솕�궡�몴 ��泥� */ 
+    background-size: 20px 20px;
+    border: 1px solid #999; 
+    border-radius: 0px;
+    appearance: none;
+    outline: 0;
+}
+
+
+.menu-bar{
+    display: flex;
+    justify-content: center;
+    --background-color: #dbdbdb;
+    background: rgb(245, 245, 245);
+}
+    .menu { 
+        display: flex;    
+        align-items: center;
+        height: 40px;
+        width: 900px;
+    }
+    .menu ul{
+        display: flex;    
+    }
+
+    .menu>ul>li>a{
+        display: inline-block;
+        height: 30px;
+        width: 130px;
+        line-height: 30px;  
+        padding-right: 20px;
+        font-size: 15px;
+        color: rgb(121, 121, 121);
+        
+    }

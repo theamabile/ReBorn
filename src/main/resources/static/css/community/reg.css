@@ -1,0 +1,117 @@
+@import url("cummunity-style.css");
+
+.item-tool-bar{
+    display: flex;
+    justify-content: center;
+    --background-color: #dbdbdb;
+    background: rgb(250, 250, 250);
+    height: 90px;
+}
+.item-toolkit{
+    width: 900px;
+    display: flex;
+    --justify-content: space-between;
+    align-items: center;
+    text-indent: -9999px;
+}
+    
+    .image-item{
+        background: url(../../../image/communication/camera.png) no-repeat center center;
+        width: 50px;
+        height: 50px;
+        background-size: 50px;
+        
+    }
+    .video-item{
+        background: url(../../../image/communication/video.png) no-repeat center center;
+        width: 50px;
+        height: 50px;
+        background-size: 50px;
+    }
+    .bold-item{
+        background: url(../../../image/communication/bold.png) no-repeat center center;
+        width: 40px;
+        height: 50px;
+        background-size: 22px;
+    }
+    .italic-item{
+        background: url(../../../image/communication/italic.png) no-repeat center 12px;
+        width: 40px;
+        height: 50px;
+        background-size: 30px;
+    }
+    .underline-item{
+        background: url(../../../image/communication/underline.png) no-repeat center 13px;
+        width: 40px;
+        height: 50px;
+        background-size: 22px;
+    }
+    .align-left-item{
+        background: url(../../../image/communication/align-left.png) no-repeat center 13px;
+        width: 40px;
+        height: 50px;
+        background-size: 25px;    
+    }
+    .align-center-item{
+        background: url(../../../image/communication/align-center.png) no-repeat center 13px;
+        width: 40px;
+        height: 50px;
+        background-size: 25px;    
+    }
+    .align-right-item{
+        background: url(../../../image/communication/align-right.png) no-repeat center 13px;
+        width: 40px;
+        height: 50px;
+        background-size: 25px;    
+    }
+
+    .wrapper{
+        margin: auto;
+        width: 900px;
+    }
+    .article-title>input{
+        width: 900px;
+        height: 40px;
+        border: 0;        
+        font-size: 25px;
+        --color: rgb(241, 241, 241);
+    }
+    .article-title{
+        border-bottom: 1px solid  #cccccc ;
+
+    }
+    .artice-content{
+        
+    }
+    .article-content>textarea{
+        padding: 10px;
+        width: 900px;
+        min-height: 400px;
+        border: 0;        
+        border-bottom: 1px solid #cccccc ;
+    }
+    .article-confirm{
+        background: rgb(240, 240, 240);
+        display: flex;
+        justify-content: center;
+    }
+
+    .article-confirm>div{
+        width: 900px;
+        height: 90px;
+        line-height: 90px;
+        text-align: right;        
+    }
+    .reg-button{
+        width: 70px;
+        height: 35px;
+        font-size: 17px;
+        background: #146965;
+        color:lavender;
+        box-shadow: 1px 0px 1px 0px rgba(209, 209, 209, 0.1); 
+    }
+    .reg-button:hover{
+        background: rgba(20, 105, 101, 0.8);
+        transition: all 0.7s ease-in;
+    }
+    
