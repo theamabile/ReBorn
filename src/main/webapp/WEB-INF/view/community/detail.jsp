@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
-<link href="/css/community/list.css" type="text/css" rel="stylesheet" />
+<link href="/css/community/detail.css" type="text/css" rel="stylesheet" />
 
 	<section class="main-container">
            <!--  <div class="major-subject mt20">

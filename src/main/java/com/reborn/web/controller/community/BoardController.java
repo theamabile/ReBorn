@@ -18,7 +18,7 @@ import com.reborn.web.entity.community.BoardView;
 import com.reborn.web.service.community.BoardService;
 
 @Controller
-@RequestMapping("/community")
+@RequestMapping("/community/")
 public class BoardController {
 	
 	@Autowired
@@ -53,7 +53,7 @@ public class BoardController {
 		model.addAttribute("b", board);
 		
 		
-		return "home.community.datail";
+		return "home.community.detail";
 		
 	}
 	@GetMapping("reg")
@@ -62,14 +62,14 @@ public class BoardController {
 		return "home.community.reg";
 	}
 	
-	@PostMapping("reg")
-	public String reg(Board board, BoardCategory category, Member member, Principal principal) {
-		String uid = principal.getName();
-		int id = Integer.parseInt(uid);
-		board.setId(id);
-		
-		return "redirect:list";
-	}
+//	@PostMapping("reg")
+//	public String reg(Board board, BoardCategory category, Member member, Principal principal) {
+//		String uid = principal.getName();
+//		int id = Integer.parseInt(uid);
+//		board.setId(id);
+//		
+//		return "redirect:list";
+//	}
 	
 	
 	
