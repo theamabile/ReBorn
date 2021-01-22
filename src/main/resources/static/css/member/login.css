@@ -1,0 +1,237 @@
+@font-face {
+	font-family: 'GoyangIlsan';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangIlsan.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'GoyangDeogyang';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangDeogyang.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {
+	font-family: 'GoyangIlsan';
+}
+header {
+    position: fixed;
+}
+body {
+	background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+		url(../../images/loginBg.jpg) 50% 50%;
+
+}
+
+section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	/* 占쎄돌餓λ쵐肉� 占쎄텣占쎌젫 */
+	min-height: 860px;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../../images/loginBg.jpg) 50% 50%;
+}
+
+section .logo {
+	z-index: 1;
+	top: 50px;
+	position: relative;
+	border-radius: 100px;
+	width: 120px;
+	height: 120px;
+	background: white url(../../images/logo_Re.svg) no-repeat 50% 50%;
+	border: #43888A solid 5px;
+	background-size: contain;
+}
+
+section .title {
+	font-size: 15px;
+	padding-top: 70px;
+	padding-bottom: 14px;
+}
+
+section .container {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 25px;
+	width: 370px;
+	/* height: 430px; */
+	border: 2px solid #43888A;
+	background: rgba(255, 255, 255, 0.692);
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 60px;
+}
+
+section .input {
+	font-family: 'GoyangDeogyang';
+	text-align: -webkit-center;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	height: 32px;
+	width: 300px;
+	border: 2px solid #43888A;
+}
+
+.input-icon {
+	z-index: 1;
+	position: absolute;
+	font-size: 20px;
+	color: #43888A;
+	left: 40px;
+}
+
+section .button {
+	border: none;
+	border-radius: 5px;
+	margin-top: 5px;
+	height: 35px;
+	width: 250px;
+	color: white;
+    background: #43888A;
+}
+
+section .container .alert {
+	color: red;
+	padding-bottom: 4px;
+	font-size: 11px;
+}
+
+.confirm {
+	width: inherit;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.confirm-btn {
+	width: 90px;
+	height: 27px;
+	border-radius: 8px;
+	border: none;
+	background: #43888A;
+	color: white;
+}
+
+.confirm-input {
+	margin-left: 50px;
+	text-align: -webkit-center;
+	border-radius: 5px;
+	border: 2px solid #43888A;
+	width: 120px;
+	height: 25px;
+}
+
+/* =============login=========== */
+section a {
+	text-decoration: none;
+	color: rgb(119, 119, 196);
+}
+
+.login .container .users {
+	top: 110px;
+}
+
+.login .container .key {
+	top: 164px;
+	left: 42px;
+}
+
+.login .find-info, .login .join-nav {
+	margin: 10px 0px 23px 0px;
+}
+
+.login .button-nav {
+	display: inline-grid;
+	/* margin-top: 15px; */
+}
+
+.login .button-nav input {
+	font-family: 'GoyangDeogyang';
+	font-size: 15px;
+}
+
+#kakao-login-btn {
+	background: url(../../images//login/kakao_login_w.png) no-repeat 0;
+}
+/* =============find-id=========== */
+.find-id .container .envelope {
+	top: 110px;
+}
+
+.find-id .container .name {
+	top: 165px;
+}
+
+.find-id .container input[type="button"], .find-id-result .container input[type="button"]
+	{
+	margin: 0px 0px 25px 0px;
+}
+
+/* ==========find-id-result========== */
+/* .find-id-result{
+    top: 109px;
+} */
+.find-id-result .users {
+	top: 109px;
+}
+/* =============find-pw============== */
+.find-pw .checkboxs {
+	margin: 60px 0px 10px 0px;
+}
+
+.checkbox {
+	margin-bottom: 5px;
+	display: flex;
+	align-items: center;
+}
+
+.find-pw .input {
+	margin-bottom: 10px;
+}
+
+.find-pw .users {
+	top: 115px;
+}
+
+.find-pw .name {
+	top: 160px;
+	left: 42px;
+}
+
+.find-pw .phone {
+	top: 207px;
+	left: 45px;
+}
+/* .find-pw .button{
+    margin: 25px 0px 30px 0px;
+} */
+.sing-btn {
+	margin: 25px 0px 30px 0px;
+}
+
+/* ===========find-pw-result===== */
+.find-pw-result .users {
+	top: 110px;
+}
+
+.find-pw-result .key {
+	top: 165px;
+	left: 42px;
+}
+
+.find-pw-result .key2 {
+	top: 221px;
+	left: 42px;
+}
