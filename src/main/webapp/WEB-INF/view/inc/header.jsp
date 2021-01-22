@@ -49,8 +49,8 @@
                     <li>
                         <div class="menu-btn">
                             <a href="">정보</a>
-                            <div class="hover-line"></div>
                         </div>
+                        <div class="hover-line"></div>
                     </li>
                 </ul> 
                 <button>SIGN UP</button>

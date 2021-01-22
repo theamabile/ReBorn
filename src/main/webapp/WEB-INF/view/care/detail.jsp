@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="/css/care/common.css">
 <link rel="stylesheet" href="/css/care/detail.css">
-<section class="position-relative" style="background: transparent; padding: 0">
+<section class="intro-height position-relative" style="background: transparent; padding: 0">
 	<section class="intro intro-height position-absolute position-top position-left">
 	    <div class="intro-blur-image position-absolute position-top position-left" style="background-image: url('/images/care/info/1/1d47dc4b58bd0023f49152347e221051_20160513111715_srgxlzpg.jpg')">
 	        <!-- <img src="/images/1d47dc4b58bd0023f49152347e221051_20160513111715_srgxlzpg.jpg"> -->
@@ -18,12 +18,10 @@
 	        </div>
 	    </div>
 	</section>
-	<div class="intro-height position-relative">
-	    <div class="cloud position-absolute position-bottom position-left">
-	        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="50" viewBox="0 0 192.22 33.99" preserveAspectRatio="none">
-	            <path d="M0,8C33.65-10.84,50.37,29.77,68.88,29.77S117.26,0,149.26,0,200,25.55,200,25.55V45.68H0Z"/>
-	        </svg>
-	    </div>
+	<div class="cloud position-absolute position-bottom position-left">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="50" viewBox="0 0 192.22 33.99" preserveAspectRatio="none">
+            <path d="M0,8C33.65-10.84,50.37,29.77,68.88,29.77S117.26,0,149.26,0,200,25.55,200,25.55V45.68H0Z"/>
+        </svg>
 	</div>
 </section>
 <section class="greeting">
@@ -92,10 +90,141 @@
         </div>
     </div>
 </section>
-<section class="photos">
-    <div class="photos-inner box-center section-max-width">
-        <h1>평점</h1>
-        <div class="">
-        </div>
+<section class="evaluation">
+    <div class="evaluation-inner box-center section-max-width">
+        <h1>리뷰</h1>
+        <ul>
+        	<li>
+        		<div class="icon"><i class="far fa-smile"></i></div>
+        		<div class="container">
+        			<div class="writer">Lorem ipsum</div>
+        			<div class="box">
+        				<form method="POST">
+		        			<div class="title"><input required type="text" name="title" placeholder="제목"/></div>
+		        			<div class="score"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+		        			<div class="content"><textarea required style="resize: none;"></textarea></div>
+	        			</form>
+        			</div>
+        		</div>
+        	</li>
+        	<li>
+        		<div class="icon"><i class="far fa-smile"></i></div>
+        		<div class="container">
+        			<div class="writer">Lorem ipsum</div>
+        			<div class="box">
+	        			<div class="title">121</div>
+	        			<div class="score"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+	        			<div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing</div>
+        			</div>
+        		</div>
+        	</li>
+        	<li>
+        		<div class="icon"><i class="far fa-smile"></i></div>
+        		<div class="container">
+        			<div class="writer">Lorem ipsum</div>
+        			<div class="box">
+	        			<div class="title">121</div>
+	        			<div class="score"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+	        			<div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing</div>
+        			</div>
+        		</div>
+        	</li>
+        	<li>
+        		<div class="icon"><i class="far fa-smile"></i></div>
+        		<div class="container">
+        			<div class="writer">Lorem ipsum</div>
+        			<div class="box">
+	        			<div class="title">121</div>
+	        			<div class="score"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+	        			<div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing</div>
+        			</div>
+        		</div>
+        	</li>
+        	<li>
+        		<div class="icon"><i class="far fa-smile"></i></div>
+        		<div class="container">
+        			<div class="writer">Lorem ipsum</div>
+        			<div class="box">
+	        			<div class="title">121</div>
+	        			<div class="score"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+	        			<div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing</div>
+        			</div>
+        		</div>
+        	</li>
+        </ul>
     </div>
 </section>
+<style>
+	.evaluation-inner{
+		max-width: 800px;
+		padding-bottom: 100px;
+	}
+	
+	.evaluation-inner{
+	}
+	
+	
+	.evaluation-inner li{
+		display: flex;
+		margin: 20px 0;
+		padding: 10px 0;
+		width: 100%;
+	}
+	
+	.evaluation-inner > *{
+		flex: 0 0 auto;
+	}
+	
+	.evaluation-inner .icon{
+		flex-basis: 50px;
+		padding: 10px 10px 0;
+		color: var(--main-color);
+		font-size: 50px;
+		text-align: center;
+		box-sizing: border-box;
+	}
+	
+	.evaluation-inner .container{
+		flex-grow: 1;
+	}
+	
+	.evaluation-inner .container input,
+	.evaluation-inner .container textarea{
+		width: 100%;
+		padding: 10px;
+		border: 0;
+		border-radius: 12px;
+		background: var(--background-color);
+		box-shadow: inset 1px 1px 4px #ccc;
+		box-sizing: border-box;
+	}
+	
+	
+	.evaluation-inner .writer{
+		font-size: 16px;
+		text-align: left;
+		padding: 10px 0 6px 20px;
+	}
+	
+	.evaluation-inner .box{
+		text-align: left;
+		padding: 20px;
+		border-radius: 20px;
+		background-color: #dff3f5;
+	    box-shadow: 0 4px 12px var(--black-25);
+		box-sizing: border-box;
+	}
+	
+	.evaluation-inner .container .title{
+		font-family: var(--font-title);
+		font-weight: bold;
+		font-size: 20px;
+	}
+	
+	.evaluation-inner .container .score{
+		color: var(--main-color);
+		font-size: 20px;
+		margin: 5px 0 16px;
+	}
+	
+</style>

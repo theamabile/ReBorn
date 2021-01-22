@@ -8,7 +8,7 @@
 	<select id="getCareListByMemberId" resultType="com.reborn.web.entity.care.CareWish">
 		SELECT * FROM CareWish
 		<where>
-			memberId = #{param1}  
+			memberId = #{param1}
 			AND careRegNo IN
 			<foreach item="cw" index="index" collection="list"
 				open="(" separator="," close=")">

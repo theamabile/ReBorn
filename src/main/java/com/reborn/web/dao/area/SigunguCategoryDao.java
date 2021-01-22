@@ -8,7 +8,9 @@ import com.reborn.web.entity.area.SigunguCategory;
 public interface SigunguCategoryDao {
 
 	List<SigunguCategory> getList();
-
 	List<AreaView> getAreaViewList();
-	
+
+	int insertSigungu(SigunguCategory sigungu);
+	int deleteSigungu(int orgCd);
+
 }

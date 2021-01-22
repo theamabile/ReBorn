@@ -21,6 +21,7 @@
 	    <section class="adoption-center-list position-relative">
 	        <div class="adoption-center-list-inner">
 	            <ul>
+            		<c:if test="${empty list}"><li class="search-empty"> 결과가 없습니다</tr></c:if>
 	            <c:forEach var="cv" items="${list}">
 	            	<li>
 	                    <div>
