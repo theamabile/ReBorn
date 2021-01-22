@@ -11,12 +11,23 @@ public class Board {
 	private String files;
 	private int hitCnt;
 	private int boardCategoryId;
+	private int memberId;
 	
 	public Board() {
 	
 	}
-
-	public Board(int id, String title, String content, Date regDate, String files, int hitCnt, int boardCategoryId) {
+	public Board(int id, String title, String content, Date regDate, String files, int hitCnt) {
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.regDate = regDate;
+		this.files = files;
+		this.hitCnt = hitCnt;
+	}
+	
+	public Board(int id, String title, String content, Date regDate, String files, int hitCnt, 
+			int boardCategoryId,
+			int memberId) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -25,12 +36,19 @@ public class Board {
 		this.files = files;
 		this.hitCnt = hitCnt;
 		this.boardCategoryId = boardCategoryId;
+		this.memberId = memberId;
+	}
+	//insert를 위한 생성자
+	public Board(String title, String content) {
+		this.title = title;
+		this.content = content;
 	}
 
 	@Override
 	public String toString() {
 		return "Board [id=" + id + ", title=" + title + ", content=" + content + ", regDate=" + regDate + ", files="
-				+ files + ", hitCnt=" + hitCnt + ", boardCategoryId=" + boardCategoryId + "]";
+				+ files + ", hitCnt=" + hitCnt + ", boardCategoryId=" + boardCategoryId + ", memberId=" + memberId
+				+ "]";
 	}
 
 	public int getId() {
@@ -88,10 +106,16 @@ public class Board {
 	public void setBoardCategoryId(int boardCategoryId) {
 		this.boardCategoryId = boardCategoryId;
 	}
-	
+
+	public int getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
+
 	
 
-		
-	
 	
 }
