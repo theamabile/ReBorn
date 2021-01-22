@@ -23,10 +23,14 @@
       limit #{param2} offset #{param1}
    </select>
  
+<!-- 전체 로우 데이터 --> 
  <select id="getCount" resultType="int">
-      SELECT count(id) FROM Board
+      SELECT count(id) FROM BoardView
       <if test="param1 != null and param1 != ''">
          where BINARY ${param1} like '%${param2}%'
       </if>
    </select> 
+   
+   
+   
 </mapper> 

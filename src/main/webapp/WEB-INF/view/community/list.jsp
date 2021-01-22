@@ -5,7 +5,7 @@
 <!-- <link href="/css/community/community-style.css" type="text/css" rel="stylesheet" /> -->
 <link href="/css/community/list.css" type="text/css" rel="stylesheet" />
 
-<%-- <c:set var ="page" value="${param.p}" />
+<c:set var ="page" value="${param.p}" />
 <c:if test = "${empty param.p}">
 	<c:set var = "page" value="1" />
 </c:if>	
@@ -15,8 +15,10 @@
 <div>
 	offset: ${offset} </br>
 	startNum: ${startNum} </br>
-	param.p: ${param.p}
-</div> --%>
+	param.p: ${param.p} </br>
+	전체페이지 수pageCount: ${pageCount} </br>
+	param.f: ${param.f}
+</div>
 
 	<section class="main-container">
             <!-- <div class="major-subject mt20">
@@ -67,9 +69,13 @@
 	                                        <span class="name-txt">좋아요 </span>
 	                                        <span class="num-txt dot bold">${n.like}</span>
 	                                        <span class="hit">조회수</span>
-	                                        <span class="num-txt bold">${n.hitCnt}</span>
+	                                        <span class="num-txt bold dot">${n.hitCnt}</span>
 	                                        <span class="ico">by</span>
-	                                        <span class="num-txt bold">${n.nickname}</span>
+	                                        <span class="num-txt bold dot">${n.nickname}</span>
+	                                        <span class="hit">작성일</span>
+	                                        <span class="num-txt bold" >
+	                                        	<fmt:formatDate value="${n.regDate}" pattern="yyyy-MM-dd" />
+	                                        </span>
 	                                    </span>
 	                                </div>
 	                                <div class="post-image">
@@ -81,26 +87,44 @@
                     </ul>
                 </div>
                 <div class="write-common pt15">                
-                    <div><span class="text-red bold">1</span> / 1 pages</div>
+                    <div><span class="text-red bold">1</span> / ${pageCount} pages</div>
                     <input class="button bold" type="button" value="글쓰기">
                 </div>
             </div> <!-- wrapper -->
             <div class="pager-common mt30">
                 <div class="pager">
+                
+                
                     <div class="prev mr15">
-                        <span class="btn btn-prev">이전</span>
+                    <c:if test="${startNum > 1}">                    
+                        <a class="btn btn-prev" href="p=${startNum-5}&f=&{param.f}&q=${param.q}">이전</a>
+                    </c:if>
+                    <c:if test="${startNum == 1}">                    
+                        <span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</a>
+                    </c:if>    
+                        
                     </div>
                     <ul class="btn-center">
-                        <li class="current"><a class="bold " href="">1</a></li>
-                        <li><a class="bold " href="">2</a></li>
-                        <li><a class="bold " href="">3</a></li>
-                        <li><a class="bold " href="">4</a></li>
-                        <li><a class="bold " href="">5</a></li>
-                      
+                    <c:forEach var="i" begin="0" end="4" varStatus="st">
+                    	<c:set var="current" value="" />
+                    	<c:if test="${i+startNum == page}">
+                    		<c:set var="current" value="current"></c:set>
+                        </c:if>
+						<c:if test="${i+startNum <= pageCount}">
+                        	<li class="${current}"><a class="bold " href="?p=${i+startNum}&f=${param.f}&q=${param.q}">${i+startNum}</a></li>
+						</c:if>
+                    </c:forEach>  
                     </ul>
+                    
                     <div class="next">
-                        <span class="btn btn-next">다음</span>
+                    	<c:if test="${startNum+5 <= pageCount}">
+                        	<a class="btn btn-next" href="?p=${startNum+5}&f=${param.f}&q=${param.p}"></a>다음</span>
+                        </c:if>
+                        <c:if test="${startNum+5 > pageCount}">
+                        	<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음 </span>                        	
+                        </c:if>
                     </div>
+                    
                 </div>
                 <div class="search-form mt20"> 
                     <h2 class="hidden">커뮤니케이션 검색폼</h2>    
@@ -108,12 +132,12 @@
                         <fieldset>
                             <legend class="hidden">검색필드</legend>
                             <label class="hidden">검색분류</label>
-                            <select class="search-select" name="s">
+                            <select class="search-select" name="f">
                                 <option value="title">제목</option>
-                                <option value="writerId">작성자</option>
+                                <option value="nickname">작성자</option>
                             </select>
                             <label class="hidden">검색어</label>
-                            <input class="input-text"  type="text" name="q" value="${param.q}"/>
+                            <input class="search-window"  type="text" name="q" value="${param.q}"/>
                             <input class="btn btn-search" type="submit" value="검색" />
                         </fieldset>
                     </form>

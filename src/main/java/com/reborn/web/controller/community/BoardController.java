@@ -25,6 +25,7 @@ public class BoardController {
 		@RequestParam(name="q", defaultValue = "") String query, Model model) {
 		
 		List<BoardView> list = service.getViewList(page, 10, field, query);
+		System.out.println(page + ","+ 10+","+field+","+query);
 		int count = service.getCount(field, query);
 		
 		int size = 10;

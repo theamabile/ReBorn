@@ -156,8 +156,11 @@
     display: flex;
     justify-content: center;
 }
+.search-select{
+	width: 100px;
+}
     
-.input-text{
+.search-window{
     height: 23px;
     width: 220px;    
     border: 1px solid #999; 
