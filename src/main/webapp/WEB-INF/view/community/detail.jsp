@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <link href="/css/community/list.css" type="text/css" rel="stylesheet" />
 
 	<section class="main-container">
            <!--  <div class="major-subject mt20">
                 <h1 class="major-subject-text bold">커뮤니케이션</h1>
             </div> -->
-            <section class="wrapper" >
+            <div class="wrapper" >
                 <section class="article-header mt60">
                     <span class="category">category: <span>입양후기</span></span> 
                     <span class="title bold">아닌 것</span>
@@ -74,6 +76,6 @@
                 </form>
                 
 
-            </section> <!-- wraaper end-->
+            </div> <!-- wraaper end-->
         </section>
 

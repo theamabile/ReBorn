@@ -22,6 +22,11 @@ public class BoardServiceImp implements BoardService{
 		
 		return boardDao.getList(startIndex, endIndex, field, query);
 	}
+	@Override
+	public List<BoardView> getViewList(int page, int size) {
+		int offset = (page-1)*10;
+		return boardDao.getViewList(offset, size);
+	}
 	
 	@Override
 	public List<BoardView> getViewList(int page, int size, String field, String query) {
@@ -30,12 +35,15 @@ public class BoardServiceImp implements BoardService{
 		
 		return boardDao.getViewList(offset, size, field, query);
 	}
-
+	
 	@Override
-	public List<BoardView> getViewList(int page, int size) {
+	public List<BoardView> getViewList(int page, int view, String field, String query, String option) {
+		
 		int offset = (page-1)*10;
-		return boardDao.getViewList(offset, size);
+		
+		return boardDao.getViewList(offset, view, field, query, option);
 	}
+
 	
 
 	@Override
@@ -47,7 +55,7 @@ public class BoardServiceImp implements BoardService{
 	}
 
 	@Override
-	public Board get(int id) {
+	public BoardView get(int id) {
 		return boardDao.get(id);
 	}
 

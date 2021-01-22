@@ -10,7 +10,7 @@ public interface BoardDao {
 	int update(Board board);
 	int delete(int id);
 	
-	Board get(int id);
+	BoardView get(int id);
 	
 	Board getLast();
 	
@@ -24,6 +24,7 @@ public interface BoardDao {
 	List<Board> getList();	
 	List<Board> getList(int offset);
 	List<Board> getList(int offset, int size, String field, String query);
-	List<BoardView> getViewList(int offset, int size, String field, String query);
 	List<BoardView> getViewList(int offset, int size);
+	List<BoardView> getViewList(int offset, int size, String field, String query);
+	List<BoardView> getViewList(int offset, int view, String field, String query, String option);
 }

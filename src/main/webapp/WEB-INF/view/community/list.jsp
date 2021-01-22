@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!-- <link href="/css/community/community-style.css" type="text/css" rel="stylesheet" /> -->
+<link href="/css/community/reset.css" type="text/css" rel="stylesheet" />
 <link href="/css/community/list.css" type="text/css" rel="stylesheet" />
 
 <c:set var ="page" value="${param.p}" />
@@ -31,7 +31,7 @@
                         <form class="category-align">
                             <fieldset>
                                 <legend class="hidden">카테고리 정렬 필드</legend>
-                                <select class="select-box" name="c">
+                                <select class="select-box" name="c" onchange="this.form.submit()">
                                     <option>카테고리</option>
                                     <option value="question">질문</option>
                                     <option value="post">입양후기</option>
@@ -43,11 +43,11 @@
                         <form class="view-align">
                             <fieldset>
                                 <legend class="hidden">View 정렬 필드</legend>
-                                <select class="select-box" name="v">
+                                <select class="select-box" name="v" onchange="this.form.submit()">
                                     <option>보기</option>
-                                    <option value="ten">10개씩</option>
-                                    <option value="fifteen">15개씩</option>
-                                    <option value="thirty">30개씩</option>                            
+                                    <option value="10">10개씩</option>
+                                    <option value="15">15개씩</option>
+                                    <option value="30">30개씩</option>                            
                                 </select>
                             </fieldset>
                         </form>
@@ -58,7 +58,7 @@
                     <ul>
                     	<c:forEach var="n" items="${list}">
 	                        <li class="list-article mt20">
-	                            <a class="list-link" href="">
+	                            <a class="list-link" href="${n.id}">
 	                                <div class="post-content has-image">
 	                                    <strong class="subject bold">${n.title}</strong>
 	                                    <div class="content mt10">${n.content}
@@ -97,7 +97,7 @@
                 
                     <div class="prev mr15">
                     <c:if test="${startNum > 1}">                    
-                        <a class="btn btn-prev" href="p=${startNum-5}&f=&{param.f}&q=${param.q}">이전</a>
+                        <a class="btn btn-prev" href="p=${startNum-5}&f=${param.f}&q=${param.q}&v=${param.v}">이전</a>
                     </c:if>
                     <c:if test="${startNum == 1}">                    
                         <span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</a>
@@ -111,14 +111,14 @@
                     		<c:set var="current" value="current"></c:set>
                         </c:if>
 						<c:if test="${i+startNum <= pageCount}">
-                        	<li class="${current}"><a class="bold " href="?p=${i+startNum}&f=${param.f}&q=${param.q}">${i+startNum}</a></li>
+                        	<li class="${current}"><a class="bold " href="?p=${i+startNum}&f=${param.f}&q=${param.q}&v=${param.v}">${i+startNum}</a></li>
 						</c:if>
                     </c:forEach>  
                     </ul>
                     
                     <div class="next">
                     	<c:if test="${startNum+5 <= pageCount}">
-                        	<a class="btn btn-next" href="?p=${startNum+5}&f=${param.f}&q=${param.p}"></a>다음</span>
+                        	<a class="btn btn-next" href="?p=${startNum+5}&f=${param.f}&q=${param.p}&v=${param.v}"></a>다음</span>
                         </c:if>
                         <c:if test="${startNum+5 > pageCount}">
                         	<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음 </span>                        	

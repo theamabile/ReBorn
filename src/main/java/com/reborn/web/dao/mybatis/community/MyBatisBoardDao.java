@@ -37,7 +37,7 @@ public class MyBatisBoardDao implements BoardDao{
 	}
 
 	@Override
-	public Board get(int id) {
+	public BoardView get(int id) {
 		return mapper.get(id);
 	}
 
@@ -78,17 +78,22 @@ public class MyBatisBoardDao implements BoardDao{
 	public List<Board> getList(int offset, int size, String field, String query) {
 		return mapper.getList(offset, size, field, query);
 	}
+	@Override
+	public List<BoardView> getViewList(int offset, int size) {
+		
+		return mapper.getViewList(offset, size);
+	}
 
 	@Override
 	public List<BoardView> getViewList(int offset, int size, String field, String query) {
-		// TODO Auto-generated method stub
+
 		return mapper.getViewList(offset, size, field, query);
 	}
 
 	@Override
-	public List<BoardView> getViewList(int offset, int size) {
+	public List<BoardView> getViewList(int offset, int view, String field, String query, String option) {
 
-		return mapper.getViewList(offset, size);
+		return mapper.getViewList(offset, view, field, query, option);
 	}
 	
 	

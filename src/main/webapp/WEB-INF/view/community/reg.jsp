@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link href="/css/community/list.css" type="text/css" rel="stylesheet" />
+<link href="/css/community/reg.css" type="text/css" rel="stylesheet" />
+<!-- <link href="/css/community/reset.css" type="text/css" rel="stylesheet" /> -->
+<link href="/css/community/cummunity-style.css" type="text/css" rel="stylesheet" />
 
 	<section class="main-container">
             <section class="item-tool-bar">
@@ -24,10 +26,10 @@
             <section class="wrapper">
                 <div class="category-option mt60">
                     <select name="" id="">
-                        <option value="">질문</option>
-                        <option value="">입양후기</option>
-                        <option value="">강아지와함께</option>
-                        <option value="">고양이와함께</option>
+                        <option value="question">질문</option>
+                        <option value="post">입양후기</option>
+                        <option value="dog">강아지와함께</option>
+                        <option value="cat">고양이와함께</option>
                     </select>
                 </div>
                 <form action="post">

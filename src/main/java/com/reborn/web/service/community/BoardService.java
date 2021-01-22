@@ -8,7 +8,7 @@ import com.reborn.web.entity.community.BoardView;
 public interface BoardService {
 	
 	int hitUp(int id);
-	Board get(int id);
+	BoardView get(int id);
 	int insert(Board board);
 	int update(Board board);
 	int delete(int id);
@@ -19,4 +19,5 @@ public interface BoardService {
 	List<Board> getList(int page, int size, String field, String query);
 	List<BoardView> getViewList(int page, int size, String field, String query);
 	List<BoardView> getViewList(int page, int size);
+	List<BoardView> getViewList(int page, int view, String field, String query, String option);
 }

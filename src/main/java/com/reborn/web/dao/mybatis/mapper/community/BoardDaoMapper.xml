@@ -9,6 +9,9 @@
 	  SELECT * FROM BoardView
       <if test="param3 != null and param3 != ''">
          where BINARY ${param3} like '%${param4}%'
+      </if>      
+      <if test="param5 != null and param5 != ''">
+      	AND BINARY category = '%${param5}%' 
       </if>
       order by regdate desc
       limit #{param2} offset #{param1}
@@ -16,7 +19,7 @@
 	
  <select id="getList">
  	SELECT * FROM Board
- 	<if test="param3 != null and param3 != ''">
+ 	  <if test="param3 != null and param3 != ''">
          where BINARY ${param3} like '%${param4}%'
       </if>
       order by regdate desc
@@ -30,7 +33,11 @@
          where BINARY ${param1} like '%${param2}%'
       </if>
    </select> 
-   
+  
+  <select id="get" resultType="com.reborn.web.entity.community.BoardView">
+  		SELECT * FROM BoardView
+  		where id=${id}
+  </select>   
    
    
 </mapper> 
