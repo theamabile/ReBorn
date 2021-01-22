@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.reborn.web.dao.data.DataDao">
+
+	<select id="getView" resultType="com.reborn.web.entity.data.InfoView">
+		select I.id, I.title, I.content, I.regDate, I.files, I.hitCnt, IC.name as cateName
+		from Info I left join InfoCategory IC 
+		on I.infoCategoryId = IC.id where I.id=#{param1};
+	</select>
+
+
+	<select id="getViewList" resultType="com.reborn.web.entity.data.InfoView">
+		select I.id, I.title, I.content, I.regDate, I.files, I.hitCnt, IC.name as cateName
+		from Info I left join InfoCategory IC 
+		on I.infoCategoryId = IC.id 
+        where infoCategoryId = #{param3}
+        limit #{param2} offset #{param1};
+	</select>
+	
+	<select id="getCount" resultType="int">
+		select count(id) from Info where infoCategoryId = #{param1};
+	</select>
+</mapper>
