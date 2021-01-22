@@ -19,9 +19,10 @@ section h1{
 }
 
 .intro{
-    z-index: -1;
+    z-index: 0;
     width: 100%;
     padding: 0;
+    overflow: hidden;
 }
 .intro .intro-image,
 .intro .intro-blur-image
@@ -112,9 +113,6 @@ section h1{
     object-fit: cover;
 }
 
-.photos{
-    
-}
 .map{
     background: var(--background-gray);
     padding: 150px 0;

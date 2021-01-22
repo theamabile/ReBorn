@@ -71,7 +71,7 @@ public class CareController {
 			@RequestParam(name = "q", defaultValue = "") String query,
 			Model model, Principal principal){
 		
-		int size = 20;
+		int size = 10;
 		
 		// DATA LOAD ==================================================
 		List<CareView> careList = careService.getViewList(page, size, field, query);
@@ -86,7 +86,7 @@ public class CareController {
 		// ============================================================
 		// ============================================================
 		
-		if( memberId != 0)
+		if( !careList.isEmpty() && memberId != 0)
 			careService.setWish(careList);
 		
 		model.addAttribute("currentPage", page);

@@ -25,4 +25,16 @@ public class MyBatisSidoCategoryDao implements SidoCategoryDao {
 		return mapper.getList();
 	}
 
+	@Override
+	public int insertSido(SidoCategory sido) {
+
+		return mapper.insertSido(sido);
+	}
+
+	@Override
+	public int deleteSido(int uprCd) {
+
+		return mapper.deleteSido(uprCd);
+	}
+
 }
