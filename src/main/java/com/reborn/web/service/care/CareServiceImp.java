@@ -6,15 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.care.CareDao;
+import com.reborn.web.dao.care.CareWishDao;
 import com.reborn.web.entity.care.Care;
 import com.reborn.web.entity.care.CareView;
+import com.reborn.web.entity.care.CareWish;
 
 @Service
 public class CareServiceImp implements CareService {
 	
-	@Autowired
 	private CareDao careDao;
-
+	private CareWishDao careWishDao;
+	
+	@Autowired
+	public CareServiceImp(CareDao careDao, CareWishDao careWishDao) {
+		this.careDao = careDao;
+		this.careWishDao = careWishDao;
+	}	
+	
 	@Override
 	public Care getCareByCareRegNo(String careRegNo) {
 		Care c = null;
@@ -23,6 +31,7 @@ public class CareServiceImp implements CareService {
 		
 		return c;
 	}
+
 
 	@Override
 	public CareView getCareViewByCareRegNo(String careRegNo) {
@@ -91,6 +100,36 @@ public class CareServiceImp implements CareService {
 		result = careDao.getCount(field, query);	
 
 		return result;
+	}
+
+	@Override
+	public void setWish(List<CareView> list) {
+		
+		// ============================================================
+		// ============================================================
+		// 테스트용 아이디
+		int memberId = 3;
+		// ============================================================
+		// ============================================================
+		
+		List<CareWish> wishList = careWishDao.getCareListByMemberId(memberId, list);
+		
+		for(CareView cv : list) {
+			cv.setWish(false);
+			
+			for(CareWish wish : wishList) {
+				String careNum = cv.getCareRegNo();
+				String wishNum = wish.getCareRegNo();
+				
+				if( careNum.equals(wishNum) ) {
+					cv.setWish(true);
+					
+					wishList.remove(wish);
+					break;
+				}
+			}
+		}
+		
 	}
 
 }
