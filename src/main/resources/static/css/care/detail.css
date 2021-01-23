@@ -141,7 +141,7 @@ section h1{
 	flex: 0 0 auto;
 }
 
-.review-inner .icon,
+.review-inner .icon i,
 .review-inner .submit-icon i{
 	flex-basis: 50px;
 	padding: 10px 10px 0 0;
@@ -150,6 +150,9 @@ section h1{
 	text-align: center;
 	box-sizing: border-box;
 }
+
+.review-inner .icon i.fa-meh{color:var(--blue)}
+.review-inner .icon i.fa-frown{color:var(--red-pink)}
 
 .review-inner .container{
 	flex-grow: 1;

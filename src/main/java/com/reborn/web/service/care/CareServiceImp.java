@@ -11,6 +11,7 @@ import com.reborn.web.dao.care.CareReviewDao;
 import com.reborn.web.dao.care.CareWishDao;
 import com.reborn.web.entity.care.Care;
 import com.reborn.web.entity.care.CareReview;
+import com.reborn.web.entity.care.CareReviewView;
 import com.reborn.web.entity.care.CareView;
 import com.reborn.web.entity.care.CareWish;
 
@@ -172,6 +173,17 @@ public class CareServiceImp implements CareService {
 		int offset = (page-1)*size;//10,20,30,40,50,60...
 		
 		list = careReviewDao.getList(offset, size, careRegNo);
+		
+		return list;
+	}
+
+	@Override
+	public List<CareReviewView> getReviewViewList(int page, int size, String careRegNo) {
+		List<CareReviewView> list = new ArrayList<>();
+
+		int offset = (page-1)*size;//10,20,30,40,50,60...
+		
+		list = careReviewDao.getViewList(offset, size, careRegNo);
 		
 		return list;
 	}

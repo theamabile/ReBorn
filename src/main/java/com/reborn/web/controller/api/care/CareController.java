@@ -32,6 +32,8 @@ import org.xml.sax.SAXException;
 
 import com.reborn.web.entity.care.AnimalEntityTemp;
 import com.reborn.web.entity.care.Care;
+import com.reborn.web.entity.care.CareReview;
+import com.reborn.web.entity.care.CareReviewView;
 import com.reborn.web.entity.care.CareView;
 import com.reborn.web.entity.care.CareWish;
 import com.reborn.web.service.care.CareService;
@@ -79,7 +81,7 @@ public class CareController {
 			careService.getWishedList(careList);
 		
 		int pageCount = (int)Math.ceil( count / (float)size );
-		
+
 		datas.put("list", careList);
 		datas.put("currentPage", page);
 		datas.put("pageCount", pageCount);
@@ -90,9 +92,14 @@ public class CareController {
 	@GetMapping("{careRegNo}")
 	public Map<String, Object> detail(@PathVariable("careRegNo") String careRegNo) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException{
 		Map<String, Object> datas = new HashMap<>();
+		List<CareReviewView> reviewList = new ArrayList<>();
+		int size = 10;
 		
-		Care care = careService.getCareByCareRegNo(careRegNo);
+		Care care = careService.getCareByCareRegNo(careRegNo);		
+		reviewList = careService.getReviewViewList(1, size, careRegNo);
 		
+		
+		// API 보호동물들 가져오
 		List<AnimalEntityTemp> animalInfoList = new ArrayList<>();
 		try {
 			StringBuilder urlBuilder = new StringBuilder(animalListUrl);
@@ -132,6 +139,7 @@ public class CareController {
 		}
 //		System.out.println(animalInfoList);
 		datas.put("care", care);
+		datas.put("reviewList", reviewList);
 		datas.put("animalInfoList", animalInfoList);
 		
 		return datas;
@@ -164,6 +172,104 @@ public class CareController {
 			datas.put("result", "sussess");
 		
 		datas.put("careRegNo", cw.getCareRegNo());
+		
+		return datas;
+	}
+
+	@GetMapping("{careRegNo}/review/list")
+	public List<CareReviewView> reviewList(
+			@PathVariable("careRegNo") String careRegNo,
+			@RequestParam(name = "p", defaultValue = "1") Integer page
+			){
+		List<CareReviewView> list = new ArrayList<>();
+		
+		if(careRegNo == null || careRegNo.equals("")) {
+			return list;
+		}
+		
+		int size = 10;
+		list = careService.getReviewViewList(page, size, careRegNo);
+		
+		return list;
+	}
+
+	@PostMapping("{careRegNo}/review/insert")
+	public Map<String, Object> reviewInsert(
+			@PathVariable("careRegNo") String careRegNo,
+			String title, String content, int score){
+		Map<String, Object> datas = new HashMap<>();
+		int result = 0;
+		
+		
+		if(memberId == 0) {
+			datas.put("result", "fail");
+			return datas;
+		}
+
+		CareReview cr = new CareReview();
+		cr.setCareRegNo(careRegNo);
+		cr.setMemberId(memberId);
+		cr.setTitle(title);
+		cr.setContent(content);
+		cr.setScore(score);
+		
+		result = careService.insertReview(cr);
+		
+		if(result == 0)
+			datas.put("result", "fail");
+		else
+			datas.put("result", "sussess");
+
+		datas.put("careReviewId", cr.getId());
+		
+		return datas;
+	}
+
+	@PostMapping("{careRegNo}/review/update")
+	public Map<String, Object> reviewUpdate(
+			int id, String title, String content, int score){
+		Map<String, Object> datas = new HashMap<>();
+		int result = 0;
+
+		if(memberId == 0) {
+			datas.put("result", "fail");
+			return datas;
+		}
+
+		CareReview origin = careService.getReview(id);
+		
+		origin.setTitle(title);
+		origin.setContent(content);
+		origin.setScore(score);
+		
+		result = careService.updateReview(origin);
+		
+		if(result == 0)
+			datas.put("result", "fail");
+		else
+			datas.put("result", "sussess");
+		
+		datas.put("careReviewId", origin.getId());
+		
+		return datas;
+	}
+
+	@PostMapping("{careRegNo}/review/delete")
+	public Map<String, Object> reviewDelete(int id){
+		Map<String, Object> datas = new HashMap<>();
+		int result = 0;
+		
+		if(memberId == 0) {
+			datas.put("result", "fail");
+			return datas;
+		}
+		
+		result = careService.deleteReview(id);
+		
+		if(result == 0)
+			datas.put("result", "fail");
+		else
+			datas.put("result", "sussess");
 		
 		return datas;
 	}

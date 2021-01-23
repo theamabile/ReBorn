@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.reborn.web.dao.care.CareReviewDao;
 import com.reborn.web.entity.care.CareReview;
+import com.reborn.web.entity.care.CareReviewView;
 
 @Repository
 public class MyBatisCareReviewDao implements CareReviewDao{
@@ -27,6 +28,11 @@ public class MyBatisCareReviewDao implements CareReviewDao{
 	@Override
 	public List<CareReview> getList(int offset, int size, String careRegNo) {
 		return mapper.getList(offset, size, careRegNo);
+	}
+
+	@Override
+	public List<CareReviewView> getViewList(int offset, int size, String careRegNo) {
+		return mapper.getViewList(offset, size, careRegNo);
 	}
 
 	@Override

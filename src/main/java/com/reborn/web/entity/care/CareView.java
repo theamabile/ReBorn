@@ -6,7 +6,7 @@ public class CareView extends Care{
 
 	private boolean wish;
 	private int wishCnt;
-	private int evaluationCnt;
+	private int reviewCnt;
 	private int animalCnt;
 	
 	public CareView() {
@@ -14,17 +14,17 @@ public class CareView extends Care{
 	}
 
 	public CareView(String careRegNo, String name, boolean auth, String tel, String addr, String jibunAddr, String latitude,
-			String longitude, Date dataStdDt, String thumb, int uprCd, int orgCd, Boolean wish, int wishCnt, int evaluationCnt, int animalCnt) {
+			String longitude, Date dataStdDt, String thumb, int uprCd, int orgCd, Boolean wish, int wishCnt, int reviewCnt, int animalCnt) {
 		super(careRegNo, name, auth, tel, addr, jibunAddr, latitude, longitude, dataStdDt, thumb, uprCd, orgCd);
 		this.wish = wish;
 		this.wishCnt = wishCnt;
-		this.evaluationCnt = evaluationCnt;
+		this.reviewCnt = reviewCnt;
 		this.animalCnt = animalCnt;
 	}
 	
-	public CareView(int wishCnt, int evaluationCnt, int animalCnt) {
+	public CareView(int wishCnt, int reviewCnt, int animalCnt) {
 		this.wishCnt = wishCnt;
-		this.evaluationCnt = evaluationCnt;
+		this.reviewCnt = reviewCnt;
 		this.animalCnt = animalCnt;
 	}
 	
@@ -44,12 +44,12 @@ public class CareView extends Care{
 		this.wishCnt = wishCnt;
 	}
 
-	public int getEvaluationCnt() {
-		return evaluationCnt;
+	public int getreviewCnt() {
+		return reviewCnt;
 	}
 
-	public void setEvaluationCnt(int evaluationCnt) {
-		this.evaluationCnt = evaluationCnt;
+	public void setreviewCnt(int reviewCnt) {
+		this.reviewCnt = reviewCnt;
 	}
 
 	public int getAnimalCnt() {
@@ -62,7 +62,7 @@ public class CareView extends Care{
 
 	@Override
 	public String toString() {
-		return "CareView [wishCnt=" + wishCnt + ", evaluationCnt=" + evaluationCnt + ", animalCnt=" + animalCnt + "]";
+		return "CareView [wishCnt=" + wishCnt + ", reviewCnt=" + reviewCnt + ", animalCnt=" + animalCnt + "]";
 	}
 	
 }

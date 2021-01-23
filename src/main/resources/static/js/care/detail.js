@@ -5,7 +5,8 @@ class CareDetail extends React.Component{
 		
 		this.state = {
 			care: {},
-			animalInfoList: []
+			animalInfoList: [],
+			reviewList: []
 		}
 		this.review = {
 			title: "",
@@ -20,14 +21,28 @@ class CareDetail extends React.Component{
 	}
 	
 	invalidate(){
-		console.log("fetch");
+		console.log("invalidate");
 		
 		fetch(`/api/care/${this.careRegNo}`)
 		.then((response ) => {
 			return response.json()
 		})
-		.then(({care, animalInfoList})=>{
-			this.setState({care, animalInfoList});
+		.then(({care, animalInfoList, reviewList})=>{
+			this.setState({care, animalInfoList, reviewList});
+			
+			//this.startNum = this.page - ((this.page - 1) % this.range);
+		});
+	}
+	
+	getReviewList(){
+		console.log("getReviewList");
+		
+		fetch(`/api/care/${this.careRegNo}/review/list`)
+		.then((response ) => {
+			return response.json()
+		})
+		.then((reviewList)=>{
+			this.setState({reviewList});
 			
 			//this.startNum = this.page - ((this.page - 1) % this.range);
 		});
@@ -66,19 +81,25 @@ class CareDetail extends React.Component{
 				finded = true;
 			}
 		}
-		switch(this.review.score){
+		faceIcon.className = scoreToFace(this.review.score);
+	}
+	
+	scoreToFace(score){
+		let face = "";
+		switch(score){
 			case 5:
 			case 4:
-				faceIcon.className = "far fa-smile";
+				face = "far fa-smile";
 				break;
 			case 3:
 			case 2:
-				faceIcon.className = "far fa-meh";
+				face = "far fa-meh";
 				break;
 			case 1:
-				faceIcon.className = "far fa-frown";
+				face = "far fa-frown";
 				break;
 		}
+		return face;
 	}
 	
 	render(){
@@ -174,6 +195,30 @@ class CareDetail extends React.Component{
 		                    </div>
 		                </li>
 		                <li className="line"></li>
+						{
+							this.state.reviewList.map(
+								review => <li key={review.id}>
+			                    <div className="icon"><i className={this.scoreToFace(review.score)}></i></div>
+			                    <div className="container">
+			                        <div className="writer">{review.nickname}</div>
+			                        <div className="box">
+			                            <div className="title">{review.title}</div>
+			                            <div className="score">
+											{
+												[1, 2, 3, 4, 5].map(
+													score => review.score >= score 
+													?<i key={score} className="fas fa-star"></i> 
+													:<i key={score} className="far fa-star"></i>
+												)
+											}
+										</div>
+			                            <div className="content">{review.content}</div>
+			                            <div className="regDate">{MMddHHmm(new Date(review.regDate.slice(0,19)))}</div>
+			                        </div>
+			                    </div>
+			                </li>
+							)
+						}
 		                <li>
 		                    <div className="icon"><i className="far fa-smile"></i></div>
 		                    <div className="container">

@@ -15,6 +15,13 @@
 		LIMIT #{param2} OFFSET #{param1}
 	</select>
 	
+	<select id="getViewList" resultType="com.reborn.web.entity.care.CareReviewView">
+		SELECT * FROM CareReviewView
+		WHERE careRegNo = #{param3}
+		ORDER BY regDate desc
+		LIMIT #{param2} OFFSET #{param1}
+	</select>
+	
 	<insert id="insert" parameterType="com.reborn.web.entity.care.CareReview">
 		INSERT INTO 
 		CareReview 

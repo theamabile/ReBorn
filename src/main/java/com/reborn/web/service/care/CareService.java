@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.reborn.web.entity.care.Care;
 import com.reborn.web.entity.care.CareReview;
+import com.reborn.web.entity.care.CareReviewView;
 import com.reborn.web.entity.care.CareView;
 import com.reborn.web.entity.care.CareWish;
 
@@ -27,6 +28,7 @@ public interface CareService {
 	
 	CareReview getReview(int id);
 	List<CareReview> getReviewList(int page, int size, String careRegNo);
+	List<CareReviewView> getReviewViewList(int page, int size, String careRegNo);
 	int insertReview(CareReview cr);
 	int updateReview(CareReview cr);
 	int deleteReview(int id);
