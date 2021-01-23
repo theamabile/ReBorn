@@ -1,15 +1,15 @@
 package com.reborn.web.entity.care;
 
-public class CareEvaluationReportCategory {
+public class CareReviewReportCategory {
 
 	private int id;
 	private String name;
 	
-	public CareEvaluationReportCategory() {
+	public CareReviewReportCategory() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CareEvaluationReportCategory(int id, String name) {
+	public CareReviewReportCategory(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -33,7 +33,7 @@ public class CareEvaluationReportCategory {
 
 	@Override
 	public String toString() {
-		return "CareEvaluationReportCategory [id=" + id + ", name=" + name + "]";
+		return "CareReviewReportCategory [id=" + id + ", name=" + name + "]";
 	}
 	
 }

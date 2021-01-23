@@ -92,12 +92,12 @@ section h1{
     display:flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    font-size: 16px;
 }
 
 .animal-list li{
     flex: 0 0 40%;
     margin: 0 15px 80px;
-    font-size: 16px;
 }
 
 .animal-list li div:first-child{
@@ -116,6 +116,103 @@ section h1{
 .map{
     background: var(--background-gray);
     padding: 150px 0;
+}
+
+.map-inner .bold{
+    font-family: var(--font-title);
+}
+
+.review{
+	background: #ffffff;
+}
+.review-inner{
+	max-width: 700px;
+	padding-bottom: 100px;
+}
+
+.review-inner li{
+	display: flex;
+	margin: 20px 0;
+	padding: 10px 0;
+	width: 100%;
+}
+
+.review-inner > *{
+	flex: 0 0 auto;
+}
+
+.review-inner .icon,
+.review-inner .submit-icon i{
+	flex-basis: 50px;
+	padding: 10px 10px 0 0;
+	color: var(--main-color);
+	font-size: 50px;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+.review-inner .container{
+	flex-grow: 1;
+}
+
+.review-inner .container form .score i{
+	cursor: pointer;
+}
+
+.review-inner .container input,
+.review-inner .container textarea{
+	width: 100%;
+	padding: 10px;
+	border: 0;
+	border-radius: 12px;
+	background: var(--background-color);
+	box-shadow: inset 1px 1px 4px #ccc;
+	box-sizing: border-box;
+    outline: none;
+}
+
+.review-inner .container textarea{
+	height: 120px;
+	margin-top: 10px;
+	resize: none;
+}
+
+
+
+.review-inner .writer{
+	font-size: 16px;
+	text-align: left;
+	padding: 10px 0 6px 20px;
+}
+
+.review-inner .box{
+	text-align: left;
+	padding: 20px;
+	border-radius: 20px;
+	background-color: #dff3f5;
+    box-shadow: 0 4px 12px var(--black-25);
+	box-sizing: border-box;
+}
+
+.review-inner .container .title{
+	font-family: var(--font-title);
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.review-inner .container .score i{
+	color: var(--main-color);
+	font-size: 20px;
+	margin: 5px 0 16px;
+}
+
+
+.review-inner .container .submit-icon{
+	text-align: right;
+}
+
+.review-inner .container .submit-icon i{
+	color: var(--main-color);
 }
 
 @media screen and (max-width:768px){

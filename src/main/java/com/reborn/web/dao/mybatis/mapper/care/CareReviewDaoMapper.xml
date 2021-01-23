@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.reborn.web.dao.care.CareReviewDao">
+
+	<select id="get" resultType="com.reborn.web.entity.care.CareReview">
+		SELECT * FROM CareReview WHERE id = #{param1}
+	</select>
+	
+	<select id="getList" resultType="com.reborn.web.entity.care.CareReview">
+		SELECT * FROM CareReview
+		WHERE careRegNo = #{param3}
+		ORDER BY regDate desc
+		LIMIT #{param2} OFFSET #{param1}
+	</select>
+	
+	<insert id="insert" parameterType="com.reborn.web.entity.care.CareReview">
+		INSERT INTO 
+		CareReview 
+			(careRegNo, memberId, content, score, title)
+		VALUES 
+			(#{careRegNo}, #{memberId}, #{content}, #{score}, #{title})
+	</insert>
+	
+	<update id="update" parameterType="com.reborn.web.entity.care.CareReview">
+		UPDATE CareReview
+		SET
+		content = #{content},
+		score = #{score},
+		title = #{title}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM CareReview 
+		WHERE id = #{param1}
+	</delete>
+	
+</mapper>

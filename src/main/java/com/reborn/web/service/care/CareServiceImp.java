@@ -1,13 +1,16 @@
 package com.reborn.web.service.care;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.care.CareDao;
+import com.reborn.web.dao.care.CareReviewDao;
 import com.reborn.web.dao.care.CareWishDao;
 import com.reborn.web.entity.care.Care;
+import com.reborn.web.entity.care.CareReview;
 import com.reborn.web.entity.care.CareView;
 import com.reborn.web.entity.care.CareWish;
 
@@ -16,11 +19,13 @@ public class CareServiceImp implements CareService {
 	
 	private CareDao careDao;
 	private CareWishDao careWishDao;
+	private CareReviewDao careReviewDao;
 	
 	@Autowired
-	public CareServiceImp(CareDao careDao, CareWishDao careWishDao) {
+	public CareServiceImp(CareDao careDao, CareWishDao careWishDao, CareReviewDao careReviewDao) {
 		this.careDao = careDao;
 		this.careWishDao = careWishDao;
+		this.careReviewDao = careReviewDao;
 	}	
 	
 	@Override
@@ -103,7 +108,7 @@ public class CareServiceImp implements CareService {
 	}
 
 	@Override
-	public void setWish(List<CareView> list) {
+	public void getWishedList(List<CareView> list) {
 		
 		// ============================================================
 		// ============================================================
@@ -130,6 +135,72 @@ public class CareServiceImp implements CareService {
 			}
 		}
 		
+	}
+
+	@Override
+	public int insertWish(CareWish cw) {
+		int result = 0;
+		
+		result = careWishDao.insert(cw);
+		
+		return result;
+		
+	}
+
+	@Override
+	public int deleteWish(CareWish cw) {
+		int result = 0;
+		
+		result = careWishDao.delete(cw.getMemberId(), cw.getCareRegNo());
+		
+		return result;
+	}
+
+	@Override
+	public CareReview getReview(int id) {
+		CareReview cr = new CareReview();
+		
+		cr = careReviewDao.get(id);
+		
+		return cr;
+	}
+
+	@Override
+	public List<CareReview> getReviewList(int page, int size, String careRegNo) {
+		List<CareReview> list = new ArrayList<>();
+
+		int offset = (page-1)*size;//10,20,30,40,50,60...
+		
+		list = careReviewDao.getList(offset, size, careRegNo);
+		
+		return list;
+	}
+
+	@Override
+	public int insertReview(CareReview cr) {
+		int result = 0;
+		
+		result = careReviewDao.insert(cr);
+		
+		return result;
+	}
+
+	@Override
+	public int updateReview(CareReview cr) {
+		int result = 0;
+		
+		result = careReviewDao.update(cr);
+		
+		return result;
+	}
+
+	@Override
+	public int deleteReview(int id) {
+		int result = 0;
+		
+		result = careReviewDao.delete(id);
+		
+		return result;
 	}
 
 }
