@@ -135,6 +135,7 @@ section h1{
 	margin: 20px 0;
 	padding: 10px 0;
 	width: 100%;
+    justify-content: center;
 }
 
 .review-inner > *{
@@ -180,13 +181,37 @@ section h1{
 	resize: none;
 }
 
-
-
 .review-inner .writer{
 	font-size: 16px;
 	text-align: left;
 	padding: 10px 0 6px 20px;
+	font-family: var(--font-title);
 }
+
+.review-inner .member,
+.review-inner .edit{
+	display:flex;
+    /* align-items: baseline; */
+    align-items: center;
+}
+
+.review-inner .edit{
+	margin-left: auto;
+    margin-right: 10px;
+}
+
+.review-inner .edit > div{
+	margin: 0 5px; 
+}
+
+.review-inner .edit i{
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.review-inner .edit .fa-edit{color: var(--main);}
+.review-inner .edit .fa-trash-alt,
+.review-inner .edit svg path{color: var(--red-pink);}
 
 .review-inner .box{
 	text-align: left;
@@ -216,6 +241,11 @@ section h1{
 
 .review-inner .container .submit-icon i{
 	color: var(--main-color);
+}
+
+.review-inner .container .regDate{
+    text-align: right;
+    opacity: 0.5;
 }
 
 @media screen and (max-width:768px){

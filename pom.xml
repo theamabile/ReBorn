@@ -12,8 +12,7 @@
 	<artifactId>web</artifactId>
 	<version>1.0</version>
 	<name>ReBornProject</name>
-	<description>Newlecture-web2 Project
- Project</description>
+	<description>Newlecture-web2 Project</description>
 
 	<properties>
 		<java.version>1.8</java.version>

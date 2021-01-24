@@ -217,8 +217,14 @@ public class CareController {
 		
 		if(result == 0)
 			datas.put("result", "fail");
-		else
+		else {
 			datas.put("result", "sussess");
+
+			int size = 10;
+			int page = 1;
+			List<CareReviewView> list = careService.getReviewViewList(page, size, careRegNo);
+			datas.put("reviewList", list);
+		}
 
 		datas.put("careReviewId", cr.getId());
 		

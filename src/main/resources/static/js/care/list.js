@@ -113,7 +113,7 @@ class CareList extends React.Component{
 		        <div className="adoption-center-list-inner">
 		            <ul onClick={this.wishClickHandler.bind(this)}>
 	            		{
-							this.state.list.length != 0
+							this.state.list
 							? this.state.list.map(
 								cv => <li key={cv.careRegNo} data-care-reg-no={cv.careRegNo}>
 				                    <div>
@@ -121,14 +121,32 @@ class CareList extends React.Component{
 				                            <a href={cv.careRegNo}><img src="/images/care/thumb/1d47dc4b58bd0023f49152347e221051_20160513111715_srgxlzpg.jpg" /></a>
 				                        </div>
 				                        <div className="name">
-				                            <div className="bold">{cv.auth ? <i className="fas fa-check"></i> : ``}<a href={cv.careRegNo}>{cv.name}</a></div>
+				                            <div className="bold"><a href={cv.careRegNo}>{cv.name}</a>{cv.auth ? <i className="fas fa-check"></i> : ``}</div>
 				                            <div>{cv.addr}</div>
 				                            <div>{cv.tel}</div>
 				                        </div>
-				                        <div className="current-animals-num">
-				                            <div className="bold">보호중인 동물 수</div>
-				                            <div>{cv.animalCnt}</div>
-				                        </div>
+				                        {
+											//<div className="current-animals-num">
+					                        //    <div className="bold">보호중인 동물 수</div>
+					                        //    <div>{cv.animalCnt}</div>
+					                        //</div>
+										}
+										<div className="score-avg">
+											<div className="star-box position-relative">
+												<div><i className="far fa-star"></i><i className="far fa-star"></i><i className="far fa-star"></i><i className="far fa-star"></i><i className="far fa-star"></i></div>
+												<div style={{width:`${cv.reviewScoreAvg.toFixed(1)/5*100}%`}}><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i></div>
+											</div>
+											{
+											//<div>
+												//[1, 2, 3, 4, 5].map(
+												//	score => Math.round(cv.reviewScoreAvg) >= score 
+												//	?<i key={score} className="fas fa-star"></i> 
+												//	:<i key={score} className="far fa-star"></i>
+												//)
+											//</div>
+											}
+											<div>{cv.reviewScoreAvg.toFixed(1)} ({cv.reviewCnt})</div>
+										</div>
 				                        <div className="wish">
 				                            <div className="pointer">
 				                                {cv.wish ? <i className="fas fa-heart"></i> : <i className="far fa-heart"></i>}

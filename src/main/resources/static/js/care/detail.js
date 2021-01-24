@@ -9,12 +9,10 @@ class CareDetail extends React.Component{
 			reviewList: []
 		}
 		this.review = {
-			title: "",
-			content: "",
+			title: React.createRef(),
+			content: React.createRef(),
 			score: 5,
 		}
-		this.titleInput = React.createRef();
-		this.contentInput =  React.createRef();
 		this.careRegNo = /([0-9]*)$/.exec(window.location.pathname)[0];
 		
 		this.invalidate();
@@ -54,6 +52,34 @@ class CareDetail extends React.Component{
 	
 	reviewSubmitHandler(e){
 		e.preventDefault();
+		
+		// let formData = new FormData();
+		// formData.append("careRegNo", this.careRegNo);
+		// formData.append("title", this.review.title.value);
+		// formData.append("content", this.review.content.value);
+		// formData.append("score", this.review.score);
+		
+		fetch(`/api/care/${this.careRegNo}/review/insert`, {
+			body: `careRegNo=${this.careRegNo}&title=${this.review.title.current.value}&content=${this.review.content.current.value}&score=${this.review.score}`,
+		    headers: {
+		        "Content-Type": "application/x-www-form-urlencoded",
+		    },
+		    method: "POST",
+		})
+		.then((response ) => {
+			return response.json()
+		})
+		.then(({result, reviewList})=>{
+			if( result == "sussess" ){
+				this.reviewFormReset();
+				this.setState({reviewList});
+			}
+		});
+	}
+	
+	reviewFormReset(){
+		this.review.title.current.value = "";
+		this.review.content.current.value = "";
 	}
 	
 	scoreClickHandler(e){
@@ -81,7 +107,7 @@ class CareDetail extends React.Component{
 				finded = true;
 			}
 		}
-		faceIcon.className = scoreToFace(this.review.score);
+		faceIcon.className = this.scoreToFace(this.review.score);
 	}
 	
 	scoreToFace(score){
@@ -100,6 +126,34 @@ class CareDetail extends React.Component{
 				break;
 		}
 		return face;
+	}
+	
+	reviewClickHandler(e){
+		if(e.target.tagName != "I")
+			return;
+			
+		if(e.target.classList.contains("fa-trash-alt")){
+			
+			if(!confirm("삭제하시겠습니까???"))
+				return;
+			
+			let li = e.target.closest('li');
+			if (!li) return; 
+			if (!e.currentTarget.contains(li)) return;
+			
+			let reviewId = li.dataset.reviewId; 
+			if (reviewId == undefined) return;
+			
+			fetch(`/api/care/${this.careRegNo}/review/delete?id=${reviewId}`, {method: "post"})
+			.then((response) => {
+				return response.json()
+			})
+			.then(({result})=>{
+				if( result == "sussess" ){
+					li.remove();
+				}
+			});
+		}
 	}
 	
 	render(){
@@ -177,17 +231,16 @@ class CareDetail extends React.Component{
 		    <section className="review">
 		        <div className="review-inner box-center section-max-width">
 		            <h1>리뷰</h1>
-		            <ul>
+		            <ul onClick={this.reviewClickHandler.bind(this)}>
 		                <li onClick={this.scoreClickHandler.bind(this)}>
 		                    <div className="icon"><i className="far fa-smile"></i></div>
 		                    <div className="container">
-		                        <div className="writer">Lorem ipsum</div>
+		                        <div className="writer">신짱나인 #테스트중</div>
 		                        <div className="box">
 		                            <form method="POST" onSubmit={this.reviewSubmitHandler.bind(this)}>
 		                                <div className="score"><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i></div>
-										<input className="d-none" type="range" name="score" value={this.review.score} min="1" max="5" step="1" onChange={(e)=>{this.review.score = e.target.value}} placeholder="제목"/>
-		                                <div className="title"><input required type="text" name="title" ref={this.titleInput} placeholder="제목"/></div>
-		                                <div className="content"><textarea required placeholder="내용" ref={this.contentInput}></textarea></div>
+		                                <div className="title"><input required type="text" name="title" ref={this.review.title} placeholder="제목"/></div>
+		                                <div className="content"><textarea required ref={this.review.content} placeholder="내용" ></textarea></div>
 		                                <div className="submit-icon"><label htmlFor="review-submit" className="pointer"><i className="fas fa-arrow-alt-circle-down"></i></label></div>
 		                                <input id="review-submit" className="d-none" type="submit" value="전송" />
 		                            </form>
@@ -196,11 +249,22 @@ class CareDetail extends React.Component{
 		                </li>
 		                <li className="line"></li>
 						{
-							this.state.reviewList.map(
-								review => <li key={review.id}>
+							this.state.reviewList.length != 0
+							?this.state.reviewList.map(
+								review => <li key={review.id} data-review-id={review.id}>
 			                    <div className="icon"><i className={this.scoreToFace(review.score)}></i></div>
 			                    <div className="container">
-			                        <div className="writer">{review.nickname}</div>
+			                        <div className="member">
+										<div className="writer">{review.nickname}</div>
+										{
+											review.memberId == 3
+											? <div className="edit">
+												<div><i className="far fa-edit"></i></div>
+												<div><i className="far fa-trash-alt"></i></div>
+											</div>
+											: <div className="edit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style={{width: "18px"}}><path fill="currentColor" d="M128.21,134.94a8,8,0,0,1,9-6.87l15.86,2.13a8,8,0,0,1,6.87,9L135.82,320H400L375,120.06A64,64,0,0,0,311.5,64h-175A64,64,0,0,0,73,120.06L48,320h55.54ZM432,352H16A16,16,0,0,0,0,368v64a16,16,0,0,0,16,16H432a16,16,0,0,0,16-16V368A16,16,0,0,0,432,352Z" ></path></svg></div>
+										}
+									</div>
 			                        <div className="box">
 			                            <div className="title">{review.title}</div>
 			                            <div className="score">
@@ -218,62 +282,8 @@ class CareDetail extends React.Component{
 			                    </div>
 			                </li>
 							)
+							:<li><div className="search-empty">리뷰가 없습니다</div></li>
 						}
-		                <li>
-		                    <div className="icon"><i className="far fa-smile"></i></div>
-		                    <div className="container">
-		                        <div className="writer">Lorem ipsum</div>
-		                        <div className="box">
-		                            <div className="title">Lorem ipsum dolor sit amet</div>
-		                            <div className="score"><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i></div>
-		                            <div className="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing</div>
-		                        </div>
-		                    </div>
-		                </li>
-		                <li>
-		                    <div className="icon"><i className="far fa-smile"></i></div>
-		                    <div className="container">
-		                        <div className="writer">Lorem ipsum</div>
-		                        <div className="box">
-		                            <div className="title">Lorem ipsum dolor sit amet</div>
-		                            <div className="score"><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="far fa-star"></i></div>
-		                            <div className="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing</div>
-		                        </div>
-		                    </div>
-		                </li>
-		                <li>
-		                    <div className="icon"><i className="far fa-meh"></i></div>
-		                    <div className="container">
-		                        <div className="writer">Lorem ipsum</div>
-		                        <div className="box">
-		                            <div className="title">Lorem ipsum dolor sit amet</div>
-		                            <div className="score"><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="far fa-star"></i><i className="far fa-star"></i></div>
-		                            <div className="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing</div>
-		                        </div>
-		                    </div>
-		                </li>
-		                <li>
-		                    <div className="icon"><i className="far fa-meh"></i></div>
-		                    <div className="container">
-		                        <div className="writer">Lorem ipsum</div>
-		                        <div className="box">
-		                            <div className="title">Lorem ipsum dolor sit amet</div>
-		                            <div className="score"><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="far fa-star"></i><i className="far fa-star"></i><i className="far fa-star"></i></div>
-		                            <div className="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing</div>
-		                        </div>
-		                    </div>
-		                </li>
-		                <li>
-		                    <div className="icon"><i className="far fa-frown"></i></div>
-		                    <div className="container">
-		                        <div className="writer">Lorem ipsum</div>
-		                        <div className="box">
-		                            <div className="title">Lorem ipsum dolor sit amet</div>
-		                            <div className="score"><i className="fas fa-star"></i><i className="far fa-star"></i><i className="far fa-star"></i><i className="far fa-star"></i><i className="far fa-star"></i></div>
-		                            <div className="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing</div>
-		                        </div>
-		                    </div>
-		                </li>
 		            </ul>
 		        </div>
 		    </section>
