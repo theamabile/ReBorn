@@ -3,6 +3,7 @@ package com.reborn.web.service.community;
 import java.util.List;
 
 import com.reborn.web.entity.community.Board;
+import com.reborn.web.entity.community.BoardCategory;
 import com.reborn.web.entity.community.BoardView;
 
 public interface BoardService {
@@ -10,6 +11,8 @@ public interface BoardService {
 	int hitUp(int id);
 	BoardView get(int id);
 	int insert(Board board);
+	int insert(BoardCategory category);
+	
 	int update(Board board);
 	int delete(int id);
 	int getLastId();

@@ -88,7 +88,9 @@
                 </div>
                 <div class="write-common pt15">                
                     <div><span class="text-red bold">1</span> / ${pageCount} pages</div>
-                    <input class="button bold" type="button" value="글쓰기">
+                    <form action="">
+                    	<a class="community-button bold" type="button" href="/community/boardReg" >글쓰기 </a>
+                    </form>
                 </div>
             </div> <!-- wrapper -->
             <div class="pager-common mt30">

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.community.BoardDao;
 import com.reborn.web.entity.community.Board;
+import com.reborn.web.entity.community.BoardCategory;
 import com.reborn.web.entity.community.BoardView;
 
 @Service
@@ -62,6 +63,12 @@ public class BoardServiceImp implements BoardService{
 	@Override
 	public int insert(Board board) {
 		return boardDao.insert(board);
+	}
+	
+	@Override
+	public int insert(BoardCategory category) {
+		// TODO Auto-generated method stub
+		return boardDao.insert(category);
 	}
 
 	@Override

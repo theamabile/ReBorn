@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.reborn.web.dao.community.BoardDao;
 import com.reborn.web.entity.community.Board;
+import com.reborn.web.entity.community.BoardCategory;
 import com.reborn.web.entity.community.BoardView;
 @Repository
 public class MyBatisBoardDao implements BoardDao{
@@ -24,6 +25,12 @@ public class MyBatisBoardDao implements BoardDao{
 	@Override
 	public int insert(Board board) {
 		return mapper.insert(board);
+	}
+	
+	@Override
+	public int insert(BoardCategory category) {
+	
+		return mapper.insert(category);
 	}
 
 	@Override

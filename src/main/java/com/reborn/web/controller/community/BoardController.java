@@ -13,24 +13,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.reborn.web.entity.community.Board;
-import com.reborn.web.entity.community.BoardCategory;
 import com.reborn.web.entity.community.BoardView;
+import com.reborn.web.entity.community.Comment;
 import com.reborn.web.service.community.BoardService;
+import com.reborn.web.service.community.CommentService;
 
 @Controller
-@RequestMapping("/community/")
+@RequestMapping("/community")
 public class BoardController {
 	
 	@Autowired
 	private BoardService service;
+	@Autowired
+	private CommentService commentService;
 	
-	@RequestMapping("list")
+	@RequestMapping("boardList")
 	public String list(
 		@RequestParam(name="p", defaultValue ="1") int page,
 		@RequestParam(name="v", defaultValue = "10") int view,		
 		@RequestParam(name="f", defaultValue ="title") String field,
 		@RequestParam(name="q", defaultValue = "") String query, 
-		@RequestParam(name="c", defaultValue = "") String option,
+		@RequestParam(name="c", defaultValue = "", required = false) String option,
 		Model model) {
 		
 		List<BoardView> list = service.getViewList(page, view, field, query, option);
@@ -42,34 +45,57 @@ public class BoardController {
 		model.addAttribute("list", list);
 		model.addAttribute("pageCount", pageCount);
 		
-		return "home.community.list";
+		return "home.community.boardList";
 	}
 	
 	@RequestMapping("{id}")
 	public String detail(Model model, @PathVariable("id") Integer id) {
 		
-		BoardView board = service.get(id);
-		
+		BoardView board = service.get(id);		
 		model.addAttribute("b", board);
 		
+		List<Comment> comment = commentService.getList(id);
+		model.addAttribute("comment", comment);
 		
-		return "home.community.detail";
 		
-	}
-	@GetMapping("reg")
-	public String reg() {
-		
-		return "home.community.reg";
+		return "home.community.boardDetail";		
 	}
 	
-//	@PostMapping("reg")
-//	public String reg(Board board, BoardCategory category, Member member, Principal principal) {
+	@RequestMapping("{id}/del")
+	public String delete(@PathVariable("id") int id) {
+		service.delete(id);
+		
+		return "redirect:../boardList";
+		
+	}
+	
+	
+	@GetMapping("boardReg")
+	public String reg() {
+		
+		
+		return "home.community.boardReg";
+	}
+	
+	@PostMapping("boardReg")
+	public String reg(@RequestParam(name="title") String title,
+			@RequestParam(name="content") String content,
+			@RequestParam(name="category") int category,
+			@RequestParam(name="memberId", defaultValue = "1" ) int member,
+			Principal principal) {
 //		String uid = principal.getName();
 //		int id = Integer.parseInt(uid);
-//		board.setId(id);
-//		
-//		return "redirect:list";
-//	}
+		
+		Board board = new Board();
+		board.setTitle(title);
+		board.setContent(content);
+		board.setBoardCategoryId(category);
+		//멤버ID는 멤버가 주는 값으로 수정해야 함.		
+		board.setMemberId(1);
+		service.insert(board);
+		
+		return "redirect:boardList";
+	}
 	
 	
 	

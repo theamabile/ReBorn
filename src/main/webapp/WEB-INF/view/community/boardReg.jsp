@@ -24,31 +24,32 @@
                 </div>
             </section>
             <section class="wrapper">
-                <div class="category-option mt60">
-                    <select name="" id="">
-                        <option value="question">질문</option>
-                        <option value="post">입양후기</option>
-                        <option value="dog">강아지와함께</option>
-                        <option value="cat">고양이와함께</option>
-                    </select>
-                </div>
-                <form action="post">
-                    <div class="article-title mt30">
-                        <input type="text" name="" id="" placeholder="제목을 입력해주세요.">
-                        
-                    </div>
-                    <div class="article-content mt30">
-                        <textarea name="" id="" cols="30" rows="10">
-
-                        </textarea>
-                    </div>
-                </section>
-                    <div class="article-confirm mt20">
-                        <div>
-                            <input class="reg-button" type="submit" value="완료"></input>
-                        </div>
-                    </div>
+                <form method="post" enctype="multipart/form-data">
+	                <div class="category-option mt60">
+	                    <select name="category" id="">
+	                        <option value="1">질문</option>
+	                        <option value="2">입양후기</option>
+	                        <option value="3">강아지와함께</option>
+	                        <option value="4">고양이와함께</option>
+	                    </select>
+	                </div>
+	                    <div class="article-title mt30">
+	                        <input type="text" name="title" placeholder="제목을 입력해주세요." />
+	                        
+	                    </div><!-- contenteditable="true" -->
+	                    <div class="article-content mt30">
+	                        <textarea class="content-place" name="content"  >
+	
+	                        </textarea>
+	                    </div>
+	                    <div class="article-confirm mt20">
+	                        <div>
+	                            <input class="community-button" type="submit" value="등록" />
+	                           <!--  <a class="reg-button" href="list">취소</a> -->
+	                        </div>
+	                    </div>
                 </form>
+            </section>
 
         </section>
       
