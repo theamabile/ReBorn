@@ -8,4 +8,5 @@ public interface MemberDao {
 
 	int insert(Member member);
 
+//	public MemberVO login(MemberVO vo)  throws Exception;
 }

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="/css/member/info.css" type="text/css" rel="stylesheet" />
+<script src="/js/member/join.js" type="text/javascript"></script>
 
 <section class="main-container">
 	<div class="content join-container">
@@ -12,15 +13,15 @@
 			<div class="form-group">
 				<div class="id-box input-box">
 					<label>아이디<span class="required-text">*</span></label> <input
-						type="text" name="loginId" class="loginId input w400" placeholder="아이디"
-						required  autofocus>
+						type="text" name="loginId" class="loginId input w400" placeholder="영문자로 시작하는 영문자 또는 숫자  6~14자를 입력하세요."
+						pattern="^[A-za-z][A-za-z0-9]{5,13}$" required  autofocus>
 				</div>
 				<div class="pw-box input-box">
-					<label>비밀번호<span class="required-text ">*</span></label> <input class=" input w400"
-						type="password" placeholder="비밀번호" required>
+					<label>비밀번호<span class="required-text ">*</span></label> <input class="pw input w400"
+						type="password" pattern="(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{1,50}).{8,50}$" placeholder="숫자, 영문, 특수문자를 조합한 8자리 이상의 문자를 입력하세요." required>
 				</div>
 				<div class="pw-box input-box">
-					<label>비밀번호 확인<span class="required-text">*</span></label> <input  class=" input w400"
+					<label>비밀번호 확인<span class="required-text">*</span></label> <input  class="pw-conf  input w400"
 						type="password" name="pw" placeholder="비밀번호 확인" required>
 				</div>
 				<div class="input-box">

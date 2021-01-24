@@ -1,6 +1,8 @@
 package com.reborn.web.controller.member;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -8,8 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
 
 	
-	@RequestMapping("login")
-	public String login() {
+	@GetMapping("login")
+	public String login( ) {
+
+	
+		
+		return "member.login";
+	}
+	@PostMapping("login")
+	public String login(String loginId, String pw ) {
+
+		System.out.println(loginId+pw);
 		return "member.login";
 	}
 	
