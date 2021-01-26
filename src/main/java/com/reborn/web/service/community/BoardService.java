@@ -5,6 +5,8 @@ import java.util.List;
 import com.reborn.web.entity.community.Board;
 import com.reborn.web.entity.community.BoardCategory;
 import com.reborn.web.entity.community.BoardView;
+import com.reborn.web.entity.community.Comment;
+import com.reborn.web.entity.community.CommentView;
 
 public interface BoardService {
 	
@@ -23,4 +25,9 @@ public interface BoardService {
 	List<BoardView> getViewList(int page, int size, String field, String query);
 	List<BoardView> getViewList(int page, int size);
 	List<BoardView> getViewList(int page, int view, String field, String query, String option);
+	
+	public int commentInsert(Comment comment);
+	public int commentDelete(int id);
+	int getCommentCount(int id);
+	List<CommentView> getCommentViewList(int id);
 }

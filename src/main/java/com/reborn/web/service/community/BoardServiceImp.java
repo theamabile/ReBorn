@@ -6,14 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.community.BoardDao;
+import com.reborn.web.dao.community.CommentDao;
 import com.reborn.web.entity.community.Board;
 import com.reborn.web.entity.community.BoardCategory;
 import com.reborn.web.entity.community.BoardView;
+import com.reborn.web.entity.community.Comment;
+import com.reborn.web.entity.community.CommentView;
 
 @Service
 public class BoardServiceImp implements BoardService{
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Autowired
+	private CommentDao commentDao;
 	
 	@Override
 	public List<Board> getList(int page, int size, String field, String query) {
@@ -108,7 +114,30 @@ public class BoardServiceImp implements BoardService{
 	public Board getNext(int id) {
 		return boardDao.getnext(id);
 	}
+	@Override
+	public List<CommentView> getCommentViewList(int id) {
+	
+		return commentDao.getViewList(id);
+	}
+	@Override
+	public int commentInsert(Comment comment) {
+		
+		return commentDao.insert(comment);
+		
+	}
+	@Override
+	public int commentDelete(int id) {
 
+		return commentDao.delete(id);
+	}
+		
+	
+	@Override
+	public int getCommentCount(int id) {
+		
+		return commentDao.getCount(id);
+	}
+	
 
 	
 	

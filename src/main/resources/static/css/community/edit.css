@@ -42,7 +42,7 @@
         color: #808080;
     }
 
-    /* 而⑦뀗�듃 蹂몃Ц */
+    /* �뚢뫂�쀯옙�뱜 癰귣챶揆 */
     .article-content{
         text-align: center;
     }
@@ -93,13 +93,55 @@
     .comment-form{
         width: 100%;
     }
+    
+    textarea{
+	    resize:none;
+		outline: 0;
+		border: none;
+    }
+    
+    .article-content{
+ 	   border: 2px 2px 2px 2px solid  black;
+    
+    }
 
-    .comment-form>textarea{
+    .content-place{
         width: 100%;
-        height: 90px;
+        min-height: 200px;
     }
-    .comment-button-box{
-        display: flex;
-        justify-content: space-between;
+    .article-title>input{
+        width: 100%;
+        height: 40px;
+        border: 0;        
+        font-size: 25px;
+        color: rgb(128, 128, 128);
     }
+    .article-title{
+        border-bottom: 1px solid  #cccccc ;
+    }   
+    
+    
+    .transfer-button-box{
+    	display: flex;
+    	justify-content: flex-end;
+    }
+    .edit-save-button{
+    	width: 70px;
+        height: 35px;
+        font-size: 17px;
+        background: #146965;
+        color:white;
+        --box-shadow: 1px 0px 1px 0px rgba(209, 209, 209, 0.1); 
+    }
+    .a-button{
+    	display: inline-block;
+    	width: 70px;
+        height: 35px;
+        font-size: 17px;
+        background: #146965;
+    	color:white;
+    	line-height: 35px;
+    	text-align: center;
+    }
+    
     

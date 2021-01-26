@@ -37,6 +37,14 @@
 .mr10{
     margin-right: 10px;
 }
+
+.ml1{
+	margin-left: 10px;
+}
+.ml2{
+	margin-left: 20px;
+}
+
 /* text - bold */
 .bold{
     font-weight: bold;
@@ -144,4 +152,17 @@ select{
         font-size: 15px;
         color: rgb(121, 121, 121);
         
+    }
+    
+    /*a태그로 감싼 인풋버튼  */
+    .a-button{
+    	display: inline-block;
+    	width: 70px;
+        height: 35px;
+        font-size: 17px;
+        background: #1a7a7e;
+    	color:lavender;
+        box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2); 
+    	line-height: 35px;
+    	text-align: center;
     }

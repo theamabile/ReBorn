@@ -31,8 +31,7 @@
                         <form class="category-align">
                             <fieldset>
                                 <legend class="hidden">카테고리 정렬 필드</legend>
-                                <select class="select-box" name="c" onchange="this.form.submit()">
-                                    <option>카테고리</option>
+                                <select class="select-box select-category" name="c" onchange="this.form.submit()">
                                     <option value="question">질문</option>
                                     <option value="post">입양후기</option>
                                     <option value="dog">우리집 멍이</option>
@@ -43,7 +42,7 @@
                         <form class="view-align">
                             <fieldset>
                                 <legend class="hidden">View 정렬 필드</legend>
-                                <select class="select-box" name="v" onchange="this.form.submit()">
+                                <select class="select-box select-view" name="v" >
                                     <option>보기</option>
                                     <option value="10">10개씩</option>
                                     <option value="15">15개씩</option>
@@ -55,7 +54,7 @@
                 </div>    
                 <div class="list-common mt30">
                     <h2 class="hidden">목록</h2>
-                    <ul>
+                    <ul class="list-data">
                     	<c:forEach var="n" items="${list}">
 	                        <li class="list-article mt20">
 	                            <a class="list-link" href="${n.id}">
@@ -89,13 +88,12 @@
                 <div class="write-common pt15">                
                     <div><span class="text-red bold">1</span> / ${pageCount} pages</div>
                     <form action="">
-                    	<a class="community-button bold" type="button" href="/community/boardReg" >글쓰기 </a>
+                    	<a class="community-button bold" type="button" href="/community/reg" >글쓰기 </a>
                     </form>
                 </div>
             </div> <!-- wrapper -->
             <div class="pager-common mt30">
-                <div class="pager">
-                
+                <div class="pager">                
                 
                     <div class="prev mr15">
                     <c:if test="${startNum > 1}">                    
@@ -146,3 +144,5 @@
                 </div>
             </div>
         </section>
+	
+	<script src="/js/community/list.js"></script>
