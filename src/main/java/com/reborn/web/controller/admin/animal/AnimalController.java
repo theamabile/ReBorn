@@ -1,4 +1,4 @@
-package com.reborn.web.controller.animal;
+package com.reborn.web.controller.admin.animal;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,8 +34,8 @@ import com.reborn.web.service.animal.AnimalKindService;
 import com.reborn.web.service.animal.AnimalService;
 
 /* api를 읽어와서 유기동물 목록을 전시 */
-@Controller
-@RequestMapping("/animal/")
+@Controller("adminAnimalController")
+@RequestMapping("/admin/animal/")
 public class AnimalController {
 	
 	@Autowired
@@ -49,40 +49,34 @@ public class AnimalController {
 	
 	@Value("${animal.apiKey}")
 	private String serviceKey;
-	
+		
 	
 	@RequestMapping("list")
-	public String list(
-			@RequestParam(name="p", defaultValue="1") 	 int page,
-			@RequestParam(name="upkind", required=false) String upkind,		//축종 코드
-			@RequestParam(name="kind", required=false) 	 String kind,		//품종 코드
-			@RequestParam(name="bgnde", required=false)	 Date startDate, 	//유기 시작 날짜
-			@RequestParam(name="endde", required=false)	 Date endDate, 		//유기 종료 날짜
-			@RequestParam(name="neuter", required=false) String neuter
-			, Model model) {
+	public String list() {
 		
-		int size = 10;		
-		List<Animal> list = animalService.getList(page, size, upkind, kind, startDate, endDate, neuter); 
 		
-		int count =	animalService.getCount();
-		
-		int pageCount = (int)Math.ceil(count / (float)size);
-		model.addAttribute("pageCount", pageCount);
-		model.addAttribute("list", list);
-			
-		return "home.animal.list";
+		return "admin.animal.detail";
 	}
 	
-	@RequestMapping("{desertionNo}")
-	public String detail(@PathVariable(name="desertionNo") long no, Model model) {
+	
+	// 관리자 페이지에서 목록을 api의 내용으로 업데이트 하겠다는 내용
+	@RequestMapping("update")
+	public String updateList() {
 		
-		System.out.println("desertionNo : "+no);
-		
-		Animal a = animalService.get(no);
-		
-		model.addAttribute("animal", a);		
-		
-		return "home.animal.detail";
+		animalService.updateListFromAPI(2, 100, "", "", null, null, "");
+		 
+		return "admin.animal.detail";
 	}
+	
+	
+	// 관리자 축종/품종 업데이트용 함수 : api로부터 읽어와서 값을 insert/update 함
+	@RequestMapping("update/kind")
+	public String kind() {
+
+		kindService.updateKindListFromAPI();
+		
+		return "home.animal.list";
+	}
+		
 	
 }
