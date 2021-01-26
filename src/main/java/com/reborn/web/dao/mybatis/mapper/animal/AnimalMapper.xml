@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.reborn.web.dao.animal.AnimalDao">
+
+	<select id="getList" resultType="com.reborn.web.entity.animal.Animal">
+		SELECT * FROM Animal
+	</select>
+
+	
+	<select id="get" resultType="com.reborn.web.entity.animal.Animal">
+		SELECT * FROM Animal
+		WHERE desertionNo = #{desertionNo}
+	</select>
+
+
+	<insert id="insert" parameterType="com.reborn.web.entity.animal.Animal">
+		INSERT INTO Animal (sexCd, noticeNo, kindCd, careAddr, processState 
+							, noticeSdt, noticeEdt, weight, careNm, desertionNo 
+							, careTel, happenPlace, officetel, orgNm, popfile
+							, neuterYn,specialMark,colorCd,happenDt, age)
+      	VALUES(#{sexCd}, #{noticeNo}, #{kindCd}, #{careAddr}, #{processState}, 
+      			#{noticeSdt}, #{noticeEdt}, #{weight} ,#{careNm}, #{desertionNo},
+      			#{careTel}, #{happenPlace}, #{officetel}, #{orgNm}, #{popfile},#{neuterYn}, 
+      			#{specialMark}, #{colorCd}, #{happenDt}, #{age})
+	</insert>
+	
+	
+	<update id="update" parameterType="com.reborn.web.entity.animal.Animal">
+		UPDATE Animal SET sexCd = #{sexCd}, noticeNo = #{noticeNo}, kindCd = #{kindCd}, careAddr = #{careAddr}, processState = #{processState} 
+						, noticeSdt = #{noticeSdt}, noticeEdt = #{noticeEdt}, weight = #{weight}, careNm = #{careNm}, desertionNo = #{desertionNo} 
+						, careTel = #{careTel}, happenPlace = #{happenPlace}, officetel = #{officetel}, orgNm = #{orgNm}, popfile = #{popfile}
+						, neuterYn = #{neuterYn}, specialMark = #{specialMark}, colorCd = #{colorCd}, happenDt = #{happenDt}, age = #{age})
+		WHERE desertionNo = #{desertionNo}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM Animal
+		WHERE desertionNo = #{desertionNo}
+	</delete>
+	
+	<delete id="getCount">
+		SELECT count(desertionNo) FROM Animal
+	</delete>
+	
+	<select id="getByDesertionNo" resultType="com.reborn.web.entity.animal.Animal">
+		SELECT * FROM Animal
+		where desertionNo = #{desertionNo}
+	</select>
+	
+</mapper>

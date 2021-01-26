@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.reborn.web.dao.name.VoteDao">
+
+	<select id="getList" resultType="com.reborn.web.entity.name.Vote">
+		SELECT * FROM Vote
+		<where>
+			<if test="param3 != null and param3 != ''">
+				BINARY ${param3} LIKE '%${param4}%'
+			</if>
+		</where>
+		ORDER BY recruitStartDate
+		LIMIT #{param2} OFFSET #{param1}
+	</select>
+	
+	<!-- &gt; - >  / &lt;- < -->
+	<!-- 진행중인 유효한 투표 조건 
+		1. 이름 수가 1개 이상이여야함.
+		2. voteEndDate가 현재 날짜보다 같거나 커야함
+	 -->
+	<select id="getViewList" resultType="com.reborn.web.entity.name.VoteView">
+		SELECT * FROM VoteView
+		WHERE
+			nameCnt > 0 				<!-- 이름이 1개 이상이여야함.(신고로 인해서 지워질 수도 있으니 조건 처리) -->
+			AND sysdate() &lt;= date(voteEndDate)
+			<if test="param5 != null and param5 != ''">
+				AND BINARY ${param5} LIKE '%${param6}%'
+			</if>
+		ORDER BY ${param3} ${param4}
+		LIMIT #{param2} OFFSET #{param1}
+	</select>
+
+	<!-- <if test="param3 != null and param3 != ''">
+				ORDER BY #{param3} #{param4}
+			</if> -->
+	<select id="getCount" resultType="int">
+		SELECT count(id) FROM VoteView
+		where
+			nameCnt > 0 				<!-- 이름이 1개 이상이여야함.(신고로 인해서 지워질 수도 있으니 조건 처리) -->
+			AND sysdate() &lt;= date(voteEndDate)
+		<if test="param1 != null and param1 != ''">
+	      	BINARY ${param1} like '%${param2}%'
+	    </if> 
+	</select>
+
+</mapper>
