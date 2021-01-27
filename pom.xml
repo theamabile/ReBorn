@@ -11,6 +11,7 @@
 	<groupId>com.reborn</groupId>
 	<artifactId>web</artifactId>
 	<version>1.0</version>
+	<packaging>war</packaging>
 	<name>ReBornProject</name>
 	<description>Newlecture-web2 Project</description>
 
