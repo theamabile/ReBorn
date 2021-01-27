@@ -5,10 +5,11 @@ class CareList extends React.Component{
 		
 		this.state = {
 			list: [],
+			careCount: 0,
 			pageCount: 0
 		}
 		
-		this.page = getParameter("p");
+		this.page = getParameter("p") || 1;
 		this.field = "name";
 		this.query = getParameter("q");
 		this.range = 5;
@@ -16,27 +17,39 @@ class CareList extends React.Component{
       	this.queryInput = React.createRef();
 
 		this.invalidate();
+			
+		window.onpopstate = (e)=>{
+			console.log("onpopstate=====================================");
+			console.log(JSON.stringify(e.state));
+			console.log(e);
+			this.page = e.state?.p || 1;
+			this.field = e.state?.f || "name";
+			this.query = e.state?.q || "";
+			this.queryInput.current.value = this.query;
+			this.invalidate();
+			
+		}
 	}
 	
 	invalidate(){
-		console.log("fetch");
-		
 		fetch(`/api/care/list?p=${this.page}&f=${this.field}&q=${this.query}`)
 		.then((response ) => {
-			return response.json()
+			return response.json();
 		})
-		.then(({list, pageCount})=>{
-			this.setState({list, pageCount});
-			
+		.then(({list, pageCount, careCount})=>{
 			this.startNum = this.page - ((this.page - 1) % this.range);
+			this.setState({list, pageCount, careCount});
 		});
+		
 	}
 	
 	searchHandler(e){
 		if( e.currentTarget.classList.contains("search-icon")){
 			this.page = 1;
 			this.query = this.queryInput.current.value;
+			history.pushState({p: this.page, f: this.field, q: this.query}, "", `?p=${this.page}&f=${this.field}&q=${this.query}`);
 			this.invalidate();
+			
 			return;
 		}
 			
@@ -44,6 +57,7 @@ class CareList extends React.Component{
 			if( e.keyCode == 13 || e.key == "Enter" ){
 				this.page = 1;
 				this.query = this.queryInput.current.value;
+				history.pushState({p: this.page, f: this.field, q: this.query}, "", `?p=${this.page}&f=${this.field}&q=${this.query}`);
 				this.invalidate();
 			}
 		}
@@ -90,6 +104,18 @@ class CareList extends React.Component{
 		);
 	}
 	
+	pagerHandler(e){
+		if( e.target.tagName == "A" ){
+			e.preventDefault();
+			
+			this.page = e.target.dataset.page;
+			history.pushState({p: this.page, f: this.field, q: this.query}, "", `?p=${this.page}&f=${this.field}&q=${this.query}`);
+			this.invalidate();
+			window.scrollTo(0, 0);
+		}
+			
+	}
+	
 	render(){
 		console.log("render");
 		return <section>
@@ -104,7 +130,7 @@ class CareList extends React.Component{
 		                        <path d="M508.5 481.6l-129-129c-2.3-2.3-5.3-3.5-8.5-3.5h-10.3C395 312 416 262.5 416 208 416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c54.5 0 104-21 141.1-55.2V371c0 3.2 1.3 6.2 3.5 8.5l129 129c4.7 4.7 12.3 4.7 17 0l9.9-9.9c4.7-4.7 4.7-12.3 0-17zM208 384c-97.3 0-176-78.7-176-176S110.7 32 208 32s176 78.7 176 176-78.7 176-176 176z"></path>
 		                    </svg>
 		                </div>
-		                <div className="search-input"><input ref={this.queryInput} onKeyPress={this.searchHandler.bind(this)} className="input-reset" name="adoption-center" placeholder="보호소 이름" /></div>
+		                <div className="search-input"><input defaultValue={this.query} ref={this.queryInput} onKeyPress={this.searchHandler.bind(this)} className="input-reset" name="adoption-center" placeholder="보호소 이름" /></div>
 		            </div>
 		        </div>
 		    </section>
@@ -160,6 +186,43 @@ class CareList extends React.Component{
 		            </ul>
 		        </div>
 		    </section>
+
+            <div className="pager-common mt30">
+                <div className="pager" onClick={this.pagerHandler.bind(this)}>
+                
+                    <div className="prev mr15">
+
+					{
+						this.startNum > 1
+						? <a className="btn btn-prev" data-page={`${parseInt(this.startNum) - this.range}`} href={`?p=${parseInt(this.startNum) - this.range}&f=${this.field}&q=${this.query}`}>이전</a>
+						: <span className="btn btn-prev" onClick={()=>{new ModalBox({content:"이 페이지가 없습니다.", cancelBtnHide: true})}}>이전</span>
+					}   
+                        
+                    </div>
+                    <ul className="btn-center">
+
+					{
+						[0, 1, 2, 3, 4].map(
+							i => 
+							this.startNum + i <= this.state.pageCount  
+							?<li key={i} className={i + this.startNum == this.page ? "current" : ""}>
+								<a className="bold " data-page={`${parseInt(this.startNum) + i}`} href={`?p=${parseInt(this.startNum) + i}&f=${this.field}&q=${this.query}`}>{i+this.startNum}</a>
+							</li>
+							:""
+						)
+					}
+                    </ul>
+                    
+                    <div className="next mr15">
+					{
+						this.startNum + 5 <= this.state.pageCount
+						? <a className="btn btn-next" data-page={`${parseInt(this.startNum) + this.range}`} href={`?p=${parseInt(this.startNum) + this.range}&f=${this.field}&q=${this.query}`}>다음</a>
+						: <span className="btn btn-next" onClick={()=>{new ModalBox({content:"다음 페이지가 없습니다.", cancelBtnHide: true})}}>다음 </span>
+					}
+					</div>
+                </div>
+				<div className="pager-info">검색된 보호소 수: {this.state.careCount}, 페이지 수: {this.state.pageCount}</div>
+            </div>
 		</section>; 
 	}
 }

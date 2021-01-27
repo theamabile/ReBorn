@@ -249,6 +249,9 @@ class CareDetail extends React.Component{
 							content.innerText = modalContent;
 							li.querySelector(".icon i").className = this.scoreToFace(modalScore);
 							
+							li.classList.remove("highlight");
+							setTimeout(()=>{li.classList.add("highlight")})
+							
 						}else {
 							new ModalBox({
 								content: `변경에 실패하였습니다.`,
@@ -265,7 +268,8 @@ class CareDetail extends React.Component{
 		if(e.target.classList.contains("fa-trash-alt")){
 			
 			let modalBox =  new ModalBox({
-				content: `리뷰를 삭제하겠습니까??`
+				content: `리뷰를 삭제하겠습니까??`,
+				okBtnBackgroundColor: "var(--red-pink)"
 			});
 			
 			// 담아놓지 않으면 promise 기다리는 동안 currentTarget이 삭제된다.
@@ -274,7 +278,7 @@ class CareDetail extends React.Component{
 			modalBox
 			.then(
 				resolve => {
-					console.log(resolve.result)
+					// console.log(resolve.result)
 					if(resolve.result != "ok")
 						return;
 					
@@ -392,7 +396,7 @@ class CareDetail extends React.Component{
 		                <ul>
 		                    {
 		                        this.state.animalInfoList.length == 0
-		                        ? <li style={{flexGrow: 1, fontSize: "3vw"}} className="search-empty"> 테스트중 com.reborn.web.controller.api.care.CareController list()부 주석 풀기<br /> 보호중인 동물 없습니다</li>
+		                        ? <li style={{flexGrow: 1, fontSize: "3vw"}} className="search-empty"> 테스트중 com.reborn.web.controller.api.care.CareController list()부분 주석 풀기<br /> 보호중인 동물 없습니다</li>
 		                        : this.state.animalInfoList.map(
 		                            animal => <li key={animal.noticeNo}><div><img src={animal.popfile} alt={animal.noticeNo} /></div><div>{animal.noticeNo}</div></li>
 		                        )

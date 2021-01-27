@@ -74,17 +74,18 @@ public class CareController {
 		
 		// DATA LOAD ==================================================
 		List<CareView> careList = careService.getViewList(page, size, field, query);
-		int count = careService.getCount(field, query);
+		int careCount = careService.getCount(field, query);
 		
 		// WISH LOAD ==================================================
 		if( !careList.isEmpty() && memberId != 0)
 			careService.getWishedList(careList);
 		
-		int pageCount = (int)Math.ceil( count / (float)size );
+		int pageCount = (int)Math.ceil( careCount / (float)size );
 
 		datas.put("list", careList);
 		datas.put("currentPage", page);
 		datas.put("pageCount", pageCount);
+		datas.put("careCount", careCount);
 		
 		return datas;
 	}
