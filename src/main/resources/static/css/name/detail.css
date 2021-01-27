@@ -1,0 +1,171 @@
+@charset "UTF-8";
+
+.img-section {
+    width: 100%;
+    height: 600px;
+    position: relative;        
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+    .img-section > .background-img {
+        width: 100%;
+        height: 600px;          /* 겹치게 하려면 absolute로 해야하는데 absolute면 부모의 크기 값을 할 수 없음(100% 불가)*/ 
+        position: absolute;
+        background: center / cover no-repeat url('/images/animal1.png');
+        filter: blur(6px); 
+        box-sizing: content-box;
+        transform: scale(1.1);     /* 테두리도 흐려져서 키운다음 부모에서 overflow hidden 해야함*/
+        z-index: -1;
+    }
+    
+    .img-section .circle-img {
+        --position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 300px;
+        background: center / cover no-repeat url('/images/animal1.png');
+        margin: auto;
+    }
+    
+     .img-section .summary {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 30px;
+    }	
+    	.img-section .summary > *{
+        	color: var(--bg);
+    		margin-bottom: 10px; 
+    	}
+    	
+    	.img-section .summary > *:nth-child(1){
+    		font-size: 40px;
+    		font-weight: bold;
+    	}
+    	
+    	.img-section .summary > *:nth-child(3){
+    		font-size: 20px;
+    		font-weight: bold;
+    	}
+    	
+
+
+
+
+.info-box {
+	--width: 80%;
+	--background: lightgreen;
+	--margin: auto;
+}
+
+	.info-box table {
+		width: 100%;
+	}
+		.info-box table *{
+			text-align: center;
+			height: 50px;
+		}
+			
+		.info-box table th{
+			font-weight: bold;
+			width: 15%;
+		}
+		
+		.info-box table td{
+			width: 35%;
+		}
+		
+		
+		
+.vote {
+	width: 90%;
+	--background: lightyellow;
+	margin: 100px auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+	.vote .vote-info {
+		width: inherit;
+		display: flex;
+		justify-content: space-between;
+		font-size: 12px;
+		color: var(--light-text);
+	}
+	
+	.vote .report-btn {		
+		width: inherit;
+		background:transparent;
+		outline: none;
+		border: none;
+		margin-top: 10px;
+	}
+	
+	.vote .vote-btn {
+		width: inherit;
+	}
+
+	.vote .vote-box{
+		width: inherit;
+		--background: lightskyblue;
+		padding: 20px;
+	} 
+		.vote-box .vote-item {
+			width: 100%; 
+			height: 60px;
+			border: 1px solid var(--border);
+			border-radius: 10px;
+			background: white;
+			
+			display: flex;
+			align-items: center;
+			
+			margin-bottom: 10px; 
+		}
+			.vote-box .vote-item:last-child{
+				margin-bottom: 0px; 
+			}
+			
+			.vote-box .vote-item > *{
+				margin: 0px 10px;
+			}
+			
+			.vote-box .vote-item .name {
+				font-size: 30px;
+				font-weight: bold;
+				margin-left: 20px;
+			}
+			
+	   		.vote-box .vote-item .vote-item-content {
+	   			flex-grow: 1;
+	   			flex-shrink: 1;
+	   			display: flex;
+	   			flex-direction: column;
+	   		}
+	   			.vote-box .vote-item .vote-item-content :nth-child(1){
+	   				color: var(--light-text);
+	   			}
+	   			
+	   			.vote-box .vote-item .vote-item-content :nth-child(2){
+	   				color: var(--point-text);
+	   				font-weight: bold;
+	   			}
+	   		
+	   		.vote-box .vote-item .vote-radio {
+	   			width: 40px;
+	   			height: 40px
+	   		}
+   		
+   		
+   		
+   		
+   		
+   		
+   		
+   		
+   		

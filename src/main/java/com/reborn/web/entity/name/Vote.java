@@ -4,13 +4,14 @@ import java.sql.Date;
 
 public class Vote {
 	private int id;
+	private String animalId;
+	private int memberId;
+	private int resultId; 
 	private Date recruitStartDate;
 	private Date recruitEndDate;
 	private Date voteStartDate;
 	private Date voteEndDate;
 	private String state;
-	private int resultId; 
-	private int memberId;
 	
 	public int getId() {
 		return id;
@@ -19,7 +20,31 @@ public class Vote {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public String getAnimalId() {
+		return animalId;
+	}
+
+	public void setAnimalId(String animalId) {
+		this.animalId = animalId;
+	}
+		
+	public int getMemberId() {
+		return memberId;
+	}
 	
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
+	
+	public int getResultId() {
+		return resultId;
+	}
+	
+	public void setResultId(int resultId) {
+		this.resultId = resultId;
+	}	
+
 	public Date getRecruitStartDate() {
 		return recruitStartDate;
 	}
@@ -59,21 +84,12 @@ public class Vote {
 	public void setState(String state) {
 		this.state = state;
 	}
-	
-	public int getResultId() {
-		return resultId;
-	}
-	
-	public void setResultId(int resultId) {
-		this.resultId = resultId;
-	}
-	
-	public int getMemberId() {
-		return memberId;
-	}
-	
-	public void setMemberId(int memberId) {
-		this.memberId = memberId;
+
+	@Override
+	public String toString() {
+		return "Vote [id=" + id + ", animalId=" + animalId + ", memberId=" + memberId + ", resultId=" + resultId
+				+ ", recruitStartDate=" + recruitStartDate + ", recruitEndDate=" + recruitEndDate + ", voteStartDate="
+				+ voteStartDate + ", voteEndDate=" + voteEndDate + ", state=" + state + "]";
 	}
 	
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.reborn.web.dao.animal.AnimalKindDao">
+
+	<select id="getList" resultType="com.reborn.web.entity.animal.AnimalKind">
+		SELECT * FROM AnimalKind
+	</select>
+
+	<insert id="insert" parameterType="com.reborn.web.entity.animal.AnimalKind">
+		INSERT INTO AnimalKind(code, upKindCode, name)
+      	VALUES(#{code}, #{upKindCode}, #{name})
+	</insert>
+	
+	<update id="update" parameterType="com.reborn.web.entity.animal.AnimalKind">
+		UPDATE AnimalKind SET upKindCode=#{upKindCode}, name=#{name}, code=#{code}
+		WHERE code = #{code}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM AnimalKind 
+		WHERE code = #{code}
+	</delete>
+	
+	<select id="getKindListByUpKindCode" resultType="com.reborn.web.entity.animal.AnimalKind">
+		SELECT * FROM AnimalKind
+		WHERE upKindCode = #{upKindCode}
+	</select>
+	
+	
+	
+</mapper>
