@@ -99,44 +99,45 @@ public class CareController {
 		reviewList = careService.getReviewViewList(1, size, careRegNo);
 		
 		
-		// API 보호동물들 가져오
+		// API 보호동물들 가져오기
 		List<AnimalEntityTemp> animalInfoList = new ArrayList<>();
-		try {
-			StringBuilder urlBuilder = new StringBuilder(animalListUrl);
+//		try {
+//			StringBuilder urlBuilder = new StringBuilder(animalListUrl);
+//		
+//			int getSize = 100;
+//			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + animalApiKey);
+//			urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + getSize);
+//			urlBuilder.append("&" + URLEncoder.encode("care_reg_no","UTF-8") + "=" + careRegNo);
+//			urlBuilder.append("&" + URLEncoder.encode("state","UTF-8") + "=" + "protect");
+//			
+//			// URL로 GET 요청 보냄
+//			Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+//			                                       .parse(urlBuilder.toString());
+//			XPath xpath = XPathFactory.newInstance().newXPath();
+//
+//			// 받은걸로 데이터 추출
+//	        NodeList itemNodes = (NodeList)xpath.evaluate("//body/items/item", document, XPathConstants.NODESET);
+//	        for( int i = 0; i < itemNodes.getLength(); i++ ){
+//	            XPathExpression noticeNoExpression = xpath.compile("noticeNo");
+//	            XPathExpression popfileExpression = xpath.compile("popfile");
+//	            
+//				Node noticeNoNode = (Node) noticeNoExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
+//				Node popfileNode = (Node) popfileExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
+//				
+//				String noticeNo = noticeNoNode.getTextContent();
+//				String popfile = popfileNode.getTextContent();
+//				
+//				AnimalEntityTemp aet = new AnimalEntityTemp();
+//				aet.setNoticeNo(noticeNo);
+//				aet.setPopfile(popfile);
+//				
+//				animalInfoList.add(aet);
+//	        }
+//			
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
 		
-			int getSize = 100;
-			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + animalApiKey);
-			urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + getSize);
-			urlBuilder.append("&" + URLEncoder.encode("care_reg_no","UTF-8") + "=" + careRegNo);
-			urlBuilder.append("&" + URLEncoder.encode("state","UTF-8") + "=" + "protect");
-			
-			// URL로 GET 요청 보냄
-			Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-			                                       .parse(urlBuilder.toString());
-			XPath xpath = XPathFactory.newInstance().newXPath();
-
-			// 받은걸로 데이터 추출
-	        NodeList itemNodes = (NodeList)xpath.evaluate("//body/items/item", document, XPathConstants.NODESET);
-	        for( int i = 0; i < itemNodes.getLength(); i++ ){
-	            XPathExpression noticeNoExpression = xpath.compile("noticeNo");
-	            XPathExpression popfileExpression = xpath.compile("popfile");
-	            
-				Node noticeNoNode = (Node) noticeNoExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
-				Node popfileNode = (Node) popfileExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
-				
-				String noticeNo = noticeNoNode.getTextContent();
-				String popfile = popfileNode.getTextContent();
-				
-				AnimalEntityTemp aet = new AnimalEntityTemp();
-				aet.setNoticeNo(noticeNo);
-				aet.setPopfile(popfile);
-				
-				animalInfoList.add(aet);
-	        }
-			
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
 //		System.out.println(animalInfoList);
 		datas.put("care", care);
 		datas.put("reviewList", reviewList);
@@ -145,8 +146,9 @@ public class CareController {
 		return datas;
 	}
 	
-	@PostMapping("wish")
-	public Map<String, Object> wish(String careRegNo, Boolean wish){
+	@PostMapping("{careRegNo}/wish/insert")
+	public Map<String, Object> wishInsert(
+			@PathVariable("careRegNo") String careRegNo){
 		Map<String, Object> datas = new HashMap<>();
 		
 		if(memberId == 0) {
@@ -159,17 +161,39 @@ public class CareController {
 		cw.setCareRegNo(careRegNo);
 		cw.setMemberId(memberId);
 		
-		int result = 0;
-		if( wish ) {
-			result = careService.insertWish(cw);
-		} else {
-			result = careService.deleteWish(cw);
-		}
+		int result = careService.insertWish(cw);
 		
 		if(result == 0)
 			datas.put("result", "fail");
 		else
-			datas.put("result", "sussess");
+			datas.put("result", "success");
+		
+		datas.put("careRegNo", cw.getCareRegNo());
+		
+		return datas;
+	}
+
+	@PostMapping("{careRegNo}/wish/delete")
+	public Map<String, Object> wishDelete(
+			@PathVariable("careRegNo") String careRegNo){
+		Map<String, Object> datas = new HashMap<>();
+		
+		if(memberId == 0) {
+			datas.put("result", "fail");
+			return datas;
+		}
+		
+		CareWish cw = new CareWish();
+		
+		cw.setCareRegNo(careRegNo);
+		cw.setMemberId(memberId);
+		
+		int result = careService.deleteWish(cw);
+		
+		if(result == 0)
+			datas.put("result", "fail");
+		else
+			datas.put("result", "success");
 		
 		datas.put("careRegNo", cw.getCareRegNo());
 		
@@ -218,7 +242,7 @@ public class CareController {
 		if(result == 0)
 			datas.put("result", "fail");
 		else {
-			datas.put("result", "sussess");
+			datas.put("result", "success");
 
 			int size = 10;
 			int page = 1;
@@ -231,9 +255,10 @@ public class CareController {
 		return datas;
 	}
 
-	@PostMapping("{careRegNo}/review/update")
-	public Map<String, Object> reviewUpdate(
-			int id, String title, String content, int score){
+	@PostMapping("{careRegNo}/review/{reviewId}/edit")
+	public Map<String, Object> reviewEdit(
+			@PathVariable("reviewId") int reviewId,
+			String title, String content, int score){
 		Map<String, Object> datas = new HashMap<>();
 		int result = 0;
 
@@ -242,7 +267,7 @@ public class CareController {
 			return datas;
 		}
 
-		CareReview origin = careService.getReview(id);
+		CareReview origin = careService.getReview(reviewId);
 		
 		origin.setTitle(title);
 		origin.setContent(content);
@@ -252,16 +277,18 @@ public class CareController {
 		
 		if(result == 0)
 			datas.put("result", "fail");
-		else
-			datas.put("result", "sussess");
+		else {
+			datas.put("result", "success");
+			datas.put("review", origin);
+		}
 		
-		datas.put("careReviewId", origin.getId());
 		
 		return datas;
 	}
 
-	@PostMapping("{careRegNo}/review/delete")
-	public Map<String, Object> reviewDelete(int id){
+	@PostMapping("{careRegNo}/review/{reviewId}/delete")
+	public Map<String, Object> reviewDelete(
+			@PathVariable("reviewId") int reviewId){
 		Map<String, Object> datas = new HashMap<>();
 		int result = 0;
 		
@@ -270,12 +297,12 @@ public class CareController {
 			return datas;
 		}
 		
-		result = careService.deleteReview(id);
+		result = careService.deleteReview(reviewId);
 		
 		if(result == 0)
 			datas.put("result", "fail");
 		else
-			datas.put("result", "sussess");
+			datas.put("result", "success");
 		
 		return datas;
 	}

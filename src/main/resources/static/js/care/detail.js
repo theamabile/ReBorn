@@ -1,3 +1,13 @@
+
+
+//import ModalBox from "/js/modules/ModalBox.js";
+//console.log(ModalBox);
+
+//(async ()=>{
+//    const {ModalBox} = await import("/js/modules/ModalBox.js");
+//    console.log(ModalBox);
+//})();
+
 class CareDetail extends React.Component{
 	
 	constructor(){
@@ -6,16 +16,29 @@ class CareDetail extends React.Component{
 		this.state = {
 			care: {},
 			animalInfoList: [],
-			reviewList: []
+			reviewList: [],
+			review: {
+				faceIcon: "far fa-smile",
+				score: 5,
+				title: "",
+				content: ""
+			}
 		}
 		this.review = {
-			title: React.createRef(),
-			content: React.createRef(),
+			faceIcon: "far fa-smile",
 			score: 5,
+			title: React.createRef(),
+			content: React.createRef()
 		}
 		this.careRegNo = /([0-9]*)$/.exec(window.location.pathname)[0];
 		
 		this.invalidate();
+		
+	}
+	
+	componentDidMount(){
+		
+		
 	}
 	
 	invalidate(){
@@ -46,9 +69,6 @@ class CareDetail extends React.Component{
 		});
 	}
 	
-	componentDidMount(){
-		
-	}
 	
 	reviewSubmitHandler(e){
 		e.preventDefault();
@@ -60,7 +80,7 @@ class CareDetail extends React.Component{
 		// formData.append("score", this.review.score);
 		
 		fetch(`/api/care/${this.careRegNo}/review/insert`, {
-			body: `careRegNo=${this.careRegNo}&title=${this.review.title.current.value}&content=${this.review.content.current.value}&score=${this.review.score}`,
+			body: `title=${this.review.title.current.value}&content=${this.review.content.current.value}&score=${this.review.score}`,
 		    headers: {
 		        "Content-Type": "application/x-www-form-urlencoded",
 		    },
@@ -70,7 +90,7 @@ class CareDetail extends React.Component{
 			return response.json()
 		})
 		.then(({result, reviewList})=>{
-			if( result == "sussess" ){
+			if( result == "success" ){
 				this.reviewFormReset();
 				this.setState({reviewList});
 			}
@@ -91,7 +111,7 @@ class CareDetail extends React.Component{
 		let finded = false;
 		this.review.score = 0;
 		
-		let faceIcon = li.firstElementChild.firstElementChild;
+		// let faceIcon = li.firstElementChild.firstElementChild;
 		
 		for(let i = 0; i < 5; i++){
 			scoreBox.children[i].classList.remove("fas", "far");
@@ -107,7 +127,14 @@ class CareDetail extends React.Component{
 				finded = true;
 			}
 		}
-		faceIcon.className = this.scoreToFace(this.review.score);
+		
+		let faceIcon = this.scoreToFace(this.review.score);
+		
+		let review = this.state.review;
+		
+		review.faceIcon = faceIcon
+		
+		this.setState({review});
 	}
 	
 	scoreToFace(score){
@@ -132,28 +159,190 @@ class CareDetail extends React.Component{
 		if(e.target.tagName != "I")
 			return;
 			
-		if(e.target.classList.contains("fa-trash-alt")){
-			
-			if(!confirm("삭제하시겠습니까???"))
-				return;
+		if(e.target.classList.contains("fa-edit")){
 			
 			let li = e.target.closest('li');
 			if (!li) return; 
 			if (!e.currentTarget.contains(li)) return;
+			if (li.dataset.reviewId == undefined) return;
 			
-			let reviewId = li.dataset.reviewId; 
-			if (reviewId == undefined) return;
+			let reviewId = li.dataset.reviewId;
+			let contentNode = document.createElement("div");
 			
-			fetch(`/api/care/${this.careRegNo}/review/delete?id=${reviewId}`, {method: "post"})
-			.then((response) => {
-				return response.json()
-			})
-			.then(({result})=>{
-				if( result == "sussess" ){
-					li.remove();
+			let score = li.querySelector(".box .score");
+			let title = li.querySelector(".box .title");
+			let content = li.querySelector(".box .content");
+			
+			contentNode.classList.add("review-edit");
+			contentNode.dataset.reviewId = reviewId;
+			
+			let insertHtml = `<div class="box">
+					<form method="POST">
+						<div class="score">${score.innerHTML}</div>
+						<div class="title"><input required="" type="text" name="title" value="${title.innerText}" placeholder="제목"></div>
+						<div class="content"><textarea required="" placeholder="내용">${content.innerText}</textarea></div>
+					</form>
+				</div>`;
+				
+			contentNode.insertAdjacentHTML("beforeend", insertHtml);
+			
+			contentNode.addEventListener("click", (e)=>{
+				// 별 클릭하면
+				if( e.target.tagName == "I" && e.target.classList.contains("fa-star")){
+					let scoreBox = e.target.closest('div.score');
+					if (!scoreBox) return; 
+					if (!e.currentTarget.contains(scoreBox)) return;
+					
+					let finded = false;
+					for(let i = 0; i < 5; i++){
+						scoreBox.children[i].classList.remove("fas", "far");
+			
+						if( finded )
+							scoreBox.children[i].classList.add("far");
+						else
+							scoreBox.children[i].classList.add("fas");
+			
+						if( scoreBox.children[i] === e.target )
+							finded = true;
+					}
 				}
+				
 			});
+			
+			
+			// 모달창 띄우기 ====================================================== 
+			let modalBox =  new ModalBox({
+				content: contentNode,
+				contentPadding: false,
+				okBtnText: "편집",
+				removeOnBackgroundClick: false
+//				footerHide: true
+			});
+			
+			modalBox
+			.then(
+				resolve => {
+					//resolve.instance.close();
+					if(resolve.result != "ok")
+						return;
+						
+						
+					let modalTitle = resolve.instance.contentNode.querySelector(".title input").value;
+					let modalContent = resolve.instance.contentNode.querySelector(".content textarea").value;
+					let modalScore = resolve.instance.contentNode.querySelectorAll("form .score i.fas").length;
+					fetch(`/api/care/${this.careRegNo}/review/${reviewId}/edit`, {
+						body: `title=${modalTitle}&content=${modalContent}&score=${modalScore}`,
+					    headers: {
+					        "Content-Type": "application/x-www-form-urlencoded",
+					    },
+					    method: "POST",
+					})
+					.then((response ) => {
+						return response.json()
+					})
+					.then(({result, review})=>{
+						if( result == "success" ){
+							console.log(review);
+							
+							score.innerHTML = resolve.instance.contentNode.querySelector("form .score").innerHTML;
+							title.innerText = modalTitle;
+							content.innerText = modalContent;
+							li.querySelector(".icon i").className = this.scoreToFace(modalScore);
+							
+						}else {
+							new ModalBox({
+								content: `변경에 실패하였습니다.`,
+								cancelBtnHide: true,
+								okBtnBackgroundColor: "var(--red-pink)"
+							});	
+						}
+					});
+				}
+			)
+			return;
 		}
+		
+		if(e.target.classList.contains("fa-trash-alt")){
+			
+			let modalBox =  new ModalBox({
+				content: `리뷰를 삭제하겠습니까??`
+			});
+			
+			// 담아놓지 않으면 promise 기다리는 동안 currentTarget이 삭제된다.
+			let { target, currentTarget } = e;
+			
+			modalBox
+			.then(
+				resolve => {
+					console.log(resolve.result)
+					if(resolve.result != "ok")
+						return;
+					
+					let li = target.closest('li');
+					if (!li) return; 
+					if (!currentTarget.contains(li)) return;
+					
+					let reviewId = li.dataset.reviewId; 
+					if (reviewId == undefined) return;
+					
+					fetch(`/api/care/${this.careRegNo}/review/${reviewId}/delete`, {method: "post"})
+					.then((response) => {
+						return response.json()
+					})
+					.then(({result})=>{
+						if( result == "success" ){
+							
+							let {reviewList} = this.state;
+							
+							reviewList = reviewList.filter( 
+								review => review.id != reviewId 
+							);
+							
+							this.setState({reviewList});
+							
+							return "삭제되었습니다";
+						} 
+						else if( result == "fail"){
+							return "실패하였습니다";
+						}
+					})
+					.then(message =>{
+						new ModalBox({
+							content: message,
+							cancelBtnHide: true,
+							okBtnBackgroundColor: message == "실패하였습니다" ? "var(--red-pink)" : ""
+						});
+					});
+					
+				}
+			)
+		}
+	}
+	
+	reviewMouseOverHandler(e){
+		let li = e.target.closest('li');
+		if (!li) return; 
+		if (!e.currentTarget.contains(li)) return;
+		
+		if( li.dataset.reviewId == undefined )
+			return;
+			
+		let editNode = li.querySelector(".member .edit");
+		
+		editNode.classList.remove("d-none");
+	}
+	
+	reviewMouseOutHandler(e){
+		let li = e.target.closest('li');
+		if (!li) return; 
+		if (!e.currentTarget.contains(li)) return;
+		
+		if( li.dataset.reviewId == undefined )
+			return;
+		
+		let editNode = li.querySelector(".member .edit");
+		
+		editNode.classList.add("d-none");
 	}
 	
 	render(){
@@ -203,7 +392,7 @@ class CareDetail extends React.Component{
 		                <ul>
 		                    {
 		                        this.state.animalInfoList.length == 0
-		                        ? <li style={{flexGrow: 1, fontSize: "6vw"}} className="search-empty">보호중인 동물 없습니다</li>
+		                        ? <li style={{flexGrow: 1, fontSize: "3vw"}} className="search-empty"> 테스트중 com.reborn.web.controller.api.care.CareController list()부 주석 풀기<br /> 보호중인 동물 없습니다</li>
 		                        : this.state.animalInfoList.map(
 		                            animal => <li key={animal.noticeNo}><div><img src={animal.popfile} alt={animal.noticeNo} /></div><div>{animal.noticeNo}</div></li>
 		                        )
@@ -231,9 +420,9 @@ class CareDetail extends React.Component{
 		    <section className="review">
 		        <div className="review-inner box-center section-max-width">
 		            <h1>리뷰</h1>
-		            <ul onClick={this.reviewClickHandler.bind(this)}>
+		            <ul onClick={this.reviewClickHandler.bind(this)} onMouseOver={this.reviewMouseOverHandler.bind(this)} onMouseOut={this.reviewMouseOutHandler.bind(this)}>
 		                <li onClick={this.scoreClickHandler.bind(this)}>
-		                    <div className="icon"><i className="far fa-smile"></i></div>
+		                    <div className="icon"><i className={this.state.review.faceIcon}></i></div>
 		                    <div className="container">
 		                        <div className="writer">신짱나인 #테스트중</div>
 		                        <div className="box">
@@ -257,12 +446,15 @@ class CareDetail extends React.Component{
 			                        <div className="member">
 										<div className="writer">{review.nickname}</div>
 										{
+											//! 아이디 불러오기 ==========================================================================
+											//! 아이디 불러오기 ==========================================================================
+											//! 아이디 불러오기 ==========================================================================
 											review.memberId == 3
-											? <div className="edit">
+											? <div className="edit d-none">
 												<div><i className="far fa-edit"></i></div>
 												<div><i className="far fa-trash-alt"></i></div>
 											</div>
-											: <div className="edit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style={{width: "18px"}}><path fill="currentColor" d="M128.21,134.94a8,8,0,0,1,9-6.87l15.86,2.13a8,8,0,0,1,6.87,9L135.82,320H400L375,120.06A64,64,0,0,0,311.5,64h-175A64,64,0,0,0,73,120.06L48,320h55.54ZM432,352H16A16,16,0,0,0,0,368v64a16,16,0,0,0,16,16H432a16,16,0,0,0,16-16V368A16,16,0,0,0,432,352Z" ></path></svg></div>
+											: <div className="edit d-none"><div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style={{width: "18px"}}><path fill="currentColor" d="M128.21,134.94a8,8,0,0,1,9-6.87l15.86,2.13a8,8,0,0,1,6.87,9L135.82,320H400L375,120.06A64,64,0,0,0,311.5,64h-175A64,64,0,0,0,73,120.06L48,320h55.54ZM432,352H16A16,16,0,0,0,0,368v64a16,16,0,0,0,16,16H432a16,16,0,0,0,16-16V368A16,16,0,0,0,432,352Z" ></path></svg></div></div>
 										}
 									</div>
 			                        <div className="box">

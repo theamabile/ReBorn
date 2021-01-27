@@ -62,29 +62,28 @@ class CareList extends React.Component{
 		
 		// 채워진 하트
 		if( e.target.classList.contains("fas")){
-			this.postCareWish({careRegNo, wish: false})
+			this.postCareWish({careRegNo, action: "delete"})
 			.then(({result, careRegNo}) => {
-				if(result == "sussess"){
+				if(result == "success"){
 					e.target.className = "far fa-heart";
 					countElement.innerText = parseInt(countElement.innerText) - 1;
 				} 
 			});
 		} // 안 체워진 하트 
 		else if( e.target.classList.contains("far") ){
-			this.postCareWish({careRegNo, wish: true})
+			this.postCareWish({careRegNo, action: "insert"})
 			.then(({result, careRegNo}) => {
-				if(result == "sussess"){
+				if(result == "success"){
 					e.target.className = "fas fa-heart";
 					countElement.innerText = parseInt(countElement.innerText) + 1;
 				}
 			});
 		}
-		console.log();
 	}
 	
-	postCareWish({careRegNo, wish}){
+	postCareWish({careRegNo, action}){
 		return (
-			fetch(`/api/care/wish?careRegNo=${careRegNo}&wish=${wish}`, { method: "POST" })
+			fetch(`/api/care/${careRegNo}/wish/${action}`, { method: "POST" })
 			.then((response) => {
 				return response.json();	
 			})

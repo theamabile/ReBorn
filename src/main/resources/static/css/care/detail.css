@@ -159,12 +159,10 @@ section h1{
 	flex-grow: 1;
 }
 
-.review-inner .container form .score i{
-	cursor: pointer;
-}
-
-.review-inner .container input,
-.review-inner .container textarea{
+.review-inner .container input[type="text"],
+.review-inner .container textarea,
+.modal .review-edit input[type="text"],
+.modal .review-edit textarea{
 	width: 100%;
 	padding: 10px;
 	border: 0;
@@ -175,7 +173,8 @@ section h1{
     outline: none;
 }
 
-.review-inner .container textarea{
+.review-inner .container textarea,
+.modal .review-edit textarea{
 	height: 120px;
 	margin-top: 10px;
 	resize: none;
@@ -204,7 +203,8 @@ section h1{
 	margin: 0 5px; 
 }
 
-.review-inner .edit i{
+.review-inner .edit i,
+.review-inner .edit svg{
 	font-size: 18px;
 	cursor: pointer;
 }
@@ -213,7 +213,8 @@ section h1{
 .review-inner .edit .fa-trash-alt,
 .review-inner .edit svg path{color: var(--red-pink);}
 
-.review-inner .box{
+.review-inner .box,
+.modal .review-edit .box{
 	text-align: left;
 	padding: 20px;
 	border-radius: 20px;
@@ -222,16 +223,19 @@ section h1{
 	box-sizing: border-box;
 }
 
-.review-inner .container .title{
+.review-inner .container .title,
+.modal .review-edit .box .title{
 	font-family: var(--font-title);
 	font-weight: bold;
 	font-size: 24px;
 }
 
-.review-inner .container .score i{
+.review-inner .container .score i,
+.modal .review-edit .box .score i{
 	color: var(--main-color);
 	font-size: 20px;
 	margin: 5px 0 16px;
+	cursor: pointer;
 }
 
 
@@ -246,6 +250,39 @@ section h1{
 .review-inner .container .regDate{
     text-align: right;
     opacity: 0.5;
+}
+
+
+.modal .review-edit .box{
+	border-radius: 0;
+	min-width: 300px;
+}
+
+.modal .review-edit .btn-container{
+	display: flex;
+	height: 32px;
+    margin-top: 10px;
+	border-radius: 12px;
+	overflow: hidden;
+	background: var(--background-color);
+}
+
+
+.modal .review-edit .btn-inner{
+	flex: 0 0 50%;
+}
+
+.modal .review-edit .btn-container input{
+	width: 100%;
+	height: 100%;
+	border: 0;
+	outline: none;
+	cursor: pointer;
+}
+
+.modal .review-edit .btn-container .submit-btn{
+	background-color: var(--main);
+	color: #ffffff;
 }
 
 @media screen and (max-width:768px){
