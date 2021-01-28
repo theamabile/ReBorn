@@ -7,6 +7,7 @@
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script src="/js/member/login.js" type="text/javascript"></script>
 
 <section class="login">
 	<div class="logo"></div>
@@ -26,7 +27,7 @@
 				<a href="find-id">아이디 찾기</a>/ <a href="find-pw">비밀번호 재설정</a>
 			</div>
 			<nav class="button-nav">
-				<input class="sign-in button" type="submit" value="sign in">  
+				<input class="sign-in button able" type="submit" value="sign in">  
 				<input id="kakao-login-btn" class="button" type="button">
 			</nav>
 			<div class="join-nav">

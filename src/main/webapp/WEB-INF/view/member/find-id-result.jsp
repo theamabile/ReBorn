@@ -8,7 +8,7 @@
 		<div class="users input-icon">
 			<i class="fas fa-users"></i>
 		</div>
-		<input type="text" class="name input" placeholder="이름"> <input
-			type="button" value="sign up" class="button">
+		<input type="text" class="loginId input" placeholder="아이디" value="${param.loginId}" readonly><a href="./login"> <input
+			type="button" value="sign up" class="button able"></a>
 	</div>
 </section>

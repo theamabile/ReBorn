@@ -1,4 +1,3 @@
-
 window.addEventListener("load", () => {
 	const container = document.querySelector(".container");
 	const btnNav = container.querySelector(".button-nav");
@@ -9,8 +8,6 @@ window.addEventListener("load", () => {
 	const idReg = /^[A-za-z][A-za-z0-9]{5,13}$/;
 	const pwReg = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{1,50}).{8,50}$/;
 
-
-	;
 	id.oninput = () => {
 		// 아이디 검사
 		let span = `<span class ="alert">아이디는 영문자로 시작하는 6~14자 영문자 또는 숫자입니다.</span>`;
@@ -22,11 +19,12 @@ window.addEventListener("load", () => {
 			return;
 		}
 		else if (idReg.test(id.value) && id.nextElementSibling.tagName == "SPAN") {
-			console.log(id.nextElementSibling)
+	
 			id.nextElementSibling.remove();
 			id.style["margin-bottom"] = "20px";
 		}
 	};
+	
 	// 비밀번호 검사
 	password.oninput = () => {
 		if (!pwReg.test(password.value) && password.nextElementSibling.tagName != "SPAN") {
@@ -40,10 +38,8 @@ window.addEventListener("load", () => {
 			console.log(password.nextElementSibling)
 			password.nextElementSibling.remove();
 			password.style["margin-bottom"] = "20px";
-
 		}
 	}
-
 
 	//로그인버튼
 	loginBtn.addEventListener("click", (e) => {
@@ -52,11 +48,8 @@ window.addEventListener("load", () => {
 			alert("아이디와 비밀번호를 확인해주세요.");
 			return;
 		}
-
 	});
-
 });
-
 
 //카카오 로그인
 window.addEventListener("load", () => {
@@ -72,5 +65,4 @@ window.addEventListener("load", () => {
 			alert(JSON.stringify(err));
 		}
 	});
-
 })

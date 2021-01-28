@@ -7,7 +7,7 @@
             <div class="users input-icon">
             <i class="fas fa-users"></i>
             </div>
-            <input type="text" class="id input" placeholder="아이디">
+            <input type="text" class="id input" placeholder="아이디" value="${param.loginId}" readonly>
             <div class="key input-icon">
                 <i class="fas fa-key"></i>
             </div>
@@ -16,6 +16,6 @@
                 <i class="fas fa-key"></i>
             </div>
             <input type="text" class="password input"placeholder="패스워드 확인">
-            <input type="button" value="확인" class="button sing-btn">
+            <input type="button" value="확인" class="button sing-btn disabled">
         </div>
     </section>

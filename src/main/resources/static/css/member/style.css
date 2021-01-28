@@ -1,0 +1,26 @@
+input:focus {outline:none;}
+ 
+.align-r{   
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+
+}
+.align-l{
+    align-items: center;
+    display: flex;
+}
+.btn-s{
+    padding: 0px 8px;
+    border-radius: 8px;
+    height: 30px;
+    border: none;
+    color: white;
+}
+.able{
+    background: rgba(33, 97, 99, 0.8);
+}
+
+ .disabled{
+    background: rgb(150 172 173 / 80%);
+ }
