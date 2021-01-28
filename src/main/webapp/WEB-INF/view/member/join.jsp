@@ -8,13 +8,12 @@
 	<div class="content join-container">
 
 		<h3 class="title">회원 가입</h3>
-		<form action="join" name="member" method="post" class="joinForm"
-			enctype="multipart/form-data">
+		<form action="join" name="member" method="post" class="joinForm">
 			<div class="form-group">
 				<div class="id-box input-box">
 					<label>아이디<span class="required-text">*</span></label> <input
 						type="text" name="loginId" class="loginId input w400" placeholder="영문자로 시작하는 영문자 또는 숫자  6~14자를 입력하세요."
-						pattern="^[A-za-z][A-za-z0-9]{5,13}$" required  autofocus>
+						pattern="^[A-za-z][A-za-z0-9]{5,13}$" required >
 				</div>
 				<div class="pw-box input-box">
 					<label>비밀번호<span class="required-text ">*</span></label> <input class="pw input w400"
@@ -68,7 +67,7 @@
 					<div class="radio-group align-l w400">
 						<input type="radio" value="man" name="gender" class="radio-item"> 남자</input>
 						<input type="radio" value="girl" name="gender" class="radio-item"> 여자</input>
-						<input type="radio" value="none" name="gender" class="radio-item"> 선택안함</input>
+						<input type="radio" value="none" name="gender" class="radio-item" checked="checked"> 선택안함</input>
 					</div>
 				</div>
 
@@ -89,18 +88,18 @@
 
 				<div class="input-box">
 					<label>휴대전화<span class="required-text">*</span></label> <input
-						type="text" name="phone" class="input w400" pattern="01[016789]\d{3,4}\d{4}"
+						type="text" name="phone" class="phone input w400" pattern="01[016789]\d{3,4}\d{4}"
 						placeholder="01012341234" required>
 				</div>
 				<div class="align-r">
-					<input type="text" class="phoneConfirm input"> <input class=" btn-s"
+					<input type="text" class="phoneConfirm input"> <input class=" btn-s able confirm-btn"
 						type="button" value="인증번호 발송">
 				</div>
 
 
 			<div class="button-area ">
 				<input type="submit" value="회원가입"
-					class="submit-button btn-s ">
+					class="disabled submit-button  btn-s">
 			</div>
 
 			</div>

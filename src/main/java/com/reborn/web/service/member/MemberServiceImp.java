@@ -1,10 +1,17 @@
 package com.reborn.web.service.member;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reborn.web.dao.member.MemberDao;
 import com.reborn.web.entity.member.Member;
 
@@ -38,6 +45,44 @@ public class MemberServiceImp implements MemberService{
 		String pw = m.getPw();
 		
 		return pw;
+	}
+
+	@Override
+	public void checkId(String loginId, HttpServletResponse response) throws Exception {
+		PrintWriter out = response.getWriter();
+		out.println(memberDao.checkId(loginId));
+		out.close();
+	}
+
+	@Override
+	public void checkEmail(String email, HttpServletResponse response) throws Exception {
+		PrintWriter out = response.getWriter();
+		out.println(memberDao.checkEmail(email));
+		out.close();
+	}
+
+	//이메일, 이름으로 회원확인하고 로그인 아이디 리턴
+	@Override
+	public void checkMember(String email,String name, HttpServletResponse response) throws Exception {
+		PrintWriter out = response.getWriter();
+
+		Member m = memberDao.getMember(email,name);
+		JSONObject memberInfo = new JSONObject();
+		if(m!=null) {
+		memberInfo.put("loginId",m.getLoginId());
+		}
+		else {
+			memberInfo.put("loginId",null);
+		}
+		out.println(memberInfo);
+		out.close();
+	}
+
+	@Override
+	public void checkMember(String loginId, String name, String phone, HttpServletResponse response) throws IOException {
+		PrintWriter out = response.getWriter();
+		out.println(memberDao.checkMemberPhone(loginId,name,phone));
+		out.close();
 	}
 
 }

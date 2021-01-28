@@ -2,6 +2,7 @@ package com.reborn.web.entity.member;
 
 import java.util.Date;
 
+
 public class Member {
 	   private int id;
 	   private String loginId;

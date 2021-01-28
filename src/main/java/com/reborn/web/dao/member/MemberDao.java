@@ -8,5 +8,10 @@ public interface MemberDao {
 
 	int insert(Member member);
 
-//	public MemberVO login(MemberVO vo)  throws Exception;
+	int checkId(String loginId);
+	int checkEmail(String Email);
+	int  checkMemberPhone(String loginId, String name, String phone);
+	
+	Member getMember(String email, String name);
+
 }
