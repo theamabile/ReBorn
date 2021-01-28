@@ -36,7 +36,6 @@
 			<if test="param3 != null and !param3.equals('')">
 				BINARY ${param3} LIKE '%${param4}%'
 			</if>
-			
 		</where>
 		ORDER BY (CASE 
  			WHEN ASCII(SUBSTRING(name,1)) BETWEEN 48 AND 57 THEN 3

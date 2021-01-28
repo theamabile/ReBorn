@@ -12,8 +12,8 @@ public interface CareWishDao {
 	
 	List<CareWish> getCareListByMemberId(int memberId, List<CareView> list);
 	
-	Care insert(int memberId, CareWish cw);
+	int insert(CareWish cw);
 //	Care update(int memberId, Care care);
-	Care delete(int memberId, String careRegNo);
+	int delete(int memberId, String careRegNo);
 	
 }
