@@ -7,38 +7,58 @@
 
 	<insert id="insert">
 		insert into Member
-				(loginId,name,gender,pw,nickname,birthDay,phone,email,authorityId)
-				values(#{loginId},#{name},#{gender},#{pw},#{nickname},#{birthDay},#{phone},#{email},2);
+		(loginId,name,gender,pw,nickname,birthDay,phone,email,authorityId)
+		values(#{loginId},#{name},#{gender},#{pw},#{nickname},#{birthDay},#{phone},#{email},2);
 	</insert>
-	
-	<select id="get" resultType="com.reborn.web.entity.member.Member">
-	    select * from Member
-		where  loginId =#{loginId}
-	</select>
-	
-	<!-- 이메일로 멤버 가져오기검사 -->
-	<select id="getMember" resultType="com.reborn.web.entity.member.Member">
-		select  * from Member where email = #{email} and name = #{name}
-	</select>
-	
-		
 
-	
+	<select id="get"
+		resultType="com.reborn.web.entity.member.Member">
+		select * from Member
+		where loginId =#{loginId}
+	</select>
+
+	<!-- 이메일로 멤버 가져오기검사 -->
+	<select id="getMember"
+		resultType="com.reborn.web.entity.member.Member">
+		select * from Member where email = #{email} and name =
+		#{name}
+	</select>
+
+
 	<!-- 아이디 중복 검사 -->
 	<select id="checkId" parameterType="String" resultType="int">
-	select count(*) from Member where loginid =#{loginId}
+		select count(*) from Member where loginid =#{loginId}
 	</select>
-	
+
 	<!-- 이메일 중복 검사 -->
 	<select id="checkEmail" parameterType="String" resultType="int">
 		select count(*) from Member where email = #{email}
 	</select>
-	
-		<!-- 이메일로 멤버 가져오기검사 -->
-	<select id="checkMemberPhone" parameterType="String" resultType="int">
-		select  count(*) from Member where loginId = #{loginId} and name = #{name} and phone = #{phone}
-	</select>
-	
 
+	<!-- 이메일로 멤버 가져오기검사 -->
+	<select id="checkMemberPhone" parameterType="String"
+		resultType="int">
+		select count(*) from Member where loginId = #{loginId} and
+		name = #{name} and phone = #{phone}
+	</select>
+
+	<update id="update">
+
+		update Member
+			set
+				loginId=#{loginId},
+				name=#{name},
+				gender=#{gender},
+				pw=#{pw},
+				regDate=#{regDate},
+				nickname=#{nickname},
+				birthDay=#{birthDay},
+				phone=#{phone},
+				email=#{email},
+				outDate=#{outDate},
+				authorityId=#{authorityId}
+			where id=#{id};
+
+	</update>
 
 </mapper>

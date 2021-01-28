@@ -20,4 +20,6 @@ public interface MemberService {
 
 	void checkMember(String loginId, String name, String phone, HttpServletResponse response) throws IOException;
 
+	int updatePw(String loginId, String password);
+
 }

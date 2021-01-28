@@ -25,12 +25,11 @@ public class MemberController {
 		return "member.login";
 	}
 	
-	@PostMapping("login")
-	public String login(String loginId, String pw ) {
-
-		System.out.println(loginId+pw);
-		return "member.login";
-	}
+	/*
+	 * @PostMapping("login") public String login(String loginId, String pw ) {
+	 * 
+	 * System.out.println(loginId+pw); return "member.login"; }
+	 */
 	
 	@RequestMapping("find-id")
 	public String findId() {
@@ -48,9 +47,17 @@ public class MemberController {
 		return "member.find-pw";
 	}
 	
-	@RequestMapping("find-pw-result")
+	@RequestMapping("reset-pw")
 	public String findPwResult(@RequestParam(value = "loginId") String loginId) {
-		return "member.find-pw-result";
+		return "member.reset-pw";
+	}
+	
+	//패스워드 재설정
+	@PostMapping("update-pw")
+	public String update(String loginId,String password ) {
+
+		service.updatePw(loginId,password);
+		return "redirect:./login";
 	}
 	
 	//휴대전화 인증 

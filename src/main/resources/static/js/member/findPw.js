@@ -26,7 +26,6 @@ window.addEventListener("load", () => {
 
 
 	//아이디 확인
-	const idReg = /^[A-za-z][A-za-z0-9]{5,13}$/;
 	let idInput = section.querySelector(".id-input");
 	let id;
 	idInput.addEventListener("focusout", () => {
@@ -52,7 +51,7 @@ window.addEventListener("load", () => {
 					result.classList.add("d-none");
 					idConf = false;
 					console.log(json);
-					form.action = "./find-pw-result?loginId=" + id;
+					form.action = "./reset-pw?loginId=" + id;
 				}
 			});
 	})

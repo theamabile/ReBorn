@@ -11,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reborn.web.dao.member.MemberDao;
 import com.reborn.web.entity.member.Member;
 
@@ -85,4 +84,16 @@ public class MemberServiceImp implements MemberService{
 		out.close();
 	}
 
+	@Override
+	public int updatePw(String loginId, String password) {
+		
+		Member m= memberDao.get(loginId);
+		String encodePassword = passwordEncoder.encode(password);
+		m.setPw(encodePassword); 
+		
+		System.out.println("생년월일"+m.getBirthDay());
+		
+		return memberDao.update(m);
+		
+	}
 }

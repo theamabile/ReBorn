@@ -25,7 +25,6 @@ public class MyBatisMemberDao implements MemberDao {
 		return mapper.get(loginId);
 	}
 
-
 	@Override
 	public int insert(Member member) {
 
@@ -44,7 +43,6 @@ public class MyBatisMemberDao implements MemberDao {
 		return  mapper.checkEmail(Email);
 	}
 
-
 	@Override
 	public Member getMember(String email, String name) {
 		// TODO Auto-generated method stub
@@ -57,4 +55,9 @@ public class MyBatisMemberDao implements MemberDao {
 		return mapper.checkMemberPhone(loginId,name, phone);
 	}
 
+	@Override
+	public int update(Member m) {
+		// TODO Auto-generated method stub
+		return mapper.update(m);
+	}
 }
