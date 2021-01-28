@@ -1,35 +1,35 @@
 package com.reborn.web.entity.animal;
 
 public class AnimalKind {
-	private String code;
-	private String upKindCode;
+	private String cd;
+	private String upKindCd;
 	private String name;
 	
 	public AnimalKind() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public AnimalKind(String code, String upKindCode, String name) {
+	public AnimalKind(String cd, String upKindCd, String name) {
 		super();
-		this.code = code;
-		this.upKindCode = upKindCode;
+		this.cd = cd;
+		this.upKindCd = upKindCd;
 		this.name = name;
 	}
 
-	public String getCode() {
-		return code;
+	public String getCd() {
+		return cd;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setCd(String cd) {
+		this.cd = cd;
 	}
 
-	public String getUpKindCode() {
-		return upKindCode;
+	public String getUpKindCd() {
+		return upKindCd;
 	}
 
-	public void setUpKindCode(String upKindCode) {
-		this.upKindCode = upKindCode;
+	public void setUpKindCd(String upKindCd) {
+		this.upKindCd = upKindCd;
 	}
 
 	public String getName() {
@@ -42,7 +42,7 @@ public class AnimalKind {
 
 	@Override
 	public String toString() {
-		return "AnimalKind [code=" + code + ", upKindCode=" + upKindCode + ", name=" + name + "]";
+		return "AnimalKind [cd=" + cd + ", upKindCd=" + upKindCd + ", name=" + name + "]";
 	}
 	
 }

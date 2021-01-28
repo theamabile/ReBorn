@@ -9,18 +9,18 @@
 	</select>
 
 	<insert id="insert" parameterType="com.reborn.web.entity.animal.AnimalUpKind">
-		INSERT INTO AnimalUpKind(code, name)
-      	VALUES(#{code}, #{name})
+		INSERT INTO AnimalUpKind(cd, name)
+      	VALUES(#{cd}, #{name})
 	</insert>
 	
 	<delete id="delete">
 		DELETE FROM AnimalUpKind 
-		WHERE id = #{id}
+		WHERE cd = #{cd}
 	</delete>
 		
-	<select id="getUpKindByCode" resultType="com.reborn.web.entity.animal.AnimalUpKind">
+	<select id="get" resultType="com.reborn.web.entity.animal.AnimalUpKind">
 		SELECT * FROM AnimalUpKind
-		WHERE code = #{code}
+		WHERE ${param1} = #{param2}
 	</select>
 	
 </mapper>

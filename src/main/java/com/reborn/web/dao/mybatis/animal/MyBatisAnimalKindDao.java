@@ -34,15 +34,15 @@ public class MyBatisAnimalKindDao implements AnimalKindDao{
 	}
 
 	@Override
-	public int delete(int id) {
+	public int delete(String cd) {
 		// TODO Auto-generated method stub
-		return mapper.delete(id);
+		return mapper.delete(cd);
 	}
 
 	@Override
-	public AnimalKind get(int id) {
+	public AnimalKind get(String field, String query) {
 		// TODO Auto-generated method stub
-		return mapper.get(id);
+		return mapper.get(field, query);
 	}
 
 	@Override
@@ -52,15 +52,15 @@ public class MyBatisAnimalKindDao implements AnimalKindDao{
 	}
 
 	@Override
-	public AnimalKind getKindByCode(String code) {
+	public List<AnimalKind> getKindListByUpKindCd(String upKindCd) {
 		// TODO Auto-generated method stub
-		return mapper.getKindByCode(code);
+		return mapper.getKindListByUpKindCd(upKindCd);
 	}
 
 	@Override
-	public List<AnimalKind> getKindListByUpKindCode(String upKindCode) {
+	public AnimalKind getLastCustomKind() {
 		// TODO Auto-generated method stub
-		return mapper.getKindListByUpKindCode(upKindCode);
+		return mapper.getLastCustomKind();
 	}
 	
 }

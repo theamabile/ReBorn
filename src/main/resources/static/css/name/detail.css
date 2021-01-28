@@ -112,7 +112,11 @@
 
 	.vote .vote-box{
 		width: inherit;
-		--background: lightskyblue;
+		min-height: 250px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
 		padding: 20px;
 	} 
 		.vote-box .vote-item {
@@ -160,11 +164,7 @@
 	   			width: 40px;
 	   			height: 40px
 	   		}
-   		
-   		
-   		
-   		
-   		
+   		   		
    		
    		
    		

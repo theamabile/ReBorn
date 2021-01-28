@@ -4,16 +4,18 @@ import java.sql.Date;
 
 // DB의 Animal 테이블과 매핑 되는 Animal 엔티티
 public class Animal {
+	private long desertionNo;
 	private String sexCd;
 	private String noticeNo;
 	private String kindCd;
+	private String upKindCd;
+	private String careRegNo;
 	private String careAddr;
 	private String processState;
 	private Date noticeSdt;
 	private Date noticeEdt;
 	private String weight;
 	private String careNm;
-	private long desertionNo;
 	private String careTel;
 	private String happenPlace;
 	private String officetel;
@@ -24,67 +26,31 @@ public class Animal {
 	private String colorCd;
 	private Date happenDt;
 	private String age;
-	
-	// 못불러오는 경우가 있어서 제외
-	//String chargeNm;
-	
-	public Animal() {
-		// TODO Auto-generated constructor stub
+		
+	public long getDesertionNo() {
+		return desertionNo;
 	}
-	
-//	public Animal(AnimalAPI apiAnimal) {
-//		// TODO Auto-generated constructor stub
-//		this.sexCd = apiAnimal.getSexCd();
-//		this.noticeNo = apiAnimal.getNoticeNo();
-//		this.kindId = apiAnimal.getKindId();
-//		this.careAddr = apiAnimal.getCareAddr();
-//		this.processState = apiAnimal.getProcessState();
-//		this.noticeSdt = apiAnimal.getNoticeSdt();
-//		this.weight = apiAnimal.getWeight();
-//		this.careNm = apiAnimal.getCareNm();
-//		this.desertionNo = apiAnimal.getDesertionNo();
-//		this.careTel = apiAnimal.getCareTel();
-//		this.happenPlace = apiAnimal.getHappenPlace();
-//		this.officetel = apiAnimal.getOfficetel();
-//		this.orgNm = apiAnimal.getOrgNm();
-//		this.popfile = apiAnimal.getPopfile();
-//		this.noticeEdt = apiAnimal.getNoticeEdt();
-//		this.neuterYn = apiAnimal.getNeuterYn();
-//		this.specialMark = apiAnimal.getSpecialMark();
-//		this.colorCd = apiAnimal.getColorCd();
-//		this.happenDt = apiAnimal.getHappenDt();
-//		this.age = apiAnimal.getAge();
-//	}
-	
-	
-	public Animal(String sexCd, String noticeNo, String kindCd, String careAddr, String processState, Date noticeSdt,
-			Date noticeEdt, String weight, String careNm, long desertionNo, String careTel, String happenPlace,
-			String officetel, String orgNm, String popfile, String neuterYn, String specialMark, String colorCd,
-			Date happenDt, String age) {
-		super();
-		this.sexCd = sexCd;
-		this.noticeNo = noticeNo;
-		this.kindCd = kindCd;
-		this.careAddr = careAddr;
-		this.processState = processState;
-		this.noticeSdt = noticeSdt;
-		this.noticeEdt = noticeEdt;
-		this.weight = weight;
-		this.careNm = careNm;
+	public void setDesertionNo(long desertionNo) {
 		this.desertionNo = desertionNo;
-		this.careTel = careTel;
-		this.happenPlace = happenPlace;
-		this.officetel = officetel;
-		this.orgNm = orgNm;
-		this.popfile = popfile;
-		this.neuterYn = neuterYn;
-		this.specialMark = specialMark;
-		this.colorCd = colorCd;
-		this.happenDt = happenDt;
-		this.age = age;
 	}
-	
-	
+	public String getKindCd() {
+		return kindCd;
+	}	
+	public void setKindCd(String kindCd) {
+		this.kindCd = kindCd;
+	}	
+	public String getUpKindCd() {
+		return upKindCd;
+	}
+	public void setUpKindCd(String upKindCd) {
+		this.upKindCd = upKindCd;
+	}			
+	public String getCareRegNo() {
+		return careRegNo;
+	}
+	public void setCareRegNo(String careRegNo) {
+		this.careRegNo = careRegNo;
+	}
 	public String getSexCd() {
 		return sexCd;
 	}
@@ -97,12 +63,6 @@ public class Animal {
 	public void setNoticeNo(String noticeNo) {
 		this.noticeNo = noticeNo;
 	}	
-	public String getKindCd() {
-		return kindCd;
-	}
-	public void setKindCd(String kindCd) {
-		this.kindCd = kindCd;
-	}
 	public String getCareAddr() {
 		return careAddr;
 	}
@@ -132,12 +92,6 @@ public class Animal {
 	}
 	public void setCareNm(String careNm) {
 		this.careNm = careNm;
-	}
-	public long getDesertionNo() {
-		return desertionNo;
-	}
-	public void setDesertionNo(long desertionNo) {
-		this.desertionNo = desertionNo;
 	}
 	public String getCareTel() {
 		return careTel;
@@ -205,5 +159,5 @@ public class Animal {
 	public void setAge(String age) {
 		this.age = age;
 	}
-	
+
 }

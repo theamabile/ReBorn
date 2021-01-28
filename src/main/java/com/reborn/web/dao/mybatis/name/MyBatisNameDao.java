@@ -35,21 +35,15 @@ public class MyBatisNameDao implements NameDao{
 	}
 
 	@Override
-	public int delete(int id) {
+	public int delete(long animalId, String name) {
 		// TODO Auto-generated method stub
-		return mapper.delete(id);
-	}
+		return mapper.delete(animalId, name);
+	}	
 
 	@Override
-	public int deleteAll(int[] ids) {
+	public Name get(long animalId, String name) {
 		// TODO Auto-generated method stub
-		return mapper.deleteAll(ids);
-	}
-
-	@Override
-	public Name get(int id) {
-		// TODO Auto-generated method stub
-		return mapper.get(id);
+		return mapper.get(animalId, name);
 	}
 
 	@Override
@@ -77,9 +71,8 @@ public class MyBatisNameDao implements NameDao{
 	}
 
 	@Override
-	public List<NameView> getViewListByVoteId(int voteId, int size) {
+	public List<NameView> getViewListByAnimalId(long animalId, int size) {
 		// TODO Auto-generated method stub
-		return mapper.getViewListByVoteId(voteId, size);
+		return mapper.getViewListByAnimalId(animalId, size);
 	}
-	
 }
