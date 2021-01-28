@@ -33,10 +33,16 @@
 	                        <option value="4">고양이와함께</option>
 	                    </select>
 	                </div>
+	                <!-- 제목 입력부분 -->
 	                    <div class="article-title mt30">
-	                        <input type="text" name="title" placeholder="제목을 입력해주세요." />
-	                        
+	                        <input type="text" name="title" placeholder="제목을 입력해주세요." />	                        
 	                    </div><!-- contenteditable="true" -->
+	                 <!-- 파일첨부 -->   
+	                    <div class="article-file mt30">
+	                       <input type="file" name="file" />	                        
+	                    </div>
+	                    
+	                 <!-- 내용입력부분 -->   
 	                    <div class="article-content mt30">
 	                        <textarea class="content-place" name="content"  >
 	

@@ -46,8 +46,8 @@
    
    <!-- 글 등록 -->
    <insert id="insert" parameterType="com.reborn.web.entity.community.Board" >
-   		INSERT INTO Board(title, content, boardCategoryId, memberId) 
-   		values(#{title}, #{content}, #{boardCategoryId}, #{memberId})
+   		INSERT INTO Board(title, content, boardCategoryId, memberId, files) 
+   		values(#{title}, #{content}, #{boardCategoryId}, #{memberId}, #{files})
    </insert>
 <!--    <insert id="insert" parameterType="com.reborn.web.entity.community.BoardCategory" >
    		INSERT INTO BoardCategory(name) values(#{name})
@@ -63,6 +63,11 @@
    		files = #{files}
    	WHERE id = #{id}   		
    </update> 
+   
+   <select id="getLast" resultType="com.reborn.web.entity.community.Board">
+   		SELECT * FROM Board 
+			WHERE id = (SELECT MAX(id) FROM Board);
+   </select>
    
    
 </mapper> 

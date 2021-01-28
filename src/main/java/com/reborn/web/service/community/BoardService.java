@@ -17,7 +17,8 @@ public interface BoardService {
 	
 	int update(Board board);
 	int delete(int id);
-	int getLastId();
+	Board getLastId(); 
+//	int getLastId();
 	int getCount(String field, String query);
 	Board getPrev(int id);
 	Board getNext(int id);
@@ -30,4 +31,7 @@ public interface BoardService {
 	public int commentDelete(int id);
 	int getCommentCount(int id);
 	List<CommentView> getCommentViewList(int id);
+	int update(Comment comment);
+	
+	
 }

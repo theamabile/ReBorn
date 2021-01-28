@@ -78,7 +78,7 @@
 	                                    </span>
 	                                </div>
 	                                <div class="post-image">
-	                                    <img src="/images/community/dog.png" alt="">
+	                                    <!-- <img src="/images/community/dog.png" alt=""> -->
 	                                </div>
 	                            </a>
 	                        </li>

@@ -1,13 +1,18 @@
 package com.reborn.web.controller.api.community;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reborn.web.entity.community.BoardView;
+import com.reborn.web.entity.community.CommentView;
 import com.reborn.web.service.community.BoardService;
 
 @RestController("apiBoardController")
@@ -27,8 +32,35 @@ public class BoardController {
 			) {
 		
 		List<BoardView> list = service.getViewList(page, view, field, query, option);
-
-			return list;
-				
+	
+		return list;				
 	}
+	
+	@RequestMapping("{id}")
+	public Map<String, Object> detail(
+			@PathVariable("id") int id){
+		
+		BoardView board = service.get(id);
+		List<CommentView> comment = service.getCommentViewList(id);
+		int commentCount = service.getCommentCount(id);
+		
+		Map<String, Object> dto = new HashMap<>();
+		dto.put("b", board);
+		dto.put("comment", comment);
+		dto.put("commentCount", commentCount);
+		
+		return dto;
+
+		
+	}	
+	
+	public List<CommentView> list(
+			@RequestParam(name="id") int id){
+	
+		List<CommentView> list = service.getCommentViewList(id);
+		
+		return list;
+		
+	}
+	
 }

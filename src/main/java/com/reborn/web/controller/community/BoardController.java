@@ -1,16 +1,26 @@
 package com.reborn.web.controller.community;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.reborn.web.entity.community.Board;
 import com.reborn.web.entity.community.BoardView;
@@ -48,7 +58,7 @@ public class BoardController {
 	}
 	//글 상세
 	@RequestMapping("{id}")
-	public String detail(Model model, @PathVariable("id") Integer id) {
+	public String detail(Model model, @PathVariable("id") int id) {
 		
 		BoardView board = service.get(id);		
 		model.addAttribute("b", board);
@@ -115,7 +125,8 @@ public class BoardController {
 			@RequestParam(name="content") String content,
 			@RequestParam(name="category") int category,
 			@RequestParam(name="memberId", defaultValue = "1" ) int member,
-			Principal principal) {
+			@RequestParam(name="file", defaultValue = "", required = false) Part filePart,
+			Principal principal, HttpServletRequest request) throws IOException {
 //		String uid = principal.getName();
 //		int id = Integer.parseInt(uid);
 		
@@ -123,8 +134,41 @@ public class BoardController {
 		board.setTitle(title);
 		board.setContent(content);
 		board.setBoardCategoryId(category);
+		Board lastId = service.getLastId();
+		int newBoardId = lastId.getId()+1;
+		board.setId(newBoardId);
 		//멤버ID는 멤버가 주는 값으로 수정해야 함.		
 		board.setMemberId(1);
+		/*
+		 * String fileName = files.getOriginalFilename(); String fileNameExtention =
+		 * FilenameUtils.getExtension(fileName).toLowerCase(); File destinationFilename;
+		 * String destinationiFileName; String filsUrl =
+		 */
+		if(filePart != null) {
+			String fileName = filePart.getSubmittedFileName();
+			board.setFiles(fileName);
+			
+			String pathTemp = request.getServletContext().getRealPath("/uploadFiles/board/2021/"+newBoardId+"/");
+			System.out.println(pathTemp);
+			
+			File path = new File(pathTemp);
+			if(!path.exists())	
+				path.mkdirs();
+			
+			String filePath = pathTemp + File.separator + fileName;
+			
+			InputStream fis = filePart.getInputStream();
+			FileOutputStream fos = new FileOutputStream(filePath);
+			
+			byte[] buf = new byte[1024];
+			int size = 0;
+			while((size = fis.read(buf)) != -1)
+					fos.write(buf, 0, size);
+			
+			fos.close();
+			fis.close();
+		}//end if
+		
 		service.insert(board);
 		
 		return "redirect:list";
@@ -142,6 +186,19 @@ public class BoardController {
 		return "redirect:../../../"+id;
 	}
 	
+	//댓글 수정 요청
+	@GetMapping("{id}/comment/{commentId}/edit")
+	public String commentEdit(@PathVariable("id")  int id,
+			@PathVariable("commentId") int commentId,
+			Model model
+			) {
+		
+			
+		
+		return "../../../"+id;
+	}
+	
+	
 	//댓글 작성
 	@PostMapping("{id}/comment/write")
 	public String commentWrite(
@@ -154,11 +211,11 @@ public class BoardController {
 		comment.setMemberId(1);
 		comment.setBoardId(id);
 		
-		
 		service.commentInsert(comment);
 		return "redirect:../../"+id;
 	
 	}
+	
 	
 	
 	

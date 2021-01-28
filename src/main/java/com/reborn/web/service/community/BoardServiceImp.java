@@ -52,6 +52,8 @@ public class BoardServiceImp implements BoardService{
 	}
 
 	
+	
+	
 
 	@Override
 	public int hitUp(int id) {
@@ -76,7 +78,7 @@ public class BoardServiceImp implements BoardService{
 		// TODO Auto-generated method stub
 		return boardDao.insert(category);
 	}
-
+	
 	@Override
 	public int update(Board board) {
 		int result = 0;
@@ -91,12 +93,19 @@ public class BoardServiceImp implements BoardService{
 		return result;
 	}
 
+//	@Override
+//	public int getLastId() {
+//		Board b = boardDao.getLast();
+//		
+//		return b.getId();
+//	}
+	//board의 마지막 Id값구하기
 	@Override
-	public int getLastId() {
-		Board b = boardDao.getLast();
+	public Board getLastId() {
 		
-		return b.getId();
+		return boardDao.getLast();
 	}
+	
 
 	@Override
 	public int getCount(String field, String query) {
@@ -114,11 +123,14 @@ public class BoardServiceImp implements BoardService{
 	public Board getNext(int id) {
 		return boardDao.getnext(id);
 	}
+//	댓글 조회
 	@Override
 	public List<CommentView> getCommentViewList(int id) {
 	
 		return commentDao.getViewList(id);
 	}
+	
+	//댓글 등록
 	@Override
 	public int commentInsert(Comment comment) {
 		
@@ -138,7 +150,12 @@ public class BoardServiceImp implements BoardService{
 		return commentDao.getCount(id);
 	}
 	
-
+	@Override
+	public int update(Comment comment) {
+		int result = 0;
+		commentDao.update(comment);
+		return result;
+	}
 	
 	
 }

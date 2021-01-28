@@ -52,7 +52,7 @@ public class MyBatisBoardDao implements BoardDao{
 	@Override
 	public Board getLast() {
 
-		return null;
+		return mapper.getLast();
 	}
 
 	@Override
@@ -102,6 +102,7 @@ public class MyBatisBoardDao implements BoardDao{
 
 		return mapper.getViewList(offset, view, field, query, option);
 	}
+	
 	
 	
 	

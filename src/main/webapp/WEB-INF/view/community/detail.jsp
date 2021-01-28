@@ -20,7 +20,10 @@
                         <a class="edit-btn bar mr10" href="${b.id}/edit">수정</a>
                         <a class="delete-btn" href="${b.id}/del">삭제</a>
                     </div>
-                </section>                
+                </section>
+                <div class="product-name-img">
+                 	<img src="/uploadFiles/board/2021/${b.id}/${b.files}" alt="상품이미지" />
+                </div>                
 
                 <section class="article-content mt50">
                     ${b.content}
@@ -32,7 +35,7 @@
                     <button class="like-btn" type="button">좋아요 <span class="like-img"></span></button>
                 </div>
                 
-                <!-- 댓글 작성 -->
+                <!-- 댓글 리스트 -->
                 <c:forEach items="${comment}" var="c" >
 	                <div class="comment-view-box padding10 mt5">
 	                    <div class="comment-info mt10">
@@ -40,8 +43,9 @@
 	                        <span class="comment-regdate dot">
 	                        	<fmt:formatDate value="${c.regDate}" pattern="yyyy.MM.dd[E] a hh:mm:ss"/>
 	                        </span>
-	                        <span class="comment-report dot"><a href="">신고</a></span>
-	                        <span class="comment-delete"><a class="" href="${b.id}/comment/${c.id}/del">삭제</a>
+	                        <span class="comment-edit"><a class="dot" href="<%-- ${b.id}/comment/${c.id}/edit --%>">수정</a>
+	                        <span class="comment-delete"><a class="dot" href="${b.id}/comment/${c.id}/del">삭제</a>
+	                        <span class="comment-report"><a href="">신고</a></span>
 	                    </div>
 	                    <div class="comment-content mt10"> 
 	                        ${c.content}
@@ -50,7 +54,7 @@
 	                </div>
                 </c:forEach>
                 
-
+				<!-- 댓글 작성 -->
                 <form method="post" action="${b.id}/comment/write" >
                     <div class="comment-form mt20">                                                   
                         <textarea name="comment" cols="" rows="4" placeholder="여러분의 소중한 댓글을 입력해주세요."></textarea>
@@ -67,4 +71,4 @@
             </div> <!-- wraaper end-->
         </section>
 
-	
+		<script src="/js/community/detail.js"></script>
