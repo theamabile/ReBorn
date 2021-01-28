@@ -27,11 +27,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.reborn.web.entity.animal.Animal;
-import com.reborn.web.entity.animal.AnimalAPIResponseData;
 import com.reborn.web.entity.animal.AnimalKind;
 import com.reborn.web.entity.animal.AnimalUpKind;
 import com.reborn.web.service.animal.AnimalKindService;
 import com.reborn.web.service.animal.AnimalService;
+
 
 /* api를 읽어와서 유기동물 목록을 전시 */
 @Controller("adminAnimalController")
@@ -63,7 +63,7 @@ public class AnimalController {
 	@RequestMapping("update")
 	public String updateList() {
 		
-		animalService.updateListFromAPI(2, 100, "", "", null, null, "");
+		animalService.updateListFromAPI(1, 3000, "", "", null, null, "");
 		 
 		return "admin.animal.detail";
 	}

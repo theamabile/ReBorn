@@ -33,23 +33,17 @@ public class NameServiceImp implements NameService {
 		return result;
 	}
 
-	@Override
-	public int delete(int id) {
-		int result = nameDao.delete(id);
-		
-		return result;
-	}
 
 	@Override
-	public int deleteAll(int[] ids) {
-		int result = nameDao.deleteAll(ids);
-		
-		return result;
+	public int delete(long animalId, String name) {
+		// TODO Auto-generated method stub
+		return nameDao.delete(animalId, name);
 	}
+	
 
 	@Override
-	public Name get(int id) {
-		return nameDao.get(id);
+	public Name get(long animalId, String name) {
+		return nameDao.get(animalId, name);
 	}
 
 	@Override
@@ -74,16 +68,17 @@ public class NameServiceImp implements NameService {
 		return list;
 	}
 
+	
 	@Override
 	public int getCount(String field, String query) {
 		return nameDao.getCount(field, query);
 	}
 
 	@Override
-	public List<NameView> getViewListByVoteId(int voteId, int size) {
+	public List<NameView> getViewListByAnimalId(long animalId, int size) {
 		// TODO Auto-generated method stub
-		return nameDao.getViewListByVoteId(voteId, size);
+		return nameDao.getViewListByAnimalId(animalId, size);
 	}
-	
+
 
 }

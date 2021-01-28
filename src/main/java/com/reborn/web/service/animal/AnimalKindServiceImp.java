@@ -48,15 +48,21 @@ public class AnimalKindServiceImp implements AnimalKindService{
 	}
 
 	@Override
-	public int delete(int id) {
+	public int delete(String cd) {
 		// TODO Auto-generated method stub
-		return kindDao.delete(id);
+		return kindDao.delete(cd);
 	}
 
 	@Override
-	public AnimalKind getKind(int id) {
+	public AnimalKind getKind(String cd) {
 		// TODO Auto-generated method stub
-		return kindDao.get(id);
+		return kindDao.get("cd", cd);
+	}
+	
+	@Override
+	public AnimalKind getKind(String field, String query) {
+		// TODO Auto-generated method stub
+		return kindDao.get(field, query);
 	}
 
 	@Override
@@ -66,23 +72,23 @@ public class AnimalKindServiceImp implements AnimalKindService{
 	}
 
 	@Override
-	public AnimalUpKind getUpKind(int id) {
+	public AnimalUpKind getUpKind(String cd) {
 		// TODO Auto-generated method stub
-		return upKindDao.get(id);
-	}
-	
-	@Override
-	public AnimalUpKind getUpKindByCode(String code) {
-		// TODO Auto-generated method stub
-		return upKindDao.getUpKindByCode(code);
+		return upKindDao.get("cd", cd);
 	}
 
+	@Override
+	public AnimalUpKind getUpKind(String field, String query) {
+		// TODO Auto-generated method stub
+		return upKindDao.get(field, query);
+	}
+	
 	@Override
 	public List<AnimalUpKind> getUpKindList() {
 		List<AnimalUpKind> upKindList = upKindDao.getList();
 		
 		for(AnimalUpKind upKind : upKindList) {
-			List<AnimalKind> kindList = kindDao.getKindListByUpKindCode(upKind.getCode());
+			List<AnimalKind> kindList = kindDao.getKindListByUpKindCd(upKind.getCd());
 			upKind.setKindList(kindList);
 		}
 		
@@ -90,15 +96,9 @@ public class AnimalKindServiceImp implements AnimalKindService{
 	}
 	
 	@Override
-	public List<AnimalKind> getKindListByUpKindCode(String upKindCode) {
+	public List<AnimalKind> getKindListByUpKindCd(String upKindCd) {
 		// TODO Auto-generated method stub
-		return kindDao.getKindListByUpKindCode(upKindCode);
-	}
-	
-	@Override
-	public AnimalKind getKindByCode(String code) {
-		// TODO Auto-generated method stub
-		return kindDao.getKindByCode(code);
+		return kindDao.getKindListByUpKindCd(upKindCd);
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class AnimalKindServiceImp implements AnimalKindService{
 				StringBuilder paramBuilder =  new StringBuilder();
 				paramBuilder.append(URLEncoder.encode("up_kind_cd","UTF-8"));
 				paramBuilder.append("=");
-				paramBuilder.append(upKind.getCode());
+				paramBuilder.append(upKind.getCd());
 				paramBuilder.append("&");	
 				
 				StringBuilder urlBuilder = new StringBuilder(url);
@@ -178,14 +178,14 @@ public class AnimalKindServiceImp implements AnimalKindService{
 					
 					AnimalKind originKind = null; 
 					for(AnimalKind kind : upKind.getKindList()) { 
-						if(kind.getCode().equals(code) == true) {
+						if(kind.getCd().equals(code) == true) {
 							originKind = kind;
 							break; 
 						}
 					}
 				
 					// 코드를 갖고 있는 데이터가 없으면 추가하고 있으면 받아온 데이터로 update 
-					AnimalKind kind = new AnimalKind(code, upKind.getCode(), kindName); 
+					AnimalKind kind = new AnimalKind(code, upKind.getCd(), kindName); 
 					if(originKind == null) {
 						result += insert(kind); 
 					} else { 
@@ -206,14 +206,14 @@ public class AnimalKindServiceImp implements AnimalKindService{
 						// DB에서 code로 조회해도 되지만 질의 횟수를 줄이려고 upkind가 갖고있는 kind 리스트로 확인 
 						AnimalKind originKind = null; 
 						for(AnimalKind kind : upKind.getKindList()) { // api에서 읽어온 데이터를 갖고 있음 
-							if(kind.getCode().equals(code) == true) {
+							if(kind.getCd().equals(code) == true) {
 								originKind = kind;
 								break; 
 							}
 						}
 					
 						// 코드를 갖고 있는 데이터가 없으면 추가하고 있으면 받아온 데이터로 update 
-						AnimalKind kind = new AnimalKind(code, upKind.getCode(), kindName); 
+						AnimalKind kind = new AnimalKind(code, upKind.getCd(), kindName); 
 						if(originKind == null) {
 							result += insert(kind); 
 						} else { 
@@ -234,5 +234,10 @@ public class AnimalKindServiceImp implements AnimalKindService{
 		return result;
 	}
 
+	@Override
+	public AnimalKind getLastCustomKind() {
+		// TODO Auto-generated method stub
+		return kindDao.getLastCustomKind();
+	}
 
 }

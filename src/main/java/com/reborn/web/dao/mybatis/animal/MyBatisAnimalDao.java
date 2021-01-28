@@ -54,22 +54,22 @@ public class MyBatisAnimalDao implements AnimalDao{
 	}
 
 	@Override
-	public List<Animal> getList(int page, int size, String upkind, String kind, Date startDate, Date endDate,
-			String neuter) {
+	public List<Animal> getList(int offset, int size, String upKindCd, String kindCd, Date startDate, Date endDate,String neuter) {
 		// TODO Auto-generated method stub
-		return mapper.getList(page, size, upkind, kind, startDate, endDate, neuter);
+		return mapper.getList(offset, size, upKindCd, kindCd, startDate, endDate, neuter);
 	}
-	
+
 	@Override
-	public int getCount() {
+	public int getCount(String upkind, String kind, Date startDate, Date endDate, String neuter) {
 		// TODO Auto-generated method stub
-		return mapper.getCount();
-	}
+		return mapper.getCount(upkind, kind, startDate, endDate, neuter);
+	}	
 
 	@Override
 	public Animal getByDesertionNo(long desertionNo) {
 		// TODO Auto-generated method stub
 		return mapper.getByDesertionNo(desertionNo);
 	}
+
 	
 }

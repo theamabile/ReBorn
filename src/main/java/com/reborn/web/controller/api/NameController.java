@@ -39,8 +39,7 @@ public class NameController {
 		
 		// 해당 투표에서 인기 있기 있는 3가지 후보를 가져옴
 		for( VoteView v : list) {
-			List<NameView> n = nameService.getViewListByVoteId(v.getId(), 3);
-			System.out.println(v.getId()+" rank : "+n.size());
+			List<NameView> n = nameService.getViewListByAnimalId(v.getAnimalId(), 3);
 			v.setRankNameList(n);
 		}
 		int count = voteService.getCount(field, query);

@@ -35,21 +35,21 @@ public class MyBatisVoteDao implements VoteDao{
 	}
 
 	@Override
-	public int delete(int id) {
+	public int delete(long animalId) {
 		// TODO Auto-generated method stub
-		return mapper.delete(id);
+		return mapper.delete(animalId);
 	}
 
 	@Override
-	public int deleteAll(int[] ids) {
+	public int deleteAll(long[] animalIds) {
 		// TODO Auto-generated method stub
-		return mapper.deleteAll(ids);
+		return mapper.deleteAll(animalIds);
 	}
 
 	@Override
-	public Vote get(int id) {
+	public Vote get(long animalId) {
 		// TODO Auto-generated method stub
-		return mapper.get(id);
+		return mapper.get(animalId);
 	}
 
 	@Override
@@ -65,6 +65,12 @@ public class MyBatisVoteDao implements VoteDao{
 	}
 
 	@Override
+	public VoteView getView(long animalId) {
+		// TODO Auto-generated method stub
+		return mapper.getView(animalId);
+	}
+	
+	@Override
 	public List<VoteView> getViewList(int offset, int size, String orderField, String orderQuery,
 			String field, String query) {
 		// TODO Auto-generated method stub
@@ -77,5 +83,10 @@ public class MyBatisVoteDao implements VoteDao{
 		return mapper.getCount(field, query);
 	}
 
+	@Override
+	public Vote getLast() {
+		// TODO Auto-generated method stub
+		return mapper.getLast();
+	}
 
 }
