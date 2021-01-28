@@ -2,9 +2,12 @@ package com.reborn.web.dao.mybatis.name;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.reborn.web.dao.name.ChoiceDao;
 import com.reborn.web.entity.name.Choice;
 
+@Repository
 public class MyBatisChoiceDao implements ChoiceDao{
 
 	@Override

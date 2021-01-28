@@ -61,8 +61,6 @@
     color: white;
 }
 
-
-
 .adoption-center-list{
     width: 100%;
     min-height: 100%;
@@ -115,7 +113,8 @@
 }
 
 .adoption-center-list li > div > div:last-child{
-    margin-left: auto;
+    /* margin-left: auto; */
+    margin-left: 10px;
     font-weight: lighter;
     color: #464646;
     text-align: center;
@@ -150,7 +149,7 @@
 }
 
 .adoption-center-list li .name{
-    flex-basis: 40%;
+    flex-basis: 50%;
     margin-left: 40px;
 }
 .adoption-center-list li .name svg{
@@ -161,11 +160,29 @@
     flex-basis: 30%;
     margin-left: 10px;
 }
-.search-empty{
-	line-height: 300px;
-	font-size: 70px;
-	text-align: center;	
-	color: #ddd;
+.adoption-center-list li .score-avg{
+	margin-left: auto;
+	text-align: center;
+}
+
+.adoption-center-list li .score-avg .star-box{
+	width: 100%;
+}
+
+.adoption-center-list li .score-avg .star-box > div{
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.adoption-center-list li .score-avg .star-box > div:last-child{
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+.adoption-center-list li .score-avg i{
+	color: var(--main);
+    font-size: 20px;
 }
 @media screen and (max-width:600px){
     .adoption-center-list li > div{
@@ -182,14 +199,18 @@
 
     .adoption-center-list li .name,
     .adoption-center-list li .current-animals-num{
-        margin: 0;
-        margin-bottom: 32px;
+        margin: 5px 0 30px;
     }
 
     .adoption-center-list li .name div:first-child,
     .adoption-center-list li .current-animals-num div:first-child{
         margin-bottom: 0;
     }
+
+	.adoption-center-list li .score-avg{
+		margin-left: 0;
+		margin-bottom: 10px;
+	}
 
     .adoption-center-list li > div > div:last-child{
         margin-left: 0;

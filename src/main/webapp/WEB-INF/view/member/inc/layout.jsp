@@ -8,7 +8,8 @@
 	<title>리본</title>
     <link href="/css/layout.css" type="text/css" rel="stylesheet" />
     <link href="/css/member/login.css" type="text/css" rel="stylesheet" />
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/common.js"></script>
 </head>
 <body>
     <script type="module" src="/js/inc/header.js"></script> 

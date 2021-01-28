@@ -2,9 +2,12 @@ package com.reborn.web.dao.mybatis.name;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.reborn.web.dao.name.NameReportDao;
 import com.reborn.web.entity.name.NameReport;
 
+@Repository
 public class MyBatisNameReportDao implements NameReportDao{
 
 	@Override

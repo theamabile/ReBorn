@@ -11,6 +11,7 @@
 	box-sizing:border-box;
 }
 
+
 input[type="text"],
 input[type="date"],
 select{
@@ -22,63 +23,159 @@ select{
 
 
 .animal-box {
+	display: flex;
+	flex-wrap: wrap;
+	min-height: 300px;
+}
+
+.animal-item {
 	width: 300px;
 	height: 380px;
-	--background: lightgreen;
+	background: var(--bg);
 	display: flex;
 	flex-direction: column;
 	border: solid 1px var(--border);
+	padding: 0px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	outline: none;
 }	
-	.animal-box > *{
+	.animal-item > *{
 		flex-grow: 1;
+		width: 100%;
 		border-bottom: solid 1px var(--border);
 	}	
-	.animal-box > *:last-child{
+	.animal-item > *:nth-last-child(2){		/*hidden 엘리먼트가 하나 있어서 뒤에서 두번째*/
 		border-bottom: none;
 	}	
 	
-	.animal-box img{
+	.animal-item > *:first-child{
 		width: 100%; /*300*/
 		height: 65%; /*250*/
 		flex-grow: 0;
 		background-size:cover;
+		overflow: hidden;
 	}	
+		.animal-item > *:first-child img{
+			width: 100%; 
+			height: 100%; 
+			flex-grow: 0;
+			background-size:cover;
+       		transition: 0.5s;
+		}	
+		.animal-item *:first-child img:hover{
+       		transform: scale(1.2); 
+       		--filter: grayscale(100%); 
+       		--transition: 0.5s;
+		}	
+		
 
-.animal-box .title-box{
+.animal-item .title-box{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
-	.animal-box .title-box > span{
+	.animal-item .title-box > span{
 		font-size: 24px;
 		font-weight: bold;
 		color: var(--main);
 	}
 
-.animal-box .main-info-box{
+.animal-item .main-info-box{
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
 	font-size: 13px;
 }
-	.animal-box .main-info-box *:nth-child(2){
+	.animal-item .main-info-box *:nth-child(2){
 		font-weight: bold;
 	}
 	
-.animal-box .sub-info-box {
+.animal-item .sub-info-box {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
 }
-	.animal-box .sub-info-box *{
+	.animal-item .sub-info-box *{
 		font-size: 14px;
 		flex-grow: 0;
 	}
 	
 
-/* 검색 도구 - table */
 .search-box {
+	width: 100%;
+	border: solid 1px var(--border);
+	box-shadow: var(-box-shadow);
+	margin-bottom: 30px;
+	padding: 30px;
+	
+	display: flex;
+	flex-direction: column;
+}
+	.search-box > * {
+		flex-grow: 1;
+	}
+	
+	.search-box  lable {
+		width: 90px;
+	}
+	
+	.search-box .box-row {
+		display: flex;
+		align-items: center;
+		margin-bottom: 15px;
+	}
+		.search-box .box-row:last-child {
+			margin-bottom: 0px;
+		}
+
+
+	.search-box .box-row .breed-box,
+	.search-box .box-row .name-box,
+	.search-box .box-row .name-box > input[type="text"] {
+		flex-grow: 1;
+	}
+	
+	.search-box .box-row .regdate {
+		flex-grow: 1;
+		margin-right: 10px;
+	}
+	
+	.search-box .box-row .name-box,
+	.search-box .box-row .breed-box,
+	.search-box .box-row .regdate {
+		display: flex;
+		align-items: center;
+	}
+		.search-box .box-row .breed-box > *,
+		.search-box .box-row .regdate > input {
+			flex-grow: 1;
+			width: 50%;
+		}
+		.search-box .box-row .regdate > span {
+			margin-right: 10px;
+		}
+	
+	.search-box .box-row .hasName-box,
+	.search-box .box-row .neuter {
+		width:250px;
+		display: flex;
+	}
+	
+		.search-box .box-row .hasName-box > *,
+		.search-box .box-row .neuter > *{
+			flex-grow: 1;
+		}
+	
+
+
+
+
+
+
+/* 검색 도구 - table */
+/* .search-box {
 	width: 100%;
 	border: solid 1px var(--border);
 	box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
@@ -92,16 +189,24 @@ select{
 			display: table-cell;
 		}
 		
-		/* .search-box table td{
+		.search-box table td{
 			display: flex;
-		} */
-		/* 	.search-box table td *{
+		}
+			.search-box table td *{
 				flex-grow: 1;
-			} */
+			}
 	
 		.search-box table th {
 			width: 100px;
 		}
+		
+	.search-box .regdate {
+		display: flex;
+	}
+		.search-box .regdate input{
+			width: 300px;
+		}
+		
 		
 	
 .table-td-l {
@@ -112,11 +217,7 @@ select{
 	width: 30%;	
 }
 
-
-
-
-
-
+ */
 
 
 
@@ -193,8 +294,10 @@ select{
 	.search-box .kind span {
 		flex-grow: 1;
 	}
+*/	
+	
 			
-*/			
+		
 /*
 .search-box .detail-box .exist-name,
 		.search-box .detail-box .regdate {

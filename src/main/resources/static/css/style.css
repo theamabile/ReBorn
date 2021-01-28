@@ -7,14 +7,18 @@
     --main: #43888A;
     --sub: #fff4ff;
     --menu-item: #43888A15;
+    --title-text-shadow: 0px 3px 10px rgba(0, 0, 0, 0.75);
+    --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.50);
+    --red-pink: #E99292;
+    --blue: #7c7ada;
     /*--------공통 버튼 컬러---------*/
     --main-hover: #499496;
     --main-active: #3c7879; 
     --gray: #5c5c5c;
     --gray-hover: #4e4e4e;
     --gray-active: #3f3b41;
-    --bg-hover: #f1f1f1;
-    --bg-active: #e7e2eb;
+    --bg-hover: rgb(247, 247, 247);
+    --bg-active: rgb(241, 241, 241);
     /*---------- 폰트 -------------*/
     --font-normal: 'GoyangIlsan';
     --font-title: 'GoyangDeogyang';
@@ -101,9 +105,9 @@ h3 {
 .gray-button-wf,
 .bg-button-wf {
     width: 100%;
-    height: 40px;
+    height: 50px;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 /* l사이즈 버튼(크기, 폰트 등)*/
@@ -111,9 +115,9 @@ h3 {
 .gray-button-l,
 .bg-button-l {
     width: 150px;
-    height: 40px;
+    height: 50px;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 /* m사이즈 버튼(크기, 폰트 등)*/
@@ -121,19 +125,19 @@ h3 {
 .gray-button-m,
 .bg-button-m {
     width: 100px;
-    height: 40px;
+    height: 50px;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 /* s사이즈 버튼(크기, 폰트 등)*/
 .main-button-s,
 .gray-button-s,
 .bg-button-s {
-    width: 60px;
-    height: 25px;
+    width: 70px;
+    height: 30px;
     border-radius: 5px;
-    font-size: 10px;
+    font-size: 13px;
 }
 
 
@@ -229,6 +233,9 @@ h3 {
         align-items: flex-end;
         height: 70px;
     }
+    .btn-prev {
+    	margin-right: 15px;
+    }
     .btn-prev, .btn-next{
         display: inline-block;
         --border: lightslategray solid 1px;
@@ -264,4 +271,99 @@ h3 {
     .btn-next{
         margin-left: 5px;
     }
-        
+
+.scroll-none{
+    overflow: hidden;
+}
+
+.modal{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background .5s;
+	z-index: 100;
+}
+
+.modal.active{
+    background: rgba(0, 0, 0, .4);
+}
+
+.modal .modal-box-inner{
+    display: flex;
+    flex-direction: column;
+    max-height: 80%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    animation: showAlert .3s;
+    /* will-change: transform; */
+}
+
+.modal .modal-content{
+	min-width: 200px;
+    min-height: 60px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.modal .modal-content.modal-content-padding{
+	padding: 20px;
+}
+
+.modal .modal-footer .btn-inner{
+	display: flex;
+	text-align: center;
+/* 	border-top: 1px solid var(--bg-hover); */
+}
+
+.modal .modal-footer .btn-inner > .modal-btn{
+	flex: 1 0 50%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.modal .modal-footer .btn-inner > .modal-btn.cancel-btn{
+	background: var(--bg-hover);
+}
+.modal .modal-footer .btn-inner > .modal-btn.ok-btn{
+	background: var(--main-hover);
+	color: #ffffff;
+}
+
+.modal .modal-footer .btn-inner > .modal-btn.cancel-btn:hover{background: var(--bg-hover)}
+.modal .modal-footer .btn-inner > .modal-btn.ok-btn:hover{background: var(--main);}
+
+
+.modal .modal-footer .btn-inner > .modal-btn:first-child{
+	/* border-right: 1px solid var(--bg-hover); */
+}
+
+@keyframes showAlert{
+	0% {
+	    -webkit-transform: scale(1);
+	    transform: scale(1);
+	}
+	1% {
+	    -webkit-transform: scale(.5);
+	    transform: scale(.5);
+	}
+	45% {
+	    -webkit-transform: scale(1.05);
+	    transform: scale(1.05);
+	}
+	80% {
+	    -webkit-transform: scale(.95);
+	    transform: scale(.95);
+	}
+	100% {
+	    -webkit-transform: scale(1);
+	    transform: scale(1);
+	}
+}

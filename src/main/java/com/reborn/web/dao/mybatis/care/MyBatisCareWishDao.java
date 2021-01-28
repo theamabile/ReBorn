@@ -32,8 +32,8 @@ public class MyBatisCareWishDao implements CareWishDao{
 	}
 
 	@Override
-	public Care insert(int memberId, CareWish cw) {
-		return mapper.insert(memberId, cw);
+	public int insert(CareWish cw) {
+		return mapper.insert(cw);
 	}
 
 //	@Override
@@ -42,7 +42,7 @@ public class MyBatisCareWishDao implements CareWishDao{
 //	}
 
 	@Override
-	public Care delete(int memberId, String careRegNo) {
+	public int delete(int memberId, String careRegNo) {
 		return mapper.delete(memberId, careRegNo);
 	}
 	
