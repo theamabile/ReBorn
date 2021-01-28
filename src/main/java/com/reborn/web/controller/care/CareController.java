@@ -45,20 +45,17 @@ import com.reborn.web.service.care.CareService;
 @RequestMapping("/care/")
 public class CareController {
 
-
+	// API KEY
 	@Value("${animal.apiKey}")
 	private String animalApiKey;
-	
 	@Value("${care.infoApiKey}")
 	private String careApiKey;
 	
-	
+	// URL
 	@Value("${care.listApiUrl}")
 	private String listApiUrl;
-	
 	@Value("${care.listApiUrl}")
 	private String infoApiUrl;
-	
 	@Value("${care.animalListUrl}")
 	private String animalListUrl;
 
@@ -256,7 +253,6 @@ public class CareController {
 		
 		return result.toString();
 	}
-	
 
 	@PostMapping("rebuildDetail")
 	@ResponseBody
@@ -353,6 +349,83 @@ public class CareController {
 //	        	break;
 //
 //	        cnt++;
+		}
+		
+		StringBuilder result = new StringBuilder(); 
+		Gson gson = new Gson();
+		
+		result.append("{");
+		result.append("\"findCareSize\":" + careList.size());
+		result.append(",");
+		result.append("\"sussessSize\":" + sussessList.size());
+		result.append(",");
+		result.append("\"sussess\":" + gson.toJson(sussessList));
+		result.append(",");
+		result.append("\"failSize\":" + failList.size());
+		result.append(",");
+		result.append("\"fail\":" + gson.toJson(failList));
+		result.append("}");
+		
+		return result.toString();
+		
+	}
+
+
+	@GetMapping("animalCareMapping")
+	@ResponseBody
+	public String animalCareMapping() throws SAXException, IOException, ParserConfigurationException, XPathExpressionException, ParseException {
+
+		// DB에서 리스트 가져오기 ===========================================================================================
+		List<Care> careList = careService.getList(0, 999999, null, null);
+		
+		// 보호소 정보 API로 불러오기 ========================================================================================
+		List<Care> sussessList = new ArrayList<>();
+		List<Care> failList = new ArrayList<>();
+		
+		int cnt = 0;
+		for(Care care : careList) {
+			String careRegNo = care.getCareRegNo();
+			
+			// API 보호동물들 가져오기
+			List<AnimalEntityTemp> animalList = new ArrayList<>();
+			try {
+				StringBuilder urlBuilder = new StringBuilder(animalListUrl);
+			
+				int getSize = 1000;
+				urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + animalApiKey);
+				urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + getSize);
+				urlBuilder.append("&" + URLEncoder.encode("care_reg_no","UTF-8") + "=" + careRegNo);
+				urlBuilder.append("&" + URLEncoder.encode("state","UTF-8") + "=" + "protect");
+				
+				// URL로 GET 요청 보냄
+				Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+				                                       .parse(urlBuilder.toString());
+				XPath xpath = XPathFactory.newInstance().newXPath();
+
+				// 받은걸로 데이터 추출
+		        NodeList itemNodes = (NodeList)xpath.evaluate("//body/items/item", document, XPathConstants.NODESET);
+		        for( int i = 0; i < itemNodes.getLength(); i++ ){
+		            XPathExpression noticeNoExpression = xpath.compile("noticeNo");
+		            
+					Node noticeNoNode = (Node) noticeNoExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
+					
+					String noticeNo = noticeNoNode.getTextContent();
+					
+					AnimalEntityTemp aet = new AnimalEntityTemp();
+					aet.setNoticeNo(noticeNo);
+					
+					animalList.add(aet);
+		        }
+				
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	        
+	      	//테스트
+	        if(cnt == 6)
+	        	break;
+
+	        cnt++;
 		}
 		
 		StringBuilder result = new StringBuilder(); 

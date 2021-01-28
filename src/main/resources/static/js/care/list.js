@@ -6,7 +6,8 @@ class CareList extends React.Component{
 		this.state = {
 			list: [],
 			careCount: 0,
-			pageCount: 0
+			pageCount: 0,
+			autoCompleteList: []
 		}
 		
 		this.page = getParameter("p") || 1;
@@ -17,6 +18,7 @@ class CareList extends React.Component{
       	this.queryInput = React.createRef();
 
 		this.invalidate();
+		window.careNameList = window.careNameList.sort();
 			
 		window.onpopstate = (e)=>{
 			console.log("onpopstate=====================================");
@@ -59,6 +61,7 @@ class CareList extends React.Component{
 				this.query = this.queryInput.current.value;
 				history.pushState({p: this.page, f: this.field, q: this.query}, "", `?p=${this.page}&f=${this.field}&q=${this.query}`);
 				this.invalidate();
+				this.setState({autoCompleteList: []});
 			}
 		}
 	}
@@ -112,16 +115,122 @@ class CareList extends React.Component{
 			history.pushState({p: this.page, f: this.field, q: this.query}, "", `?p=${this.page}&f=${this.field}&q=${this.query}`);
 			this.invalidate();
 			window.scrollTo(0, 0);
+		}		
+	}
+	
+	autoCompleteHandler(e){
+		let value = e.target.value;
+		let result = [];
+		if(value.length == 0){
+			this.setState({autoCompleteList : result})
+			return;
+		}
+		let valueChars = this.toKorChars(value).join("");
+//		console.log(valueChars);
+		
+		for(let care of careNameList){
+			let chars = this.toKorChars(care).join("");
+			let match = chars.match("^" + new RegExp(valueChars, "i"))
+//			if( match )
+//			result.push(match);
+			if( match ){
+				let escape = value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+				if(escape.length > 1)
+					escape = escape.replace(new RegExp("[ㄱ-ㅎ]$"),"");
+				let exec = new RegExp(`(.*)(${escape})(.*)`, "i").exec(care);
+				if( exec )
+					result.push(exec);
+			}
+//				result.push(<li>{care.replace(value, <span>${value}</span>)}</li>);
+			
+			if( result.length >= 10)
+				break;
+		};
+		
+		if(result.length <= 10){
+			for(let care of careNameList){
+				let chars = this.toKorChars(care).join("");
+				let match = chars.match(new RegExp(valueChars, "i"))
+//				if( match )
+//				result.push(match);
+				if( match ){
+					let escape = value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+					if(escape.length > 1)
+						escape = escape.replace(new RegExp("[ㄱ-ㅎ]$"),"");
+					let exec = new RegExp(`(.*)(${escape})(.*)`, "i").exec(care);
+					if( exec )
+						result.push(exec);
+				}
+				if( result.length >= 10)
+					break;
+			};
+		}
+		
+//		console.log(result);
+		
+		if( result.length != 0 ){
+			this.setState({autoCompleteList: result});
+			return;
 		}
 			
+		if( result.length == 0 && 
+				this.state.autoCompleteList.length != 0 )
+			this.setState({autoCompleteList: result});
 	}
+    
+	toKorChars(value){ 
+        var cCho = [ 'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ' ], 
+        cJung = [ 'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ' ], 
+        cJong = [ '', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ' ], cho, jung, jong; 
+        var str = value, 
+        cnt = str.length, 
+        chars = [], 
+        cCode; 
+        for (var i = 0; i < cnt; i++) {
+            cCode = str.charCodeAt(i); 
+            if (cCode == 32) { 
+             	//chars.push(" ");
+              continue;
+            } // 한글이 아닌 경우 
+            if (cCode < 0xAC00 || cCode > 0xD7A3) { 
+                chars.push(str.charAt(i)); continue; 
+            } 
+            cCode = str.charCodeAt(i) - 0xAC00; 
+
+            jong = cCode % 28; 
+            // 종성 
+            jung = ((cCode - jong) / 28 ) % 21 
+
+            // 중성 
+            cho = (((cCode - jong) / 28 ) - jung ) / 21 
+            // 초성 
+
+            //기본 코드 테스트가 ㅌㅔㅅ-ㅌ- 형식으로 저장됨 
+             chars.push(cCho[cho], cJung[jung]); 
+             if (cJong[jong] !== '') { 
+                 chars.push(cJong[jong]); 
+                 } 
+
+			// 이부분을 원하는 방향으로 바꿈.
+            // 테스트라는 문장이 
+            // ㅌ,ㅔ,ㅅ,-,ㅌ,- 형식으로 저장되던 코드를 
+            // ㅌ,테,ㅅ,스,ㅌ,트 형식으로 저장되도록함 (타이핑효과를 위해서)
+//            chars.push(cCho[cho]);
+//            chars.push(String.fromCharCode( 44032 + (cho * 588) + (jung  * 28)));
+//            if (cJong[jong] !== '') { 
+//                chars.push(String.fromCharCode( 44032 + (cho * 588) + (jung  * 28) + jong ));
+//            }
+        }
+        return chars; 
+    }
 	
 	render(){
 		console.log("render");
 		return <section>
 			<section className="search-box">
-		        <div className="search-inner section-max-width">
-		            <div className="search-bar backdrop-blur">
+		        <div className="search-inner section-max-width position-relative">
+		            <div className="search-bar backdrop-blur  position-absolute">
+		                <div className="search-input"><input defaultValue={this.query} ref={this.queryInput} onInput={this.autoCompleteHandler.bind(this)} onKeyPress={this.searchHandler.bind(this)} className="input-reset" name="adoption-center" placeholder="보호소 이름" /></div>
 		                <div className="search-icon pointer" onClick={this.searchHandler.bind(this)}>
 		                    {
 								// <!-- <i className="fas fa-search"></i> -->
@@ -130,7 +239,23 @@ class CareList extends React.Component{
 		                        <path d="M508.5 481.6l-129-129c-2.3-2.3-5.3-3.5-8.5-3.5h-10.3C395 312 416 262.5 416 208 416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c54.5 0 104-21 141.1-55.2V371c0 3.2 1.3 6.2 3.5 8.5l129 129c4.7 4.7 12.3 4.7 17 0l9.9-9.9c4.7-4.7 4.7-12.3 0-17zM208 384c-97.3 0-176-78.7-176-176S110.7 32 208 32s176 78.7 176 176-78.7 176-176 176z"></path>
 		                    </svg>
 		                </div>
-		                <div className="search-input"><input defaultValue={this.query} ref={this.queryInput} onKeyPress={this.searchHandler.bind(this)} className="input-reset" name="adoption-center" placeholder="보호소 이름" /></div>
+						{
+							this.state.autoCompleteList.length != 0
+							?<div className="auto-complete">
+								<ul>
+								{
+									this.state.autoCompleteList.map(
+										 str => <li key={str}>{str[1]}<span className="bold">{str[2]}</span>{str[3]}</li>
+									)
+//									if( match )
+//									result.push(care);
+//										str => <li key={str}>{str}</li>
+									
+								}
+								</ul>
+							</div>
+							: ""
+						}
 		            </div>
 		        </div>
 		    </section>
