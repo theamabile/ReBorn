@@ -4,8 +4,35 @@
 
 <mapper namespace="com.reborn.web.dao.animal.AnimalDao">
 
+	<!-- &gt; : >   /  &lt; : <   -->
+	
+	
+	<!-- int offset, int size, String upKindCd, String kindCd, Date startDate, Date endDate, String neuter -->
 	<select id="getList" resultType="com.reborn.web.entity.animal.Animal">
 		SELECT * FROM Animal
+		<where>
+			<if test="param3 != null and param3 != ''">		
+	      		AND upKindCd = #{param3}
+	     	</if> 
+	     	
+			<if test="param4 != null and param4 != ''">		
+	      		AND kindCd = #{param4}
+	     	</if> 
+	     	
+	     	<if test="param5 != null and param5 != ''">
+	      		AND happenDt &gt;= #{param5}
+	     	</if> 
+	     	
+	     	<if test="param6 != null and param6 != ''">
+	      		AND happenDt &lt;= #{param6}
+	     	</if> 
+	     	
+	     	<if test="param7 != null and param7 != ''">
+	      		AND neuterYn = #{param7}
+	     	</if> 
+		</where>
+      order by happenDt desc
+      limit #{param2} offset #{param1}
 	</select>
 
 	
@@ -16,33 +43,54 @@
 
 
 	<insert id="insert" parameterType="com.reborn.web.entity.animal.Animal">
-		INSERT INTO Animal (sexCd, noticeNo, kindCd, careAddr, processState 
-							, noticeSdt, noticeEdt, weight, careNm, desertionNo 
+		INSERT INTO Animal (desertionNo, noticeNo, upKindCd, kindCd, careAddr, processState 
+							, noticeSdt, noticeEdt, weight, careNm, sexCd
 							, careTel, happenPlace, officetel, orgNm, popfile
 							, neuterYn,specialMark,colorCd,happenDt, age)
-      	VALUES(#{sexCd}, #{noticeNo}, #{kindCd}, #{careAddr}, #{processState}, 
-      			#{noticeSdt}, #{noticeEdt}, #{weight} ,#{careNm}, #{desertionNo},
-      			#{careTel}, #{happenPlace}, #{officetel}, #{orgNm}, #{popfile},#{neuterYn}, 
-      			#{specialMark}, #{colorCd}, #{happenDt}, #{age})
+      	VALUES(#{desertionNo}, #{noticeNo}, #{upKindCd}, #{kindCd}, #{careAddr}, #{processState} 
+      			, #{noticeSdt}, #{noticeEdt}, #{weight} ,#{careNm}, #{sexCd}
+      			, #{careTel}, #{happenPlace}, #{officetel}, #{orgNm}, #{popfile}, #{neuterYn} 
+      			, #{specialMark}, #{colorCd}, #{happenDt}, #{age})
 	</insert>
 	
 	
 	<update id="update" parameterType="com.reborn.web.entity.animal.Animal">
-		UPDATE Animal SET sexCd = #{sexCd}, noticeNo = #{noticeNo}, kindCd = #{kindCd}, careAddr = #{careAddr}, processState = #{processState} 
-						, noticeSdt = #{noticeSdt}, noticeEdt = #{noticeEdt}, weight = #{weight}, careNm = #{careNm}, desertionNo = #{desertionNo} 
+		UPDATE Animal SET noticeNo = #{noticeNo}, upKindCd = #{upKindCd}, kindCd = #{kindCd}, careAddr = #{careAddr}, processState = #{processState} 
+						, noticeSdt = #{noticeSdt}, noticeEdt = #{noticeEdt}, weight = #{weight}, careNm = #{careNm}, sexCd = #{sexCd} 
 						, careTel = #{careTel}, happenPlace = #{happenPlace}, officetel = #{officetel}, orgNm = #{orgNm}, popfile = #{popfile}
-						, neuterYn = #{neuterYn}, specialMark = #{specialMark}, colorCd = #{colorCd}, happenDt = #{happenDt}, age = #{age})
+						, neuterYn = #{neuterYn}, specialMark = #{specialMark}, colorCd = #{colorCd}, happenDt = #{happenDt}, age = #{age}
 		WHERE desertionNo = #{desertionNo}
 	</update>
 	
-	<delete id="delete">
+	<delete id="delete" parameterType="long">
 		DELETE FROM Animal
 		WHERE desertionNo = #{desertionNo}
 	</delete>
 	
-	<delete id="getCount">
+	<select id="getCount" resultType="int">
 		SELECT count(desertionNo) FROM Animal
-	</delete>
+		<where>
+			<if test="param1 != null and param1 != ''">		
+	      		AND upKindCd = #{param1}
+	     	</if> 
+	     	
+			<if test="param2 != null and param2 != ''">		
+	      		AND kindCd = #{param2}
+	     	</if> 
+	     	
+	     	<if test="param3 != null and param3 != ''">		
+	      		AND happenDt &gt;= #{param3}
+	     	</if> 
+	     	
+	     	<if test="param4 != null and param4 != ''">
+	      		AND happenDt &lt;= #{param4}
+	     	</if> 
+	     	
+	     	<if test="param5 != null and param5 != ''">
+	      		AND neuterYn = #{param5}
+	     	</if> 
+		</where>
+	</select>
 	
 	<select id="getByDesertionNo" resultType="com.reborn.web.entity.animal.Animal">
 		SELECT * FROM Animal

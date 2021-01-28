@@ -11,6 +11,7 @@ import com.reborn.web.entity.name.VoteView;
 
 @Service
 public class VoteServiceImp implements VoteService{
+	
 	@Autowired
 	private VoteDao voteDao;
 	
@@ -29,24 +30,24 @@ public class VoteServiceImp implements VoteService{
 	}
 
 	@Override
-	public int delete(int id) {
-		int result = voteDao.delete(id);
+	public int delete(long animalId) {
+		int result = voteDao.delete(animalId);
 		
 		return result;
 	}
 
 	@Override
-	public int deleteAll(int[] ids) {
-		int result = voteDao.deleteAll(ids);
+	public int deleteAll(long[] animalIds) {
+		int result = voteDao.deleteAll(animalIds);
 		
 		return result;
 	}
 
 	@Override
-	public Vote get(int id) {
-		return voteDao.get(id);
+	public Vote get(long animalId) {
+		return voteDao.get(animalId);
 	}
-
+	
 	@Override
 	public List<Vote> getList(int page, int size, String field, String query) {
 		List<Vote> list = null;
@@ -58,6 +59,13 @@ public class VoteServiceImp implements VoteService{
 		return list;
 	}
 
+
+	@Override
+	public VoteView getView(long animalId) {
+		// TODO Auto-generated method stub
+		return voteDao.getView(animalId);
+	}
+	
 	@Override
 	public List<VoteView> getViewList(int page, int size, String orderField, String orderQuery, String field, String query) {
 		List<VoteView> list = null;
@@ -82,5 +90,11 @@ public class VoteServiceImp implements VoteService{
 	@Override
 	public int getCount(String field, String query) {
 		return voteDao.getCount(field, query);
+	}
+
+	@Override
+	public Vote getLast() {
+		// TODO Auto-generated method stub
+		return voteDao.getLast();
 	}
 }

@@ -3,29 +3,29 @@ package com.reborn.web.entity.name;
 import java.sql.Date;
 
 public class Vote {
-	private int id;
-	private String animalId;
+	private long animalId;
 	private int memberId;
 	private int resultId; 
 	private Date recruitStartDate;
 	private Date recruitEndDate;
 	private Date voteStartDate;
 	private Date voteEndDate;
-	private String state;
+	private String state;			// 자동 업데이트가 되면 필요, 날짜 계산으로 되면 불필요
 	
-	public int getId() {
-		return id;
+	public Vote() {
+		// TODO Auto-generated constructor stub
 	}
 	
-	public void setId(int id) {
-		this.id = id;
+	public Vote(long animalId, int memberId) {
+		this.animalId = animalId;
+		this.memberId = memberId;
 	}
 
-	public String getAnimalId() {
+	public long getAnimalId() {
 		return animalId;
 	}
 
-	public void setAnimalId(String animalId) {
+	public void setAnimalId(long animalId) {
 		this.animalId = animalId;
 	}
 		
@@ -87,7 +87,7 @@ public class Vote {
 
 	@Override
 	public String toString() {
-		return "Vote [id=" + id + ", animalId=" + animalId + ", memberId=" + memberId + ", resultId=" + resultId
+		return "Vote [animalId=" + animalId + ", memberId=" + memberId + ", resultId=" + resultId
 				+ ", recruitStartDate=" + recruitStartDate + ", recruitEndDate=" + recruitEndDate + ", voteStartDate="
 				+ voteStartDate + ", voteEndDate=" + voteEndDate + ", state=" + state + "]";
 	}

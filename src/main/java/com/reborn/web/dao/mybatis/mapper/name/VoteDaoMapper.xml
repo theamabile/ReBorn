@@ -4,6 +4,23 @@
     
 <mapper namespace="com.reborn.web.dao.name.VoteDao">
 
+	
+	<insert id="insert" parameterType="com.reborn.web.entity.name.Vote">
+		INSERT INTO Vote (animalId, memberId
+						  , recruitStartDate, recruitEndDate
+						  , voteStartDate, voteEndDate)
+      	VALUES( #{animalId}, #{memberId}
+      			, current_timestamp(), DATE_ADD(current_timestamp(), INTERVAL 3 DAY) 
+				, DATE_ADD(DATE_ADD(current_timestamp(), INTERVAL 3 DAY), INTERVAL 1 MINUTE)
+				, DATE_ADD(current_timestamp(), INTERVAL 10 DAY) 
+				)
+	</insert>
+	
+	<select id="get" resultType="com.reborn.web.entity.name.Vote">
+		SELECT * FROM Vote
+		WHERE animalId = #{animalId}
+	</select>
+	
 	<select id="getList" resultType="com.reborn.web.entity.name.Vote">
 		SELECT * FROM Vote
 		<where>
@@ -32,11 +49,13 @@
 		LIMIT #{param2} OFFSET #{param1}
 	</select>
 
-	<!-- <if test="param3 != null and param3 != ''">
-				ORDER BY #{param3} #{param4}
-			</if> -->
+	<select id="getView" resultType="com.reborn.web.entity.name.VoteView">
+		SELECT * FROM VoteView
+		WHERE animalId = #{animalId}
+	</select>
+
 	<select id="getCount" resultType="int">
-		SELECT count(id) FROM VoteView
+		SELECT count(animalId) FROM VoteView
 		where
 			nameCnt > 0 				<!-- 이름이 1개 이상이여야함.(신고로 인해서 지워질 수도 있으니 조건 처리) -->
 			AND sysdate() &lt;= date(voteEndDate)
@@ -44,5 +63,12 @@
 	      	BINARY ${param1} like '%${param2}%'
 	    </if> 
 	</select>
-
+	
+	<select id="getLast" resultType="com.reborn.web.entity.name.Vote" >
+		SELECT * FROM Vote
+	    ORDER BY recruitStartDate DESC
+		LIMIT 1
+	</select>
+	
+	
 </mapper>

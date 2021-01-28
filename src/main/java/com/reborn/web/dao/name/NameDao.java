@@ -9,14 +9,13 @@ import com.reborn.web.entity.name.NameView;
 public interface NameDao {
 	int insert(Name name);
 	int update(Name name);
-	int delete(int id);	
-	int deleteAll(int[] ids);
+	int delete(long animalId, String name);
 	
-	Name get(int id);	
+	Name get(long animalId, String name);	
 	List<Name> getList();
 	List<Name> getList(int offset, int size, String field, String query);
 	List<NameView> getViewList(int offset, int size, String field, String query);
-	List<NameView> getViewListByVoteId(int voteId, int size);
+	List<NameView> getViewListByAnimalId(long animalId, int size);
 	
 	int getCount(String field, String query);
 

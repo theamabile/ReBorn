@@ -4,12 +4,23 @@ import java.sql.Date;
 
 public class Name {
 	private int id;
-	private int voteId;
+	private long animalId;
 	private int memberId;
 	private String name;
 	private String reason;
 	private Date regDate;
 	
+	public Name() {
+		// TODO Auto-generated constructor stub
+	}
+		
+	public Name(long animalId, int memberId, String name, String reason) {
+		this.animalId = animalId;
+		this.memberId = memberId;
+		this.name = name;
+		this.reason = reason;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -18,14 +29,14 @@ public class Name {
 		this.id = id;
 	}
 	
-	public int getVoteId() {
-		return voteId;
+	public long getAnimalId() {
+		return animalId;
 	}
-	
-	public void setVoteId(int voteId) {
-		this.voteId = voteId;
+
+	public void setAnimalId(long animalId) {
+		this.animalId = animalId;
 	}
-	
+
 	public int getMemberId() {
 		return memberId;
 	}
@@ -58,10 +69,5 @@ public class Name {
 		this.regDate = regDate;
 	}
 
-	@Override
-	public String toString() {
-		return "Name [id=" + id + ", voteId=" + voteId + ", memberId=" + memberId + ", name=" + name + ", reason="
-				+ reason + ", regDate=" + regDate + "]";
-	}	
-	
+		
 }

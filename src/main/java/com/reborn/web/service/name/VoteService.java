@@ -9,12 +9,15 @@ public interface VoteService {
 	
 	int insert(Vote vote);
 	int update(Vote vote);
-	int delete(int id);
-	int deleteAll(int[] ids);
+	int delete(long animalId);
+	int deleteAll(long[] animalIds);
 	
-	Vote get(int id);
+	Vote get(long animalId);
 	List<Vote> getList(int page, int size, String field, String query);
+	VoteView getView(long animalId);
 	List<VoteView> getViewList(int page, int size, String orderField, String orderQuery, String field, String query);
-
+	
 	int getCount(String field, String query);
+	Vote getLast();
+
 }

@@ -7,25 +7,37 @@
 	<select id="getList" resultType="com.reborn.web.entity.animal.AnimalKind">
 		SELECT * FROM AnimalKind
 	</select>
+	
+	<select id="get" resultType="com.reborn.web.entity.animal.AnimalKind">
+		SELECT * FROM AnimalKind
+		WHERE ${param1} = #{param2}
+	</select>
 
 	<insert id="insert" parameterType="com.reborn.web.entity.animal.AnimalKind">
-		INSERT INTO AnimalKind(code, upKindCode, name)
-      	VALUES(#{code}, #{upKindCode}, #{name})
+		INSERT INTO AnimalKind(cd, upKindCd, name)
+      	VALUES(#{cd}, #{upKindCd}, #{name})
 	</insert>
 	
 	<update id="update" parameterType="com.reborn.web.entity.animal.AnimalKind">
-		UPDATE AnimalKind SET upKindCode=#{upKindCode}, name=#{name}, code=#{code}
-		WHERE code = #{code}
+		UPDATE AnimalKind SET upKindCd=#{upKindCd}, name=#{name}
+		WHERE cd = #{cd}
 	</update>
 	
 	<delete id="delete">
 		DELETE FROM AnimalKind 
-		WHERE code = #{code}
+		WHERE cd = #{cd}
 	</delete>
 	
-	<select id="getKindListByUpKindCode" resultType="com.reborn.web.entity.animal.AnimalKind">
+	<select id="getKindListByUpKindCd" resultType="com.reborn.web.entity.animal.AnimalKind">
 		SELECT * FROM AnimalKind
-		WHERE upKindCode = #{upKindCode}
+		WHERE upKindCd = #{upKindCd}
+	</select>
+	
+	<select id="getLastCustomKind" resultType="com.reborn.web.entity.animal.AnimalKind">
+		SELECT * FROM AnimalKind
+		WHERE cd &gt;= 900
+		ORDER BY cd DESC
+		LIMIT 1;
 	</select>
 	
 	

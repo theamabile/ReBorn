@@ -4,6 +4,18 @@
     
 <mapper namespace="com.reborn.web.dao.name.NameDao">
 
+	<insert id="insert" parameterType="com.reborn.web.entity.name.Name">
+		INSERT INTO Name (animalId, memberId, name, reason)
+      	VALUES( #{animalId}, #{memberId}, #{name}, #{reason})
+	</insert>
+	
+	<select id="get" resultType="com.reborn.web.entity.name.Name">
+		SELECT * FROM Name
+		WHERE 
+			animalId = #{param1}
+			and name = #{param2}
+	</select>
+	
 	<select id="getList" resultType="com.reborn.web.entity.name.Name">
 		SELECT * FROM Name
 		<where>
@@ -26,9 +38,9 @@
 		LIMIT #{param2} OFFSET #{param1}
 	</select>
 	
-	<select id="getViewListByVoteId" resultType="com.reborn.web.entity.name.NameView">
+	<select id="getViewListByAnimalId" resultType="com.reborn.web.entity.name.NameView">
 		SELECT * FROM NameView
-		where voteId = #{param1}
+		where animalId = #{param1}
 		ORDER BY choiceCnt DESC
 		LIMIT #{param2}
 	</select>

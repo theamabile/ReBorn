@@ -8,18 +8,20 @@ import com.reborn.web.entity.animal.AnimalUpKind;
 public interface AnimalKindService {
 	int insert(AnimalKind kind);
 	int update(AnimalKind kind);
-	int delete(int id);
+	int delete(String cd);
 	
-	AnimalUpKind getUpKind(int id);
+	// 축종
+	AnimalUpKind getUpKind(String cd);
+	AnimalUpKind getUpKind(String field, String query);
 	List<AnimalUpKind> getUpKindList();
-	AnimalUpKind getUpKindByCode(String code);
 	
-
-	AnimalKind getKind(int id);
+	// 품종
+	AnimalKind getKind(String cd);
+	AnimalKind getKind(String field, String query);
 	List<AnimalKind> getKindList();
-	AnimalKind getKindByCode(String code);
-	List<AnimalKind> getKindListByUpKindCode(String upKindCode);
+	List<AnimalKind> getKindListByUpKindCd(String upKindCd);
 	
 	// DB에 저장 된 upkind 코드기준으로 kind 목록을 api로부터 가져옴
 	int updateKindListFromAPI() ;
+	AnimalKind getLastCustomKind();
 }

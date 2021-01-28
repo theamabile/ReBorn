@@ -3,19 +3,19 @@ package com.reborn.web.entity.animal;
 import java.util.List;
 
 public class AnimalUpKind {
-	private String code;
+	private String cd;
 	private String name;
 	private List<AnimalKind> kindList;
 	
 	
-	public String getCode() {
-		return code;
+	public String getCd() {
+		return cd;
 	}
-	
-	public void setCode(String code) {
-		this.code = code;
+
+	public void setCd(String cd) {
+		this.cd = cd;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -34,7 +34,7 @@ public class AnimalUpKind {
 	
 	@Override
 	public String toString() {
-		return "AnimalUpKind [code=" + code + ", name=" + name + ", kindList=" + kindList + "]";
+		return "AnimalUpKind [cd=" + cd + ", name=" + name + ", kindList=" + kindList + "]";
 	}
 	
 }
