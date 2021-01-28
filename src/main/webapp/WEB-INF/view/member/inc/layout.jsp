@@ -13,7 +13,6 @@
 </head>
 <body>
     <script type="module" src="/js/inc/header.js"></script> 
-    <script src="/js/member/login.js" type="text/javascript"></script>
 	<tiles:insertAttribute name="header" />
  
 
