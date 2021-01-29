@@ -1,198 +1,156 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-    <link rel= "stylesheet" type="text/css" href="/css/animal/list.css">
+
+<link rel= "stylesheet" type="text/css" href="/css/name/name.css">
+<link rel= "stylesheet" type="text/css" href="/css/animal/list.css">
+
+<!-- 리액트 -->
+<!-- <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel" src="/js/animal/list-react.js"></script> -->
+
+<script src="/js/animal/list.js"></script>
+
+ 	 
+<c:set var="page" value="${param.p}"/>
+<c:if test="${empty param.p}"> <!-- page 인자 없이 리스트에 왔을 때 -->
+	<c:set var="page" value="1"/>
+</c:if>
+
+<c:set var="offset" value="${(page-1)%5 }"></c:set>
+<c:set var="startNum" value="${page-offset}"></c:set> 
+  
     <section class="main-container">
+    	
 		<h1>유기동물 목록 </h1>
-		
-		<!-- ---------------------- 검색 도구 ------------------------ -->
 		<section class="search-box">
-			<table>
-				<tr>
-					<th>
-						이름 검색
-					</th>
-					<td class="name-box " colspan="4">
-						<input type="text" placeholder="검색어 입력">
-						<input type="submit" value="검색" class="main-button-m">
-					</td>
-				</tr>
-				<tr>
-					<th>품종</th>
-					<td>
-						<select name="upkind">	
-							<option>전체</option>  선택 안되면 null로 보내지게
+				<div class="box-row">
+					<lable>품종</lable>
+					<div class="breed-box">
+						<select name="upkind" class="upkind">	
+							<option value="">전체</option>  
 							<option value="417000">개</option>
 							<option value="422400">고양이</option>
 							<option value="429900">기타</option>
 						</select>
-						<select name="kind">	
-							<!-- 축종에 따라 api로 갖고오기 -->
+						<select name="kind" class="kind">	
+							<option value="">선택 없음</option>
 						</select>
-					</td>
-					
-					<th>이름 여부</th>
-					<td>
-						<div>
-							<input type="radio" name="existName" checked="checked">전체</input>
-						</div>
-						<div>
-							<input type="radio" name="existName" value="N">이름 없음</input>
-						</div>
-						<div>
-							<input type="radio" name="existName" value="Y">이름 있음</input>
-						</div>
-					</td>			
-				</tr>
-				<tr>
-					<th>유기 날짜</th>
-					<td class="regdate table-td-l">
-						<input type="date" name="regDateStart">
+					</div>
+				</div>		
+				<div class="box-row">
+					<lable>유기 날짜</lable>
+					<div class="regdate">
+						<input type="date" name="bgnde" class="bgnde">
 						<span>~</span>
-						<input type="date" name="regDateEnd">
-					</td>
-					<th>중성화 여부</th>
-					<td class="neuter table-td-m">
-						<select name="neutralize">	
-							<option>전체</option>  <!-- 선택 안되면 null로 보내지게 -->
-							<option value="Y">예</option>
-							<option value="N">아니오</option>
-							<option value="U">미상</option>			
-						</select>
-					</td>	
-				</tr>
-			</table>
-		</section>
-		
-		
-		
-		<!-- <section class="search-box">
-			<div class="name-box">
-				<label>이름 검색</label>
-				<input type="text" placeholder="검색어 입력">
-				<input type="submit" value="검색" class="main-button-m">
-			</div> 
-			<h3>상세 검색</h3>
-			<div>
-				<div class="kind">
-					<label>품종</label>
-					<select name="upkind">	
-						<option>전체</option>  선택 안되면 null로 보내지게
-						<option value="417000">개</option>
-						<option value="422400">고양이</option>
-						<option value="429900">기타</option>
-					</select>
-					<select name="kind">	
-						축종에 따라 api로 갖고오기
-					</select>
-				</div>
-				<div class="exist-name">
-					<label>이름 여부</label>
-					<div class="radio-btns">
-						<div>
-							<input type="radio" name="existName" checked="checked">전체</input>
-						</div>
-						<div>
-							<input type="radio" name="existName" value="N">이름 없음</input>
-						</div>
-						<div>
-							<input type="radio" name="existName" value="Y">이름 있음</input>
-						</div>
+						<input type="date" name="endde" class="endde">
 					</div>
-				</div>
-				
-			</div>
-			
-			<div>
-				<div class="regdate">
-					<label>유기 날짜</label>
-					<input type="date" name="regDateStart">
-					<span>~</span>
-					<input type="date" name="regDateEnd">
-				</div>
-			
-				<div class="neuter">
-					<label>중성화 여부</label>
-					<select name="neutralize">	
-						<option>전체</option>  선택 안되면 null로 보내지게
-						<option value="Y">예</option>
-						<option value="N">아니오</option>
-						<option value="U">미상</option>			
-					</select>
-				</div>
-			</div> -->			
-		</section>
-			
-			
-			
-			<!-- <div class="detail-box">
-				<h4>상세 검색</h4>
-				<div class="exist-name">
-					<label>이름 여부</label>
-					<div>
-						<input type="radio" name="existName" checked="checked">전체</input>
-					</div>
-					<div>
-						<input type="radio" name="existName" value="N">이름 없음</input>
-					</div>
-					<div>
-						<input type="radio" name="existName" value="Y">이름 있음</input>
-					</div>
-				</div>
-				<div class="regdate">
-					<label>유기 날짜</label>
-					<input type="date" name="regDateStart">
-					<span>~</span>
-					<input type="date" name="regDateEnd">
-				</div>
-				<div>
-					<div class="kind">
-						<label>품종</label>
-						<select name="upkind">	
-							<option>전체</option>  선택 안되면 null로 보내지게
-							<option value="417000">개</option>
-							<option value="422400">고양이</option>
-							<option value="429900">기타</option>
-						</select>
-						<select name="kind">	
-							축종에 따라 api로 갖고오기
-						</select>
-					</div>
+					<lable>중성화 여부</lable>
 					<div class="neuter">
-						<label>중성화 여부</label>
-						<select name="neutralize">	
-							<option>전체</option>  선택 안되면 null로 보내지게
+						<select name="neuter" class="neuterYn">	
+							<option value="">전체</option>  
 							<option value="Y">예</option>
 							<option value="N">아니오</option>
 							<option value="U">미상</option>			
 						</select>
-					</div>
+					</div>	
 				</div>
-				
-			</div>
-		</section> -->
-
-
-
-
+		</section>
+		
 		<!-- ---------------------- 목록 ------------------------ -->
 		
-	<div class="animal-box">
-		<img src="/images/kiki.JPG" />
-		<div class="title-box">
-			<span>추냥쓰</span>
-			<div></div>
-		</div>
-		<div class="main-info-box">
-			<span>외동읍 녹동원길</span>
-			<span>생후 40일령</span>
-		</div>
-		<div class="sub-info-box">
-			<span>수컷</span>
-			<span>믹스견</span>
-			<span>2021-01-19</span>
-		</div>
-	</div>
-
+		<form method="post" action="/animal/detail"> 
+			<section class="animal-box">
+				<!-- <div class="animal-item">
+					<div>
+						<img src="/images/kiki.JPG" />
+					</div>
+					<div class="title-box">
+						<span>ㅎㅎㅎㅎㅎㅎ</span>
+						<div></div>
+					</div>
+					<div class="main-info-box">
+						<span>11111111</span>
+						<span>2222222222</span>
+					</div>
+					<div class="sub-info-box">
+						<span>수컷</span>
+						<span>믹스견</span>
+						<span>20200101</span>
+					</div>
+				</div> -->
+		</section>
+		</form>
+		
+		
+		<input type="button" value="테스트" onclick="test()">
+		
+	
+	 	<div class="pager-common mt30">
+        	<div class="pager">     
+        		<div class="prev mr15">	
+        			<a class="btn btn-prev">이전</a>  
+            	</div>
+                <ul class="btn-center">
+                    <%-- <c:forEach var="i" begin="0" end="4" varStatus="st">
+                    	<c:set var="current" value="" />
+                       	<c:if test="${i+startNum == page}">
+                        	<c:set var="current" value="current"></c:set>
+                      	</c:if>
+	                  	<c:if test="${i+startNum <= pageCount}">
+	                           <li class="${current}"><a class="bold " href="?p=${i+startNum}&f=${param.f}&q=${param.q}&v=${param.v}">${i+startNum}</a></li>
+	                  	</c:if>
+                    </c:forEach>   --%>
+                </ul>
+                <div class="next">
+                    <a class="btn btn-next">다음</a>
+                </div>
+        	</div>
+        </div>
+                
+<%--                
+ <c:if test="${startNum+5 <= pageCount}">
+                    	<a class="btn btn-next" href="?p=${startNum+5}&f=${param.f}&q=${param.p}&v=${param.v}">다음</a>
+                    </c:if>
+                    <c:if test="${startNum+5 > pageCount}">
+                        <span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음 </span>                           
+                	</c:if> 
+                	
+  <c:if test="${startNum > 1}">                    
+                        <a class="btn btn-prev" href="p=${startNum-5}&f=${param.f}&q=${param.q}&v=${param.v}">이전</a>
+                    </c:if>
+                    <c:if test="${startNum == 1}">                    
+                        <span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</a>
+                    </c:if>                 	
+                	
+                	--%>
+<%-- 		<div class="pager">
+			 <div class="prev mr15">
+                 <c:if test="${startNum > 1}">                    
+                     <a class="btn btn-prev" href="p=${startNum-5}&of=${param.of}&oq=${param.oq}&f=${param.f}&q=${param.q}"></a>
+                 </c:if>
+                 <c:if test="${startNum == 1}">                    
+                     <span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</span>
+                 </c:if>    
+             </div>
+                    
+			<ul class="btn-center">				 
+				
+			</ul>
+			
+		 	<div class="next">
+		 		<c:if test="${startNum+5 <= pageCount}">
+                  	<a class="btn btn-next" href="?p=${startNum+5}&f=${param.f}&q=${param.p}&v=${param.v}"></a>다음</span>
+                </c:if>
+                <c:if test="${startNum+5 > pageCount}">
+                  	<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음 </span>                        	
+                </c:if>
+            </div>
+		</div> --%>
+		
     </section>
 

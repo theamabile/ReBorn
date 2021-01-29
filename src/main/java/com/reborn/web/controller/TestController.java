@@ -17,7 +17,7 @@ public class TestController {
 	public String test() {
 		
 //		return "connectText Table record count: " + service.test();
-		return "test";
+		return "list";
 	}
 	
 }

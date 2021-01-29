@@ -9,4 +9,14 @@
 		SELECT * FROM SidoCategory
 	</select>
 
+	<insert id="insert" parameterType="com.reborn.web.entity.area.SidoCategory">
+		INSERT INTO CareSidoCategory(uprCd, name)
+      	VALUES(#{uprCd}, #{name})
+	</insert>
+	
+	<delete id="delete">
+		DELETE FROM CareSidoCategory 
+		WHERE uprCd = #{uprCd}
+	</delete>
+	
 </mapper>

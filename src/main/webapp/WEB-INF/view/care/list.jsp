@@ -5,53 +5,11 @@
 <link rel="stylesheet" href="/css/care/common.css">
 <link rel="stylesheet" href="/css/care/list.css">
 
-	    <section class="search-box">
-	        <div class="search-inner section-max-width">
-	            <div class="search-bar backdrop-blur">
-	                <div class="search-icon">
-	                    <!-- <i class="fas fa-search"></i> -->
-	                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" >
-	                        <path d="M508.5 481.6l-129-129c-2.3-2.3-5.3-3.5-8.5-3.5h-10.3C395 312 416 262.5 416 208 416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c54.5 0 104-21 141.1-55.2V371c0 3.2 1.3 6.2 3.5 8.5l129 129c4.7 4.7 12.3 4.7 17 0l9.9-9.9c4.7-4.7 4.7-12.3 0-17zM208 384c-97.3 0-176-78.7-176-176S110.7 32 208 32s176 78.7 176 176-78.7 176-176 176z"></path>
-	                    </svg>
-	                </div>
-	                <div class="search-input"><input class="input-reset" name="adoption-center" placeholder="입양소 이름"></div>
-	            </div>
-	        </div>
-	    </section>
-	    <section class="adoption-center-list position-relative">
-	        <div class="adoption-center-list-inner">
-	            <ul>
-	            <c:forEach var="cv" items="${list}">
-	            	<li>
-	                    <div>
-	                        <div class="thumb">
-	                            <a href="${cv.careRegNo}"><img src="/images/care/thumb/1d47dc4b58bd0023f49152347e221051_20160513111715_srgxlzpg.jpg"></a>
-	                        </div>
-	                        <div class="name">
-	                            <div class="bold"><c:if test="${cv.auth}"><i class="fas fa-check"></i> </c:if><a href="${cv.careRegNo}">${cv.name}</a></div>
-	                            <div>${cv.addr}</div>
-	                            <div>${cv.tel}</div>
-	                        </div>
-	                        <div class="current-animals-num">
-	                            <div class="bold">보호중인 동물 수</div>
-	                            <div>${cv.animalCnt}</div>
-	                        </div>
-	                        <div class="interest">
-	                            <div>
-	                                <c:choose>
-	                                	<c:when test="${cv.wish}">
-	                                		<i class="fas fa-heart"></i>
-	                                	</c:when>
-	                                	<c:otherwise>
-	                                		<i class="far fa-heart"></i>
-	                                	</c:otherwise>
-	                                </c:choose>
-	                            </div>
-	                            <div>${cv.wishCnt}</div>
-	                        </div>
-	                    </div>
-	                </li>
-	            </c:forEach>
-	            </ul>
-	        </div>
-	    </section>
+
+<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel" src="/js/care/list.js"></script>
+
+<div id="list"></div>

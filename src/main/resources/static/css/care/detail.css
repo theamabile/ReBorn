@@ -19,9 +19,10 @@ section h1{
 }
 
 .intro{
-    z-index: -1;
+    z-index: 0;
     width: 100%;
     padding: 0;
+    overflow: hidden;
 }
 .intro .intro-image,
 .intro .intro-blur-image
@@ -91,12 +92,12 @@ section h1{
     display:flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    font-size: 16px;
 }
 
 .animal-list li{
     flex: 0 0 40%;
     margin: 0 15px 80px;
-    font-size: 16px;
 }
 
 .animal-list li div:first-child{
@@ -112,12 +113,176 @@ section h1{
     object-fit: cover;
 }
 
-.photos{
-    
-}
 .map{
     background: var(--background-gray);
     padding: 150px 0;
+}
+
+.map-inner .bold{
+    font-family: var(--font-title);
+}
+
+.review{
+	background: #ffffff;
+}
+.review-inner{
+	max-width: 700px;
+	padding-bottom: 100px;
+}
+
+.review-inner li{
+	display: flex;
+	margin: 20px 0;
+	padding: 10px 0;
+	width: 100%;
+    justify-content: center;
+}
+
+.review-inner > *{
+	flex: 0 0 auto;
+}
+
+.review-inner .icon i,
+.review-inner .submit-icon i{
+	flex-basis: 50px;
+	padding: 10px 10px 0 0;
+	color: var(--main-color);
+	font-size: 50px;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+.review-inner .icon i.fa-meh{color:var(--blue)}
+.review-inner .icon i.fa-frown{color:var(--red-pink)}
+
+.review-inner .container{
+	flex-grow: 1;
+}
+
+.review-inner .container input[type="text"],
+.review-inner .container textarea,
+.modal .review-edit input[type="text"],
+.modal .review-edit textarea{
+	width: 100%;
+	padding: 10px;
+	border: 0;
+	border-radius: 12px;
+	background: var(--background-color);
+	box-shadow: inset 1px 1px 4px #ccc;
+	box-sizing: border-box;
+    outline: none;
+}
+
+.review-inner .container textarea,
+.modal .review-edit textarea{
+	height: 120px;
+	margin-top: 10px;
+	resize: none;
+}
+
+.review-inner .writer{
+	font-size: 16px;
+	text-align: left;
+	padding: 10px 0 6px 20px;
+	font-family: var(--font-title);
+}
+
+.review-inner .member,
+.review-inner .edit{
+	display:flex;
+    /* align-items: baseline; */
+    align-items: center;
+}
+
+.review-inner .edit{
+	margin-left: auto;
+    margin-right: 10px;
+}
+
+.review-inner .edit > div{
+	margin: 0 5px; 
+}
+
+.review-inner .edit i,
+.review-inner .edit svg{
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.review-inner .edit .fa-edit{color: var(--main);}
+.review-inner .edit .fa-trash-alt,
+.review-inner .edit svg path{color: var(--red-pink);}
+
+.review-inner .box,
+.modal .review-edit .box{
+	text-align: left;
+	padding: 20px;
+	border-radius: 20px;
+	background-color: #dff3f5;
+    box-shadow: 0 4px 12px var(--black-25);
+	box-sizing: border-box;
+}
+
+.review-inner .container .title,
+.modal .review-edit .box .title{
+	font-family: var(--font-title);
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.review-inner .container .score i,
+.modal .review-edit .box .score i{
+	color: var(--main-color);
+	font-size: 20px;
+	margin: 5px 0 16px;
+	cursor: pointer;
+}
+
+
+.review-inner .container .submit-icon{
+	text-align: right;
+}
+
+.review-inner .container .submit-icon i{
+	color: var(--main-color);
+}
+
+.review-inner .container .regDate{
+    text-align: right;
+    opacity: 0.5;
+}
+
+
+.modal .review-edit .box{
+	border-radius: 0;
+	min-width: 300px;
+}
+
+.modal .review-edit .btn-container{
+	display: flex;
+	height: 32px;
+    margin-top: 10px;
+	border-radius: 12px;
+	overflow: hidden;
+	background: var(--background-color);
+}
+
+
+.modal .review-edit .btn-inner{
+	flex: 0 0 50%;
+}
+
+.modal .review-edit .btn-container input{
+	width: 100%;
+	height: 100%;
+	border: 0;
+	outline: none;
+	cursor: pointer;
+}
+
+.modal .review-edit .btn-container .submit-btn{
+	background-color: var(--main);
+	color: #ffffff;
 }
 
 @media screen and (max-width:768px){

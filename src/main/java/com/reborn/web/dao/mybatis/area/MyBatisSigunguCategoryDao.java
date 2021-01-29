@@ -32,4 +32,14 @@ public class MyBatisSigunguCategoryDao implements SigunguCategoryDao {
 		return mapper.getAreaViewList();
 	}
 
+	@Override
+	public int insertSigungu(SigunguCategory sigungu) {
+		return mapper.insertSigungu(sigungu);
+	}
+
+	@Override
+	public int deleteSigungu(int orgCd) {
+		return mapper.deleteSigungu(orgCd);
+	}
+
 }
