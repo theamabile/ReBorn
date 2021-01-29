@@ -396,7 +396,7 @@ class CareDetail extends React.Component{
 		                <ul>
 		                    {
 		                        this.state.animalInfoList.length == 0
-		                        ? <li style={{flexGrow: 1, fontSize: "3vw"}} className="search-empty"> 테스트중 com.reborn.web.controller.api.care.CareController list()부분 주석 풀기<br /> 보호중인 동물 없습니다</li>
+		                        ? <li style={{flexGrow: 1, fontSize: "3vw"}} className="search-empty">보호중인 동물 없습니다</li>
 		                        : this.state.animalInfoList.map(
 		                            animal => <li key={animal.noticeNo}><div><img src={animal.popfile} alt={animal.noticeNo} /></div><div>{animal.noticeNo}</div></li>
 		                        )

@@ -34,10 +34,12 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.google.gson.Gson;
+import com.reborn.web.entity.animal.Animal;
 import com.reborn.web.entity.area.AreaView;
 import com.reborn.web.entity.care.Care;
 import com.reborn.web.entity.care.CareView;
 import com.reborn.web.entity.care.AnimalEntityTemp;
+import com.reborn.web.service.animal.AnimalService;
 import com.reborn.web.service.area.AreaService;
 import com.reborn.web.service.care.CareService;
 
@@ -61,12 +63,15 @@ public class CareController {
 
 	private CareService careService;
 	private AreaService areaService;
+	private AnimalService animalService;
 	
 	@Autowired
-	public CareController(CareService careService, AreaService areaService) {
+	public CareController(CareService careService, AreaService areaService, AnimalService animalService) {
 		this.careService = careService;
 		this.areaService = areaService;
+		this.animalService = animalService;
 	}
+	
 	
 	@GetMapping("list")
 	public String list(
@@ -101,7 +106,7 @@ public class CareController {
 		
 		return "home.care.list";
 	}
-	
+
 	@GetMapping("{careRegNo}")
 	public String detail( @PathVariable("careRegNo") String careRegNo,
 			Model model) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException{
@@ -152,7 +157,7 @@ public class CareController {
 		return "home.care.detail";
 	}
 
-	@PostMapping("rebuildList")
+	@PostMapping("rebuild/list")
 	@ResponseBody
 	public String rebuildList() throws SAXException, IOException, ParserConfigurationException, XPathExpressionException {
 		
@@ -254,13 +259,13 @@ public class CareController {
 		return result.toString();
 	}
 
-	@PostMapping("rebuildDetail")
+	@PostMapping("rebuild/detail")
 	@ResponseBody
 	public String rebuildDetail() throws SAXException, IOException, ParserConfigurationException, XPathExpressionException, ParseException {
 
 		
 		// DB에서 리스트 가져오기 ===========================================================================================
-		List<Care> careList = careService.getList(0, 999999, null, null);
+		List<Care> careList = careService.getList(1, 999999, null, null);
 		
 		// 보호소 정보 API로 불러오기 ========================================================================================
 		List<Care> sussessList = new ArrayList<>();
@@ -371,23 +376,23 @@ public class CareController {
 	}
 
 
-	@GetMapping("animalCareMapping")
+	@GetMapping("rebuild/animalCareMapping")
 	@ResponseBody
 	public String animalCareMapping() throws SAXException, IOException, ParserConfigurationException, XPathExpressionException, ParseException {
 
 		// DB에서 리스트 가져오기 ===========================================================================================
-		List<Care> careList = careService.getList(0, 999999, null, null);
+		List<Care> careList = careService.getList(1, 999999, null, null);
 		
 		// 보호소 정보 API로 불러오기 ========================================================================================
-		List<Care> sussessList = new ArrayList<>();
-		List<Care> failList = new ArrayList<>();
+		List<Animal> sussessList = new ArrayList<>();
+		List<Animal> failList = new ArrayList<>();
 		
 		int cnt = 0;
 		for(Care care : careList) {
 			String careRegNo = care.getCareRegNo();
 			
 			// API 보호동물들 가져오기
-			List<AnimalEntityTemp> animalList = new ArrayList<>();
+			List<Animal> animalList = new ArrayList<>();
 			try {
 				StringBuilder urlBuilder = new StringBuilder(animalListUrl);
 			
@@ -406,15 +411,29 @@ public class CareController {
 		        NodeList itemNodes = (NodeList)xpath.evaluate("//body/items/item", document, XPathConstants.NODESET);
 		        for( int i = 0; i < itemNodes.getLength(); i++ ){
 		            XPathExpression noticeNoExpression = xpath.compile("noticeNo");
+		            XPathExpression desertionNoExpression = xpath.compile("desertionNo");
 		            
 					Node noticeNoNode = (Node) noticeNoExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
-					
+					Node desertionNoNode = (Node) desertionNoExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
 					String noticeNo = noticeNoNode.getTextContent();
+					Long desertionNo = Long.parseLong(desertionNoNode.getTextContent());
+
+					Animal origin = animalService.get(desertionNo);
+
+					animalList.add(origin);
 					
-					AnimalEntityTemp aet = new AnimalEntityTemp();
-					aet.setNoticeNo(noticeNo);
-					
-					animalList.add(aet);
+					if(origin != null) {
+						origin.setNoticeNo(noticeNo);
+						origin.setCareRegNo(careRegNo);
+						
+						int result = animalService.update(origin);
+						
+						if(result == 1) {
+							sussessList.add(origin);
+							continue;
+						}
+					}
+					failList.add(origin);
 		        }
 				
 			} catch (UnsupportedEncodingException e) {

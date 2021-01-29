@@ -16,20 +16,19 @@ class CareList extends React.Component{
 		this.range = 5;
 		this.startNum = this.page - ((this.page - 1) % this.range);
       	this.queryInput = React.createRef();
+		this.autoCompleteUl = React.createRef();
+		this.queryInputValueTemp = ""; 
+		this.autoCompleteIndex = 0;
 
 		this.invalidate();
 		window.careNameList = window.careNameList.sort();
 			
 		window.onpopstate = (e)=>{
-			console.log("onpopstate=====================================");
-			console.log(JSON.stringify(e.state));
-			console.log(e);
 			this.page = e.state?.p || 1;
 			this.field = e.state?.f || "name";
 			this.query = e.state?.q || "";
 			this.queryInput.current.value = this.query;
 			this.invalidate();
-			
 		}
 	}
 	
@@ -40,7 +39,7 @@ class CareList extends React.Component{
 		})
 		.then(({list, pageCount, careCount})=>{
 			this.startNum = this.page - ((this.page - 1) % this.range);
-			this.setState({list, pageCount, careCount});
+			this.setState({list, pageCount, careCount, autoCompleteList: []});
 		});
 		
 	}
@@ -51,18 +50,85 @@ class CareList extends React.Component{
 			this.query = this.queryInput.current.value;
 			history.pushState({p: this.page, f: this.field, q: this.query}, "", `?p=${this.page}&f=${this.field}&q=${this.query}`);
 			this.invalidate();
-			
 			return;
 		}
 			
-		if( e.target.tagName == "INPUT" ){
-			if( e.keyCode == 13 || e.key == "Enter" ){
-				this.page = 1;
-				this.query = this.queryInput.current.value;
-				history.pushState({p: this.page, f: this.field, q: this.query}, "", `?p=${this.page}&f=${this.field}&q=${this.query}`);
-				this.invalidate();
-				this.setState({autoCompleteList: []});
+	}
+	
+	searchKeyDownHandler(e){
+		const ARROW_UP = 38;
+		const ARROW_DOWN = 40;
+		const ENTER = 13;
+		const BACKSPACE = 8;
+		
+		if( e.keyCode == ENTER ){
+			if(this.autoCompleteIndex != 0){
+				let ul = this.autoCompleteUl.current;
+				let li = ul.querySelector(".active");
+				
+				if( li ){
+					this.queryInput.current.value = li.innerText;
+					this.query = li.innerText;
+					history.pushState({p: this.page, f: this.field, q: this.query}, "", `?p=${this.page}&f=${this.field}&q=${this.query}`);
+					this.invalidate();
+				}
 			}
+			
+			this.page = 1;
+			this.query = this.queryInput.current.value;
+			history.pushState({p: this.page, f: this.field, q: this.query}, "", `?p=${this.page}&f=${this.field}&q=${this.query}`);
+			this.invalidate();
+		}
+		
+		// 자동완성 Ul 이벤트 ===========================================
+		if( !this.autoCompleteUl.current ){
+			return;
+		}
+		
+		let ul = this.autoCompleteUl.current;
+		let li = ul.querySelector(".active");
+		
+		switch(e.keyCode){
+			case BACKSPACE:{
+				if( this.queryInput.current.value != this.queryInputValueTemp){
+					e.preventDefault();
+					this.queryInput.current.value = this.queryInputValueTemp;
+					this.autoCompleteIndex = 0;
+					li.className="";	
+				}
+				break;
+			}
+			case ARROW_UP:{
+				if( this.autoCompleteIndex - 1 <= 0)	{	
+					if(li){
+						this.queryInput.current.value = this.queryInputValueTemp;
+						li.className = "";
+					}
+					return;
+				}
+				if(li)
+					li.className = "";
+				
+				this.autoCompleteIndex--;
+				li = ul.children[this.autoCompleteIndex - 1];
+				li.className = "active";
+				this.queryInput.current.value = li.innerText;
+				break;
+			}
+			case ARROW_DOWN:{
+				if(this.state.autoCompleteList.length <= this.autoCompleteIndex)
+					return;
+				if(li)
+					li.className = "";
+				
+				this.autoCompleteIndex++;
+
+				li = ul.children[this.autoCompleteIndex - 1];
+				li.className = "active";
+				this.queryInput.current.value = li.innerText;
+				break;
+			}
+			
 		}
 	}
 	
@@ -121,52 +187,105 @@ class CareList extends React.Component{
 	autoCompleteHandler(e){
 		let value = e.target.value;
 		let result = [];
+		this.autoCompleteIndex = 0;
+		this.queryInputValueTemp = e.target.value;
 		if(value.length == 0){
 			this.setState({autoCompleteList : result})
 			return;
 		}
 		let valueChars = this.toKorChars(value).join("");
-//		console.log(valueChars);
 		
-		for(let care of careNameList){
+		let strTemp = []; 
+		let careNameListTemp = careNameList.slice(); 
+		
+		for(let care of careNameListTemp){
 			let chars = this.toKorChars(care).join("");
-			let match = chars.match("^" + new RegExp(valueChars, "i"))
-//			if( match )
-//			result.push(match);
+			let match = chars.match(new RegExp("^" + valueChars, "i"));
+			
+//			console.log(valueChars, chars)
+			
 			if( match ){
-				let escape = value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-				if(escape.length > 1)
-					escape = escape.replace(new RegExp("[ㄱ-ㅎ]$"),"");
-				let exec = new RegExp(`(.*)(${escape})(.*)`, "i").exec(care);
-				if( exec )
-					result.push(exec);
+				if(care[0] != value[0])
+					continue;
+				
+				let searchIndex = care.search(new RegExp(value[0], "i"));
+				let valueTemp = value.split("");
+				let careTemp = care.split("");
+				let j = 0;
+				let k = 0;
+//				console.log(valueTemp, careTemp)
+				for(let i = 0; i < careTemp.length; i++){
+					if( valueTemp[j] && careTemp[i].toUpperCase() == valueTemp[j].toUpperCase() ){
+						j++;
+						continue;
+					}
+					if( j > 0 && careTemp[i] == " "){
+						k++;
+						continue;
+					}
+					// 문자열이 이어지지 않으면 멈춤
+					if( j >= 0 )
+						break;
+				}
+					
+				let str = [];
+				str[0] = (careTemp.splice(0, searchIndex)).join("");
+				str[1] = (careTemp.splice(0, j + k)).join("");
+				str[2] = (careTemp.splice(0, careTemp.length)).join("");
+//				console.log(1,searchIndex,j,k,str);
+				result.push(str);
+				strTemp.push(care);
 			}
-//				result.push(<li>{care.replace(value, <span>${value}</span>)}</li>);
 			
 			if( result.length >= 10)
 				break;
 		};
 		
 		if(result.length <= 10){
-			for(let care of careNameList){
+			for(let str of strTemp){
+				let index = careNameListTemp.indexOf(str);
+				if( index != -1)
+					careNameListTemp.splice(index, index+1);
+			}
+				
+			
+			for(let care of careNameListTemp){
 				let chars = this.toKorChars(care).join("");
-				let match = chars.match(new RegExp(valueChars, "i"))
-//				if( match )
-//				result.push(match);
+				let match = (chars.slice(1,chars.length)).match(new RegExp(`${valueChars}`, "i"));
 				if( match ){
-					let escape = value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-					if(escape.length > 1)
-						escape = escape.replace(new RegExp("[ㄱ-ㅎ]$"),"");
-					let exec = new RegExp(`(.*)(${escape})(.*)`, "i").exec(care);
-					if( exec )
-						result.push(exec);
+					let searchIndex = care.search(new RegExp(value[0], "i"));
+					let valueTemp = value.split("");
+					let careTemp = care.split("");
+					let j = 0;
+					let k = 0;
+					
+					for(let i = 0; i < careTemp.length; i++){
+						if( valueTemp[j] && careTemp[i].toUpperCase() == valueTemp[j].toUpperCase() ){
+							j++;
+							continue;
+						}
+						// 공일 경우 통과
+						if( j > 0 && careTemp[i] == " "){
+							k++;
+							continue;
+						}
+						// 문자열이 이어지지 않으면 멈춤
+						if( j > 0)
+							break;
+					}
+					
+					let str = [];
+					str[0] = (careTemp.splice(0, searchIndex)).join("");
+					str[1] = (careTemp.splice(0, j + k)).join("");
+					str[2] = (careTemp.splice(0, careTemp.length)).join("");
+//					console.log(1,searchIndex,j,k,str);
+					result.push(str);
 				}
+				
 				if( result.length >= 10)
 					break;
 			};
 		}
-		
-//		console.log(result);
 		
 		if( result.length != 0 ){
 			this.setState({autoCompleteList: result});
@@ -209,7 +328,7 @@ class CareList extends React.Component{
              chars.push(cCho[cho], cJung[jung]); 
              if (cJong[jong] !== '') { 
                  chars.push(cJong[jong]); 
-                 } 
+             }
 
 			// 이부분을 원하는 방향으로 바꿈.
             // 테스트라는 문장이 
@@ -223,15 +342,83 @@ class CareList extends React.Component{
         }
         return chars; 
     }
+
+	autoCompleteListClickHandler(e){
+		let li = e.target.closest('li');
+		if (!li) return; 
+		if (!e.currentTarget.contains(li)) return;
+		
+		this.queryInput.current.value = li.innerText;
+		this.query = li.innerText;
+		history.pushState({p: this.page, f: this.field, q: this.query}, "", `?p=${this.page}&f=${this.field}&q=${this.query}`);
+		this.invalidate();
+	}
+	
+	queryInputClearHandler(e){
+		this.queryInput.current.value = "";
+		this.setState({autoCompleteList: []});
+	}
+	
+	autoCompleteCloseHandler(e){
+		console.log(e.target)
+		if(this.state.autoCompleteList.length == 0)
+			return;
+		
+		let div = e.target.closest('div.search-inner');
+		console.log(div);
+		if (div) return; 
+		if (e.currentTarget.contains(div)) return;
+		
+//		console.log(div);
+		
+		this.setState({autoCompleteList: []});
+	}
+	
+	autoCompleteMouseOverHandler(e){
+		let current = e.target.closest('li');
+		if (!current) return; 
+		if (!e.currentTarget.contains(current)) return;
+		
+		let ul = this.autoCompleteUl.current;
+		let li = ul.querySelector(".active");
+		
+		if(li)
+			li.className = ""; 
+		
+		
+		let list = ul.children;
+		
+		for( let i = 0; i < list.length; i++){
+			if( list[i] === current){
+				this.autoCompleteIndex = i + 1;
+				break;
+			}
+		}
+		
+		this.queryInput.current.value = current.innerText;
+		current.classList.add("active");
+	}
+	
+	autoCompleteMouseOutHandler(e){
+		let current = e.target.closest('li');
+		if (!current) return; 
+		if (!e.currentTarget.contains(current)) return;
+		
+		this.autoCompleteIndex = 0;
+		
+		this.queryInput.current.value = this.queryInputValueTemp;
+		current.classList.remove("active");
+	}
 	
 	render(){
 		console.log("render");
-		return <section>
+		return <section onClick={this.autoCompleteCloseHandler.bind(this)}>
 			<section className="search-box">
 		        <div className="search-inner section-max-width position-relative">
 		            <div className="search-bar backdrop-blur  position-absolute">
-		                <div className="search-input"><input defaultValue={this.query} ref={this.queryInput} onInput={this.autoCompleteHandler.bind(this)} onKeyPress={this.searchHandler.bind(this)} className="input-reset" name="adoption-center" placeholder="보호소 이름" /></div>
-		                <div className="search-icon pointer" onClick={this.searchHandler.bind(this)}>
+		                <div className="search-input"><input defaultValue={this.query} ref={this.queryInput} onInput={this.autoCompleteHandler.bind(this)} onKeyDown={this.searchKeyDownHandler.bind(this)} onClick={this.autoCompleteHandler.bind(this)}  className="input-reset" name="adoption-center" placeholder="보호소 이름" /></div>
+		                <div className={"search-clear pointer" + (this.queryInput.current?.value ? "" : " d-none")} onClick={this.queryInputClearHandler.bind(this)}><i className="fas fa-times-circle"></i></div>
+						<div className="search-icon pointer" onClick={this.searchHandler.bind(this)}>
 		                    {
 								// <!-- <i className="fas fa-search"></i> -->
 							}
@@ -242,19 +429,15 @@ class CareList extends React.Component{
 						{
 							this.state.autoCompleteList.length != 0
 							?<div className="auto-complete">
-								<ul>
+								<ul ref={this.autoCompleteUl}onClick={this.autoCompleteListClickHandler.bind(this)} onMouseOver={this.autoCompleteMouseOverHandler.bind(this)} onMouseOut={this.autoCompleteMouseOutHandler.bind(this)}>
 								{
 									this.state.autoCompleteList.map(
-										 str => <li key={str}>{str[1]}<span className="bold">{str[2]}</span>{str[3]}</li>
+										 str => <li key={str}>{str[0]}<span>{str[1]}</span>{str[2]}</li>
 									)
-//									if( match )
-//									result.push(care);
-//										str => <li key={str}>{str}</li>
-									
 								}
 								</ul>
 							</div>
-							: ""
+							:""
 						}
 		            </div>
 		        </div>

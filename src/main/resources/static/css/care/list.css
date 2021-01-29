@@ -33,6 +33,15 @@
     height: 100%;
 }
 
+.search-box .search-clear{
+	margin-right: 6px;
+}
+
+.search-box .search-clear i{
+    font-size: 20px;
+	color: #AFAFAF;
+}
+
 .search-box .search-icon{
     flex-basis: 30px;
     padding: 12px 16px;
@@ -86,7 +95,7 @@
 	color: yellow;
 }
 
-.search-box .auto-complete ul li:hover{
+.search-box .auto-complete ul li.active{
     background: rgba(0, 0, 0, .2);
 }
 
