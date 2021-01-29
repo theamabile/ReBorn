@@ -44,11 +44,11 @@
 
 	<insert id="insert" parameterType="com.reborn.web.entity.animal.Animal">
 		INSERT INTO Animal (desertionNo, noticeNo, upKindCd, kindCd, careAddr, processState 
-							, noticeSdt, noticeEdt, weight, careNm, sexCd
+							, careRegNo, noticeSdt, noticeEdt, weight, careNm, sexCd
 							, careTel, happenPlace, officetel, orgNm, popfile
 							, neuterYn,specialMark,colorCd,happenDt, age)
-      	VALUES(#{desertionNo}, #{noticeNo}, #{upKindCd}, #{kindCd}, #{careAddr}, #{processState} 
-      			, #{noticeSdt}, #{noticeEdt}, #{weight} ,#{careNm}, #{sexCd}
+      	VALUES(#{desertionNo}, #{noticeNo}, #{upKindCd}, #{kindCd}, #{careAddr}, #{processState}
+      			, #{careRegNo}, #{noticeSdt}, #{noticeEdt}, #{weight} ,#{careNm}, #{sexCd}
       			, #{careTel}, #{happenPlace}, #{officetel}, #{orgNm}, #{popfile}, #{neuterYn} 
       			, #{specialMark}, #{colorCd}, #{happenDt}, #{age})
 	</insert>
@@ -56,7 +56,7 @@
 	
 	<update id="update" parameterType="com.reborn.web.entity.animal.Animal">
 		UPDATE Animal SET noticeNo = #{noticeNo}, upKindCd = #{upKindCd}, kindCd = #{kindCd}, careAddr = #{careAddr}, processState = #{processState} 
-						, noticeSdt = #{noticeSdt}, noticeEdt = #{noticeEdt}, weight = #{weight}, careNm = #{careNm}, sexCd = #{sexCd} 
+						, careRegNo = #{careRegNo}, noticeSdt = #{noticeSdt}, noticeEdt = #{noticeEdt}, weight = #{weight}, careNm = #{careNm}, sexCd = #{sexCd} 
 						, careTel = #{careTel}, happenPlace = #{happenPlace}, officetel = #{officetel}, orgNm = #{orgNm}, popfile = #{popfile}
 						, neuterYn = #{neuterYn}, specialMark = #{specialMark}, colorCd = #{colorCd}, happenDt = #{happenDt}, age = #{age}
 		WHERE desertionNo = #{desertionNo}
