@@ -9,7 +9,9 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,16 +76,32 @@ public class AnimalController {
 			@RequestParam(name="neuter", required=false) String neuter) {		//중성화여부
 	
 		// date format 더해보기 => null & required
+		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");	
 		Date startDate = null;
 		Date endDate = null;
+
 		if(bgnde != null && !bgnde.equals("")) {
-			startDate = Date.valueOf(bgnde);
-		}
-		if(endde != null && !endde.equals("")) {
-			endDate = Date.valueOf(endde);
+			try {
+				startDate = new Date(inputFormat.parse(bgnde).getTime());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
-		System.out.println("ㅎㅎ : "+startDate);
+		if(endde != null && !endde.equals("")) {
+			try {
+				endDate = new Date(inputFormat.parse(endde).getTime());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+
+		System.out.println("startDate : "+startDate+" / endDate : "+endDate);
+		
+		
 		List<Animal> list = animalService.getList(page, size, upkind, kind, startDate, endDate, neuter);
 		int count =	animalService.getCount(upkind, kind, startDate, endDate, neuter);
 				

@@ -37,6 +37,7 @@ window.addEventListener("load", e=>{
 		loadKind()
 		.then(
 			result=>{
+				page = 1;
 				load();
 			});
 	});
@@ -112,6 +113,9 @@ window.addEventListener("load", e=>{
 			animalList.innerHTML = "";
 			let count = json.count;
 			let list = json.list;
+			
+			window.scrollTo( 0, 0 );
+			console.log("scrollY : "+window.scrollY);
 			
 			if(json.count <= 0) {			
 				animalList.insertAdjacentHTML('beforeend', `<span class="bold m-auto gray fs-1">항목이 존재하지 않습니다</span>`);
@@ -205,8 +209,7 @@ window.addEventListener("load", e=>{
 				console.log(json);
 				
 				let list = json;
-				kindSelectBox.innerHTML = "";
-				
+				kindSelectBox.innerHTML = "";				
 				
 				kind= "";		// 축종이 바뀌니까 품종은 일단 선택된 값 없음.
 				kindSelectBox.insertAdjacentHTML('beforeend', `<option value="" selected>전체</option>`);
@@ -222,13 +225,6 @@ window.addEventListener("load", e=>{
 		});
 		
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	// 축종 값 변경 되면 로드하기	

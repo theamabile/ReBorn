@@ -6,9 +6,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -334,9 +335,14 @@ public class AnimalServiceImp implements AnimalService{
 		String day = strValue.substring(6, 8);
 
 		String strDate = String.format("%s-%s-%s", year, month, day);
-
-		Date date = Date.valueOf(strDate);
-		
+		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date =  new Date();
+		try {
+			date = inputFormat.parse(strDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return date;
 	}
 
