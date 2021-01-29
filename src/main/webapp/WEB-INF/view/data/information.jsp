@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <link href="/css/data/information.css" type="text/css" rel="stylesheet" />    
-
+<script src="/js/data/information.js"></script>	
 
 <c:set var="page" value ="${param.p}"/>
 <c:set var="cate" value ="${param.categroy}"/>
@@ -21,11 +21,11 @@
 	<h1>동물 기본 상식</h1>
 	<div class="info-tab">
 
-        <ul>
-        	<li class="${cate==1?'active':''}"><a href="./information?p=1&categroy=1">공통</a></li>
-            <li class="${cate==2?'active':''}"><a href="./information?p=1&categroy=2">강아지</a></li>
-            <li class="${cate==3?'active':''}"><a href="./information?p=1&categroy=3">고양이</a></li>
-            <li class="${cate==4?'active':''}"><a href="./information?p=1&categroy=4">기타</a></li>
+        <ul class="info-tab-list">
+        	<li class="${cate==1?'active':''}"><a href="#" data-category="1">공통</a></li>
+            <li class="${cate==2?'active':''}"><a href="#" data-category="2"">강아지</a></li>
+            <li class="${cate==3?'active':''}"><a href="#" data-category="3"">고양이</a></li>
+            <li class="${cate==4?'active':''}"><a href="#" data-category="4">기타</a></li>
         </ul>
     </div>
     <div class="info-board">
@@ -62,40 +62,80 @@
     
     
     
-     <c:set var="offset" value="${(page-1)%5}" />
+    
+    <c:set var="offset" value="${(page-1)%5}" />
+	<c:set var="startNum" value="${page-offset}" />
+	 
+	 
+    <div class="pager-common mt30">
+         <div class="pager">  
+            <div class="prev mr15">
+              	<c:if test ="${startNum > 1}">
+            		<a class="btn btn-prev" href="?p=${startNum-5}&categroy=${param.categroy}">이전</a>
+            	</c:if>
+            	<c:if test="${startNum == 1}">                    
+                    <span class="btn btn-prev">이전</a>
+                </c:if>    
+            </div>  
+           <ul class="btn-center">
+                  <c:forEach var="i" begin="0" end="4" varStatus="st">
+                  <c:set var="current" value="" />
+                  <c:if test="${i+startNum == page}">
+                  <c:set var="current" value="current"></c:set>
+                  </c:if>
+                  <c:if test="${i+startNum <= pageCount}">
+                       <li class="${current}"><a class="bold " href="#">${i+startNum}</a></li>
+                  </c:if>
+             	</c:forEach>  
+             </ul>
+      		 <div class="next">
+                <c:if test="${startNum+5 <= pageCount}">
+                    <a class="btn btn-next" href="?p=${startNum+5}&categroy=${param.categroy}"></a>다음</span>
+                 </c:if>
+                 <c:if test="${startNum+5 > pageCount}">
+                    <span class="btn btn-next">다음 </span>                           
+                 </c:if>
+             </div>
+   		</div>
+ 	</div>
+    
+    
+    
+    
+    
+    <br/>
+        <br/>
+            <br/>
+                <br/>
+                    <br/>
+                        <br/>
+    
+    <%--  <c:set var="offset" value="${(page-1)%5}" />
 	 <c:set var="startNum" value="${page-offset}" />
 	 
     <div class="">
-            <ul class="">
-            
-            	<!-- 이전 페이지 -->
                 <c:if test ="${startNum > 1}">
-                	 <li><a href="?p=${startNum+5}&categroy=${param.categroy}">&lt;</a></li>
-					<a class="btn btn-next" href="?p=${startNum-5}&f=${param.f}&q=${param.q}">다음</a>
+                	 <a href="?p=${startNum-5}&categroy=${param.categroy}">&lt;</a>
 				</c:if>
 				<c:if test ="${startNum == 1}">
-					 <li onclick="alert('이전 페이지가 없습니다.');"><a href="#">&lt;</a></li>
+					<a href="#" onclick="alert('이전 페이지가 없습니다.');">&lt;</a>
 				</c:if>
-				<!-- //이전 페이지 -->
 				
-				<!-- 페이지 번호 -->
+            <ul class="pager">
                 <c:forEach var="i" begin="0" end="4" varStatus="st">
                 	<c:if test ="${i+startNum <= pageCount}">
                 		<li class="active"><a href="?p=${i+startNum}&categroy=${param.categroy}">${startNum + i}</a></li>
                 	</c:if>
                 </c:forEach>
-                <!-- //페이지 번호 -->
-                
-                <!-- 다음 페이지 -->
+
+            </ul>
+            
                 <c:if test ="${startNum + 5 <= pageCount}">
-                	 <li><a href="?p=${startNum+5}&categroy=${param.categroy}">&gt;</a></li>
-					<a class="btn btn-next" href="?p=${startNum+5}&f=${param.f}&q=${param.q}">다음</a>
+                	<a href="?p=${startNum+5}&categroy=${param.categroy}">&gt;</a>
 				</c:if>
 				<c:if test ="${startNum + 5 > pageCount}">
-					 <li onclick="alert('다음 페이지가 없습니다.');"><a href="#">&gt;</a></li>
+					<a href="#" onclick="alert('다음 페이지가 없습니다.');">&gt;</a>
 				</c:if>
-				<!-- //다음 페이지 -->
-               
-            </ul>
-        </div>
+        </div> --%>
+        
 </section>

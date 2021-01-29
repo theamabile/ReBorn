@@ -1,3 +1,5 @@
+@IMPORT url("style.css");
+
 @font-face {
 	font-family: 'GoyangIlsan';
 	src:
@@ -19,13 +21,14 @@
 * {
 	font-family: 'GoyangIlsan';
 }
+
 header {
-    position: fixed;
+	position: fixed;
 }
+
 body {
 	background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
 		url(../../images/loginBg.jpg) 50% 50%;
-
 }
 
 section {
@@ -35,10 +38,11 @@ section {
 	justify-content: center;
 	/* 占쎄돌餓λ쵐肉� 占쎄텣占쎌젫 */
 	min-height: 860px;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../../images/loginBg.jpg) 50% 50%;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+		url(../../images/loginBg.jpg) 50% 50%;
 }
 
 section .logo {
@@ -79,7 +83,7 @@ section .input {
 	font-family: 'GoyangDeogyang';
 	text-align: -webkit-center;
 	border-radius: 5px;
-	margin-bottom: 20px;
+	margin-bottom: 22px;
 	height: 32px;
 	width: 300px;
 	border: 2px solid #43888A;
@@ -100,7 +104,6 @@ section .button {
 	height: 35px;
 	width: 250px;
 	color: white;
-    background: #43888A;
 }
 
 section .container .alert {
@@ -113,6 +116,7 @@ section .container .alert {
 	width: inherit;
 	display: flex;
 	justify-content: space-evenly;
+	margin-bottom: 20px;
 }
 
 .confirm-btn {
@@ -133,6 +137,11 @@ section .container .alert {
 	height: 25px;
 }
 
+.result {
+	color: red;
+	font-weight: initial;
+	margin-bottom: 4px;
+}
 /* =============login=========== */
 section a {
 	text-decoration: none;
@@ -148,7 +157,7 @@ section a {
 	left: 42px;
 }
 
-.login .find-info, .login .join-nav {
+.login .find-info, .login .join-nav, .find-id .join-nav {
 	margin: 10px 0px 23px 0px;
 }
 
@@ -163,7 +172,7 @@ section a {
 }
 
 #kakao-login-btn {
-	background: url(../../images//login/kakao_login_w.png) no-repeat 0;
+	background: url(../../images/login/kakao_login_w.png) no-repeat 0;
 }
 /* =============find-id=========== */
 .find-id .container .envelope {
@@ -174,17 +183,21 @@ section a {
 	top: 165px;
 }
 
-.find-id .container input[type="button"], .find-id-result .container input[type="button"]
-	{
+.find-id-result .container input[type="button"] {
 	margin: 0px 0px 25px 0px;
 }
 
 /* ==========find-id-result========== */
-/* .find-id-result{
-    top: 109px;
-} */
+
 .find-id-result .users {
 	top: 109px;
+}
+
+.find-id form,.find-pw form,
+.reset-pw form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 /* =============find-pw============== */
 .find-pw .checkboxs {
@@ -197,7 +210,10 @@ section a {
 	align-items: center;
 }
 
-.find-pw .input {
+.find-pw .name-input ,
+.find-pw .phone-input ,
+.find-pw .email-input ,
+.reset-pw .pw-input{
 	margin-bottom: 10px;
 }
 
@@ -206,12 +222,12 @@ section a {
 }
 
 .find-pw .name {
-	top: 160px;
-	left: 42px;
+	top: 172px;
+	left: 44px;
 }
 
-.find-pw .phone {
-	top: 207px;
+.find-pw .phone , .find-pw .envelope {
+	top: 219px;
 	left: 45px;
 }
 /* .find-pw .button{
@@ -221,17 +237,17 @@ section a {
 	margin: 25px 0px 30px 0px;
 }
 
-/* ===========find-pw-result===== */
-.find-pw-result .users {
+/* ===========reset-pw===== */
+.reset-pw .users {
 	top: 110px;
 }
 
-.find-pw-result .key {
-	top: 165px;
+.reset-pw .key {
+top: 167px;
 	left: 42px;
 }
 
-.find-pw-result .key2 {
-	top: 221px;
+.reset-pw .key2 {
+    top: 213px;
 	left: 42px;
 }

@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link href="/css/report/detail.css" type="text/css" rel="stylesheet" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<link href="/css/report/detail.css" type="text/css" rel="stylesheet" />
+<script src="/js/report/detail.js"></script>	
 <section class="main-container">
 	<h1>반려동물 실종 신고</h1>
 	        <div class="data-table-box">
+	        <span class="missing-id hide">${missingView.id}</span>	
             <form action="" class="data-table-form">
                 <table class="data-table">
                     <colgroup>
@@ -12,31 +17,29 @@
                         <col style="width:auto;">
                     </colgroup>
                     <tbody>
-                       
-
                         <tr>
                             <th>제목</th>
                             <td>
-                                제목제목제목제목제목칸
+                                ${missingView.title}
                             </td>
                         </tr> 
                         <tr>
                             <th>작성자</th>
                             <td>
-                               홍길동
+                              ${missingView.nickname}
                             </td>
                         </tr>
                         <tr>
                             <th>실종 일자</th>
                             <td>
-                               2011-22-11
+                               <fmt:formatDate value="${missingView.missingDate}" pattern="yyyy-MM-dd"/>
                             </td>
                         </tr>
 
                         <tr>
                             <th>실종 장소</th>
                             <td>
-                              서울시 강남대로
+                              ${missingView.location}
                             </td>
                         </tr>
 
@@ -44,15 +47,13 @@
                         <tr>
                             <th>품종</th>
                             <td>
-                               믹스견
+                               ${missingView.breed}
                             </td>
                         </tr>
                         <tr>
                             <th>특징</th>
                             <td>
-                                <div class="data-table-form">
-                                    털이 갈색이고 눈색이 갈색이입니다.
-                                </div>
+                                ${missingView.feature}
                             </td>
                         </tr>
                         
@@ -60,65 +61,53 @@
                             <th>내용</th>
                             <td>
                                 <div  class="detail-content">
-                                    찾아주시는 분에게 사례합니다.<br>
+                                     ${missingView.content}
                                 </div>
                             </td>
                         </tr>
-                        
+                        <c:if test="${not empty missingView.files}">
                          <tr>
                             <td colspan="2" class="detail-img-td">
                                 <div class="detail-img-box">
                                     <ul>
-                                        <li style="background-image:url('/images/data/img1.jpg')"></li>
-									 	<li style="background-image:url('/images/data/img1.jpg')"></li>
-									  	<li style="background-image:url('/images/data/img1.jpg')"></li>
+                                    	
+                                    	<c:forEach items="${fn:split(missingView.files, ',') }" var="item">
+											 <li style="background-image:url('/upload/report/${missingView.id}/${item}')"></li>
+										</c:forEach>
+										
+									</ul>
                                 </div>
                             </td>
-                        </tr> 
+                        </tr>
+                        </c:if> 
                     </tbody>
                 </table>
             </form>
         </div>
         
         <div class="data-btn-box">
-            <a href="#" class="main-button-m">목록</a>
+            <a href="list" class="main-button-m">목록</a>
         </div>
 
 
         <div class="comment-box">
             <ul>
+            	<c:forEach var="cl" items="${commentList}">
                 <li>
                     <ol class="comment-info">
-                        <li>홍길동님</li>
-                        <li>2022-22-22</li>
+                        <li>${cl.nickname}</li>
+                        <li><fmt:formatDate value="${cl.regDate}" pattern="yyyy-MM-dd"/></li>
                     </ol>
                     <div class="comment-content">
-                        댓글입력란...
+                       ${cl.content}
                     </div>
                 </li>
-                <li>
-                    <ol class="comment-info">
-                        <li>홍길순님</li>
-                        <li>2022-22-22</li>
-                    </ol>
-                    <div class="comment-content">
-                        댓글입력란... 댓글입력란... <br>댓글입력란... 댓글입력란...<br> 댓글입력란... 댓글입력란...<br> 댓글입력란...
-                    </div>
-                </li>
-                <li>
-                    <ol class="comment-info">
-                        <li>홍길동님</li>
-                        <li>2022-22-22</li>
-                    </ol>
-                    <div class="comment-content">
-                        댓글입력란...
-                    </div>
-                </li>
+                </c:forEach>
             </ul>
             <div>
-                <form action="">
+                <form action="/api/report/${missingView.id}/comment/write" class="comment-form" method="POST">
                     <div class="comment-write-box">
-                        <textarea class="comment-area"></textarea>
+                        <textarea class="comment-area" name="comment-content"></textarea>
                         <a href="#" class="comment-btn">작성</a>
                     </div>
                 </form>

@@ -10,6 +10,7 @@ public interface DataService {
 	List<InfoView> getViewList(int page, int size, int categoryId);
 
 	int getCount(int categoryId);
+	int updateHit(int id);
 
 	
 

@@ -13,4 +13,10 @@ public class HomeController {
 		return "home.main";
 	}
 	
+	
+	@RequestMapping("chat")
+	public String chat() {
+		return "chat";
+	}
+	
 }
