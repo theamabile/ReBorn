@@ -1,6 +1,6 @@
 package com.reborn.web.dao.mybatis.animal;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;

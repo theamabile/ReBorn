@@ -20,11 +20,11 @@
 	     	</if> 
 	     	
 	     	<if test="param5 != null and param5 != ''">
-	      		AND happenDt &gt;= #{param5}
+	      		AND happenDt &gt;= ${param5}
 	     	</if> 
 	     	
 	     	<if test="param6 != null and param6 != ''">
-	      		AND happenDt &lt;= #{param6}
+	      		AND happenDt &lt;= ${param6}
 	     	</if> 
 	     	
 	     	<if test="param7 != null and param7 != ''">

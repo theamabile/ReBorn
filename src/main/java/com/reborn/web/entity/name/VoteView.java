@@ -5,6 +5,7 @@ import java.util.List;
 public class VoteView extends Vote{
 	private int nameCnt;
 	private int choiceSum;
+	private String popfile;
 	private List<NameView> rankNameList;
 	
 	public int getNameCnt() {
@@ -21,6 +22,14 @@ public class VoteView extends Vote{
 	
 	public void setChoiceSum(int choiceSum) {
 		this.choiceSum = choiceSum;
+	}
+	
+	public String getPopfile() {
+		return popfile;
+	}
+
+	public void setPopfile(String popfile) {
+		this.popfile = popfile;
 	}
 
 	public List<NameView> getRankNameList() {
