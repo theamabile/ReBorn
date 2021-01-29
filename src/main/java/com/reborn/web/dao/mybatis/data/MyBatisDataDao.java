@@ -34,6 +34,12 @@ public class MyBatisDataDao implements DataDao {
 		return  mapper.getCount(categoryId);
 	}
 
+	@Override
+	public int updateHit(int id) {
+		
+		return mapper.updateHit(id);
+	}
+
 	
 	
 	

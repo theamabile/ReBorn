@@ -5,7 +5,7 @@
 <section class="main-container">
 	<h1>반려동물 실종 신고</h1>
     <div class="data-table-box">
-        <form action="" class="data-table-form">
+        <form class="data-table-form" method="POST" enctype="multipart/form-data" action="/report/write">
             <table class="data-table">
                 <colgroup>
                     <col style="width:200px;">
@@ -16,7 +16,7 @@
                         <th>제목</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="text" placeholder="제목을 입력해주세요.">
+                                <input name="title" type="text" placeholder="제목을 입력해주세요.">
                             </div>
                         </td>
                     </tr> 
@@ -24,7 +24,7 @@
                         <th>실종 일자</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="date">
+                                <input name="missing-date" type="date">
                             </div>
                         </td>
                     </tr>
@@ -33,7 +33,7 @@
                         <th>실종 장소</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="text" placeholder="ex) 서울시 마포구 연남동 성산중학교 앞">
+                                <input name="location" type="text" placeholder="ex) 서울시 마포구 연남동 성산중학교 앞">
                             </div>
                         </td>
                     </tr>
@@ -43,7 +43,7 @@
                         <th>품종</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="text" placeholder="ex)믹스견입니다."">
+                                <input name="breed" type="text" placeholder="ex)믹스견입니다."">
                             </div>
                         </td>
                     </tr>
@@ -51,7 +51,7 @@
                         <th>특징</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="text" placeholder="ex) 털이 갈색이고 눈색이 갈색이입니다.">
+                                <input name="feature" type="text" placeholder="ex) 털이 갈색이고 눈색이 갈색이입니다.">
                             </div>
                         </td>
                     </tr>
@@ -75,7 +75,7 @@
                     <tr>
                         <th>내용</th>
                         <td>
-                            <textarea  class="data-table-textarea" class="" name="" id=""></textarea>
+                            <textarea  class="data-table-textarea" name="content"></textarea>
                         </td>
                     </tr>
                 </tbody>
@@ -84,12 +84,15 @@
     </div>
    
     <div class="data-btn-box">
-        <a href="#" class="main-button-m">작성</a>
-        <a href="#" class="gray-button-m">취소</a>
+        <a href="#" class="main-button-m data-submit">작성</a>
+        <a href="list" class="gray-button-m data-cancel">취소</a>
     </div>
 </section>
 
 <script>
+
+
+
 //첨부파일
 function fileInputClick(){
     let e = this.event.target;
@@ -155,8 +158,62 @@ window.addEventListener('load', ()=>{
               attachList.insertAdjacentHTML('beforeend',fileFormTemp);
          }
      })                    
- })
+
  
  
+	//전송
+	let dataSubmit = document.querySelector('.data-submit');
+	let dataCancel = document.querySelector('.data-cancel');
+	let form  = document.querySelector('.data-table-form');
+	let isChecked = false;
+	
+	 dataSubmit.addEventListener('click', (e)=>{
+	 	 e.preventDefault();
+	 	 isChecked = formCheck();
+	        
+	 	if(isChecked == true){
+	       form.method="POST";
+	       form.submit();
+	     }
+	 	  
+	 });
+	 
+	 dataCancel.addEventListener('load', (e)=>{
+	 	 e.preventDefault();
+	 	 window.location = "./list";
+	 });
+	 
+	 
+	 function formCheck(){
+	 	let titName = document.querySelector('input[name=title]');
+	 	let missingDate = document.querySelector('input[name= missing-date]');
+	 	let locationName = document.querySelector('input[name=location]');
+	    
+	    if(titName.value.trim()==''){
+		    alert('제목이 비어있습니다.\n제목을 입력해 주세요');
+		    titName.focus();
+		    return false;
+		}
+		
+		if(locationName.value.trim()==''){
+		    alert('실종장소가 비어있습니다.\n실종장소를 입력해 주세요');
+		    locationName.focus();
+		    return false;
+		}
+		
+		
+		if(missingDate.value.trim()==''){
+		    alert('실종일자가 비어있습니다.\n실종일자를 입력해 주세요');
+		    missingDate.focus();
+		    return false;
+		}
+		
+		
+		
+	 	return true;
+	 }
+	 
+
+})
  
  </script>	

@@ -41,7 +41,7 @@ public class InfoController {
 		int size = 4; //한페이지 출력할 개수
 		
 		List<InfoView> list = service.getViewList(page, size, categoryId);
-		System.out.println(list);
+		//System.out.println(list);
 		
 		
 		Map<Integer, String> imgUrlList = new HashMap<>();
@@ -71,9 +71,10 @@ public class InfoController {
 		return "home.data.information";
 	}
 	
-	
+	//디테일 페이지
 	@RequestMapping("{id}")
 	public String informationDetail(@PathVariable("id") int id, Model model) {
+		service.updateHit(id);
 		InfoView infoView = service.getView(id);
 		
 		model.addAttribute("n", infoView);

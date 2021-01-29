@@ -21,4 +21,9 @@
 	<select id="getCount" resultType="int">
 		select count(id) from Info where infoCategoryId = #{param1};
 	</select>
+	
+	<update id="updateHit">
+		update Info set hitCnt = hitCnt+1 where id = #{param1}; 
+	</update>
+	
 </mapper>
