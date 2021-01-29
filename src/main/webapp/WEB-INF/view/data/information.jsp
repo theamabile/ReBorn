@@ -110,38 +110,32 @@
                     <br/>
                         <br/>
     
-     <c:set var="offset" value="${(page-1)%5}" />
+    <%--  <c:set var="offset" value="${(page-1)%5}" />
 	 <c:set var="startNum" value="${page-offset}" />
 	 
     <div class="">
-    	<!-- 이전 페이지 -->
                 <c:if test ="${startNum > 1}">
                 	 <a href="?p=${startNum-5}&categroy=${param.categroy}">&lt;</a>
 				</c:if>
 				<c:if test ="${startNum == 1}">
 					<a href="#" onclick="alert('이전 페이지가 없습니다.');">&lt;</a>
 				</c:if>
-				<!-- //이전 페이지 -->
 				
             <ul class="pager">
-				<!-- 페이지 번호 -->
                 <c:forEach var="i" begin="0" end="4" varStatus="st">
                 	<c:if test ="${i+startNum <= pageCount}">
                 		<li class="active"><a href="?p=${i+startNum}&categroy=${param.categroy}">${startNum + i}</a></li>
                 	</c:if>
                 </c:forEach>
-                <!-- //페이지 번호 -->
 
             </ul>
             
-            	  <!-- 다음 페이지 -->
                 <c:if test ="${startNum + 5 <= pageCount}">
                 	<a href="?p=${startNum+5}&categroy=${param.categroy}">&gt;</a>
 				</c:if>
 				<c:if test ="${startNum + 5 > pageCount}">
 					<a href="#" onclick="alert('다음 페이지가 없습니다.');">&gt;</a>
 				</c:if>
-				<!-- //다음 페이지 -->
-        </div>
+        </div> --%>
         
 </section>
