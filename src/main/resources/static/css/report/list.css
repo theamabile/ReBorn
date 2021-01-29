@@ -131,11 +131,14 @@
 
 .report-search-box .seach-btn {
     display: block;
+   	width: 80px;
     min-width: 80px;
+    height:36px;
     line-height: 36px;
     text-align: center;
     background: #43888a;
     color: #fff;
+    border:none;
     border-radius:0 5px 5px 0;
 }
 
