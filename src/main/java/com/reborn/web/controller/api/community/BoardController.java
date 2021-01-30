@@ -37,30 +37,23 @@ public class BoardController {
 	}
 	
 	@RequestMapping("{id}")
-	public Map<String, Object> detail(
-			@PathVariable("id") int id){
+	public Map<String, Object> detail(@PathVariable("id") int id){
 		
-		BoardView board = service.get(id);
+		/* BoardView board = service.get(id); */
+		/* dto.put("b", board); */
 		List<CommentView> comment = service.getCommentViewList(id);
 		int commentCount = service.getCommentCount(id);
 		
+		
+		
 		Map<String, Object> dto = new HashMap<>();
-		dto.put("b", board);
 		dto.put("comment", comment);
 		dto.put("commentCount", commentCount);
 		
 		return dto;
-
 		
 	}	
 	
-	public List<CommentView> list(
-			@RequestParam(name="id") int id){
-	
-		List<CommentView> list = service.getCommentViewList(id);
-		
-		return list;
-		
-	}
+
 	
 }

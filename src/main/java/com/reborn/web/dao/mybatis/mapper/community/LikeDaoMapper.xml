@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.reborn.web.dao.community.LikeDao">
+     
+
+<!-- 해당 글의 '좋아요' 수를 반환  --> 
+ <select id="getLikeCount" resultType="int">
+	select count(id) from `Like`
+		where boardId = #{boardId};	
+</select>
+
+<!-- 좋아요를 눌렀는지 아닌지 반환 -->
+<select id="getCount" resultType="int">
+	select count(id) from `Like` 
+		  where boardId = #{param1}
+			AND memberId = #{param2}
+</select>
+ 
+   
+   <!-- 좋아요 추가 -->
+   <insert id="insert" parameterType="com.reborn.web.entity.community.Like" >
+	   	insert into `Like`(memberId, boardId) 
+	   	values(#{memberId}, #{boardId});
+   </insert>
+   
+   <!-- 좋아요 삭제 -->
+   <delete id="delete">
+   	DELETE from `Like`
+	where boardId = #{param1}
+    AND memberId = #{param2}
+   </delete> 
+   
+</mapper> 
+
+

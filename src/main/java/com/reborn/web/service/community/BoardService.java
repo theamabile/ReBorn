@@ -7,6 +7,7 @@ import com.reborn.web.entity.community.BoardCategory;
 import com.reborn.web.entity.community.BoardView;
 import com.reborn.web.entity.community.Comment;
 import com.reborn.web.entity.community.CommentView;
+import com.reborn.web.entity.community.Like;
 
 public interface BoardService {
 	
@@ -32,6 +33,10 @@ public interface BoardService {
 	int getCommentCount(int id);
 	List<CommentView> getCommentViewList(int id);
 	int update(Comment comment);
+	int getLikeCount(int id);
+	void insert(Like like);
+	int getCount(int id, int memberId);
+	void delete(int id, int memberId);
 	
 	
 }

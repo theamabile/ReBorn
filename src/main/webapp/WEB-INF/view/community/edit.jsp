@@ -25,6 +25,10 @@
 	                    <span class="article-title bold">
 	                    	<input type="text" name="title" value="${b.title}"/>
 	                    </span>
+	                    <div class="product-name-img">
+                 			<input type="file" name="file" value=""/>
+		                 	<img src="/upload/community/2021/${b.id}/${b.files}" alt="">		
+                		</div> 
 	                    <div class="write-info">
 	                        <span class="writer-id bar mr10">by ${b.nickname }</span> 
 	                        <span class="regdate bar mr10"> 

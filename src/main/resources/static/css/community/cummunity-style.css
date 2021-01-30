@@ -1,168 +1,226 @@
 /* 怨듯넻 css �젙�쓽 */
 .hidden {
-    display: none;
+	display: none;
 }
 /* �뙣�뵫 �깙 */
-.pt15{
-    padding-top: 15px;
+.pt15 {
+	padding-top: 15px;
 }
-.padding10{
-    padding: 10px;
+
+.padding10 {
+	padding: 10px;
 }
 
 /* 留덉쭊 �깙 */
-.mt5{
-    margin-top: 5px;
-}
-.mt10{
-    margin-top: 10px;
-}
-.mt20{
-    margin-top: 20px;
-}
-.mt30{
-    margin-top: 30px;
-}
-.mt50{
-    margin-top: 50px;
+.mt5 {
+	margin-top: 5px;
 }
 
-.mt60{
-    margin-top: 60px;
+.mt10 {
+	margin-top: 10px;
+}
+
+.mt20 {
+	margin-top: 20px;
+}
+
+.mt30 {
+	margin-top: 30px;
+}
+
+.mt50 {
+	margin-top: 50px;
+}
+
+.mt60 {
+	margin-top: 60px;
 }
 /* 留덉쭊 right */
-.mr15{
-    margin-right: 15px;
-}
-.mr10{
-    margin-right: 10px;
+.mr15 {
+	margin-right: 15px;
 }
 
-.ml1{
+.mr10 {
+	margin-right: 10px;
+}
+
+.ml1 {
 	margin-left: 10px;
 }
-.ml2{
+
+.ml2 {
 	margin-left: 20px;
 }
 
 /* text - bold */
-.bold{
-    font-weight: bold;
+.bold {
+	font-weight: bold;
 }
 
-.fz24{
-    font-size: 24px;
+.fz24 {
+	font-size: 24px;
 }
-.fz20{
-    font-size: 20px;
+
+.fz20 {
+	font-size: 20px;
 }
-.fz18{
-    font-size: 18px;
+
+.fz18 {
+	font-size: 18px;
 }
 /* 버튼 */
-input[type="button"]{
-	border:none;
+input[type="button"] {
+	border: none;
 	text-decoration: none;
-	outline:0;
-}
-button{
-	border:none;
-	text-decoration: none;
-	outline:0;
-}
-input[type="text"], input[type="text"]:focus, input[type="submit"]{
-    outline: 0;
-}
-
-textarea{
-	resize:none;
 	outline: 0;
 }
 
-.text-red{
-    color: #1a7a7e;
-}
-.dot:after{
-    content: "ㆍ";  
-    color:  rgb(146, 146, 146);
-}
-.bar:after{
-    content: "|";
-    color:  rgb(146, 146, 146);
-    margin-left: 10px;
-}
-.button{
-        width: 70px;
-        height: 35px;
-        font-size: 17px;
-        background: #1a7a7e;
-        color:lavender;
-        box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2); 
+button {
+	border: none;
+	text-decoration: none;
+	outline: 0;
 }
 
-.community-button{
-		display: inline-block;
-		text-align: center;
-		line-height: 35px;
-		border-radius: 8px;
-		width: 70px;
-        height: 35px;
-        font-size: 17px;
-        background: #1a7a7e;
-        color:lavender;
-        box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2);
-	
+input[type="text"], input[type="text"]:focus, input[type="submit"] {
+	outline: 0;
 }
 
-select{
-    width: 100px;
-    height: 25px;
-    padding-left: 5px;
-    background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 100% 50%; /* �꽕�씠�떚釉� �솕�궡�몴 ��泥� */ 
-    background-size: 20px 20px;
-    border: 1px solid #999; 
-    border-radius: 0px;
-    appearance: none;
-    outline: 0;
+textarea {
+	resize: none;
+	outline: 0;
+}
+
+.text-red {
+	color: #1a7a7e;
+}
+
+.dot:after {
+	content: "ㆍ";
+	color: rgb(146, 146, 146);
+}
+
+.bar:after {
+	content: "|";
+	color: rgb(146, 146, 146);
+	margin-left: 10px;
+}
+
+.button {
+	width: 70px;
+	height: 35px;
+	font-size: 17px;
+	background: #1a7a7e;
+	color: lavender;
+	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.community-button {
+	display: inline-block;
+	text-align: center;
+	line-height: 35px;
+	border-radius: 8px;
+	width: 70px;
+	height: 35px;
+	font-size: 17px;
+	background: #1a7a7e;
+	color: lavender;
+	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+select {
+	width: 100px;
+	height: 25px;
+	padding-left: 5px;
+	background:
+		url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg)
+		no-repeat 100% 50%; /* �꽕�씠�떚釉� �솕�궡�몴 ��泥� */
+	background-size: 20px 20px;
+	border: 1px solid #999;
+	border-radius: 0px;
+	appearance: none;
+	outline: 0;
+}
+
+.menu-bar {
+	display: flex;
+	justify-content: center; 
+	-background-color: #dbdbdb;
+	background: rgb(245, 245, 245);
+}
+
+.menu {
+	display: flex;
+	align-items: center;
+	height: 40px;
+	width: 900px;
+}
+
+.menu ul {
+	display: flex;
+}
+
+.menu>ul>li>a {
+	display: inline-block;
+	height: 30px;
+	width: 130px;
+	line-height: 30px;
+	padding-right: 20px;
+	font-size: 15px;
+	color: rgb(121, 121, 121);
+}
+
+/*a태그로 감싼 인풋버튼  */
+.a-button {
+	display: inline-block;
+	width: 70px;
+	height: 35px;
+	font-size: 17px;
+	background: #1a7a7e;
+	color: lavender;
+	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+	line-height: 35px;
+	text-align: center;
+}
+
+/* 이미지추가버튼 */
+.add-button {
+	display: inline-block;
+	padding: .5em .75em;
+	color: #fff;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #32a088;
+	cursor: pointer;
+	border: 1px solid #ffffff;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+	width: 70px;
+	height: 35px;
 }
 
 
-.menu-bar{
-    display: flex;
-    justify-content: center;
-    --background-color: #dbdbdb;
-    background: rgb(245, 245, 245);
+.file-box label {
+	display: inline-block;
+	padding: .5em .75em;
+	color: #999;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #fdfdfd;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
 }
-    .menu { 
-        display: flex;    
-        align-items: center;
-        height: 40px;
-        width: 900px;
-    }
-    .menu ul{
-        display: flex;    
-    }
 
-    .menu>ul>li>a{
-        display: inline-block;
-        height: 30px;
-        width: 130px;
-        line-height: 30px;  
-        padding-right: 20px;
-        font-size: 15px;
-        color: rgb(121, 121, 121);
-        
-    }
-    
-    /*a태그로 감싼 인풋버튼  */
-    .a-button{
-    	display: inline-block;
-    	width: 70px;
-        height: 35px;
-        font-size: 17px;
-        background: #1a7a7e;
-    	color:lavender;
-        box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2); 
-    	line-height: 35px;
-    	text-align: center;
-    }
+.file-box input[type="file"] { /* 파일 필드 숨기기 */
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}

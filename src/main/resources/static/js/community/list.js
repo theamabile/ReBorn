@@ -48,7 +48,7 @@ window.addEventListener("load", (e)=>{
 	                                    </span>
 	                                </div>
 	                                <div class="post-image">
-	                                    <img src="/images/community/dog.png" alt="">
+	                                    <img src="/uploadFiles/board/2021/${n.id}/${n.files}" alt="">
 	                                </div>
 	                            </a>
 	                        </li>

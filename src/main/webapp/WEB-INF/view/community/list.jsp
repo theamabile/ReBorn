@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link href="/css/community/reset.css" type="text/css" rel="stylesheet" />
 <link href="/css/community/list.css" type="text/css" rel="stylesheet" />
 
@@ -77,9 +78,20 @@
 	                                        </span>
 	                                    </span>
 	                                </div>
-	                                <div class="post-image">
-	                                    <!-- <img src="/images/community/dog.png" alt=""> -->
-	                                </div>
+	                                <c:set var="imageViewType" value="${(empty n.files)?0:1}" />
+	                                
+	                                <c:if test="${imageViewType>0}" >
+		                                <c:forEach var="i" begin="0" end="0" items="${fn:split(n.files, ',')}" varStatus="status" >
+							                <div class="file-image">
+							                 	<img src="/upload/community/2021/${n.id}/${i}" alt="이미지" />
+							                </div>                
+						                </c:forEach>
+					                </c:if>
+					                <c:if test="${imageViewType==0}" >
+					                	<div class="file-image">
+					                	</div>
+					                </c:if>
+					                <%-- imageViewType ${imageViewType} --%>
 	                            </a>
 	                        </li>
                         </c:forEach>                       

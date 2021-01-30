@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <link href="/css/community/detail.css" type="text/css" rel="stylesheet" />
 
@@ -21,9 +22,12 @@
                         <a class="delete-btn" href="${b.id}/del">삭제</a>
                     </div>
                 </section>
-                <div class="product-name-img">
-                 	<img src="/uploadFiles/board/2021/${b.id}/${b.files}" alt="상품이미지" />
+                <!-- 파일업로드 -->
+      			<c:forEach var="imageItems" items="${fn:split(b.files, ',')}" varStatus="status" >
+                <div class="file-image">
+                 	<img class="mr10" src="/upload/community/2021/${b.id}/${imageItems}" alt="상품이미지" />
                 </div>                
+                </c:forEach>
 
                 <section class="article-content mt50">
                     ${b.content}
@@ -32,7 +36,11 @@
 
                 <div class="reaction-info mt50">
                     <span>댓글 <span class="comment-count bold">${commentCount}</span></span> 
-                    <button class="like-btn" type="button">좋아요 <span class="like-img"></span></button>
+                    <span>
+	                    <input class="like-btn" type="button" value="좋아요" /> 
+	                    <span class="like-img"></span>
+	                    <span class="like-count bold">${likeCount}</span>
+                    </span>
                 </div>
                 
                 <!-- 댓글 리스트 -->
@@ -43,8 +51,8 @@
 	                        <span class="comment-regdate dot">
 	                        	<fmt:formatDate value="${c.regDate}" pattern="yyyy.MM.dd[E] a hh:mm:ss"/>
 	                        </span>
-	                        <span class="comment-edit"><a class="dot" href="<%-- ${b.id}/comment/${c.id}/edit --%>">수정</a>
-	                        <span class="comment-delete"><a class="dot" href="${b.id}/comment/${c.id}/del">삭제</a>
+	                        <span class="comment-edit"><a class="dot" href="<%-- ${b.id}/comment/${c.id}/edit --%>">수정</a></span>
+	                        <span class="comment-delete"><a class="dot" href="${b.id}/comment/${c.id}/del">삭제</a></span>
 	                        <span class="comment-report"><a href="">신고</a></span>
 	                    </div>
 	                    <div class="comment-content mt10"> 
@@ -62,8 +70,8 @@
 			               	<a class="a-button" href="../community/list">목록</a>
                             <button class="button" type="submit" onclick="addComment(this, 90); return false;">댓글</button>
                         </div>
-                        	<input type="hidden" name="memberId" value="${b.memberId}" />
-                        	<input type="hidden" name="boardId" value="${b.id}" />
+                        	<input class="member-id" type="hidden" name="memberId" value="${b.memberId}" />
+                        	<input class="board-id" type="hidden" name="boardId" value="${b.id}" />
                     </div>
                 </form>
                 

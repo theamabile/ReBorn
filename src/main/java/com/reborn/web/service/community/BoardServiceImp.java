@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.community.BoardDao;
 import com.reborn.web.dao.community.CommentDao;
+import com.reborn.web.dao.community.LikeDao;
 import com.reborn.web.entity.community.Board;
 import com.reborn.web.entity.community.BoardCategory;
 import com.reborn.web.entity.community.BoardView;
 import com.reborn.web.entity.community.Comment;
 import com.reborn.web.entity.community.CommentView;
+import com.reborn.web.entity.community.Like;
 
 @Service
 public class BoardServiceImp implements BoardService{
@@ -20,6 +22,8 @@ public class BoardServiceImp implements BoardService{
 	
 	@Autowired
 	private CommentDao commentDao;
+	@Autowired
+	private LikeDao likeDao;
 	
 	@Override
 	public List<Board> getList(int page, int size, String field, String query) {
@@ -50,10 +54,6 @@ public class BoardServiceImp implements BoardService{
 		
 		return boardDao.getViewList(offset, view, field, query, option);
 	}
-
-	
-	
-	
 
 	@Override
 	public int hitUp(int id) {
@@ -155,6 +155,30 @@ public class BoardServiceImp implements BoardService{
 		int result = 0;
 		commentDao.update(comment);
 		return result;
+	}
+	
+	
+	@Override
+	public int getLikeCount(int id) {
+		// TODO Auto-generated method stub
+		return likeDao.getLikeCount(id);
+	}
+	@Override
+	public void insert(Like like) {	
+		
+		likeDao.insert(like);
+	}
+	
+	@Override
+	public int getCount(int id, int memberId) {
+		
+		return likeDao.getCount(id, memberId);
+	}
+	
+	@Override
+	public void delete(int id, int memberId) {
+			likeDao.delete(id, memberId);
+		
 	}
 	
 	

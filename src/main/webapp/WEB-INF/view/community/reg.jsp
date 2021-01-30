@@ -38,8 +38,14 @@
 	                        <input type="text" name="title" placeholder="제목을 입력해주세요." />	                        
 	                    </div><!-- contenteditable="true" -->
 	                 <!-- 파일첨부 -->   
-	                    <div class="article-file mt30">
-	                       <input type="file" name="file" />	                        
+	                    <div class="file-box mt10"> 
+		                    <label for="ex_file">업로드</label> 
+	                    	<input class="upload-name" value="파일선택" disabled="disabled">
+		                    <input type="file" id="ex_file" name="file" /> 
+	                    </div>
+	                    	                    
+	                    <div>
+	                    	<input class="mt10 add-button" type="button" value="add" />
 	                    </div>
 	                    
 	                 <!-- 내용입력부분 -->   
