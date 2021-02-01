@@ -19,19 +19,19 @@
 	      		AND kindCd = #{param4}
 	     	</if> 
 	     	
-	     	<if test="param5 != null and param5 != ''">
-	      		AND happenDt &gt;= ${param5}
+	     	<if test="param5 != null">
+	      		AND happenDt &gt;= #{param5}
 	     	</if> 
 	     	
-	     	<if test="param6 != null and param6 != ''">
-	      		AND happenDt &lt;= ${param6}
+	     	<if test="param6 != null">
+	      		AND happenDt &lt;= #{param6}
 	     	</if> 
 	     	
 	     	<if test="param7 != null and param7 != ''">
 	      		AND neuterYn = #{param7}
 	     	</if> 
 		</where>
-      order by happenDt desc
+      order by desertionNo desc
       limit #{param2} offset #{param1}
 	</select>
 
@@ -59,6 +59,7 @@
 						, careRegNo = #{careRegNo}, noticeSdt = #{noticeSdt}, noticeEdt = #{noticeEdt}, weight = #{weight}, careNm = #{careNm}, sexCd = #{sexCd} 
 						, careTel = #{careTel}, happenPlace = #{happenPlace}, officetel = #{officetel}, orgNm = #{orgNm}, popfile = #{popfile}
 						, neuterYn = #{neuterYn}, specialMark = #{specialMark}, colorCd = #{colorCd}, happenDt = #{happenDt}, age = #{age}
+						, name = #{name}
 		WHERE desertionNo = #{desertionNo}
 	</update>
 	
@@ -78,11 +79,11 @@
 	      		AND kindCd = #{param2}
 	     	</if> 
 	     	
-	     	<if test="param3 != null and param3 != ''">		
+	     	<if test="param3 != null">	
 	      		AND happenDt &gt;= #{param3}
 	     	</if> 
 	     	
-	     	<if test="param4 != null and param4 != ''">
+	     	<if test="param4 != null">
 	      		AND happenDt &lt;= #{param4}
 	     	</if> 
 	     	
@@ -92,9 +93,9 @@
 		</where>
 	</select>
 	
-	<select id="getByDesertionNo" resultType="com.reborn.web.entity.animal.Animal">
+	<select id="getListByCareRegNo" resultType="com.reborn.web.entity.animal.Animal">
 		SELECT * FROM Animal
-		where desertionNo = #{desertionNo}
+		where careRegNo = #{param1}
 	</select>
 	
 </mapper>

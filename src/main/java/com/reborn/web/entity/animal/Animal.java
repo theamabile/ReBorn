@@ -1,6 +1,6 @@
 package com.reborn.web.entity.animal;
 
-import java.util.Date;
+import java.sql.Date;
 
 // DB의 Animal 테이블과 매핑 되는 Animal 엔티티
 public class Animal {
@@ -26,6 +26,7 @@ public class Animal {
 	private String colorCd;
 	private Date happenDt;
 	private String age;
+	private String name;
 		
 	public long getDesertionNo() {
 		return desertionNo;
@@ -159,5 +160,12 @@ public class Animal {
 	public void setAge(String age) {
 		this.age = age;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 
+	
 }
