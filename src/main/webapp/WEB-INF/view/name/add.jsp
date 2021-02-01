@@ -20,6 +20,7 @@
 			<h1>이름 후보</h1>
 			<div class="vote-info">
 				<!-- <span>2021-01-01 ~ 2021-01-04</span> -->		
+				<span>이름 모집기간 : ${vote.recruitStartDate}~${vote.recruitEndDate}</span>		
 			</div>
 			<div class="vote-box">  <!--  flex-column flex-a-center -->
 				<c:if test="${nameList.size() == 0}">

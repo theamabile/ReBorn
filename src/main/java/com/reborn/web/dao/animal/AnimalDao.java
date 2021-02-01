@@ -1,6 +1,6 @@
 package com.reborn.web.dao.animal;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import com.reborn.web.entity.animal.Animal;

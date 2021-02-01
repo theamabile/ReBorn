@@ -1,6 +1,6 @@
 package com.reborn.web.entity.animal;
 
-import java.sql.Date;
+import java.util.Date;
 
 // DB의 Animal 테이블과 매핑 되는 Animal 엔티티
 public class Animal {

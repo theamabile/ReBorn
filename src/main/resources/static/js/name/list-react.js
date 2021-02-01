@@ -49,7 +49,8 @@ class VoteList extends React.Component {
 				voteStartDate:"2021-01-24", 
 				voteEndDate:"2021-01-27",
 				choiceSum: 152,
-				nameCnt:3
+				nameCnt:3,
+				rankNameList:[]
 			};
 		
 		this.state = {
@@ -104,7 +105,8 @@ class VoteList extends React.Component {
 			data.list[0].rankNameList.map(
 				n=>console.log("ㅎㅎ : "+n.name)
 			);
-			console.log(data.list[0].rankNameList[0]);
+			//console.log(data.list[0].rankNameList[0]);
+			console.log(data);
 
 			this.setState(data);
 		});
@@ -134,20 +136,27 @@ class VoteList extends React.Component {
 									            <div className="gage"></div>
 									        </div>
 									        <button className="btn">
-									        	<img />	        	
+									        	<img src={v.popfile} />	        	
 									            <div className="vote-info">
 										        	<div className="regdate">
 											        	<span className="font-xs">
 											        		{v.voteStartDate}~
 											        		{v.voteEndDate}
 											        	</span>
-											            <img />
+											            <img/>
 										        	</div>
 									            	<table className="rank font-l">
 							            				<tbody>
-														{v.rankNameList.map(
-															n=><tr><td>n.name</td></tr>
-														)}
+															{
+																v.rankNameList.map(
+																	(n, index)=><tr key={index}>
+													            			<th className="bold">
+																				<i className="fas fa-medal font-m"></i>{index+1}위
+																			</th>
+													            			<td>{n.name}</td>
+													            		</tr>
+																)
+															}
 														</tbody>
 									            	</table>
 									            	<div className="count">

@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+
+.header {
+    background: var(--main);
+    box-shadow: 0px 3px 5px rgb(214, 214, 214);
+    align-items: center;
+    display: flex;
+    flex-shrink: 0;          /* shrink媛� 1濡� 吏��젙�릺吏� �븡�� ���꽍�뱾�� 湲곕낯�쟻�쑝濡� �겕湲� �븞以꾩뼱�뱾寃�*/
+    height: 70px; 
+
+    text-align : center;         /* �씤�씪�씤 �깭洹몄쓽 寃쎌슦 遺�紐� �쁺�뿭�뿉�꽌 text-align �냽�꽦�쓣 以섏빞 �옄�떇�씠 癒뱀쓬*/
+}
+    .header > .logo-menu {        /* logo �쁺�뿭�� body�쓽 nav�� width瑜� �룞�씪�븯寃� 媛�*/
+        flex-basis: 250px;
+        min-width: 250px;
+    }
+    	 .header > .logo-menu > .logo{        /* logo �쁺�뿭�� body�쓽 nav�� width瑜� �룞�씪�븯寃� 媛�*/
+	        width: 120px;
+	        display: block;
+	        margin: auto;
+	    }
+	    
+
+    .header > .login-menu {        /* login �쁺�뿭�룄 body�쓽 nav�� width瑜� �룞�씪�븯寃� 媛�*/
+        flex-basis: 280px;
+        min-width: 200px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+        .header > .login-menu > *{     
+            float: right;
+            margin-right: 10px;
+        }
+        
+        .header > .login-menu .profile-img {
+        	width: 40px;
+        	height: 40px;
+        	border-radius: 50%;    /* �룞洹몃옑寃� �슚怨� 二쇨린 */
+        }
+        
+        .header > .login-menu .loginName-box {
+        	color: white;
+        	font-size: 11px;
+        }
+        	 .header > .login-menu .loginName-box > .loginName {
+	        	font-weight: bold;
+	        }
+	        
+    
+    .header > .title{         
+        flex-shrink: 1;      /* �굹癒몄� 怨듬갚 �쁺�뿭�뿉 �뵲�씪 �겕湲곌� 寃곗젙 �릺吏�留� */      
+        min-width: 200px;    /* 理쒖냼 200px 誘몃쭔�쑝濡쒕뒗 �븞以꾩뼱�뱾�쓬 */
+        flex-grow: 1;       /* �젣紐⑸쭔 怨듬갚 �쁺�뿭 李⑥��븷 寃�*/
+        color: white;
+        font-weight: bold;
+    }
+
+    .header > nav { 
+        flex-basis: 250px;
+        min-width: 200px;   
+        text-align: right;   
+        box-sizing: border-box;
+        --padding-right: 20px;
+    }
+
+
