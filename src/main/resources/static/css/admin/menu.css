@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+.body>nav {
+	height: inherit;
+	flex: 0 0 250px; /* grow, shrink basis �닚*/
+	/* 硫붾돱 遺�遺꾩� �룊�긽�떆�뿉�뒗 �씠 �겕湲�(width, max-width 媛숈�嫄�)*/
+	min-width: 200px;
+	/* 硫붾돱 �쁺�뿭�� 理쒖냼 200px瑜� 媛�吏�硫�, 200px 誘몃쭔�쑝濡쒕뒗 �븞以꾩뼱�벉*/
+	background: white;
+	box-shadow: 1px 1px 5px #a9a9a9;
+}
+	
+	nav>.main-menu img {
+		width: 25px;
+		height: 25px;
+	}
+	
+	nav>.main-menu li a.current, nav>.main-menu li a:hover {
+		color: var(--main);
+		font-weight: bold;
+		text-decoration: none;
+	}
+	
+	nav>.main-menu li a:hover>img {
+		/* �썝�븯�뒗 �깋�쑝濡� �븘�꽣 留뚮뱾�뼱 二쇰뒗 �궗�씠�듃 :  https://codepen.io/sosuke/pen/Pjoqqp */
+		filter: invert(34%) sepia(8%) saturate(4739%) hue-rotate(211deg)
+			brightness(100%) contrast(83%);
+	}
+
+
+
+.first-menu {
+	--background-color: #eee;
+	color: #444;
+	cursor: pointer;
+	padding: 18px;
+	border: none;
+	text-align: left;
+	outline: none;
+	font-size: 15px;
+	transition: 0.4s;
+	
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: nowrap;
+}
+	.first-menu > a {
+		display: block;
+		flex-grow: 1;
+		text-align: center;
+	}
+	
+	.first-menu:hover,
+	.first-menu:hover > *{
+		color: var(--main);
+		font-weight: bold;
+	}
+
+
+.active {
+	background: var(--sub);	
+}
+	.active > *,
+	.active:after {
+		font-weight: bold;	
+		color: var(--main);
+		flex-basis: 10px;
+	}
+	
+
+
+
+.first-menu:after {
+	content: '\002B';
+	float: right;
+	flex-basis: 13px;
+}
+
+.active:after {
+	content: "\2212";
+}
+
+
+.second-menu {
+	padding: 0 18px;
+	background-color: white;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+	margin: 10px 0px;
+}
+	
+	.second-menu * {
+		text-align: center;
+	}
+	
+	.second-menu > li {
+		height: 30px;
+	}

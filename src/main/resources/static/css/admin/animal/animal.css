@@ -1,0 +1,171 @@
+@charset "UTF-8";
+
+
+form * {
+    margin: 5px 0px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+
+label{
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.radio-group{
+	display: flex;
+}
+	.radio-group * {
+		flex-grow: 1;
+		flex-shrink: 1;
+	}
+		
+
+    .radio-group *:first-child {
+        margin-left: 0px;
+    }
+
+/* ==================================add, detail==================================== */
+
+.detail-container {
+    flex-basis: 400px;
+    width: 700px;
+    margin: auto;
+    align-content: center;
+}
+
+
+.input-btn-box {
+    display: flex;    
+    align-items: center;
+}
+    .input-btn-box > input[type="text"] {
+        flex-grow: 1;
+        margin-right: 5px;
+    }
+
+
+.email-box {
+    display: flex;
+    align-items: center;
+    margin: 0px;
+}
+    .email-box * {
+        flex-grow: 1;
+    }
+    .email-box *:nth-child(3){
+        margin-left: 5px;
+    }
+
+
+
+.birth-box {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;   
+}
+	.birth-box *{
+	    flex-grow: 1;
+	    flex-shrink: 1;   
+	}
+    .birth-box input {
+        margin-right: 5px;
+    }
+
+    .birth-box input:nth-child(5){
+        margin-right: 0px;
+    }
+    
+.gender-profile-group {
+	display: flex;
+	margin-top: 20px;
+	box-sizing:border-box;
+	justify-content: space-between;
+}
+	.gender-profile-group * {
+		flex-grow: 1;
+		flex-shrink: 1; 
+	}
+
+.nickname-box,
+.id-box {
+	display: flex;
+	flex-direction: column;
+}
+	.nickname-box *,
+	.id-box * {
+		margin-top: 0px;
+	}
+
+
+.infotext-none {
+	width: 100%;
+	font-size: 10px;
+	color: green;	
+}
+
+.infotext-warning {
+	width: 100%;
+	font-size: 10px;
+	color: red;	
+}
+
+/* =================================== list =================================== */
+
+    
+table {
+    width: 100%;
+}
+	table td {
+	   animation-name: addTableRow;
+	   animation-duration: 0.5s;
+       animation-timing-function: linear;
+	}
+	
+ 	@keyframes addTableRow {
+         from {
+             transform: translate(30px, 0px); 
+         }
+         to {
+             transform: translate(0px, 0px); 
+         }
+     }
+		
+        
+        
+
+.member-container {
+   min-width: 700px; 
+}
+
+
+.tools {
+    display: flex;
+    justify-content: flex-end;
+}
+    .tools .filter {
+        flex: 1 0 300px;
+    }
+        .filter .field {
+            width: 100px;
+        }
+
+        .filter .query {
+            width: 200px;
+        }
+       
+    .tools .tools-box {
+        flex: 0 0 210px;
+        display: flex;
+        justify-content: flex-end;
+    }
+    	.tools .tools-box *{
+    		margin-right: 5px;
+	    }
+
+
+
