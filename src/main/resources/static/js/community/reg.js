@@ -46,7 +46,7 @@ window.addEventListener("load", (e)=>{
 			return ;
 		}
 		
-		let url = "/upload";
+		let url = "/community/upload";
 		
 		let formData = new FormData();
 		/*for(let n of e.dataTransfer.files)

@@ -19,6 +19,8 @@ public interface CommentDao {
 
 	int getCount(int id);
 
+	Comment commentGet(int id);
+
 	
 	
 }

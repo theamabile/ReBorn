@@ -13,4 +13,14 @@
 		SELECT * FROM AreaView
 	</select>
 
+	<insert id="insert" parameterType="com.reborn.web.entity.area.SigunguCategory">
+		INSERT INTO CareSigunguCategory(orgCd, name, uprCd)
+      	VALUES(#{orgCd}, #{name}, #{uprCd})
+	</insert>
+	
+	<delete id="delete">
+		DELETE FROM CareSigunguCategory 
+		WHERE orgCd = #{orgCd}
+	</delete>
+	
 </mapper>

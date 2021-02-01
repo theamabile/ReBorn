@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.reborn.web.dao.animal.AnimalKindDao">
+
+	<select id="getList" resultType="com.reborn.web.entity.animal.AnimalKind">
+		SELECT * FROM AnimalKind
+	</select>
+	
+	<select id="get" resultType="com.reborn.web.entity.animal.AnimalKind">
+		SELECT * FROM AnimalKind
+		WHERE ${param1} = #{param2}
+	</select>
+
+	<insert id="insert" parameterType="com.reborn.web.entity.animal.AnimalKind">
+		INSERT INTO AnimalKind(cd, upKindCd, name)
+      	VALUES(#{cd}, #{upKindCd}, #{name})
+	</insert>
+	
+	<update id="update" parameterType="com.reborn.web.entity.animal.AnimalKind">
+		UPDATE AnimalKind SET upKindCd=#{upKindCd}, name=#{name}
+		WHERE cd = #{cd}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM AnimalKind 
+		WHERE cd = #{cd}
+	</delete>
+	
+	<select id="getKindListByUpKindCd" resultType="com.reborn.web.entity.animal.AnimalKind">
+		SELECT * FROM AnimalKind
+		WHERE upKindCd = #{upKindCd}
+	</select>
+	
+	<select id="getLastCustomKind" resultType="com.reborn.web.entity.animal.AnimalKind">
+		SELECT * FROM AnimalKind
+		WHERE cd &gt;= 900
+		ORDER BY cd DESC
+		LIMIT 1;
+	</select>
+	
+	
+	
+</mapper>

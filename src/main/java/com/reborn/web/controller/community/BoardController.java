@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -120,6 +121,20 @@ public class BoardController {
 	}
 	
 	
+	//댓글 수정 POST
+//	@PostMapping("{id}/commentEdit")
+//	@ResponseBody
+//	public  Map<String, Object> commentEdit(Model model, @PathVariable("id") int id,
+//			HttpServletRequest httpRequest
+//			) {
+//		System.out.println(id);
+//		Map<String, Object> dto = new HashMap<>();
+//		
+//		List<CommentView> comment = service.getCommentViewList(id);
+//		dto.put("comment", comment);
+//		
+//		return  dto;
+//	}
 	
 	//글 수정 요청
 	@GetMapping("{id}/edit")
@@ -191,13 +206,13 @@ public class BoardController {
 		return "redirect:../list";
 	}
 	
-	//글 요청
+	//글 작성Get
 	@GetMapping("reg")
 	public String reg() {
 		return "home.community.reg";
 	}
 	
-	//글 등록
+	//글 등록Post
 	@PostMapping("reg")
 	public String reg(@RequestParam(name="title") String title,
 			@RequestParam(name="content") String content,
@@ -312,24 +327,8 @@ public class BoardController {
 		return "redirect:../../../"+id;
 	}
 	
-	//댓글 수정 Get
-	@GetMapping("{id}/comment/edit")
-	public String commentEdit(@PathVariable("id")  int id,
-			@PathVariable("commentId") int commentId, 
-			Model model) {
-			
-		
-		return "home.community.commentEdit";
-	}
-	
-	//댓글 수정 POST
-	@PostMapping()
-	public String commentEdit( ) {
-		
-		return "";
-	}
-	
-	
+
+	//드래그 박스
 	@PostMapping("upload")
 	@ResponseBody
 	public String upload(MultipartFile file, HttpServletRequest request) throws IllegalStateException, IOException {
@@ -357,9 +356,6 @@ public class BoardController {
 		return "ok";
 	}
 	
-
-	
-	
-	
-	
+	//간단하게 하면 하나로
+	//ajax로 하면 두개로.
 }

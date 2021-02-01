@@ -1,23 +1,22 @@
 package com.reborn.web.entity.care;
 
-import java.sql.Date;
+import java.util.Date;
 
-public class CareEvaluation {
+public class CareReview {
 
 	private int id;
 	private String careRegNo;
 	private int memberId;
 	private String content;
-	private String score;
+	private int score;
 	private Date regDate;
 	private String title;
 	
-	public CareEvaluation() {
+	public CareReview() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CareEvaluation(int id, String careRegNo, int memberId, String content, String score, Date regDate,
-			String title) {
+	public CareReview(int id, String careRegNo, int memberId, String content, int score, Date regDate, String title) {
 		super();
 		this.id = id;
 		this.careRegNo = careRegNo;
@@ -60,11 +59,11 @@ public class CareEvaluation {
 		this.content = content;
 	}
 
-	public String getScore() {
+	public int getScore() {
 		return score;
 	}
 
-	public void setScore(String score) {
+	public void setScore(int score) {
 		this.score = score;
 	}
 
@@ -86,8 +85,8 @@ public class CareEvaluation {
 
 	@Override
 	public String toString() {
-		return "CareEvaluation [id=" + id + ", careRegNo=" + careRegNo + ", memberId=" + memberId + ", content="
-				+ content + ", score=" + score + ", regDate=" + regDate + ", title=" + title + "]";
+		return "CareReview [id=" + id + ", careRegNo=" + careRegNo + ", memberId=" + memberId + ", content=" + content
+				+ ", score=" + score + ", regDate=" + regDate + ", title=" + title + "]";
 	}
 
 }

@@ -38,5 +38,5 @@ public interface BoardService {
 	int getCount(int id, int memberId);
 	void delete(int id, int memberId);
 	
-	
+	Comment commentGet(int id);
 }

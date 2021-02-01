@@ -182,4 +182,10 @@ public class BoardServiceImp implements BoardService{
 	}
 	
 	
+	@Override
+	public Comment commentGet(int id) {
+		// TODO Auto-generated method stub
+		return commentDao.commentGet(id);
+	}
+	
 }

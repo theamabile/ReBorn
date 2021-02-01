@@ -54,7 +54,11 @@ public class MyBatisCommentDao implements CommentDao{
 		return mapper.getCount(id);
 	}
 
-
+	@Override
+	public Comment commentGet(int id) {
+	
+		return mapper.commentGet(id);
+	}
 	
 	
 }

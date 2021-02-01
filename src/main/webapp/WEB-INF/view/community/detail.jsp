@@ -47,7 +47,7 @@
                 <c:forEach items="${comment}" var="c" >
 	                <div class="comment-view-box padding10 mt5">
 	                    <div class="comment-info mt10">
-	                        <span class="comment-id dot" >${c.nickname}</span>
+	                        <span class="comment-nickname dot" >${c.nickname}</span>
 	                        <span class="comment-regdate dot">
 	                        	<fmt:formatDate value="${c.regDate}" pattern="yyyy.MM.dd[E] a hh:mm:ss"/>
 	                        </span>
@@ -59,8 +59,10 @@
 	                    </div>
 	                    <div class="comment-content mt10"> 
 	                        ${c.content}
+	                    <input class="comment-id" type="hidden" name="commentId" value="${c.id}" />
+	                    <input class="comment-member-id" type="hidden" name="commentMemberId" value="${c.memberId}" />	                    
 	                    </div>
-	                    <a class="comment-reply" href="">답글</a>
+	                    <!-- <a class="comment-reply" href="">답글</a> -->
 	                </div>
                 </c:forEach>
                 
@@ -70,7 +72,7 @@
                         <textarea name="comment" cols="" rows="4" placeholder="여러분의 소중한 댓글을 입력해주세요."></textarea>
                         <div class="comment-button-box mt20">
 			               	<a class="a-button" href="../community/list">목록</a>
-                            <button class="button" type="submit" onclick="addComment(this, 90); return false;">댓글</button>
+                            <button class="button" type="submit" >댓글</button>
                         </div>
                         	<input class="member-id" type="hidden" name="memberId" value="${b.memberId}" />
                         	<input class="board-id" type="hidden" name="boardId" value="${b.id}" />

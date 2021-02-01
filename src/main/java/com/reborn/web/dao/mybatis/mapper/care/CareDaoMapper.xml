@@ -20,22 +20,26 @@
 	<select id="getList" resultType="com.reborn.web.entity.care.Care">
 		SELECT * FROM Care
 		<where>
-			<if test="param3 != null and param3.equals('')">
+			<if test="param3 != null and !param3.equals('')">
 				BINARY ${param3} LIKE '%${param4}%'
 			</if>
 		</where>
-		ORDER BY name ASC
+		ORDER BY (CASE 
+ 			WHEN ASCII(SUBSTRING(name,1)) BETWEEN 48 AND 57 THEN 3
+   			WHEN ASCII(SUBSTRING(name,1)) &lt; 128 THEN 2 ELSE 1 END), name
 		LIMIT #{param2} OFFSET #{param1}
 	</select>
 	
 	<select id="getViewList" resultType="com.reborn.web.entity.care.CareView">
 		SELECT * FROM CareView
 		<where>
-			<if test="param3 != null and param3.equals('')">
+			<if test="param3 != null and !param3.equals('')">
 				BINARY ${param3} LIKE '%${param4}%'
 			</if>
 		</where>
-		ORDER BY name ASC
+		ORDER BY (CASE 
+ 			WHEN ASCII(SUBSTRING(name,1)) BETWEEN 48 AND 57 THEN 3
+   			WHEN ASCII(SUBSTRING(name,1)) &lt; 128 THEN 2 ELSE 1 END), name
 		LIMIT #{param2} OFFSET #{param1}
 	</select>
 	
@@ -60,7 +64,7 @@
 	<select id="getCount" resultType="int">
 		SELECT count(careRegNo) cnt FROM Care
 		<where>
-			<if test="param1 != null and param1.equals('')">
+			<if test="param1 != null and !param1.equals('')">
 				BINARY ${param1} LIKE '%${param2}%'
 			</if>
 		</where>

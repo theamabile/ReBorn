@@ -38,4 +38,24 @@ public class AreaServiceImp implements AreaService {
 		return sigunguCategoryDao.getAreaViewList();
 	}
 
+	@Override
+	public int insertSido(SidoCategory sido) {
+		return sidoCategoryDao.insertSido(sido);
+	}
+
+	@Override
+	public int insertSigungu(SigunguCategory sigungu) {
+		return sigunguCategoryDao.insertSigungu(sigungu);
+	}
+
+	@Override
+	public int deleteSido(int uprCd) {
+		return sidoCategoryDao.deleteSido(uprCd);
+	}
+
+	@Override
+	public int deleteSigungu(int orgCd) {
+		return sigunguCategoryDao.deleteSigungu(orgCd);
+	}
+
 }

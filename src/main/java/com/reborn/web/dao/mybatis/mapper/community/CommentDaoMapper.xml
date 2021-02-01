@@ -39,5 +39,12 @@
 		where boardId = #{boardId};
 	</select>
 
+	<select id="commentGet" resultType="com.reborn.web.entity.community.Comment">
+		SELECT * FROM Comment
+  		where id=${id}
+	
+	</select>
+	
+
 
 </mapper>    
