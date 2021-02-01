@@ -1,10 +1,14 @@
 package com.reborn.web.controller.admin.animal;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.reborn.web.entity.animal.Animal;
 import com.reborn.web.service.animal.AnimalKindService;
 import com.reborn.web.service.animal.AnimalService;
 
@@ -28,6 +32,12 @@ public class AnimalController {
 	
 	@RequestMapping("list")
 	public String list() {
+		
+		List<Animal> list = animalService.getListByCareRegNo("311300201300001");
+		for(Animal a : list ) {
+			System.out.println(a.getDesertionNo()+" - careNo : "+a.getCareRegNo());
+		}
+		
 		return "admin.animal.list";
 	}
 	
