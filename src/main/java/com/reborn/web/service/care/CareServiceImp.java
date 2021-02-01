@@ -223,4 +223,22 @@ public class CareServiceImp implements CareService {
 		return result;
 	}
 
+	@Override
+	public int getReviewCount(String careRegNo) {
+		int result = 0;
+		
+		result = careReviewDao.getReviewCount(careRegNo);
+		
+		return result;
+	}
+
+	@Override
+	public double getReviewAvg(String careRegNo) {
+		double result = 0;
+		
+		result = careReviewDao.getReviewAvg(careRegNo);
+		
+		return result;
+	}
+
 }

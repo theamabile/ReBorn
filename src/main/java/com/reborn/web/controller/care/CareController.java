@@ -441,10 +441,10 @@ public class CareController {
 			}
 	        
 	      	//테스트
-	        if(cnt == 6)
-	        	break;
-
-	        cnt++;
+//	        if(cnt == 6)
+//	        	break;
+//
+//	        cnt++;
 		}
 		
 		StringBuilder result = new StringBuilder(); 

@@ -1,21 +1,14 @@
 package com.reborn.web.controller.api.care;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,17 +18,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.reborn.web.entity.care.AnimalEntityTemp;
+import com.reborn.web.entity.animal.Animal;
 import com.reborn.web.entity.care.Care;
 import com.reborn.web.entity.care.CareReview;
 import com.reborn.web.entity.care.CareReviewView;
 import com.reborn.web.entity.care.CareView;
 import com.reborn.web.entity.care.CareWish;
+import com.reborn.web.service.animal.AnimalService;
 import com.reborn.web.service.care.CareService;
 
 @RestController("apiCareController")
@@ -43,6 +34,7 @@ import com.reborn.web.service.care.CareService;
 public class CareController {
 
 	private CareService careService;
+	private AnimalService animalService;
 	// ============================================================
 	// ============================================================
 	// 테스트용 아이디, careService에서도 있음
@@ -58,8 +50,9 @@ public class CareController {
 	
 	
 	@Autowired
-	public CareController(CareService careService) {
+	public CareController(CareService careService, AnimalService animalService) {
 		this.careService = careService;
+		this.animalService = animalService;
 	}
 
 	@GetMapping("list")
@@ -89,7 +82,7 @@ public class CareController {
 		
 		return datas;
 	}
-	
+
 	@GetMapping("{careRegNo}")
 	public Map<String, Object> detail(@PathVariable("careRegNo") String careRegNo) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException{
 		Map<String, Object> datas = new HashMap<>();
@@ -98,7 +91,37 @@ public class CareController {
 		
 		Care care = careService.getCareByCareRegNo(careRegNo);		
 		reviewList = careService.getReviewViewList(1, size, careRegNo);
+		double reviewScoreAvg = careService.getReviewAvg(careRegNo); 
 		
+		List<Animal> animalList = new ArrayList<>();
+		
+//		List<Animal> animalList = null;
+//		animalList = animalService.getListByCareRegNo(careRegNo);
+		
+		int reviewCnt = 0;
+		int reviewPageCnt = 0;
+		reviewCnt = careService.getReviewCount(careRegNo);
+		reviewPageCnt = (int)Math.ceil( reviewCnt / (float)size );
+		
+		datas.put("care", care);
+		datas.put("reviewList", reviewList);
+		datas.put("reviewCnt", reviewCnt);
+		datas.put("reviewPageCnt", reviewPageCnt);
+		datas.put("reviewScoreAvg", reviewScoreAvg);
+		datas.put("animalList", animalList);
+		
+		return datas;
+	}
+	
+	/* API로 받아오는 버전 
+	@GetMapping("{careRegNo}")
+	public Map<String, Object> detail(@PathVariable("careRegNo") String careRegNo) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException{
+		Map<String, Object> datas = new HashMap<>();
+		List<CareReviewView> reviewList = new ArrayList<>();
+		int size = 10;
+		
+		Care care = careService.getCareByCareRegNo(careRegNo);		
+		reviewList = careService.getReviewViewList(1, size, careRegNo);
 		
 		// API 보호동물들 가져오기
 		List<AnimalEntityTemp> animalInfoList = new ArrayList<>();
@@ -140,12 +163,20 @@ public class CareController {
 		}
 		
 //		System.out.println(animalInfoList);
+		int reviewCnt = 0;
+		int reviewPageCnt = 0;
+		reviewCnt = careService.getReviewCount(careRegNo);
+		reviewPageCnt = (int)Math.ceil( reviewCnt / (float)size );
+		
 		datas.put("care", care);
 		datas.put("reviewList", reviewList);
+		datas.put("reviewCnt", reviewCnt);
+		datas.put("reviewPageCnt", reviewPageCnt);
 		datas.put("animalInfoList", animalInfoList);
 		
 		return datas;
 	}
+	*/
 	
 	@PostMapping("{careRegNo}/wish/insert")
 	public Map<String, Object> wishInsert(
@@ -202,20 +233,31 @@ public class CareController {
 	}
 
 	@GetMapping("{careRegNo}/review/list")
-	public List<CareReviewView> reviewList(
+	public Map<String, Object> reviewList(
 			@PathVariable("careRegNo") String careRegNo,
-			@RequestParam(name = "p", defaultValue = "1") Integer page
+			@RequestParam(name = "p", defaultValue = "1") Integer page,
+			@RequestParam(name = "s", defaultValue = "10") Integer size
 			){
-		List<CareReviewView> list = new ArrayList<>();
-		
+		Map<String, Object> datas = new HashMap<>();
 		if(careRegNo == null || careRegNo.equals("")) {
-			return list;
+			return datas;
 		}
 		
-		int size = 10;
+		List<CareReviewView> list = new ArrayList<>();
+		int reviewCnt = 0;
+		int reviewPageCnt = 0;
+		double reviewScoreAvg = 0; 
 		list = careService.getReviewViewList(page, size, careRegNo);
+		reviewCnt = careService.getReviewCount(careRegNo);
+		reviewPageCnt = (int)Math.ceil( reviewCnt / (float)size );
+		reviewScoreAvg = careService.getReviewAvg(careRegNo);
 		
-		return list;
+		datas.put("reviewList", list);
+		datas.put("reviewCnt", reviewCnt);
+		datas.put("reviewPageCnt", reviewPageCnt);
+		datas.put("reviewScoreAvg", reviewScoreAvg);
+		
+		return datas;
 	}
 
 	@PostMapping("{careRegNo}/review/insert")
@@ -224,7 +266,6 @@ public class CareController {
 			String title, String content, int score){
 		Map<String, Object> datas = new HashMap<>();
 		int result = 0;
-		
 		
 		if(memberId == 0) {
 			datas.put("result", "fail");
@@ -247,7 +288,18 @@ public class CareController {
 
 			int size = 10;
 			int page = 1;
+			int reviewCnt = 0;
+			int reviewPageCnt = 0;
+			double reviewScoreAvg = 0;
+			
 			List<CareReviewView> list = careService.getReviewViewList(page, size, careRegNo);
+			reviewCnt = careService.getReviewCount(careRegNo);
+			reviewScoreAvg = careService.getReviewAvg(careRegNo); 
+			reviewPageCnt = (int)Math.ceil( reviewCnt / (float)size);
+			
+			datas.put("reviewCnt", reviewCnt);
+			datas.put("reviewPageCnt", reviewPageCnt);
+			datas.put("reviewScoreAvg", reviewScoreAvg);
 			datas.put("reviewList", list);
 		}
 
@@ -279,16 +331,18 @@ public class CareController {
 		if(result == 0)
 			datas.put("result", "fail");
 		else {
+			double reviewScoreAvg = careService.getReviewAvg(origin.getCareRegNo());
 			datas.put("result", "success");
 			datas.put("review", origin);
+			datas.put("reviewScoreAvg", reviewScoreAvg);
 		}
-		
 		
 		return datas;
 	}
 
 	@PostMapping("{careRegNo}/review/{reviewId}/delete")
 	public Map<String, Object> reviewDelete(
+			@PathVariable("careRegNo") String careRegNo,
 			@PathVariable("reviewId") int reviewId){
 		Map<String, Object> datas = new HashMap<>();
 		int result = 0;
@@ -300,10 +354,14 @@ public class CareController {
 		
 		result = careService.deleteReview(reviewId);
 		
-		if(result == 0)
+		if(result == 0) {
 			datas.put("result", "fail");
-		else
+		} else {
+			double reviewScoreAvg = careService.getReviewAvg(careRegNo);
 			datas.put("result", "success");
+			datas.put("reviewId", reviewId);
+			datas.put("reviewScoreAvg", reviewScoreAvg);
+		}
 		
 		return datas;
 	}

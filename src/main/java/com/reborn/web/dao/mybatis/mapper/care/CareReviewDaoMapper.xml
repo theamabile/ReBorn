@@ -22,6 +22,16 @@
 		LIMIT #{param2} OFFSET #{param1}
 	</select>
 	
+	<select id="getReviewCount" resultType="int">
+		SELECT COUNT(id) FROM CareReview
+		WHERE careRegNo = #{param1}
+	</select>
+	
+	<select id="getReviewAvg" resultType="double">
+		SELECT AVG(score) FROM CareReview
+		WHERE careRegNo = #{param1}
+	</select>
+	
 	<insert id="insert" parameterType="com.reborn.web.entity.care.CareReview">
 		INSERT INTO 
 		CareReview 

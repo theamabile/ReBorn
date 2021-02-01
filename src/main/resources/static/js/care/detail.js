@@ -15,29 +15,33 @@ class CareDetail extends React.Component{
 		
 		this.state = {
 			care: {},
-			animalInfoList: [],
-			reviewList: [],
+			animalList: [],
 			review: {
+				list: [],
+				cnt: 0,
+				pageCnt:0,
+				scoreAvg:0,
 				faceIcon: "far fa-smile",
-				score: 5,
-				title: "",
-				content: ""
 			}
 		}
 		this.review = {
-			faceIcon: "far fa-smile",
 			score: 5,
 			title: React.createRef(),
-			content: React.createRef()
+			content: React.createRef(),
+			page: 1,
+			range: 5,
+			startNum: 1
 		}
 		this.careRegNo = /([0-9]*)$/.exec(window.location.pathname)[0];
 		
+		window.onpopstate = (e)=>{
+			this.review.page = e.state?.p || 1;
+			this.reviewInvalidate();
+		}
 		this.invalidate();
-		
 	}
 	
 	componentDidMount(){
-		
 		
 	}
 	
@@ -46,29 +50,42 @@ class CareDetail extends React.Component{
 		
 		fetch(`/api/care/${this.careRegNo}`)
 		.then((response ) => {
-			return response.json()
+			return response.json();
 		})
-		.then(({care, animalInfoList, reviewList})=>{
-			this.setState({care, animalInfoList, reviewList});
+		.then(({care, animalList, reviewList, reviewCnt, reviewPageCnt, reviewScoreAvg})=>{
 			
-			//this.startNum = this.page - ((this.page - 1) % this.range);
+			let review = this.state.review;
+			review.list = reviewList;
+			review.cnt = reviewCnt;
+			review.pageCnt = reviewPageCnt;
+			review.scoreAvg = reviewScoreAvg;
+			
+			this.review.startNum = this.review.page - ((this.review.page - 1) % this.review.range);
+			this.setState({care, animalList, review});
 		});
 	}
 	
-	getReviewList(){
-		console.log("getReviewList");
+	reviewInvalidate(){
+		let {page, range} = this.review;
 		
-		fetch(`/api/care/${this.careRegNo}/review/list`)
+		console.log("reviewInvalidate");
+		fetch(`/api/care/${this.careRegNo}/review/list?p=${page}`)
 		.then((response ) => {
-			return response.json()
+			return response.json();
 		})
-		.then((reviewList)=>{
-			this.setState({reviewList});
-			
-			//this.startNum = this.page - ((this.page - 1) % this.range);
+		.then(({reviewList, reviewCnt, reviewPageCnt, reviewScoreAvg})=>{
+			let review = this.state.review;
+			review.list = reviewList;
+			review.cnt = reviewCnt;
+			review.pageCnt = reviewPageCnt;
+			review.scoreAvg = reviewScoreAvg;
+			this.review.startNum = page - ((page - 1) % range);
+			this.setState({review});
+			let scrollY = this.review.title.current.offsetTop;
+			console.log(scrollY)
+			window.scrollTo(0, scrollY);
 		});
 	}
-	
 	
 	reviewSubmitHandler(e){
 		e.preventDefault();
@@ -89,10 +106,16 @@ class CareDetail extends React.Component{
 		.then((response ) => {
 			return response.json()
 		})
-		.then(({result, reviewList})=>{
+		.then(({result, reviewList, reviewCnt, reviewPageCnt, reviewScoreAvg})=>{
 			if( result == "success" ){
 				this.reviewFormReset();
-				this.setState({reviewList});
+				let review = this.state.review;
+				review.list = reviewList;
+				review.cnt = reviewCnt;
+				review.pageCnt = reviewPageCnt;
+				review.scoreAvg = reviewScoreAvg;
+				
+				this.setState({review});
 			}
 		});
 	}
@@ -129,30 +152,28 @@ class CareDetail extends React.Component{
 		}
 		
 		let faceIcon = this.scoreToFace(this.review.score);
-		
 		let review = this.state.review;
 		
-		review.faceIcon = faceIcon
-		
+		review.faceIcon = faceIcon;
 		this.setState({review});
 	}
 	
 	scoreToFace(score){
-		let face = "";
+		let className = "";
 		switch(score){
 			case 5:
 			case 4:
-				face = "far fa-smile";
+				className = "far fa-smile";
 				break;
 			case 3:
 			case 2:
-				face = "far fa-meh";
+				className = "far fa-meh";
 				break;
 			case 1:
-				face = "far fa-frown";
+				className = "far fa-frown";
 				break;
 		}
-		return face;
+		return className;
 	}
 	
 	reviewClickHandler(e){
@@ -240,17 +261,30 @@ class CareDetail extends React.Component{
 					.then((response ) => {
 						return response.json()
 					})
-					.then(({result, review})=>{
+					.then(({result, review, reviewScoreAvg})=>{
 						if( result == "success" ){
 							console.log(review);
 							
+							let list = this.state.review.list;
+							
+							list = list.map(origin => {
+								if( origin.id == review.id ){
+									origin.title = modalTitle;
+									origin.content = modalContent;
+									return;
+								}
+							});
+							
 							score.innerHTML = resolve.instance.contentNode.querySelector("form .score").innerHTML;
-							title.innerText = modalTitle;
-							content.innerText = modalContent;
 							li.querySelector(".icon i").className = this.scoreToFace(modalScore);
 							
 							li.classList.remove("highlight");
 							setTimeout(()=>{li.classList.add("highlight")})
+							
+							let reviewTemp = this.state.review; 
+							reviewTemp.scoreAvg = reviewScoreAvg;
+							
+							this.setState({reviewTemp});
 							
 						}else {
 							new ModalBox({
@@ -296,13 +330,13 @@ class CareDetail extends React.Component{
 					.then(({result})=>{
 						if( result == "success" ){
 							
-							let {reviewList} = this.state;
+							let reviewTemp = this.state.review;
 							
-							reviewList = reviewList.filter( 
+							reviewTemp.list = reviewTemp.list.filter( 
 								review => review.id != reviewId 
 							);
 							
-							this.setState({reviewList});
+							this.setState({review: reviewTemp});
 							
 							return "삭제되었습니다";
 						} 
@@ -347,6 +381,16 @@ class CareDetail extends React.Component{
 		let editNode = li.querySelector(".member .edit");
 		
 		editNode.classList.add("d-none");
+	}
+	
+	pagerHandler(e){
+		if( e.target.tagName == "A" ){
+			e.preventDefault();
+			let page = e.target.dataset.page;
+			this.review.page = page;
+			history.pushState({p: page}, "", `?p=${page}`);
+			this.reviewInvalidate();
+		}
 	}
 	
 	render(){
@@ -395,11 +439,11 @@ class CareDetail extends React.Component{
 		            <div className="">
 		                <ul>
 		                    {
-		                        this.state.animalInfoList.length == 0
-		                        ? <li style={{flexGrow: 1, fontSize: "3vw"}} className="search-empty">보호중인 동물 없습니다</li>
-		                        : this.state.animalInfoList.map(
+		                        this.state.animalList?.length > 0
+		                        ? this.state.animalList.map(
 		                            animal => <li key={animal.noticeNo}><div><img src={animal.popfile} alt={animal.noticeNo} /></div><div>{animal.noticeNo}</div></li>
 		                        )
+		                        : <li style={{flexGrow: 1, fontSize: "3vw"}} className="search-empty">보호중인 동물 없습니다</li>
 		                    }
 		                </ul>
 		            </div>
@@ -423,12 +467,13 @@ class CareDetail extends React.Component{
 		    </section>
 		    <section className="review">
 		        <div className="review-inner box-center section-max-width">
-		            <h1>리뷰</h1>
+		            <h1 style={{paddingBottom: "6px"}}>리뷰</h1>
+					<div className="score-avg"><i className="fas fa-star"></i> {(this.state.review.scoreAvg).toFixed(1)}</div>
 		            <ul onClick={this.reviewClickHandler.bind(this)} onMouseOver={this.reviewMouseOverHandler.bind(this)} onMouseOut={this.reviewMouseOutHandler.bind(this)}>
 		                <li onClick={this.scoreClickHandler.bind(this)}>
 		                    <div className="icon"><i className={this.state.review.faceIcon}></i></div>
 		                    <div className="container">
-		                        <div className="writer">신짱나인 #테스트중</div>
+		                        <div className="writer">신짱나인 #신고기능 안됨</div>
 		                        <div className="box">
 		                            <form method="POST" onSubmit={this.reviewSubmitHandler.bind(this)}>
 		                                <div className="score"><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i></div>
@@ -442,8 +487,8 @@ class CareDetail extends React.Component{
 		                </li>
 		                <li className="line"></li>
 						{
-							this.state.reviewList.length != 0
-							?this.state.reviewList.map(
+							this.state.review.list.length != 0
+							?this.state.review.list.map(
 								review => <li key={review.id} data-review-id={review.id}>
 			                    <div className="icon"><i className={this.scoreToFace(review.score)}></i></div>
 			                    <div className="container">
@@ -481,6 +526,42 @@ class CareDetail extends React.Component{
 							:<li><div className="search-empty">리뷰가 없습니다</div></li>
 						}
 		            </ul>
+		            <div className="pager-common mt30">
+		                <div className="pager" onClick={this.pagerHandler.bind(this)}>
+		                
+		                    <div className="prev mr15">
+		
+							{
+								this.review.startNum > 1
+								? <a className="btn btn-prev" data-page={`${parseInt(this.review.startNum) - this.review.range}`} href={`?p=${parseInt(this.review.startNum) - this.review.range}`}>이전</a>
+								: <span className="btn btn-prev" onClick={()=>{new ModalBox({content:"이 페이지가 없습니다.", cancelBtnHide: true})}}>이전</span>
+							}
+		                        
+		                    </div>
+		                    <ul className="btn-center">
+		
+							{
+								[0, 1, 2, 3, 4].map(
+									i => 
+									this.review.startNum + i <= this.state.review.pageCnt  
+									?<li key={i} className={i + this.review.startNum == this.review.page ? "current" : ""}>
+										<a className="bold " data-page={`${parseInt(this.review.startNum) + i}`} href={`?p=${parseInt(this.review.startNum) + i}`}>{i+this.review.startNum}</a>
+									</li>
+									:""
+								)
+							}
+		                    </ul>
+		                    
+		                    <div className="next mr15">
+							{
+								this.review.startNum + 5 <= this.state.review.pageCnt
+								? <a className="btn btn-next" data-page={`${parseInt(this.review.startNum) + this.review.range}`} href={`?p=${parseInt(this.review.startNum) + this.review.range}`}>다음</a>
+								: <span className="btn btn-next" onClick={()=>{new ModalBox({content:"다음 페이지가 없습니다.", cancelBtnHide: true})}}>다음 </span>
+							}
+							</div>
+		                </div>
+						<div className="pager-info">검색된 리뷰 수: {this.state.review.cnt}, 페이지 수: {this.state.review.pageCnt}</div>
+		            </div>
 		        </div>
 		    </section>
 		</div>;

@@ -181,7 +181,7 @@ class CareList extends React.Component{
 			history.pushState({p: this.page, f: this.field, q: this.query}, "", `?p=${this.page}&f=${this.field}&q=${this.query}`);
 			this.invalidate();
 			window.scrollTo(0, 0);
-		}		
+		}
 	}
 	
 	autoCompleteHandler(e){
@@ -190,7 +190,8 @@ class CareList extends React.Component{
 		this.autoCompleteIndex = 0;
 		this.queryInputValueTemp = e.target.value;
 		if(value.length == 0){
-			this.setState({autoCompleteList : result})
+			if(this.state.autoCompleteList.length != 0)
+				this.setState({autoCompleteList : result})
 			return;
 		}
 		let valueChars = this.toKorChars(value).join("");
