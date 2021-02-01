@@ -1,24 +1,10 @@
 package com.reborn.web.controller.animal;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,13 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.reborn.web.entity.animal.Animal;
-import com.reborn.web.entity.animal.AnimalKind;
-import com.reborn.web.entity.animal.AnimalUpKind;
 import com.reborn.web.entity.name.Vote;
 import com.reborn.web.service.animal.AnimalKindService;
 import com.reborn.web.service.animal.AnimalService;
@@ -74,42 +54,27 @@ public class AnimalController {
 			//@RequestParam(name="endde", required=false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endde,	//유기 종료 날짜
 			@RequestParam(name="neuter", required=false) String neuter
 			, Model model) {
-
-		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+		
 		Date startDate = null;
 		Date endDate = null;
-		if( bgnde != null)
-		try {
-			startDate = formatter.parse(bgnde);
-		} catch (ParseException e) {
-         // TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
-	      
+
+		if(bgnde != null && !bgnde.equals("")) {
+			startDate = Date.valueOf(bgnde);
+		}
 		
-//		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");		
-//		
-//		Date startDate = null;
-//		Date endDate = null;
-//		if(bgnde != null && !bgnde.equals("")) {
-//			try {
-//				startDate = new Date(inputFormat.parse(bgnde).getTime());
-//			} catch (ParseException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//		if(endde != null && !endde.equals("")) {
-//			try {
-//				endDate = new Date(inputFormat.parse(endde).getTime());
-//			} catch (ParseException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//		System.out.println("endDate : "+endDate+" / startDate : "+startDate);
+		if(endde != null && !bgnde.equals("")) {
+			endDate = Date.valueOf(endde);
+		}
+		
+
+//		try {
+//			startDate = formatter.parse(bgnde);
+//		} catch (ParseException e) {
+//         // TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}  
 		System.out.println("startDate : "+startDate);
+		
 		
 		int size = 9;		
 		List<Animal> list = animalService.getList(page, size, upkind, kind, startDate, endDate, neuter); 
@@ -131,20 +96,19 @@ public class AnimalController {
 		
 		Animal a = animalService.get(no);
 		Vote v = voteService.get(no);
-		
-		String nameUrl = "add";	
-		if(v == null) {		// 이름 짓기가 진행되지 않음
-			nameUrl = "add";			
-		} else {	// 이름 짓기가 진행중이거나 완료됨
-				
-			// 이름 짓기가 진행되지 않거나, 이름 후보를 받는 중임 -> add
+
+		if(v != null) {
 			// 투표가 진행중이면 -> name/{id}/detail
 			// 투표가 끝났으면 -> 이동X(버튼 안띄움)
+			String state = v.getState();
+			model.addAttribute("state", state);	
 			
+			System.out.println("state : "+state);
 		}
+
 		
 		
-		model.addAttribute("animal", a);		
+		model.addAttribute("animal", a);	
 		
 		return "home.animal.detail";
 	}
