@@ -66,9 +66,9 @@ public class MyBatisAnimalDao implements AnimalDao{
 	}	
 
 	@Override
-	public Animal getByDesertionNo(long desertionNo) {
+	public List<Animal> getListByCareRegNo(String careRegNo) {
 		// TODO Auto-generated method stub
-		return mapper.getByDesertionNo(desertionNo);
+		return mapper.getListByCareRegNo(careRegNo);
 	}
 
 	
