@@ -17,7 +17,7 @@
 	            <div class="summary">
 	                <span>${animal.noticeNo}</span>
 	                <span>색상:${animal.colorCd} / 성별:${animal.sexCd} / 나이:${animal.age} / 체중:${animal.weight}</span>
-	                <span class="happenPlace">${animal.happenPlace}</span>
+	                <span>${animal.happenPlace}</span>
 	            </div>
             </div>
         </section>
@@ -36,7 +36,7 @@
 		   			</tr>
 		   			<tr>
 		   				<th>발견장소</th>
-		   				<td>${animal.happenPlace }</td>
+		   				<td class="happenPlace">${animal.happenPlace }</td>
 		   				<th>품종</th>
 		   				<td>${animal.kindCd }</td>
 		   			</tr>
@@ -74,65 +74,44 @@
 		   				<th>관할기관</th>
 		   				<td>${animal.orgNm }</td>
 		   				<th>보호 장소</th>
-		   				<td>${animal.careAddr }</td>
+		   				<td class="careAddr">${animal.careAddr }</td>
 		   			</tr>
 		   		</table>
     		</div>
     		
     		<div class="flex mt-1 mb-3">	    		
-				<input type="button" value="입양 문의" class="callBtn vote-btn main-button-wf mr-3">
-				<input type="button" value="이름 지어주기" class="vote-btn main-button-wf">
+    			<input type="button" value="입양 문의" class="callBtn main-button-wf" >
+				<c:if  test="${state eq '이름 모집' }">
+					<c:set var="nameUrl" value="add"></c:set>
+				</c:if >
+				<c:if  test="${state eq '투표중' }">
+					<c:set var="nameUrl" value="detail"></c:set>
+				</c:if >
+				<c:if  test="${state ne '투표 종료' }">
+					<input type="button" value="이름 지어주기" onclick="location.href='/name/${animal.desertionNo}/${nameUrl}'" class="vote-btn main-button-wf ml-3" >
+				</c:if >
     		</div>
 			<input type="button" value="목록" class="vote-btn gray-button-wf">
     	</section>
     	
-		<section>
-			<h1>발견 장소</h1>
-			<div id="map" style="width:100%;height:350px;"></div>
+		<section class="flex-column flex-center">
+			<h1>보호 장소</h1>
+			<div class="flex mt-3 m-auto">
+				<span class="bold fs-4 mr-4">위치.</span>
+				<span class="fs-4">${animal.careAddr}</span>
+			</div>
+			<div id="care-map" class="mt-3" style="width:100%;height:400px;"></div>
 		</section>
     	
-   		<section class="vote">
-			<h1>투표 하기</h1>
-			<div class="vote-info">
-				<span>00명 참여</span>
-				<span>2021-01-01 ~ 2021-01-04</span>
+		<section class="flex-column flex-center">
+			<h1>발견 장소</h1>
+			<div class="flex mt-3 m-auto">
+				<span class="bold fs-4 mr-4">위치.</span>
+				<span class="fs-4">${animal.happenPlace}</span>
 			</div>
-			<div class="vote-box">
-				<div class="vote-item">
-					<span class="name">
-						예삐
-					</span>
-					<div class="vote-item-content">
-						<span>예쁘고 귀여움</span>
-						<span>야밍야밍</span>
-					</div>
-					<input type="radio" name="vote" value="이름이름" class="vote-radio">
-				</div>
-				<div class="vote-item">
-					<span class="name">
-						예삐
-					</span>
-					<div class="vote-item-content">
-						<span>예쁘고 귀여움</span>
-						<span>야밍야밍</span>
-					</div>
-					<input type="radio" name="vote" value="이름이름" class="vote-radio">
-				</div>
-				<div class="vote-item">
-					<span class="name">
-						예삐
-					</span>
-					<div class="vote-item-content">
-						<span>예쁘고 귀여움</span>
-						<span>야밍야밍</span>
-					</div>
-					<input type="radio" name="vote" value="이름이름" class="vote-radio">
-				</div>
-			</div>
-			
-			<input type="button" value="투표하기" class="vote-btn main-button-wf">
-			<input type="button" value="신고하기" class="report-btn">
-			
+			<div id="happen-map" class="mt-3" style="width:100%;height:400px;"></div>
 		</section>
+		
+    	
 		
 	</section>
