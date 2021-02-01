@@ -86,7 +86,8 @@
         </div>
         
         <div class="data-btn-box">
-            <a href="list" class="main-button-m">목록</a>
+          	<a href="list" class="main-button-m">목록</a>
+        	<a href="list" class="gray-button-m">수정</a>
         </div>
 
 
@@ -97,6 +98,13 @@
                     <ol class="comment-info">
                         <li>${cl.nickname}</li>
                         <li><fmt:formatDate value="${cl.regDate}" pattern="yyyy-MM-dd"/></li>
+                        <li class="util-menu">
+                        	<ol>
+                        		<li><a href="#" class="comment-modify " data-commentid="${cl.id}">수정</a></li>
+                        		<li><a href="#" class="comment-delete" data-commentid="${cl.id}">삭제</a></li>
+                        		<li><a href="#" class="comment-declare" data-commentid="${cl.id}">신고</a></li>
+                        	</ol>
+                        </li>
                     </ol>
                     <div class="comment-content">
                        ${cl.content}

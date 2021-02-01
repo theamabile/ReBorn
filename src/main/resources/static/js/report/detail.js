@@ -64,7 +64,52 @@ window.addEventListener('load', (e)=>{
 			}
 			
 		})
-});
+		
+		
+		
+		//수정하기
+		let modifyBtn = document.querySelectorAll('.comment-modify');
+		console.log(modifyBtn);
+		
+		
+		modifyBtn.forEach(item=>{
+			item.addEventListener('click', (e)=>{
+				e.preventDefault();
+				console.log(e.target.dataset.commentid);
+				let modalBox = new ModalBox({
+					content:`수정할 내용을 입력해주세요.`
+				});
+			})
+		});
+		
+		
+		
+		//삭제하기
+		let deleteBtn = document.querySelectorAll('.comment-delete');
+		console.log(modifyBtn);
+		deleteBtn.forEach(item =>{
+			item.addEventListener('click', (e)=>{
+				e.preventDefault();	
+				console.log(e.target.dataset.commentid);
+				let modalBox = new ModalBox({
+					content:`정말로 삭제하시겠습니까?`
+				});
+				
+				modalBox
+				.then((resolve)=>{
+					console.log(resolve)
+					if(resolve.result == "ok"){
+						console.log('취소')
+					}else {
+						
+					}
+				})
+				
+
+			});
+		})
+		
+});		
 
 
 
@@ -95,8 +140,5 @@ function date_to_str(format)
 
     if(sec10) sec = '0' + sec;
 
-    
-
     return year + "-" + month + "-" + date;
-
 }

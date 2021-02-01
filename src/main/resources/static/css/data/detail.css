@@ -15,6 +15,7 @@
     font-size: 19px;
     line-height: 1.5;
     margin-bottom: 10px;
+    font-weight:600;
 }
 
 .detail-box-header .detail-list {
@@ -57,12 +58,12 @@
 
 .data-btn-box {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
 .data-btn-box>* {
     margin-right: 10px;
-    line-height: 40px;
+    line-height: 50px;
     text-align: center;
 }
 

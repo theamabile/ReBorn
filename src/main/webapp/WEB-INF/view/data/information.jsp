@@ -90,10 +90,10 @@
              </ul>
       		 <div class="next">
                 <c:if test="${startNum+5 <= pageCount}">
-                    <a class="btn btn-next" href="?p=${startNum+5}&categroy=${param.categroy}"></a>다음</span>
+                    <a class="btn btn-next" href="?p=${startNum+5}&categroy=${param.categroy}">다음</a></span>
                  </c:if>
                  <c:if test="${startNum+5 > pageCount}">
-                    <span class="btn btn-next">다음 </span>                           
+                    <span class="btn btn-next" >다음 </span>                           
                  </c:if>
              </div>
    		</div>

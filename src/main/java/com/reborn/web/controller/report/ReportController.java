@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -27,6 +26,7 @@ import com.reborn.web.entity.report.MissingView;
 import com.reborn.web.service.email.EmailUtil;
 import com.reborn.web.service.email.MailClient;
 import com.reborn.web.service.report.ReportService;
+import com.reborn.web.service.thread.AsyncService;
 
 @Controller
 @RequestMapping("/report/")
@@ -35,11 +35,18 @@ public class ReportController {
 	@Autowired
 	private ReportService service;
 	
-	@Autowired
-	private EmailUtil emailUtil;
+	//메일
+	//@Autowired
+	//private EmailUtil emailUtil;
 	
+	//메일2(템플릿)
+	//@Autowired
+	//private MailClient mailClient;
+	
+	//스레드
 	@Autowired
-	private MailClient mailClient;
+    AsyncService asyncService;
+	
 	
 	@RequestMapping("list")
 	public String MissingBoard(
@@ -159,7 +166,7 @@ public class ReportController {
 	    //System.out.println("realPath : "+realPath);
 	    //System.out.println(files);
 
-//		System.out.println("file : "+file);
+		//System.out.println("file : "+file);
 		 
 		/*
 		 * File realPathFile = new File(realPath); if(!realPathFile.exists())
@@ -170,23 +177,19 @@ public class ReportController {
 		
 		String subject = "[리본]실종신고 글이 게시되었습니다 (" + title + ")";
 		List<String> emailList= service.getEmailList();
-		//mailClient.prepareAndSend("hyk1272@gmail.com", subject ,title, location, feature, id);
-//		for(String email : emailList) {
-//			System.out.println(email);
-//			mailClient.prepareAndSend(email, subject ,title, location, feature, id);
-//		}
-		mailClient.prepareAndSend("hyk1272@gmail.com", subject ,title, location, feature, id);
+		
+		
+		for(String email : emailList) {	
+			asyncService.send(email, subject ,title, location, feature, id);
+			//mailClient.prepareAndSend(email, subject ,title, location, feature, id);
+		}
 		
 		//방법2이메일 보내기 (보내는 사람, 제목, 내용)
-		//emailUtil.sendEmail("hyk1272@gmail.com", "[리본]신종신고 글이 게시되었습니다.(제목 : "+ title + ")" , "content");
-		
-	
+		//emailUtil.sendEmail("hyk1272@gmail.com", "제목넣는곳")" , "내용넣는곳");
 		return "redirect:./"+id;
 	}
 	
-	
-	
-	
+
 	
 	private Date DateFormat(String date) {
 		// TODO Auto-generated method stub
