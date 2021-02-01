@@ -32,6 +32,12 @@ public class DataServiceImp implements DataService {
 		return dataDao.getCount(categoryId);
 	}
 
+	@Override
+	public int updateHit(int id) {
+		return dataDao.updateHit(id);
+		
+	}
+
 	
 	
 }

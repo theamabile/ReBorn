@@ -9,8 +9,10 @@ public class MissingComment {
 	private Date regDate;
 	private String content;
 	
-	public MissingComment() {
-		// TODO Auto-generated constructor stub
+	public MissingComment(int memberId, int missingId, String content) {
+		this.memberId = memberId;
+		this.missingId = missingId;
+		this.content = content;
 	}
 
 	public MissingComment(int id, int memberId, int missingId, Date regDate, String content) {

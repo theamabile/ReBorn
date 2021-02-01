@@ -54,7 +54,6 @@ public class NameController {
 			List<NameView> n = nameService.getViewListByAnimalId(v.getAnimalId(), 3);
 			v.setRankNameList(n);
 		}
-		
 
 		int count = voteService.getCount(field, query);
 		int pageCount = (int)Math.ceil(count / (float)size);
@@ -67,25 +66,26 @@ public class NameController {
 	
 	// 이름 투표
 	@GetMapping("{id}")
-	public String choice(@PathVariable(name="id")int id) {
+	public String choice(@PathVariable(name="desertionNo")long animalId, Model model) {
 		// 이름 짓기가 끝났을때 -> 이동X
 		// 이름 투표 중일 때 -> choice;
 		// 이름 투표중이 아닐 때 => add
 		
+		VoteView vote = voteService.getView(animalId);
 		
-		System.out.println("id : "+id);
+		model.addAttribute("vote", vote);
+		
 		return "home.name.detail";
 	}
 	
 	// 이름 짓기
 	@GetMapping("{desertionNo}/add")
-	public String add(@PathVariable(name="desertionNo")long animalId,
-					Model model) {
+	public String add(@PathVariable(name="desertionNo")long animalId, Model model) {
 		Vote v = voteService.get(animalId);
 		
 		List<NameView> nameList = new ArrayList<NameView>();
 		if(v != null) {	// 후보를 받았던 적이 있음(이미 vote가 있음)
-			nameList = nameService.getViewListByAnimalId(animalId, 999);			
+			nameList = nameService.getViewList(1, 999, "animalId", String.valueOf(animalId));			
 		}		
 
 		Animal a = animalService.get(animalId);
@@ -93,6 +93,8 @@ public class NameController {
 		System.out.printf("animal : %s / nameList size : %d", a.getDesertionNo(), nameList.size());
 		model.addAttribute("nameList", nameList);
 		model.addAttribute("animal", a);
+		model.addAttribute("vote", v);
+		
 		
 		// redirect:../id
 		return "home.name.add";

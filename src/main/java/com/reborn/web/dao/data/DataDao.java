@@ -13,6 +13,8 @@ public interface DataDao {
 	
 	int getCount(int categoryId);
 
+	int updateHit(int id);
+
 	
 
 }

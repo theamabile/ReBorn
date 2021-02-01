@@ -25,13 +25,39 @@ public class MyBatisMemberDao implements MemberDao {
 		return mapper.get(loginId);
 	}
 
-
 	@Override
 	public int insert(Member member) {
 
    	return  mapper.insert(member);
 	}
 
+	@Override
+	public int checkId(String loginId) {
+		// TODO Auto-generated method stub
+		return  mapper.checkId(loginId);
+	}
 
+	@Override
+	public int checkEmail(String Email) {
+		// TODO Auto-generated method stub
+		return  mapper.checkEmail(Email);
+	}
 
+	@Override
+	public Member getMember(String email, String name) {
+		// TODO Auto-generated method stub
+		return mapper.getMember(email,name);
+		}
+
+	@Override
+	public int checkMemberPhone(String loginId, String name, String phone) {
+		// TODO Auto-generated method stub
+		return mapper.checkMemberPhone(loginId,name, phone);
+	}
+
+	@Override
+	public int update(Member m) {
+		// TODO Auto-generated method stub
+		return mapper.update(m);
+	}
 }

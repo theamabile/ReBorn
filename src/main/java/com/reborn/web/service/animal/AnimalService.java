@@ -1,6 +1,6 @@
 package com.reborn.web.service.animal;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestParam;

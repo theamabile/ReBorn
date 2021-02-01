@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>리본 메일링</title>
+</head>
+<body>
+	<div style="width:800px">
+	<h5 style="padding:0 0 20px; margin-bottom:0px; color: #43888A; font-size:18px; font-weight: bold;">반려동물 실종 신고 알림</h5>
+	<table style="width:100%; background-color:#f4f4f4; table-layout:fixed; border-collapse: collapse; border-spacing: 0;">
+		<tr>
+			<td style="width:20%; padding:15px 22px; background-color: #f3f3f3; border: 1px solid #d8d8d8; font-weight: bold;">
+				제목
+			</td>
+			<td style="padding: 15px 20px; border: 1px solid #d8d8d8;" th:text="${title}">
+	
+			</td>
+			
+		</tr>
+		<tr>
+			<td style="width:20%; padding:15px 22px; background-color: #f3f3f3; border: 1px solid #d8d8d8; font-weight: bold;" >
+				실종장소
+			</td>
+			<td style="padding: 15px 20px; border: 1px solid #d8d8d8;" th:text="${location}">
+	
+			</td>
+		</tr>
+		<tr>
+			<td style="width:20%; padding:15px 22px; background-color: #f3f3f3; border: 1px solid #d8d8d8; font-weight: bold;" >
+				특징
+			</td>
+			<td style="padding: 15px 20px; border: 1px solid #d8d8d8;" th:text="${feature}">
+		
+			</td>
+		</tr>
+		<tr>
+			<td>
+				
+			</td>
+			<td>
+			
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="padding:23px 20px; background-color:#f7f7f7; color: #666; font-size:13px; line-height: 1.5;">
+				본 메일은 E-mail 정보 수신동의 여부와 관계없이 발송되는 발신 전용 메일입니다.<br/>
+				<a th:href="@{http://localhost:8080/report/} + ${id}">게시글 바로가기</a>
+			</td>
+		</tr>
+	</table>
+	</div>
+</body>
+</html>

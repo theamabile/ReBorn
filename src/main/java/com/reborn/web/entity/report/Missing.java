@@ -9,17 +9,24 @@ public class Missing {
 	private String content;
 	private Date regDate;
 	private int hitCnt;
-	private String missingDate;
+	private Date missingDate;
 	private String feature;
 	private String location;
 	private String breed;
 	private String files;
 	
-	public Missing() {
-		// TODO Auto-generated constructor stub
+	public Missing(int memberId, String title, String content, Date missingDate, String feature, String location, String breed, String files) {
+		this.memberId = memberId;
+		this.title = title;
+		this.content = content;
+		this.missingDate = missingDate;
+		this.feature = feature;
+		this.location = location;
+		this.breed = breed;
+		this.files = files;
 	}
 
-	public Missing(int id, int memberId, String title, String content, Date regDate, int hitCnt, String missingDate,
+	public Missing(int id, int memberId, String title, String content, Date regDate, int hitCnt, Date missingDate,
 			String feature, String location, String breed, String files) {
 		this.id = id;
 		this.memberId = memberId;
@@ -32,13 +39,6 @@ public class Missing {
 		this.location = location;
 		this.breed = breed;
 		this.files = files;
-	}
-
-	@Override
-	public String toString() {
-		return "Missing [id=" + id + ", memberId=" + memberId + ", title=" + title + ", content=" + content
-				+ ", regDate=" + regDate + ", hitCnt=" + hitCnt + ", missingDate=" + missingDate + ", feature="
-				+ feature + ", location=" + location + ", breed=" + breed + ", files=" + files + "]";
 	}
 
 	public int getId() {
@@ -89,11 +89,11 @@ public class Missing {
 		this.hitCnt = hitCnt;
 	}
 
-	public String getMissingDate() {
+	public Date getMissingDate() {
 		return missingDate;
 	}
 
-	public void setMissingDate(String missingDate) {
+	public void setMissingDate(Date missingDate) {
 		this.missingDate = missingDate;
 	}
 
@@ -128,5 +128,7 @@ public class Missing {
 	public void setFiles(String files) {
 		this.files = files;
 	}
+	
+	
 	
 }
