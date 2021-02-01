@@ -200,21 +200,23 @@ select {
 }
 
 
-.file-box label {
+.file-box span {
 	display: inline-block;
 	padding: .5em .75em;
-	color: #999;
+	color: #148354;
 	font-size: inherit;
 	line-height: normal;
 	vertical-align: middle;
 	background-color: #fdfdfd;
 	cursor: pointer;
-	border: 1px solid #ebebeb;
-	border-bottom-color: #e2e2e2;
+	border: 1px solid #148354;	
 	border-radius: .25em;
 }
+.file-box>input{
+	display:none;
+}
 
-.file-box input[type="file"] { /* 파일 필드 숨기기 */
+/* .file-box input[type="file"] { 
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -223,4 +225,4 @@ select {
 	overflow: hidden;
 	clip: rect(0, 0, 0, 0);
 	border: 0;
-}
+} */

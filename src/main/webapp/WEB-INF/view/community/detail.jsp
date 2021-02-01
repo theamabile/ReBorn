@@ -51,7 +51,9 @@
 	                        <span class="comment-regdate dot">
 	                        	<fmt:formatDate value="${c.regDate}" pattern="yyyy.MM.dd[E] a hh:mm:ss"/>
 	                        </span>
-	                        <span class="comment-edit"><a class="dot" href="<%-- ${b.id}/comment/${c.id}/edit --%>">수정</a></span>
+	                        <form method="post" action="${b.id}/comment/edit">
+	                        	<span class="comment-edit dot">수정</span><!-- <a class="dot" href=""> -->
+	                        </form>
 	                        <span class="comment-delete"><a class="dot" href="${b.id}/comment/${c.id}/del">삭제</a></span>
 	                        <span class="comment-report"><a href="">신고</a></span>
 	                    </div>

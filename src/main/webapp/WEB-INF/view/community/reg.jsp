@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link href="/css/community/reg.css" type="text/css" rel="stylesheet" />
-<!-- <link href="/css/community/reset.css" type="text/css" rel="stylesheet" /> -->
+<link href="/css/community/reset.css" type="text/css" rel="stylesheet" />
 <link href="/css/community/cummunity-style.css" type="text/css" rel="stylesheet" />
+<script type="module" src="/js/community/reg.js"></script>
 
 	<section class="main-container">
             <section class="item-tool-bar">
@@ -37,11 +38,17 @@
 	                    <div class="article-title mt30">
 	                        <input type="text" name="title" placeholder="제목을 입력해주세요." />	                        
 	                    </div><!-- contenteditable="true" -->
-	                 <!-- 파일첨부 -->   
-	                    <div class="file-box mt10"> 
-		                    <label for="ex_file">업로드</label> 
-	                    	<input class="upload-name" value="파일선택" disabled="disabled">
-		                    <input type="file" id="ex_file" name="file" /> 
+	                  
+					<!-- 드래그 앤 드랍 방식 -->
+	                 	<div class="drop-box mt10">
+	                 		업로드 할 파일을 드롭하세요.
+	                 		<input type="file" />
+	                 	</div>
+	                 
+	                 <!-- 파일 첨부 방식 -->
+	                    <div class="file-box mt10">		                    
+		                    <span class="upload-button">업로드</span>
+		                    <input type="file" class="upload-file" name="file" />		                    
 	                    </div>
 	                    	                    
 	                    <div>

@@ -89,28 +89,29 @@ public class BoardController {
 		return "home.community.detail";		
 	}
 	
-	@PostMapping("{id}/like" )
+	//좋아요 토글 방식 +-
+	@PostMapping("{boardId}/like" )
 	@ResponseBody
-	public Map<String, Object> like(Model model, @PathVariable("id") int id,						
+	public Map<String, Object> like(Model model, @PathVariable("boardId") int boardId,						
 			HttpServletRequest httpRequest) {
 		
 		
 		String likes;		
 		
 		Like like = new Like();
-		like.setBoardId(id);
+		like.setBoardId(boardId);
 		like.setMemberId(1);
 		
-		int result = service.getCount(id, 1);
+		int result = service.getCount(boardId, 1);
 		
 		if(result == 0) { 		
 		  service.insert(like);
 			likes = "insert";
 		} else {
-			service.delete(id, 1);
+			service.delete(boardId, 1);
 			likes = "delete";
 		}		
-		int likeCount = service.getLikeCount(id);		
+		int likeCount = service.getLikeCount(boardId);		
 		Map<String, Object> dto = new HashMap<>();
 		dto.put("likes", likes);
 		dto.put("likeCount", likeCount);
@@ -143,8 +144,8 @@ public class BoardController {
 		if(filePart != null) {
 			fileName = filePart.getSubmittedFileName();
 			board.setFiles(fileName);
-			
-			String pathTemp = request.getServletContext().getRealPath("/uploadFiles/board/2021/"+id+"/");
+		
+			String pathTemp = request.getServletContext().getRealPath("/upload/community/2021/"+id);
 			System.out.println(pathTemp);
 			
 			File path = new File(pathTemp);
@@ -166,15 +167,11 @@ public class BoardController {
 		}//end if
 		
 		
-		
-		
-		
-		
-		
 		Board origin = service.get(board.getId());
 		origin.setTitle(title);
 		origin.setContent(content);
 		origin.setBoardCategoryId(category);
+		origin.setFiles(fileName);
 		System.out.println(content + "/" + category);
 		System.out.println(board.getId());
 		
@@ -192,7 +189,6 @@ public class BoardController {
 		service.delete(id);
 		
 		return "redirect:../list";
-		
 	}
 	
 	//글 요청
@@ -288,31 +284,6 @@ public class BoardController {
 		return "redirect:list";
 	}
 	
-	//댓글 삭제
-	@RequestMapping("{id}/comment/{commentId}/del")
-	public String commentDelete(@PathVariable("id") int id,
-			@PathVariable("commentId") int commentId
-			) {
-		
-		System.out.println(id);
-		service.commentDelete(commentId);
-		
-		return "redirect:../../../"+id;
-	}
-	
-	//댓글 수정 요청
-	@GetMapping("{id}/comment/{commentId}/edit")
-	public String commentEdit(@PathVariable("id")  int id,
-			@PathVariable("commentId") int commentId,
-			Model model
-			) {
-		
-			
-		
-		return "../../../"+id;
-	}
-	
-	
 	//댓글 작성
 	@PostMapping("{id}/comment/write")
 	public String commentWrite(
@@ -330,6 +301,63 @@ public class BoardController {
 	
 	}
 	
+	//댓글 삭제
+	@RequestMapping("{id}/comment/{commentId}/del")
+	public String commentDelete(@PathVariable("id") int id,
+			@PathVariable("commentId") int commentId) {
+		
+		System.out.println(id);
+		service.commentDelete(commentId);
+		
+		return "redirect:../../../"+id;
+	}
+	
+	//댓글 수정 Get
+	@GetMapping("{id}/comment/edit")
+	public String commentEdit(@PathVariable("id")  int id,
+			@PathVariable("commentId") int commentId, 
+			Model model) {
+			
+		
+		return "home.community.commentEdit";
+	}
+	
+	//댓글 수정 POST
+	@PostMapping()
+	public String commentEdit( ) {
+		
+		return "";
+	}
+	
+	
+	@PostMapping("upload")
+	@ResponseBody
+	public String upload(MultipartFile file, HttpServletRequest request) throws IllegalStateException, IOException {
+		System.out.println("file upload ok");
+		System.out.println(file.getOriginalFilename());
+
+		Board lastId = service.getLastId();
+		int newBoardId = lastId.getId()+1;
+		
+		String url = "/upload/community/2021/";
+		
+		String realPath = request.getServletContext().getRealPath(url);
+		System.out.println(realPath);
+		
+		File realPathFile = new File(realPath);
+		if(!realPathFile.exists())
+			realPathFile.mkdirs();
+		
+		String uploadedFilePath = realPath + File.separator+file.getOriginalFilename();
+		File uploadedFile = new File(uploadedFilePath);
+		file.transferTo(uploadedFile);
+		
+		
+		
+		return "ok";
+	}
+	
+
 	
 	
 	
