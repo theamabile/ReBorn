@@ -1,0 +1,118 @@
+@import url("cummunity-style.css");
+
+/* header */
+#header{
+    background: rgb(235, 61, 61);
+    height: 100px;
+}
+
+/* main */
+.wrapper{
+    margin: auto;
+    width: 860px;
+}
+.major-subject{
+    display: flex;
+    justify-content: center;  
+}
+    .major-subject-text{
+        line-height: 40px;
+        width: 900px;    
+        height: 35px;
+        color: #1a7a7e;
+        font-size: 20px;
+        border-bottom: 2px solid #1a7a7e; /* 216163*/
+    }
+
+.article-header{
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}    
+	.category-option{
+	
+		height: 30px;
+	}
+
+    .category{
+        font-size: 18px;
+        color: #808080;
+    }
+
+    .write-info{
+        color: #808080;
+    }
+
+    .article-content{
+        text-align: center;
+    }
+  
+    /* textarea{
+	    resize:none;
+		
+		width: 800px;
+		height: 300px;
+    } */
+    .content-place{
+      width: 100%;
+	  height: 150px;
+	  padding: 12px 20px;
+	  box-sizing: border-box;
+	  border: 1px solid #ccc;
+	  border-radius: 4px;
+	  background-color: #f8f8f8;
+	  resize: none;
+	  overflow:hidden;
+    }
+    
+    .content-place{
+        width: 100%;
+        min-height: 200px;
+        outline: 0;
+		border: 1px solid e9e9e9;
+    }
+    .article-title>input{
+        width: 100%;
+        height: 50px;
+        border: 0;        
+        font-size: 25px;
+        color: rgb(128, 128, 128);
+    }
+    .article-title{
+        border-bottom: 1px solid  #cccccc ;
+    }   
+        
+    .transfer-button-box{
+    	display: flex;
+    	justify-content: flex-end;
+    }
+    
+    .edit-save-button{
+    	width: 70px;
+        height: 35px;
+        font-size: 17px;
+        background: #32a088;
+        color:white;
+        box-shadow: 1px 0px 1px 0px rgba(209, 209, 209, 0.1); 
+    }
+    .a-button{
+    	display: inline-block;
+    	width: 70px;
+        height: 35px;
+        font-size: 17px;
+        background: #32a088;
+    	color:white;
+    	line-height: 35px;
+    	text-align: center;
+    }
+    .file-box{
+    	border-bottom: 1px solid #ccc;
+    }
+    
+    .file-box>img{
+    	width: 300px;
+    	height: 300px;    	
+    }    
+    
+  
