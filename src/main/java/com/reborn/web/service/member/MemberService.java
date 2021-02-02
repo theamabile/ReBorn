@@ -18,8 +18,12 @@ public interface MemberService {
 	
 	public void checkMember(String email,String name,HttpServletResponse response) throws Exception;
 
-	void checkMember(String loginId, String name, String phone, HttpServletResponse response) throws IOException;
+	void checkMemberPhone(String loginId, String name, String phone, HttpServletResponse response) throws IOException;
 
 	int updatePw(String loginId, String password);
+
+	void checkMemberEmail(String loginId, String name, String email, HttpServletResponse response) throws IOException;
+
+	Member get(String loginId);
 
 }
