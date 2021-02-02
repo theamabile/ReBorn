@@ -44,27 +44,29 @@
                 </div>
                 
                 <!-- 댓글 리스트 -->
-                <c:forEach items="${comment}" var="c" >
-	                <div class="comment-view-box padding10 mt5">
-	                    <div class="comment-info mt10">
-	                        <span class="comment-nickname dot" >${c.nickname}</span>
-	                        <span class="comment-regdate dot">
-	                        	<fmt:formatDate value="${c.regDate}" pattern="yyyy.MM.dd[E] a hh:mm:ss"/>
-	                        </span>
-	                        <form method="post" action="${b.id}/comment/edit">
-	                        	<span class="comment-edit dot">수정</span><!-- <a class="dot" href=""> -->
-	                        </form>
-	                        <span class="comment-delete"><a class="dot" href="${b.id}/comment/${c.id}/del">삭제</a></span>
-	                        <span class="comment-report"><a href="">신고</a></span>
-	                    </div>
-	                    <div class="comment-content mt10"> 
-	                        ${c.content}
-	                    <input class="comment-id" type="hidden" name="commentId" value="${c.id}" />
-	                    <input class="comment-member-id" type="hidden" name="commentMemberId" value="${c.memberId}" />	                    
-	                    </div>
-	                    <!-- <a class="comment-reply" href="">답글</a> -->
-	                </div>
-                </c:forEach>
+                <div class="comment-list">
+	                <c:forEach items="${comment}" var="c" >
+		                <div class="comment-view-box padding10 mt5">
+		                    <div class="comment-info mt10">
+		                        <span class="comment-nickname dot" >${c.nickname}</span>
+		                        <span class="comment-regdate dot">
+		                        	<fmt:formatDate value="${c.regDate}" pattern="yyyy.MM.dd[E] a hh:mm:ss"/>
+		                        </span>
+		                        <form method="post" action="${b.id}/comment/edit">
+		                        	<span class="comment-edit dot">수정</span><!-- <a class="dot" href=""> -->
+		                        </form>
+		                        <span class="comment-delete"><a class="dot" href="${b.id}/comment/${c.id}/del">삭제</a></span>
+		                        <span class="comment-report"><a href="">신고</a></span>
+		                    </div>
+		                    <div class="comment-content mt10"> 
+		                        ${c.content}
+		                    <input class="comment-id" type="hidden" name="commentId" value="${c.id}" />
+		                    <input class="comment-member-id" type="hidden" name="commentMemberId" value="${c.memberId}" />	                    
+		                    </div>
+		                    <!-- <a class="comment-reply" href="">답글</a> -->
+		                </div>
+	                </c:forEach>
+                </div>
                 
 				<!-- 댓글 작성 -->
                 <form method="post" action="${b.id}/comment/write" >

@@ -61,17 +61,6 @@ public class BoardController {
 		
 	}	
 	
-	
-//	//댓글 수정 Get
-//	@GetMapping("/commentEdit")
-//	public String commentEdit(@PathVariable("id")  int id,
-//			@PathVariable("commentId") int commentId, 
-//			Model model) {
-//			
-//		
-//		return "home.community.commentEdit";
-//	}
-//	
 	//댓글 수정	
 	@RequestMapping("{id}/commentEdit")							//boardId
 	public  List<CommentView> comment(Model model, @PathVariable("id") int id,
