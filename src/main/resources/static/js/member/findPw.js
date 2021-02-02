@@ -2,8 +2,7 @@ window.addEventListener("load", () => {
 	let section = document.querySelector(".find-pw");
 	let form = section.querySelector(".form");
 
-	let conf = [false, false];
-	let [idConf, phoneConf] = conf;
+ let phoneConf = false;
 
 	// radio버튼  변경
 	let phoneType = document.getElementsByName("type")[0];
@@ -12,15 +11,28 @@ window.addEventListener("load", () => {
 	let phoneConfDiv = section.querySelectorAll(".confirm-type")[0];
 	let emailConfDiv = section.querySelectorAll(".confirm-type")[1];
 
+
+	// 이름, 휴대전화 인증
+	let nameInput = section.querySelector(".name-input");
+	let phoneInput = section.querySelector(".phone-input");
+	let emailInput = section.querySelector(".email-input");
+	let confirmInput = section.querySelector(".confirm-input");
+
+	let confirmNum;
+	let isValid = false;
+
+	// radio버튼  변경
 	phoneType.addEventListener("input", () => {
 		phoneConfDiv.classList.remove("d-none");
 		emailConfDiv.classList.add("d-none");
-		console.log("phon")
+		emailInput.value = "";       // 이메일 값 삭제
+		console.log("phone")
 	})
 
 	emailType.addEventListener("input", () => {
 		emailConfDiv.classList.remove("d-none");
 		phoneConfDiv.classList.add("d-none");
+		phoneInput.value = "";      //전화번호 값 삭제
 		console.log("email")
 	})
 
@@ -44,12 +56,10 @@ window.addEventListener("load", () => {
 				if (json < 1) {
 					idInput.style["margin-bottom"] = "5px";
 					result.classList.remove("d-none");
-					idConf = true;
 				}
 				else {
 					idInput.style["margin-bottom"] = "22px";
 					result.classList.add("d-none");
-					idConf = false;
 					console.log(json);
 					form.action = "./reset-pw?loginId=" + id;
 				}
@@ -59,19 +69,15 @@ window.addEventListener("load", () => {
 	let singBtn = section.querySelector(".sing-btn");
 	let confirmBtn = section.querySelector(".confirm-btn");
 
-	// 이름, 휴대전화 인증
-	let nameInput = section.querySelector(".name-input");
-	let phoneInput = section.querySelector(".phone-input");
-	let emailInput = section.querySelector(".email-input");
-	let confirmInput = section.querySelector(".confirm-input");
 
 
-	let confirmNum;
-	let isValid = false;
-	phoneInput.addEventListener("focusout", () => {
+	//회원 정보 확인
+	phoneInput.addEventListener("focusout", checkMember);
+	emailInput.addEventListener("focusout", checkMember);
 
-		//회원 정보확인
-		fetch("./check-member/phone?loginId=" + id + "&name=" + nameInput.value + "&phone=" + phoneInput.value, {
+	//회원 정보확인
+	function checkMember() {
+		fetch("./check-member/pw?loginId=" + id + "&name=" + nameInput.value + "&phone=" + phoneInput.value + "&email=" + emailInput.value, {
 			method: 'post'
 		})
 			.then(response => response.json())
@@ -84,17 +90,31 @@ window.addEventListener("load", () => {
 					isValid = false;
 				}
 			})
-	});
+	}
 
-	// 휴대폰 인증
+	// 인증번호 전송
 	confirmBtn.addEventListener("click", (e) => {
-				e.stopPropagation();
+		e.stopPropagation();
+
+
 		if (!isValid) {
 			alert("등록된 회원정보가 아닙니다.");
 			return;
 		}
-		else {
+		//휴대폰 인증
+		else if (phoneType.checked) {
 			fetch("./sendSMS?page=패스워드찾기&phone=" + phoneInput.value, {
+				method: 'post'
+			})
+				.then(response => response.text())
+				.then(text => {
+					confirmNum = text;
+					console.log(confirmNum);
+				})
+		}
+		//이메일 인증
+		else if (emailType.checked) {
+			fetch("./sendEmail?page=패스워드찾기&email=" + emailInput.value, {
 				method: 'post'
 			})
 				.then(response => response.text())
@@ -105,21 +125,21 @@ window.addEventListener("load", () => {
 		}
 	});
 
-	
-		//인증번호 확인
-		confirmInput.addEventListener("input", () => {
-			if (confirmInput.value != confirmNum || confirmInput.value == null) {
-				phoneConf = false;
-				singBtn.classList.remove("able");
-				singBtn.classList.add("disabled");
-				console.log("인증번호가 다릅");
-			}
-			else {
-				phoneConf = true;
-				singBtn.classList.remove("disabled");
-				singBtn.classList.add("able");
-			}
-		})
+
+	//인증번호 확인
+	confirmInput.addEventListener("input", () => {
+		if (confirmInput.value != confirmNum || confirmInput.value == null) {
+			phoneConf = false;
+			singBtn.classList.remove("able");
+			singBtn.classList.add("disabled");
+			console.log("인증번호가 다릅");
+		}
+		else {
+			phoneConf = true;
+			singBtn.classList.remove("disabled");
+			singBtn.classList.add("able");
+		}
+	})
 
 	//버튼 비활성화
 	singBtn.addEventListener('load', (e) => {

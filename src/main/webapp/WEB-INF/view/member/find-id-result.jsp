@@ -9,6 +9,6 @@
 			<i class="fas fa-users"></i>
 		</div>
 		<input type="text" class="loginId input" placeholder="아이디" value="${param.loginId}" readonly><a href="./login"> <input
-			type="button" value="sign up" class="button able"></a>
+			type="button" value="sign in" class="button able"></a>
 	</div>
 </section>
