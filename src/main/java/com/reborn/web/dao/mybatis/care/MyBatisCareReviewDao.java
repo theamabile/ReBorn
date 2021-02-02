@@ -49,6 +49,15 @@ public class MyBatisCareReviewDao implements CareReviewDao{
 	public int delete(int id) {
 		return mapper.delete(id);
 	}
-	
+
+	@Override
+	public int getReviewCount(String careRegNo) {
+		return mapper.getReviewCount(careRegNo);
+	}
+
+	@Override
+	public double getReviewAvg(String careRegNo) {
+		return mapper.getReviewAvg(careRegNo);
+	}
 	
 }

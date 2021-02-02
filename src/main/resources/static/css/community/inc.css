@@ -1,0 +1,60 @@
+.text-red{
+    color: #1a7a7e;
+}
+.dot:after{
+    content: "ㆍ";  
+    color:  rgb(146, 146, 146);
+}
+.bar:after{
+    content: "|";
+    color:  rgb(146, 146, 146);
+    margin-left: 10px;
+}
+.button{
+        width: 70px;
+        height: 35px;
+        font-size: 17px;
+        background: #1a7a7e;
+        color:lavender;
+        box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2); 
+}
+
+select{
+    width: 100px;
+    height: 25px;
+    padding-left: 5px;
+    background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%; /* 네이티브 화살표 대체 */ 
+    background-size: 20px 20px;
+    border: 1px solid #999; 
+    border-radius: 0px;
+    appearance: none;
+    outline: 0;
+}
+
+
+.menu-bar{
+    display: flex;
+    justify-content: center;
+    --background-color: #dbdbdb;
+    background: rgb(245, 245, 245);
+}
+    .menu { 
+        display: flex;    
+        align-items: center;
+        height: 40px;
+        width: 900px;
+    }
+    .menu ul{
+        display: flex;    
+    }
+
+    .menu>ul>li>a{
+        display: inline-block;
+        height: 30px;
+        width: 130px;
+        line-height: 30px;  
+        padding-right: 20px;
+        font-size: 15px;
+        color: rgb(121, 121, 121);
+        
+    }

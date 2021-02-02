@@ -179,5 +179,8 @@
     --vertical-align: middle;
     
 }
-
+.file-image>img{
+	width: 150px;
+	height: 150px;
+}
 

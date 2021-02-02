@@ -33,11 +33,41 @@
          where BINARY ${param1} like '%${param2}%'
       </if>
    </select> 
-  
+  <!-- detail 에서 사용할 쿼리: id 값 가져오기 -->
   <select id="get" resultType="com.reborn.web.entity.community.BoardView">
   		SELECT * FROM BoardView
   		where id=${id}
   </select>   
+   
+   <!-- 글 삭제 -->
+   <delete id="delete">
+   		DELETE FROM Board WHERE id=#{id}   
+   </delete>
+   
+   <!-- 글 등록 -->
+   <insert id="insert" parameterType="com.reborn.web.entity.community.Board" >
+   		INSERT INTO Board(title, content, boardCategoryId, memberId, files) 
+   		values(#{title}, #{content}, #{boardCategoryId}, #{memberId}, #{files})
+   </insert>
+<!--    <insert id="insert" parameterType="com.reborn.web.entity.community.BoardCategory" >
+   		INSERT INTO BoardCategory(name) values(#{name})
+   </insert> -->
+   
+   <!-- 글 수정 -->
+   <update id="update">
+   	UPDATE Board
+   	SET
+   		title = #{title},
+   		content = #{content},
+   		boardCategoryId = #{boardCategoryId},
+   		files = #{files}
+   	WHERE id = #{id}   		
+   </update> 
+   
+   <select id="getLast" resultType="com.reborn.web.entity.community.Board">
+   		SELECT * FROM Board 
+			WHERE id = (SELECT MAX(id) FROM Board);
+   </select>
    
    
 </mapper> 
