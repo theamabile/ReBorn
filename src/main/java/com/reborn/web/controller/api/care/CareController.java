@@ -93,10 +93,10 @@ public class CareController {
 		reviewList = careService.getReviewViewList(1, size, careRegNo);
 		double reviewScoreAvg = careService.getReviewAvg(careRegNo); 
 		
-		List<Animal> animalList = new ArrayList<>();
+//		List<Animal> animalList = new ArrayList<>();
 		
-//		List<Animal> animalList = null;
-//		animalList = animalService.getListByCareRegNo(careRegNo);
+		List<Animal> animalList = null;
+		animalList = animalService.getListByCareRegNo(careRegNo);
 		
 		int reviewCnt = 0;
 		int reviewPageCnt = 0;

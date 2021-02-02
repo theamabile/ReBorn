@@ -38,31 +38,99 @@ class CareDetail extends React.Component{
 			this.review.page = e.state?.p || 1;
 			this.reviewInvalidate();
 		}
-		this.invalidate();
+		
+		this.invalidate()
+		.then(resolve=>{
+			if(resolve != "sussess")
+				return;
+				
+			this.kakaoMapSearch();
+		});
+		
+//		(async ()=>{
+//			console.log("1111111");
+//		    let temp = await this.invalidate();
+//			console.log("2222222");
+//			console.log(this.state.care.name);
+//		})();
+//		console.log("3333333");
 	}
 	
 	componentDidMount(){
 		
 	}
 	
+	kakaoMapSearch(){
+		var mapContainer = document.querySelector('#kakao-map .map'), // 지도를 표시할 div 
+		    mapOption = {
+		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		        level: 4 // 지도의 확대 레벨
+		    };  
+		// 지도를 생성합니다    
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+		// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new kakao.maps.services.Geocoder();
+		let happenPlace = this.state.care.addr || this.state.care.name;
+		
+		// 주소로 좌표를 검색합니다
+		geocoder.addressSearch(happenPlace, (result, status) => {
+		
+			var infowindow;
+			var coords;
+		
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === kakao.maps.services.Status.OK) {
+		        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		
+		        // 인포윈도우로 장소에 대한 설명을 표시합니다
+		        infowindow = new kakao.maps.InfoWindow({
+		            content: `<div style="width:150px;text-align:center;padding:6px 0;">${this.state.care.name}</div>`
+		        });
+		    } else {
+		       	coords = new kakao.maps.LatLng(37.572078, 126.987300);
+	   			
+				// 인포윈도우로 장소에 대한 설명을 표시합니다
+		        infowindow = new kakao.maps.InfoWindow({
+		            content: '<div style="width:150px;text-align:center;padding:6px 0;color:red;">발견 장소를 찾지 못했습니다</div>'
+		        });
+			}
+			
+			// 결과값으로 받은 위치를 마커로 표시합니다
+	        var marker = new kakao.maps.Marker({
+	            map: map,
+	            position: coords
+	        });
+	        infowindow.open(map, marker);
+	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	        map.setCenter(coords);
+		});
+		
+		
+	}
+	
 	invalidate(){
 		console.log("invalidate");
 		
-		fetch(`/api/care/${this.careRegNo}`)
-		.then((response ) => {
-			return response.json();
-		})
-		.then(({care, animalList, reviewList, reviewCnt, reviewPageCnt, reviewScoreAvg})=>{
+		return new Promise((resolve, reject) => {
 			
-			let review = this.state.review;
-			review.list = reviewList;
-			review.cnt = reviewCnt;
-			review.pageCnt = reviewPageCnt;
-			review.scoreAvg = reviewScoreAvg;
-			
-			this.review.startNum = this.review.page - ((this.review.page - 1) % this.review.range);
-			this.setState({care, animalList, review});
+			fetch(`/api/care/${this.careRegNo}`)
+			.then((response ) => {
+				return response.json();
+			})
+			.then(({care, animalList, reviewList, reviewCnt, reviewPageCnt, reviewScoreAvg})=>{
+				
+				let review = this.state.review;
+				review.list = reviewList;
+				review.cnt = reviewCnt;
+				review.pageCnt = reviewPageCnt;
+				review.scoreAvg = reviewScoreAvg;
+				
+				this.review.startNum = this.review.page - ((this.review.page - 1) % this.review.range);
+				this.setState({care, animalList, review});
+				resolve("sussess");
+			});
 		});
+		
 	}
 	
 	reviewInvalidate(){
@@ -387,6 +455,10 @@ class CareDetail extends React.Component{
 		if( e.target.tagName == "A" ){
 			e.preventDefault();
 			let page = e.target.dataset.page;
+			
+			if( page == undefined ) 
+				return;
+			
 			this.review.page = page;
 			history.pushState({p: page}, "", `?p=${page}`);
 			this.reviewInvalidate();
@@ -449,9 +521,9 @@ class CareDetail extends React.Component{
 		            </div>
 		        </div>
 		    </section>
-		    <section id="kakao-map" className="map" ref={this.kakaoMapContainer}>
+		    <section id="kakao-map" ref={this.kakaoMapContainer}>
 		        <div className="map-inner box-center section-max-width">
-		            <div className="flex-center">
+		            <div className="flex-center map">
 		            </div>
 		            <div>
 		                <br /><br />
@@ -541,20 +613,22 @@ class CareDetail extends React.Component{
 		                    <ul className="btn-center">
 		
 							{
-								[0, 1, 2, 3, 4].map(
+								this.state.review.cnt != 0
+								? [0, 1, 2, 3, 4].map(
 									i => 
-									this.review.startNum + i <= this.state.review.pageCnt  
+									this.review.startNum + i <= this.state.review.pageCnt
 									?<li key={i} className={i + this.review.startNum == this.review.page ? "current" : ""}>
 										<a className="bold " data-page={`${parseInt(this.review.startNum) + i}`} href={`?p=${parseInt(this.review.startNum) + i}`}>{i+this.review.startNum}</a>
 									</li>
-									:""
+									: ""
 								)
+								: <li className="current"><a>1</a></li>
 							}
 		                    </ul>
 		                    
 		                    <div className="next mr15">
 							{
-								this.review.startNum + 5 <= this.state.review.pageCnt
+								this.review.startNum + this.review.range <= this.state.review.pageCnt
 								? <a className="btn btn-next" data-page={`${parseInt(this.review.startNum) + this.review.range}`} href={`?p=${parseInt(this.review.startNum) + this.review.range}`}>다음</a>
 								: <span className="btn btn-next" onClick={()=>{new ModalBox({content:"다음 페이지가 없습니다.", cancelBtnHide: true})}}>다음 </span>
 							}

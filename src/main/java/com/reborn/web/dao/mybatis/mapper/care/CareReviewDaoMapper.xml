@@ -27,8 +27,8 @@
 		WHERE careRegNo = #{param1}
 	</select>
 	
-	<select id="getReviewAvg" resultType="double">
-		SELECT AVG(score) FROM CareReview
+	<select id="getReviewAvg" resultType="Double">
+		SELECT COALESCE(AVG(score), 0) FROM CareReview
 		WHERE careRegNo = #{param1}
 	</select>
 	

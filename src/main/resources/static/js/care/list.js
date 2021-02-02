@@ -524,7 +524,7 @@ class CareList extends React.Component{
                     
                     <div className="next mr15">
 					{
-						this.startNum + 5 <= this.state.pageCount
+						this.startNum + this.range <= this.state.pageCount
 						? <a className="btn btn-next" data-page={`${parseInt(this.startNum) + this.range}`} href={`?p=${parseInt(this.startNum) + this.range}&f=${this.field}&q=${this.query}`}>다음</a>
 						: <span className="btn btn-next" onClick={()=>{new ModalBox({content:"다음 페이지가 없습니다.", cancelBtnHide: true})}}>다음 </span>
 					}

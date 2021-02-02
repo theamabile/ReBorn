@@ -113,9 +113,13 @@ section h1{
     object-fit: cover;
 }
 
-.map{
+#kakao-map{
     background: var(--background-gray);
-    padding: 150px 0;
+    padding: 100px 100px;
+}
+
+#kakao-map .map{
+	min-height: 500px;
 }
 
 .map-inner .bold{
