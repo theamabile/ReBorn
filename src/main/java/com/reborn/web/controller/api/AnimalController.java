@@ -9,9 +9,9 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +68,6 @@ public class AnimalController {
 	@RequestMapping(value = "list")
 	public String list(
 			@RequestParam(name="p", defaultValue="1") int page,
-			@RequestParam(name="s", defaultValue = "9") int size,
 			@RequestParam(name="upkind", required=false) String upkind,		//축종 코드
 			@RequestParam(name="kind", required=false) 	 String kind,		//품종 코드
 			@RequestParam(name="bgnde", required=false)	 String bgnde, 	//유기 시작 날짜
@@ -76,32 +75,22 @@ public class AnimalController {
 			@RequestParam(name="neuter", required=false) String neuter) {		//중성화여부
 	
 		// date format 더해보기 => null & required
-		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");	
 		Date startDate = null;
 		Date endDate = null;
 
 		if(bgnde != null && !bgnde.equals("")) {
-			try {
-				startDate = new Date(inputFormat.parse(bgnde).getTime());
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			startDate = Date.valueOf(bgnde);
 		}
 		
 		if(endde != null && !endde.equals("")) {
-			try {
-				endDate = new Date(inputFormat.parse(endde).getTime());
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			endDate = Date.valueOf(endde);
 		}
 		
 
 		System.out.println("startDate : "+startDate+" / endDate : "+endDate);
 		
-		
+
+		int size = 9;		
 		List<Animal> list = animalService.getList(page, size, upkind, kind, startDate, endDate, neuter);
 		int count =	animalService.getCount(upkind, kind, startDate, endDate, neuter);
 				

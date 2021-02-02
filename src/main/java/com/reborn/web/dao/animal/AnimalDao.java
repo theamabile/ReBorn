@@ -16,6 +16,6 @@ public interface AnimalDao {
 	List<Animal> getList(int offset, int size, String upKindCd, String kindCd, Date startDate, Date endDate, String neuter);
 
 	int getCount(String upkind, String kind, Date startDate, Date endDate, String neuter);
-	Animal getByDesertionNo(long desertionNo);
 	
+	List<Animal> getListByCareRegNo(String careRegNo);
 }
