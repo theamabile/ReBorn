@@ -29,8 +29,10 @@ public interface CareService {
 	CareReview getReview(int id);
 	List<CareReview> getReviewList(int page, int size, String careRegNo);
 	List<CareReviewView> getReviewViewList(int page, int size, String careRegNo);
+	int getReviewCount(String careRegNo);
 	int insertReview(CareReview cr);
 	int updateReview(CareReview cr);
 	int deleteReview(int id);
+	double getReviewAvg(String careRegNo);
 	
 }

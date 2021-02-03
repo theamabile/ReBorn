@@ -1,0 +1,286 @@
+
+h1 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.full-button {
+    width : 100%;
+}
+
+.d-none {
+    display: none;
+}
+
+.input-wf {
+    width: 100%;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="email"],
+select,
+textarea {
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #c2c2c2;
+}
+	
+	/* �엯�젰李� �솢�꽦�솕�뒗 focus */
+	input[type="text"]:read-only,
+	input[type="password"]:read-only,
+	input[type="number"]:read-only,
+	input[type="email"]:read-only, 
+	textarea:read-only {
+        outline: none;
+        color: #888888;
+        background-color: #ecedf7;
+    }
+
+    /* �엯�젰李� �솢�꽦�솕�뒗 focus */
+    input[type="text"]:focus,
+	input[type="password"]:focus,
+	input[type="number"]:focus,
+	input[type="email"]:focus, 
+    textarea:focus  {
+        outline: none;
+        border: 1px solid var(--main);
+    }
+    
+    /* �엯�젰李� �솢�꽦�솕�뒗 focus */
+    input[type="text"]:disabled,
+	input[type="password"]:disabled,
+	input[type="number"]:disabled,
+	input[type="email"]:disabled, 
+    textarea:disabled {
+        outline: none;
+        color: #888888;
+        background-color: #ececec;
+    }
+    
+
+.input-wf {
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #c2c2c2;
+}
+
+.form-group {
+    margin-top: 20px;
+}
+
+.button-area {
+    margin-top: 30px;
+}
+
+/* 전체 설정(아웃라인, border)*/
+.main-button-wf,
+.gray-button-wf,
+.bg-button-wf,
+.main-button-l,
+.gray-button-l,
+.bg-button-l,
+.main-button-m,
+.gray-button-m,
+.bg-button-m,
+.main-button-s,
+.bg-button-s, 
+.gray-button-s  {	
+ 	border:none;
+    outline: none;    
+}
+
+/* width full 사이즈 버튼(크기, 폰트 등)*/
+.main-button-wf,
+.gray-button-wf,
+.bg-button-wf {
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* l사이즈 버튼(크기, 폰트 등)*/
+.main-button-l,
+.gray-button-l,
+.bg-button-l {
+    width: 150px;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* m사이즈 버튼(크기, 폰트 등)*/
+.main-button-m,
+.gray-button-m,
+.bg-button-m {
+    width: 100px;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* s사이즈 버튼(크기, 폰트 등)*/
+.main-button-s,
+.gray-button-s,
+.bg-button-s {
+    width: 70px;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 10px;
+}
+
+
+/* 버튼 컬러별 설정(배경 컬러, 폰트 컬러, hover 시 컬러) */
+.main-button-wf,
+.main-button-l,
+.main-button-m,
+.main-button-s {
+    background: var(--main);
+    color: var(--bg);
+}
+    .main-button-wf:hover,
+    .main-button-l:hover,
+    .main-button-m:hover,
+    .main-button-m:hover{
+        background: var(--main-hover);
+    }
+
+    .main-button-wf:active,
+    .main-button-l:active,
+    .main-button-m:active,
+    .main-button-m:active{
+        background:var(--main-active);
+    }
+
+.gray-button-wf,
+.gray-button-l,
+.gray-button-m,
+.gray-button-s {
+    background: var(--gray);
+    color:var(--bg);
+}
+    .gray-button-wf:hover,
+    .gray-button-l:hover,
+    .gray-button-m:hover,
+    .gray-button-s:hover {
+        background:var(--gray-hover);
+    }
+    .gray-button-wf:active,
+    .gray-button-l:active,
+    .gray-button-m:active,
+    .gray-button-s:active{
+        background:var(--gray-active);
+    }
+
+/* 배경색과 동일한 색상의 버튼 */
+.bg-button-wf,
+.bg-button-l,
+.bg-button-m,
+.bg-button-s {
+    background: var(--bg);
+    color: var(--main);
+}
+    .bg-button-wf:hover,
+    .bg-button-l:hover,
+    .bg-button-m:hover,
+    .bg-button-s:hover{
+        background:var(--bg-hover);
+    }
+    .bg-button-wf:active,
+    .bg-button-l:active,
+    .bg-button-m:active,
+    .bg-button-s:active{
+        background:var(--bg-active);
+    }
+    
+        
+        
+.table-width-xs {
+	width: 2%;
+}
+
+.table-width-s {
+	width: 5%;
+}
+
+.table-width-m {
+	width: 10%;
+}
+
+.table-width-l {
+	width: 15%;
+}
+
+table {
+    border-top: 2px solid var(--main);
+    border-bottom: 2px solid var(--main);
+    border-collapse: collapse;          /* �뀒�몢由� �궗�씠�쓽 媛꾧꺽 �뾾�븷湲� */
+    font-size: 15px;
+    margin: 5px;
+}
+
+table *{
+    text-align:center;
+}
+
+tr {
+   border-bottom: 1px solid var(--main);
+}
+
+th {
+    --background: #e2efef;
+    background: var(--sub);
+    padding: 15px;
+    font-weight: bold;
+}
+
+td {
+    padding: 15px;
+}
+
+
+
+.current-page {
+	font-weight: bold;
+	color: var(--main);
+}
+
+.pager {
+	width: 200px;
+	display: flex;
+	flex-basis: 180px;
+	justify-content: space-around;
+	margin: 10px auto auto auto;
+}
+	.pager .pageList {
+		flex-grow: 1;
+		display: flex;
+		justify-content: space-around;
+		margin: 0px 10px 0px 10px;
+	}
+	
+	.pager > input[type="button"] {
+		background: none;
+		outline: none;
+		border: none;
+	}
+		.pager > input[type="button"]:hover {
+			color: var(--main);
+			font-weight: bold;
+		}
+
+
+
+
+
+/* ==================================================================================*/
+
+/* ==================================================================================*/
+
+
+/* ==================================================================================*/
+
+
+   

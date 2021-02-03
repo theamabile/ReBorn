@@ -1,6 +1,6 @@
 package com.reborn.web.service.animal;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,5 +22,6 @@ public interface AnimalService {
 	int getCount(String upkind, String kind, Date startDate, Date endDate, String neuter);
 	
 	void updateListFromAPI(int page, int size, String upkind, String kind, Date startDate, Date endDate, String neuter);
-//	/Animal getByDesertionNo(long desertionNo);
+
+	List<Animal> getListByCareRegNo(String careRegNo);
 }

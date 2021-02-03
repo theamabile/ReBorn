@@ -1,6 +1,29 @@
 @charset "UTF-8";
 
 
+.filter {
+	width: 100%;
+	border: solid 1px var(--border);
+	box-shadow: var(-box-shadow);
+	margin-bottom: 30px;
+	padding: 30px;
+	
+	display: flex;
+	align-items: center;
+}
+	.filter label {
+	    width: 90px;
+	}
+	.filter select {
+		flex-grow: 1;
+		height: 40px;
+		border: solid 1px var(--border);
+		border-radius: 5px;
+		margin-right: 10px;
+	}
+
+	
+
 .vote-list {
 	display:flex;
 	flex-direction: column;
@@ -9,22 +32,22 @@
 }
 
 .item {
-    width: 80%;
+    width: 100%;
 	box-shadow: var(--box-shadow);
 	margin-bottom: 20px;
 }
-    .item .percent {
+    .item .progress {
         width: 100%;
         height: 5px;
         background-color: var(--border);
     }
-        .item .percent .gage {
+        /* .item .percent .progress-bar {
             width: 0%;
-            height: 100%;
+            height: 5px;
             background-color: var(--main);
-            transition: width 2s ease-in-out;  /* 이 클래스에 width 속성이 바뀔땐 무조건 애니메이션 적용*/
+            transition: width 2s ease-in-out;  이 클래스에 width 속성이 바뀔땐 무조건 애니메이션 적용
         }
-
+ */
    	.item .regdate {
    		--position: fixed;
    		margin-right: 0px;
@@ -34,7 +57,7 @@
    	
     .item .btn {
     	width: 100%;
-        height: 200px;
+        height: 250px;
         display:flex;
         justify-content: flex-start;
        	align-items: center; 
@@ -109,7 +132,7 @@
 					    .count-item > span:first-child{
 					       	--font-size: 18px;
 					       	font-weight: bold;
-					       	margin-right: 10px;
+					       	margin-right: 20px;
 					    }
 					    
 					    .count-item > span:last-child{					    
