@@ -114,6 +114,12 @@ html, body{
 .shake{
 	animation: shake 5s ease-in-out infinite
 }
+.pager-info{
+	text-align:center;
+	line-height: 70px;
+	color: #ddd;
+    font-size: 20px;
+}
 @keyframes shake {
   2% {
     transform: translate(1.5px, 2.5px) rotate(-0.5deg); }
@@ -234,4 +240,17 @@ html, body{
                 0 0 0 60px rgba(255,255,255, 0.1),
                 0 0 0 80px rgba(255,255,255, 0);
   }
+}
+
+.highlight{
+	animation: highlight 1s ease 1;
+}
+
+@keyframes highlight {
+    0%{
+		background: rgba(238,211,126,0.7);
+    }
+    100%{
+		background: transparent;
+    }
 }
