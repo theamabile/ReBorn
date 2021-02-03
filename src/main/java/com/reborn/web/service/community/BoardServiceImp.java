@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.reborn.web.dao.community.BoardDao;
 import com.reborn.web.dao.community.CommentDao;
@@ -54,13 +56,18 @@ public class BoardServiceImp implements BoardService{
 		
 		return boardDao.getViewList(offset, view, field, query, option);
 	}
-
+	
+	
+	//트랜잭션 처리
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
-	public int hitUp(int id) {
-		Board board = boardDao.get(id);
-		board.setHitCnt(board.getHitCnt()+1);
-		int result = boardDao.update(board);
-		return result;
+	public BoardView hitUp(int id) {
+//		Board board = boardDao.get(id);
+//		board.setHitCnt(board.getHitCnt()+1);
+//		int result = boardDao.update(board);
+		boardDao.hitUp(id);
+		
+		return boardDao.get(id);
 	}
 
 	@Override
@@ -75,7 +82,6 @@ public class BoardServiceImp implements BoardService{
 	
 	@Override
 	public int insert(BoardCategory category) {
-		// TODO Auto-generated method stub
 		return boardDao.insert(category);
 	}
 	

@@ -8,7 +8,7 @@ window.addEventListener("load", (e)=>{
 	const addButton = document.querySelector(".add-button");
 	
 	const dropBox = document.querySelector(".drop-box");
-	
+	const fileName = document.querySelector(".file-name");
 	
 	/*파일첨부버튼*/
 	uploadButton.addEventListener("click", (e)=>{
@@ -20,6 +20,17 @@ window.addEventListener("load", (e)=>{
 		});
 		uploadFile.dispatchEvent(event);
 	});
+	uploadFile.addEventListener("change", (e)=>{
+		
+		console.log(uploadFile.value);
+		fileName.innerText = uploadFile.value;
+		
+	})
+	
+	
+	
+	
+	
 	
 	/*파일첨부추가버튼*/
 	addButton.addEventListener("click", (e) =>{

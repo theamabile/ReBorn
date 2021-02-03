@@ -1,10 +1,7 @@
 window.addEventListener("load", (e)=>{
 	const likeBtn = document.querySelector(".like-btn");
 	const boardId = document.querySelector(".board-id");
-	const likeCount = document.querySelector(".like-count");
-	const commentEditBtn = document.querySelectorAll(".comment-edit");
-	const commentContent = document.querySelector(".comment-content");//코멘트 내용
-	const commentIds = document.querySelectorAll(".comment-id");//코멘트의 글ID	
+	const likeCount = document.querySelector(".like-count");		
 	const commentList = document.querySelector(".comment-list");//부모
 	
 
@@ -12,7 +9,7 @@ window.addEventListener("load", (e)=>{
 	
 	console.log(boardId);
 	let boardValue = boardId.value;  //jsp에서 hidden으로 숨긴 boardId 값
-	let commentValue = commentIds[0].value;
+	
 	
 	//let win;
 	
@@ -41,14 +38,14 @@ window.addEventListener("load", (e)=>{
 	});
 	
 
+		//e.target          //이벤트발생
+		//e.currentTarget   //이벤트를 달아준 객체를 반환
 	
 	commentList.addEventListener("click", (e)=>{
 		if(!e.target.classList.contains('comment-edit'))
 			return;
 		console.log(e.target.innerText);
 		console.log(e.currentTarget);
-		//e.target          //이벤트발생
-		//e.currentTarget   //이벤트를 달아준 객체를 반환
 		
 		let commentViewBox = e.target.closest('div.comment-view-box'); // (1)	
 	    

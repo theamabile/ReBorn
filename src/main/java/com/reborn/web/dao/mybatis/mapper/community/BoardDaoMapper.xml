@@ -69,5 +69,11 @@
 			WHERE id = (SELECT MAX(id) FROM Board);
    </select>
    
+   <update id="hitUp" parameterType="int">
+   	UPDATE Board SET
+   		hitCnt = hitCnt+1
+   		WHERE id = #{id}
+   </update>
+   
    
 </mapper> 

@@ -41,6 +41,9 @@ public class BoardController {
 		List<BoardView> list = service.getViewList(page, view, field, query, option);
 	
 		return list;				
+		
+		
+		
 	}
 	
 	@RequestMapping("{id}")	
@@ -50,9 +53,7 @@ public class BoardController {
 		/* dto.put("b", board); */
 		List<CommentView> comment = service.getCommentViewList(id);
 		int commentCount = service.getCommentCount(id);
-		
-		
-		
+						
 		Map<String, Object> dto = new HashMap<>();
 		dto.put("comment", comment);
 		dto.put("commentCount", commentCount);
@@ -62,9 +63,11 @@ public class BoardController {
 	}	
 	
 	//댓글 수정	
-	@RequestMapping("{id}/commentEdit")							//boardId
+	@RequestMapping("{id}/commentEdit")				//boardId
 	public  List<CommentView> comment(Model model, @PathVariable("id") int id,
-			@RequestParam(name="commentId") int commentId, @RequestParam(name="content") String content) {
+			@RequestParam(name="commentId") int commentId, 
+			@RequestParam(name="content") String content) {
+		
 		System.out.println(id);
 		System.out.println(commentId);
 		System.out.println(content);

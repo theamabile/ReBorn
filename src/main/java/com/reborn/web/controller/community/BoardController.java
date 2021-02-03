@@ -54,7 +54,7 @@ public class BoardController {
 		List<BoardView> list = service.getViewList(page, view, field, query, option);
 		System.out.println(page + ","+ view +","+field+","+query+","+option);
 		int count = service.getCount(field, query);
-		
+			
 		//int size = view;
 		int pageCount = (int)Math.ceil(count/(float)view);
 		model.addAttribute("list", list);
@@ -86,6 +86,7 @@ public class BoardController {
 		
 		int likeCount = service.getLikeCount(id);
 		model.addAttribute("likeCount", likeCount);
+		service.hitUp(id);
 		
 		return "home.community.detail";		
 	}

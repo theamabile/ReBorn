@@ -6,7 +6,11 @@ window.addEventListener("load", (e)=>{
 	const searchButton = searchForm.querySelector(".btn-search");
 	const searchWindow = searchForm.querySelector(".search-window");
 	const searchSelect = searchForm.querySelector(".search-select");
-	/*const selectBox = document.querySelector(".select-view");*/
+	//const selectBox = document.querySelector(".select-view");
+
+	
+	
+
 	
 	searchButton.addEventListener("click", (e)=>{
 		e.preventDefault();
@@ -15,12 +19,13 @@ window.addEventListener("load", (e)=>{
 		let page = e.target.innerText;
 		let query = searchWindow.value;
 		let field = searchSelect.value;
-		/*let view = selectBox.value;
-		console.log(view);*/
+		//let view = selectBox.value;
+		
 		
 		fetch(`/api/community/list?p=${page}&f=${field}&q=${query}`)
 		.then(response => response.json())
 		.then((json) => {
+			console.log(json);
 			listData.innerHTML = "";
 			
 			//console.log(json[1].title);
@@ -65,8 +70,8 @@ window.addEventListener("load", (e)=>{
 		let page = e.target.innerText;
 		let query = searchWindow.value;
 		let field = "title";
-		/*let view = selectBox.value;
-		console.log(view);*/
+		//let view = selectBox.value;
+		
 		
 		fetch(`/api/community/list?p=${page}&f=${field}&q=${query}`)
 		.then(response => response.json())

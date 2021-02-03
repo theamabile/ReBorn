@@ -5,6 +5,9 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.reborn.web.dao.community.BoardDao;
 import com.reborn.web.entity.community.Board;
 import com.reborn.web.entity.community.BoardCategory;
@@ -37,7 +40,15 @@ public class MyBatisBoardDao implements BoardDao{
 	public int update(Board board) {
 		return mapper.update(board);
 	}
-
+	
+	//글 조회수 업데이트
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public int hitUp(int id) {
+		
+		return mapper.hitUp(id);
+	}
+	
 	@Override
 	public int delete(int id) {
 		return mapper.delete(id);
