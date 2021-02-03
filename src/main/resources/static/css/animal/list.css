@@ -74,12 +74,27 @@ select{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	padding: 0px 10px;
 }
-	.animal-item .title-box > span{
+	.animal-item .title-box *{
 		font-size: 24px;
 		font-weight: bold;
 		color: var(--main);
 	}
+	.animal-item .title-box .blank{
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-content: flex-start;    
+		padding-bottom: 6px;
+    	padding-top: 6px;
+	}
+		.animal-item .title-box .blank > *{
+			font-size: 15px;
+			color: var(--gray);
+		}
+	
 
 .animal-item .main-info-box{
 	display: flex;
@@ -87,6 +102,7 @@ select{
 	align-items: flex-start;
 	justify-content: center;
 	font-size: 13px;
+	padding: 0px 10px;
 }
 	.animal-item .main-info-box *:nth-child(2){
 		font-weight: bold;
@@ -106,10 +122,8 @@ select{
 .search-box {
 	width: 100%;
 	border: solid 1px var(--border);
-	box-shadow: var(-box-shadow);
 	margin-bottom: 30px;
-	padding: 30px;
-	
+	padding: 30px;	
 	display: flex;
 	flex-direction: column;
 }

@@ -1,11 +1,13 @@
 package com.reborn.web.service.name;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.name.VoteDao;
+import com.reborn.web.entity.name.Choice;
 import com.reborn.web.entity.name.Vote;
 import com.reborn.web.entity.name.VoteView;
 
@@ -14,7 +16,7 @@ public class VoteServiceImp implements VoteService{
 	
 	@Autowired
 	private VoteDao voteDao;
-	
+			
 	@Override
 	public int insert(Vote vote) {
 		int result = voteDao.insert(vote);
@@ -67,29 +69,20 @@ public class VoteServiceImp implements VoteService{
 	}
 	
 	@Override
-	public List<VoteView> getViewList(int page, int size, String orderField, String orderQuery, String field, String query) {
+	public List<VoteView> getViewList(int page, int size, String orderField, String orderQuery, String field, String query, String state) {
 		List<VoteView> list = null;
 		
 		// offset 계산 => limit 사용
 		int offset = (page-1)*size;
-		System.out.printf("page:%d / size:%d / orderField:%s / orderQuery:%s / field:%s/ query:%s\n"
-				, page, size, orderField, orderQuery, field, query);
 		
-		
-		list = voteDao.getViewList(offset, size, orderField, orderQuery, field, query);
-		
-
-		
-		for(VoteView v : list) {
-			System.out.println(v.getAnimalId());
-		}
+		list = voteDao.getViewList(offset, size, orderField, orderQuery, field, query, state);
 		
 		return list;
 	}
 
 	@Override
-	public int getCount(String field, String query) {
-		return voteDao.getCount(field, query);
+	public int getCount(String field, String query, String state) {
+		return voteDao.getCount(field, query, state);
 	}
 
 	@Override
@@ -97,4 +90,17 @@ public class VoteServiceImp implements VoteService{
 		// TODO Auto-generated method stub
 		return voteDao.getLast();
 	}
+
+	@Override
+	public List<VoteView> getStartViewList(Date date, String field, String query) {
+		// TODO Auto-generated method stub
+		return voteDao.getStartViewList(date, field, query);
+	}
+
+	@Override
+	public List<VoteView> getEndViewList(Date date, String field, String query) {
+		// TODO Auto-generated method stub
+		return voteDao.getEndViewList(date, field, query);
+	}
+	
 }
