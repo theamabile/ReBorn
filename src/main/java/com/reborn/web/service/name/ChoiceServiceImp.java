@@ -1,56 +1,47 @@
-package com.reborn.web.dao.mybatis.name;
+package com.reborn.web.service.name;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.name.ChoiceDao;
-import com.reborn.web.dao.name.NameDao;
 import com.reborn.web.entity.name.Choice;
 
-@Repository
-public class MyBatisChoiceDao implements ChoiceDao{
-
-	private SqlSession session;
-	private ChoiceDao mapper;
+@Service
+public class ChoiceServiceImp implements ChoiceService {
 
 	@Autowired
-	public void setSession(SqlSession session) {
-		this.session = session;
-		this.mapper = session.getMapper(ChoiceDao.class);
-	}
+	private ChoiceDao choiceDao;
 	
 	@Override
 	public int insert(Choice choice) {
 		// TODO Auto-generated method stub
-		return mapper.insert(choice);
+		return choiceDao.insert(choice);
 	}
 
 	@Override
 	public int update(Choice choice) {
 		// TODO Auto-generated method stub
-		return mapper.update(choice);
+		return choiceDao.update(choice);
 	}
 
 	@Override
 	public int delete(long animalId, int memberId) {
 		// TODO Auto-generated method stub
-		return mapper.delete(animalId, memberId);
+		return choiceDao.delete(animalId, memberId);
 	}
 
 	@Override
 	public Choice get(long animalId, int memberId) {
 		// TODO Auto-generated method stub
-		return mapper.get(animalId, memberId);
+		return choiceDao.get(animalId, memberId);
 	}
 
 	@Override
 	public List<Choice> getList() {
 		// TODO Auto-generated method stub
-		return mapper.getList();
+		return choiceDao.getList();
 	}
-
 
 }

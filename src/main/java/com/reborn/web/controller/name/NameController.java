@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.reborn.web.entity.animal.Animal;
+import com.reborn.web.entity.name.Choice;
 import com.reborn.web.entity.name.Name;
 import com.reborn.web.entity.name.NameView;
 import com.reborn.web.entity.name.Vote;
 import com.reborn.web.entity.name.VoteView;
 import com.reborn.web.service.animal.AnimalService;
+import com.reborn.web.service.name.ChoiceService;
 import com.reborn.web.service.name.NameService;
 import com.reborn.web.service.name.VoteService;
 
@@ -32,7 +34,12 @@ public class NameController {
 	@Autowired
 	private NameService nameService;
 	@Autowired
+	private ChoiceService choiceService;
+	@Autowired
 	private AnimalService animalService;
+	
+
+	int memberId = 1;		// 나중에 로그인 구현 되면 받아와서 하기
 	
 	// 이름 투표 목록
 	@GetMapping("list")
@@ -41,13 +48,14 @@ public class NameController {
 						@RequestParam(name="of", defaultValue = "voteStartDate") String orderField,
 						@RequestParam(name="oq", defaultValue="DESC") String orderQuery,
 						@RequestParam(name="f", required = false) String field,
-						@RequestParam(name="q", defaultValue="") String query) {
+						@RequestParam(name="q", defaultValue="") String query,
+						@RequestParam(name="s", defaultValue="START") String state) {
 	
 		int size = 2;
 		
 		// name(갖고올때 choice 수 기준으로 order by) + choice 있는지 없는지
 		// vote 날짜
-		List<VoteView> list = voteService.getViewList(page, size, orderField, orderQuery, field, query);
+		List<VoteView> list = voteService.getViewList(page, size, orderField, orderQuery, field, query, state);
 		
 		// 해당 투표에서 인기 있기 있는 3가지 후보를 가져옴
 		for( VoteView v : list) {
@@ -55,7 +63,7 @@ public class NameController {
 			v.setRankNameList(n);
 		}
 
-		int count = voteService.getCount(field, query);
+		int count = voteService.getCount(field, query, state);
 		int pageCount = (int)Math.ceil(count / (float)size);
 		
 		model.addAttribute("pageCount", pageCount);
@@ -65,38 +73,78 @@ public class NameController {
 	}
 	
 	// 이름 투표
-	@GetMapping("{id}")
+	@GetMapping("{desertionNo}")
 	public String choice(@PathVariable(name="desertionNo")long animalId, Model model) {
 		// 이름 짓기가 끝났을때 -> 이동X
 		// 이름 투표 중일 때 -> choice;
 		// 이름 투표중이 아닐 때 => add
 		
-		VoteView vote = voteService.getView(animalId);
+		Animal a = animalService.get(animalId);
+		VoteView v = voteService.getView(animalId);
+
+		int choiceSum = 0;
+		List<NameView> nameList = new ArrayList<NameView>();
+		if(v != null) {	// 후보를 받았던 적이 있음(이미 vote가 있음)
+			System.out.println("String.valueOf(animalId)) : "+String.valueOf(animalId));
+			nameList = nameService.getViewListByAnimalId(animalId, 9999);	
+			
+			for(NameView n : nameList) {	 		// 투표수 합계를 구함
+				choiceSum += n.getChoiceCnt();
+			}
+		}		
 		
-		model.addAttribute("vote", vote);
+		System.out.println("animalId : "+ animalId+" / memberId : "+memberId);
+		
+		Choice choice = choiceService.get(animalId, memberId);
+//		if( choice != null ) {
+//			choiced = true;
+//		}
+	
+		///System.out.println("choice-"+choice.getName());
+		
+		model.addAttribute("nameList", nameList);
+		model.addAttribute("animal", a);
+		model.addAttribute("vote", v);
+		model.addAttribute("choice", choice);
+		model.addAttribute("choiceSum", choiceSum);
 		
 		return "home.name.detail";
 	}
 	
+
+	@PostMapping("{desertionNo}")
+	public String choice(@PathVariable(name="desertionNo") long animalId,
+						@RequestParam(name="name") String name) {
+		//@@@@@@@@@@@@@@@@@@@@@@@@ 여기 해야함
+
+		//System.out.println("선택된 이름 - " + selectName);
+		System.out.println("선택된 이름@@@@@@@ "+name);
+		
+		Choice choice = new Choice(animalId, memberId, name);
+		choiceService.insert(choice);
+		
+		return "redirect:"+animalId;
+	}
+	
+	
 	// 이름 짓기
 	@GetMapping("{desertionNo}/add")
 	public String add(@PathVariable(name="desertionNo")long animalId, Model model) {
-		Vote v = voteService.get(animalId);
+		VoteView v = voteService.getView(animalId);
 		
 		List<NameView> nameList = new ArrayList<NameView>();
 		if(v != null) {	// 후보를 받았던 적이 있음(이미 vote가 있음)
-			nameList = nameService.getViewList(1, 999, "animalId", String.valueOf(animalId));			
+			System.out.println("String.valueOf(animalId)) : "+String.valueOf(animalId));
+			nameList = nameService.getViewListByAnimalId(animalId, 9999);
+			//nameList = nameService.getViewList(1, 999, "animalId", String.valueOf(animalId));			
 		}		
 
 		Animal a = animalService.get(animalId);
 
-		System.out.printf("animal : %s / nameList size : %d", a.getDesertionNo(), nameList.size());
 		model.addAttribute("nameList", nameList);
 		model.addAttribute("animal", a);
-		model.addAttribute("vote", v);
-		
-		
-		// redirect:../id
+		model.addAttribute("vote", v);	
+
 		return "home.name.add";
 	}
 	
@@ -104,8 +152,7 @@ public class NameController {
 	public String add(@PathVariable(name="desertionNo")long animalId,
 					  @RequestParam(name="name") String name,
 					  @RequestParam(name="reason") String reason) {
-		
-		int memberId = 1;		// 나중에 로그인 구현 되면 받아와서 하기
+
 		Animal a = animalService.get(animalId);
 		
 		Vote v = voteService.get(animalId);
@@ -123,7 +170,21 @@ public class NameController {
 		
 		// redirect:../id
 		//return "redirect:list";
-		return "redirect:";
+		return "redirect:../"+animalId+"/add";
+	}
+	
+
+	//location.href = `/name/${desertionNo}/revote?name`;
+	@GetMapping("{desertionNo}/revote")
+	public String add(@PathVariable(name="desertionNo")long animalId) {
+		
+		Choice choice = choiceService.get(animalId, memberId);
+		if(choice != null) {
+			choiceService.delete(animalId, memberId);
+		}
+		
+		return "redirect:../"+animalId;
+		
 	}
 	
 	

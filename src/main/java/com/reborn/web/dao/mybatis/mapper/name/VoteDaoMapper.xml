@@ -3,18 +3,25 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="com.reborn.web.dao.name.VoteDao">
-
 	
 	<insert id="insert" parameterType="com.reborn.web.entity.name.Vote">
 		INSERT INTO Vote (animalId, memberId
 						  , recruitStartDate, recruitEndDate
 						  , voteStartDate, voteEndDate)
       	VALUES( #{animalId}, #{memberId}
-      			, current_timestamp(), DATE_ADD(current_timestamp(), INTERVAL 3 DAY) 
-				, DATE_ADD(DATE_ADD(current_timestamp(), INTERVAL 3 DAY), INTERVAL 1 MINUTE)
-				, DATE_ADD(current_timestamp(), INTERVAL 10 DAY) 
+      			, current_date(), DATE_ADD(current_date(), INTERVAL 2 DAY) 
+				, DATE_ADD(current_date(), INTERVAL 3 DAY)
+				, DATE_ADD(current_date(), INTERVAL 9 DAY) 
 				)
 	</insert>
+	
+	<update id="update" parameterType="com.reborn.web.entity.name.Vote">
+		UPDATE Vote SET memberId = #{memberId}
+						, recruitStartDate = #{recruitStartDate}, recruitEndDate=#{recruitEndDate}
+						, voteStartDate = #{voteStartDate}, voteEndDate = #{voteEndDate}
+						, state = #{state}
+		WHERE animalId = #{animalId}
+	</update>
 	
 	<select id="get" resultType="com.reborn.web.entity.name.Vote">
 		SELECT * FROM Vote
@@ -40,10 +47,12 @@
 	<select id="getViewList" resultType="com.reborn.web.entity.name.VoteView">
 		SELECT * FROM VoteView
 		WHERE
-			nameCnt > 0 				<!-- 이름이 1개 이상이여야함.(신고로 인해서 지워질 수도 있으니 조건 처리) -->
-			AND sysdate() &lt;= date(voteEndDate)
+			nameCnt > 0 				<!-- 이름이 1개 이상이여야함.(신고로 인해서 지워질 수도 있으니 조건 처리) AND sysdate() &lt;= date(voteEndDate) -->
 			<if test="param5 != null and param5 != ''">
 				AND BINARY ${param5} LIKE '%${param6}%'
+			</if>
+			<if test="param7 != null and param7 != ''">
+				AND state = #{param7}
 			</if>
 		ORDER BY ${param3} ${param4}
 		LIMIT #{param2} OFFSET #{param1}
@@ -61,7 +70,10 @@
 			AND sysdate() &lt;= date(voteEndDate)
 		<if test="param1 != null and param1 != ''">
 	      	BINARY ${param1} like '%${param2}%'
-	    </if> 
+	    </if> 	    
+		<if test="param3 != null and param3 != ''">
+			AND state = #{param3}
+		</if>
 	</select>
 	
 	<select id="getLast" resultType="com.reborn.web.entity.name.Vote" >
@@ -70,5 +82,26 @@
 		LIMIT 1
 	</select>
 	
+	<!-- &gt; : >   /  &lt; : <   -->
+	
+	<select id="getStartViewList" resultType="com.reborn.web.entity.name.VoteView" >
+		SELECT * FROM Vote
+		WHERE
+			voteStartDate &lt;= #{param1}
+		<if test="param2 != null and param2 != ''">
+				AND ${param2} = #{param3}
+		</if>
+	    ORDER BY voteStartDate DESC
+	</select>
+	
+	<select id="getEndViewList" resultType="com.reborn.web.entity.name.VoteView" >
+		SELECT * FROM Vote
+		WHERE
+			voteEndDate &lt;= #{param1}
+		<if test="param2 != null and param2 != ''">
+				AND ${param2} = #{param3}
+		</if>
+	    ORDER BY voteEndDate DESC
+	</select>
 	
 </mapper>

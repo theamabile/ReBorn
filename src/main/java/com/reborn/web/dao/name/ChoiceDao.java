@@ -7,13 +7,10 @@ import com.reborn.web.entity.name.Choice;
 public interface ChoiceDao {
 	int insert(Choice choice);
 	int update(Choice choice);
-	int delete(int id);
+	int delete(long animalId, int memberId);
 	
-	Choice get(int id);
+	Choice get(long animalId, int memberId);
 	List<Choice> getList();
-
-	List<Choice> getList(int offset, int size, String field, String query);
-	List<Choice> getList(int startIndex);
 	
 	// 뷰는 목록에서 어떤 데이터가 필요한지 분석 후 추가
 	

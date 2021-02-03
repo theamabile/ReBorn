@@ -23,8 +23,15 @@
 				BINARY ${param3} LIKE '%${param4}%'
 			</if>
 		</where>
-		ORDER BY name ASC
+		ORDER BY regDAte ASC
 		LIMIT #{param2} OFFSET #{param1}
+	</select>
+	
+	<select id="getView" resultType="com.reborn.web.entity.name.NameView">
+		SELECT * FROM NameView
+		WHERE 
+			animalId = #{param1}
+			and name = #{param2}
 	</select>
 	
 	<select id="getViewList" resultType="com.reborn.web.entity.name.NameView">
@@ -34,15 +41,23 @@
 				BINARY ${param3} LIKE '%${param4}%'
 			</if>
 		</where>
-		ORDER BY name ASC
+		ORDER BY regDate DESC
 		LIMIT #{param2} OFFSET #{param1}
 	</select>
 	
 	<select id="getViewListByAnimalId" resultType="com.reborn.web.entity.name.NameView">
 		SELECT * FROM NameView
 		where animalId = #{param1}
-		ORDER BY choiceCnt DESC
+		ORDER BY regDate DESC
 		LIMIT #{param2}
 	</select>
-
+	
+	<select id="getBestName" resultType="com.reborn.web.entity.name.NameView">
+		SELECT *
+		FROM NameView
+		WHERE animalId = #{param1}
+		ORDER BY choiceCnt DESC
+		LIMIT 1;
+	</select>
+	
 </mapper>

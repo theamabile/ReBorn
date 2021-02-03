@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.reborn.web.dao.name.NameDao;
+import com.reborn.web.entity.name.Choice;
 import com.reborn.web.entity.name.Name;
 import com.reborn.web.entity.name.NameView;
 
@@ -59,6 +60,12 @@ public class MyBatisNameDao implements NameDao{
 	}
 
 	@Override
+	public NameView getView(long animalId, String name) {
+		// TODO Auto-generated method stub
+		return mapper.getView(animalId, name);
+	}
+
+	@Override
 	public List<NameView> getViewList(int offset, int size, String field, String query) {
 		// TODO Auto-generated method stub
 		return mapper.getViewList(offset, size, field, query);
@@ -75,4 +82,11 @@ public class MyBatisNameDao implements NameDao{
 		// TODO Auto-generated method stub
 		return mapper.getViewListByAnimalId(animalId, size);
 	}
+
+	@Override
+	public NameView getBestName(long animalId) {
+		// TODO Auto-generated method stub
+		return mapper.getBestName(animalId);
+	}
+	
 }

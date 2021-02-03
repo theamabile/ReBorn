@@ -114,8 +114,8 @@ window.addEventListener("load", e=>{
 			let count = json.count;
 			let list = json.list;
 			
-			window.scrollTo( 0, 0 );
-			console.log("scrollY : "+window.scrollY);
+			//window.scrollTo( 0, 0 );
+			//console.log("scrollY : "+window.scrollY);
 			
 			if(json.count <= 0) {			
 				animalList.insertAdjacentHTML('beforeend', `<span class="bold m-auto gray fs-1">항목이 존재하지 않습니다</span>`);
@@ -132,21 +132,35 @@ window.addEventListener("load", e=>{
 					let itembox = document.createElement("button");
 					itembox.classList.add("animal-item");
 					itembox.addEventListener("click", itemClickHandler);
-									
+					
+					let nameHTML = `<div class="blank">
+										<i class="fas fa-quote-left"></i>
+										<i class="fas fa-quote-right"></i>
+									</div>`;
+					
+					//let nameHTML = `<span>${a.noticeNo}</span>`;
+					
+					if(a.name != undefined) {
+						nameHTML = `<span>${a.name}</span>`;
+					} 
+					
+					/*
+					${a.noticeNo}
+					<i class="fas fa-quote-left"></i>*/
 					let itemHTML = `<div>
 										<img src="${a.popfile}" />
 									</div>
 									<div class="title-box">
-										<span>${a.noticeNo}</span>
+										${nameHTML}
 										<div></div>
 									</div>
 									<div class="main-info-box">
+										<span>${a.noticeNo}</span>
 										<span>${a.happenPlace}</span>
-										<span>${a.colorCd}</span>
 									</div>
 									<div class="sub-info-box">
 										<span>${sexCd}</span>
-										<span>${a.kindCd}</span>
+										<span>${a.colorCd}</span>
 										<span>${a.happenDt}</span>
 									</div>
 									<input type="hidden" class="desertionNo"" value="${a.desertionNo}">

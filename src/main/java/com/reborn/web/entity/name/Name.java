@@ -3,7 +3,6 @@ package com.reborn.web.entity.name;
 import java.sql.Date;
 
 public class Name {
-	private int id;
 	private long animalId;
 	private int memberId;
 	private String name;
@@ -19,14 +18,6 @@ public class Name {
 		this.memberId = memberId;
 		this.name = name;
 		this.reason = reason;
-	}
-
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
 	}
 	
 	public long getAnimalId() {

@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bda1963015c3359c76adbb17d9d5e489&libraries=services"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript" src="/js/animal/detail.js"></script>
 		
 <link rel= "stylesheet" type="text/css" href="/css/name/name.css">
@@ -14,7 +15,19 @@
             <img src="${animal.popfile}"  class="background-img">
             <div class="flex-column flex-a-center">
 	            <img src="${animal.popfile }" class="circle-img" />
+	            
 	            <div class="summary">
+	            	<c:if  test="${state ne 'END' }">
+						<div class="blank">							
+							<i class="fas fa-quote-left"></i>
+							<i class="fas fa-quote-right"></i>
+						</div>
+					</c:if >	
+					<c:if  test="${state eq 'END' }">
+						<%-- <span><i class="fas fa-heart mr-4 red-pink"></i>${animal.name}</span> --%>
+						<span><i class="fas fa-registered mr-4 main"></i>${animal.name}</span>
+					</c:if >
+				
 	                <span>${animal.noticeNo}</span>
 	                <span>색상:${animal.colorCd} / 성별:${animal.sexCd} / 나이:${animal.age} / 체중:${animal.weight}</span>
 	                <span>${animal.happenPlace}</span>
@@ -22,15 +35,25 @@
             </div>
         </section>
    	</section>
-   		
+   	
     <section class="main-container">
+    	<c:if  test="${state eq 'END' }">
+	    	<section>
+	    		<div class="reborn-name">
+	    			<div>
+	    				<i class="fas fa-heart mr-3 red-pink"></i><span class="bold">${name.name }</span>는(은) <span>${name.writerNickname}</span>님이 지어주신 이름입니다. 
+	    			</div>
+		        	<!-- <div><i class="fas fa-caret-down mt-3"></i></div> -->
+		        </div>
+	    	</section>
+    	</c:if>
     	<section>
     		<h1>동물 정보</h1>
     		<div class="info-box">
     			<table>
 		   			<tr>
 		   				<th>유기번호</th>
-		   				<td>${animal.desertionNo }</td>
+		   				<td class="desertionNo">${animal.desertionNo }</td>
 		   				<th>접수일</th>
 		   				<td>${animal.happenDt }</td>
 		   			</tr>
@@ -81,14 +104,14 @@
     		
     		<div class="flex mt-1 mb-3">	    		
     			<input type="button" value="입양 문의" class="callBtn main-button-wf" >
-				<c:if  test="${state eq '이름 모집' }">
-					<c:set var="nameUrl" value="add"></c:set>
+				<c:if  test="${state eq null || state eq 'NONE' }">
+					<c:set var="nameUrl" value="/add"></c:set>
 				</c:if >
-				<c:if  test="${state eq '투표중' }">
-					<c:set var="nameUrl" value="detail"></c:set>
+				<c:if  test="${state eq 'START' }">
+					<c:set var="nameUrl" value="/detail"></c:set>
 				</c:if >
-				<c:if  test="${state ne '투표 종료' }">
-					<input type="button" value="이름 지어주기" onclick="location.href='/name/${animal.desertionNo}/${nameUrl}'" class="vote-btn main-button-wf ml-3" >
+				<c:if  test="${state ne 'END' }">
+					<input type="button" value="이름 지어주기" onclick="location.href='/name/${animal.desertionNo}${nameUrl}'" class="vote-btn main-button-wf ml-3" >
 				</c:if >
     		</div>
 			<input type="button" value="목록" class="vote-btn gray-button-wf">
@@ -110,6 +133,12 @@
 				<span class="fs-4">${animal.happenPlace}</span>
 			</div>
 			<div id="happen-map" class="mt-3" style="width:100%;height:400px;"></div>
+		</section>
+		
+		<section>
+			<a id="create-kakao-link-btn" >
+				<img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+			</a>
 		</section>
 		
     	

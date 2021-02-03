@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.reborn.web.entity.animal.Animal;
+import com.reborn.web.entity.name.NameView;
 import com.reborn.web.entity.name.Vote;
+import com.reborn.web.entity.name.VoteView;
 import com.reborn.web.service.animal.AnimalKindService;
 import com.reborn.web.service.animal.AnimalService;
+import com.reborn.web.service.name.NameService;
 import com.reborn.web.service.name.VoteService;
 
 /* api를 읽어와서 유기동물 목록을 전시 */
@@ -32,6 +35,9 @@ public class AnimalController {
 	
 	@Autowired
 	VoteService voteService;
+	
+	@Autowired
+	NameService nameService;
 
 
 	@Value("${animal.kindApiUrl}")
@@ -95,18 +101,20 @@ public class AnimalController {
 		System.out.println("desertionNo : "+no);
 		
 		Animal a = animalService.get(no);
-		Vote v = voteService.get(no);
+		VoteView v = voteService.getView(no);
 
 		if(v != null) {
 			// 투표가 진행중이면 -> name/{id}/detail
 			// 투표가 끝났으면 -> 이동X(버튼 안띄움)
 			String state = v.getState();
-			model.addAttribute("state", state);	
+			model.addAttribute("state", state);
 			
-			System.out.println("state : "+state);
+			if(a.getName() != null) {
+				NameView n = nameService.getView(no, a.getName());
+				model.addAttribute("name", n);		// 이름이 있을 경우 이름 정보도 같이 띄워주기 위해 받아옴
+			}
 		}
 
-		
 		
 		model.addAttribute("animal", a);	
 		
