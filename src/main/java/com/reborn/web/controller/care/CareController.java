@@ -75,10 +75,11 @@ public class CareController {
 	
 	@GetMapping("list")
 	public String list(
-			@RequestParam(name = "p", defaultValue = "1") Integer page,
-			@RequestParam(name = "f", required = false) String field,
-			@RequestParam(name = "q", defaultValue = "") String query,
-			Model model, Principal principal){
+//			@RequestParam(name = "p", defaultValue = "1") Integer page,
+//			@RequestParam(name = "f", required = false) String field,
+//			@RequestParam(name = "q", defaultValue = "") String query,
+//			Model model, Principal principal
+			){
 		
 //		int size = 10;
 //		
@@ -108,51 +109,53 @@ public class CareController {
 	}
 
 	@GetMapping("{careRegNo}")
-	public String detail( @PathVariable("careRegNo") String careRegNo,
-			Model model) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException{
+	public String detail( 
+//			@PathVariable("careRegNo") String careRegNo,
+//			Model model) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException{
+			) {
 		
-		Care care = careService.getCareByCareRegNo(careRegNo);
-		
-		List<AnimalEntityTemp> animalInfoList = new ArrayList<>();
-		try {
-			StringBuilder urlBuilder = new StringBuilder(animalListUrl);
-		
-			int getSize = 100;
-			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + animalApiKey);
-			urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + getSize);
-			urlBuilder.append("&" + URLEncoder.encode("care_reg_no","UTF-8") + "=" + careRegNo);
-			urlBuilder.append("&" + URLEncoder.encode("state","UTF-8") + "=" + "protect");
-			
-			// URL로 GET 요청 보냄
-			Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-			                                       .parse(urlBuilder.toString());
-			XPath xpath = XPathFactory.newInstance().newXPath();
-
-			// 받은걸로 데이터 추출
-	        NodeList itemNodes = (NodeList)xpath.evaluate("//body/items/item", document, XPathConstants.NODESET);
-	        for( int i = 0; i < itemNodes.getLength(); i++ ){
-	            XPathExpression noticeNoExpression = xpath.compile("noticeNo");
-	            XPathExpression popfileExpression = xpath.compile("popfile");
-	            
-				Node noticeNoNode = (Node) noticeNoExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
-				Node popfileNode = (Node) popfileExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
-				
-				String noticeNo = noticeNoNode.getTextContent();
-				String popfile = popfileNode.getTextContent();
-				
-				AnimalEntityTemp aet = new AnimalEntityTemp();
-				aet.setNoticeNo(noticeNo);
-				aet.setPopfile(popfile);
-				
-				animalInfoList.add(aet);
-	        }
-			
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-//		System.out.println(animalInfoList);
-		model.addAttribute("care", care);
-		model.addAttribute("animalInfoList", animalInfoList);
+//		Care care = careService.getCareByCareRegNo(careRegNo);
+//		
+//		List<AnimalEntityTemp> animalInfoList = new ArrayList<>();
+//		try {
+//			StringBuilder urlBuilder = new StringBuilder(animalListUrl);
+//		
+//			int getSize = 100;
+//			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + animalApiKey);
+//			urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + getSize);
+//			urlBuilder.append("&" + URLEncoder.encode("care_reg_no","UTF-8") + "=" + careRegNo);
+//			urlBuilder.append("&" + URLEncoder.encode("state","UTF-8") + "=" + "protect");
+//			
+//			// URL로 GET 요청 보냄
+//			Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+//			                                       .parse(urlBuilder.toString());
+//			XPath xpath = XPathFactory.newInstance().newXPath();
+//
+//			// 받은걸로 데이터 추출
+//	        NodeList itemNodes = (NodeList)xpath.evaluate("//body/items/item", document, XPathConstants.NODESET);
+//	        for( int i = 0; i < itemNodes.getLength(); i++ ){
+//	            XPathExpression noticeNoExpression = xpath.compile("noticeNo");
+//	            XPathExpression popfileExpression = xpath.compile("popfile");
+//	            
+//				Node noticeNoNode = (Node) noticeNoExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
+//				Node popfileNode = (Node) popfileExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
+//				
+//				String noticeNo = noticeNoNode.getTextContent();
+//				String popfile = popfileNode.getTextContent();
+//				
+//				AnimalEntityTemp aet = new AnimalEntityTemp();
+//				aet.setNoticeNo(noticeNo);
+//				aet.setPopfile(popfile);
+//				
+//				animalInfoList.add(aet);
+//	        }
+//			
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
+////		System.out.println(animalInfoList);
+//		model.addAttribute("care", care);
+//		model.addAttribute("animalInfoList", animalInfoList);
 		
 		return "home.care.detail";
 	}

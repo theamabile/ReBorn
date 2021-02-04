@@ -14,6 +14,8 @@ class CareDetail extends React.Component{
 		super();
 		
 		this.state = {
+			nickname: "",
+			memberId: 0,
 			care: {},
 			animalList: [],
 			review: {
@@ -117,7 +119,7 @@ class CareDetail extends React.Component{
 			.then((response ) => {
 				return response.json();
 			})
-			.then(({care, animalList, reviewList, reviewCnt, reviewPageCnt, reviewScoreAvg})=>{
+			.then(({care, animalList, reviewList, reviewCnt, reviewPageCnt, reviewScoreAvg, nickname})=>{
 				
 				let review = this.state.review;
 				review.list = reviewList;
@@ -126,7 +128,7 @@ class CareDetail extends React.Component{
 				review.scoreAvg = reviewScoreAvg;
 				
 				this.review.startNum = this.review.page - ((this.review.page - 1) % this.review.range);
-				this.setState({care, animalList, review});
+				this.setState({care, animalList, review, nickname});
 				resolve("sussess");
 			});
 		});
@@ -395,7 +397,7 @@ class CareDetail extends React.Component{
 					.then((response) => {
 						return response.json()
 					})
-					.then(({result})=>{
+					.then(({result, reviewCnt, reviewScoreAvg, reviewPageCnt})=>{
 						if( result == "success" ){
 							
 							let reviewTemp = this.state.review;
@@ -403,6 +405,9 @@ class CareDetail extends React.Component{
 							reviewTemp.list = reviewTemp.list.filter( 
 								review => review.id != reviewId 
 							);
+							reviewTemp.cnt = reviewCnt;
+							reviewTemp.scoreAvg = reviewScoreAvg;
+							reviewTemp.pageCnt = reviewPageCnt;
 							
 							this.setState({review: reviewTemp});
 							
@@ -545,12 +550,12 @@ class CareDetail extends React.Component{
 		                <li onClick={this.scoreClickHandler.bind(this)}>
 		                    <div className="icon"><i className={this.state.review.faceIcon}></i></div>
 		                    <div className="container">
-		                        <div className="writer">신짱나인 #신고기능 안됨</div>
+		                        <div className="writer">{this.state.nickname != "" ? this.state.nickname : "로그인을 해주세요"}</div>
 		                        <div className="box">
 		                            <form method="POST" onSubmit={this.reviewSubmitHandler.bind(this)}>
 		                                <div className="score"><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i></div>
-		                                <div className="title"><input required type="text" name="title" ref={this.review.title} placeholder="제목"/></div>
-		                                <div className="content"><textarea required ref={this.review.content} placeholder="내용" ></textarea></div>
+		                                <div className="title"><input disabled={this.state.nickname == "" ? "disabled" : "" } required type="text" name="title" ref={this.review.title} placeholder="제목"/></div>
+		                                <div className="content"><textarea disabled={this.state.nickname == "" ? "disabled" : "" } required ref={this.review.content} placeholder="내용" ></textarea></div>
 		                                <div className="submit-icon"><label htmlFor="review-submit" className="pointer"><i className="fas fa-arrow-alt-circle-down"></i></label></div>
 		                                <input id="review-submit" className="d-none" type="submit" value="전송" />
 		                            </form>
@@ -567,10 +572,7 @@ class CareDetail extends React.Component{
 			                        <div className="member">
 										<div className="writer">{review.nickname}</div>
 										{
-											//! 아이디 불러오기 ==========================================================================
-											//! 아이디 불러오기 ==========================================================================
-											//! 아이디 불러오기 ==========================================================================
-											review.memberId == 3
+											review.memberId == this.state.memberId
 											? <div className="edit d-none">
 												<div><i className="far fa-edit"></i></div>
 												<div><i className="far fa-trash-alt"></i></div>
