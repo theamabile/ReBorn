@@ -6,5 +6,6 @@
 <div>
 <div class=""></div>
 <h3>프로필 이미지 변경</h3>
+<span>${m.loginId}</span>
 <input class="file" type="file">
 </div>
