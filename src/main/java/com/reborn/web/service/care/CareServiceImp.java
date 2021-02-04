@@ -50,8 +50,10 @@ public class CareServiceImp implements CareService {
 
 	@Override
 	public List<Care> getList(int page, int size, String field, String query) {
-
 		List<Care> list = null;
+		
+		if(page < 1)
+			page = 1;
 		
 		int offset = (page-1)*size;//10,20,30,40,50,60...
 		
@@ -64,6 +66,9 @@ public class CareServiceImp implements CareService {
 	public List<CareView> getViewList(int page, int size, String field, String query) {
 		List<CareView> list = null;
 
+		if(page < 1)
+			page = 1;
+		
 		int offset = (page-1)*size;//10,20,30,40,50,60...
 		
 		list = careDao.getViewList(offset, size, field, query);	
@@ -109,14 +114,7 @@ public class CareServiceImp implements CareService {
 	}
 
 	@Override
-	public void getWishedList(List<CareView> list) {
-		
-		// ============================================================
-		// ============================================================
-		// 테스트용 아이디
-		int memberId = 3;
-		// ============================================================
-		// ============================================================
+	public void getWishedList(int memberId, List<CareView> list) {
 		
 		List<CareWish> wishList = careWishDao.getCareListByMemberId(memberId, list);
 		
@@ -181,6 +179,9 @@ public class CareServiceImp implements CareService {
 	public List<CareReviewView> getReviewViewList(int page, int size, String careRegNo) {
 		List<CareReviewView> list = new ArrayList<>();
 
+		if(page < 1)
+			page = 1;
+		
 		int offset = (page-1)*size;//10,20,30,40,50,60...
 		
 		list = careReviewDao.getViewList(offset, size, careRegNo);
@@ -211,6 +212,24 @@ public class CareServiceImp implements CareService {
 		int result = 0;
 		
 		result = careReviewDao.delete(id);
+		
+		return result;
+	}
+
+	@Override
+	public int getReviewCount(String careRegNo) {
+		int result = 0;
+		
+		result = careReviewDao.getReviewCount(careRegNo);
+		
+		return result;
+	}
+
+	@Override
+	public double getReviewAvg(String careRegNo) {
+		double result = 0;
+		
+		result = careReviewDao.getReviewAvg(careRegNo);
 		
 		return result;
 	}

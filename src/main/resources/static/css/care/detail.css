@@ -113,9 +113,13 @@ section h1{
     object-fit: cover;
 }
 
-.map{
+#kakao-map{
     background: var(--background-gray);
-    padding: 150px 0;
+    padding: 100px 30px;
+}
+
+#kakao-map .map{
+	min-height: 60vh;
 }
 
 .map-inner .bold{
@@ -130,7 +134,7 @@ section h1{
 	padding-bottom: 100px;
 }
 
-.review-inner li{
+.review-inner > ul > li{
 	display: flex;
 	margin: 20px 0;
 	padding: 10px 0;
@@ -142,11 +146,14 @@ section h1{
 	flex: 0 0 auto;
 }
 
+.review-inner i{
+	color: var(--main);
+}
+
 .review-inner .icon i,
 .review-inner .submit-icon i{
 	flex-basis: 50px;
 	padding: 10px 10px 0 0;
-	color: var(--main-color);
 	font-size: 50px;
 	text-align: center;
 	box-sizing: border-box;
@@ -232,7 +239,7 @@ section h1{
 
 .review-inner .container .score i,
 .modal .review-edit .box .score i{
-	color: var(--main-color);
+	color: var(--main);
 	font-size: 20px;
 	margin: 5px 0 16px;
 	cursor: pointer;
@@ -244,7 +251,7 @@ section h1{
 }
 
 .review-inner .container .submit-icon i{
-	color: var(--main-color);
+	color: var(--main);
 }
 
 .review-inner .container .regDate{

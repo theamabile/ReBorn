@@ -65,31 +65,10 @@
 		
 		<form method="post" action="/animal/detail"> 
 			<section class="animal-box">
-				<!-- <div class="animal-item">
-					<div>
-						<img src="/images/kiki.JPG" />
-					</div>
-					<div class="title-box">
-						<span>ㅎㅎㅎㅎㅎㅎ</span>
-						<div></div>
-					</div>
-					<div class="main-info-box">
-						<span>11111111</span>
-						<span>2222222222</span>
-					</div>
-					<div class="sub-info-box">
-						<span>수컷</span>
-						<span>믹스견</span>
-						<span>20200101</span>
-					</div>
-				</div> -->
+				
 		</section>
 		</form>
-		
-		
-		<input type="button" value="테스트" onclick="test()">
-		
-	
+			
 	 	<div class="pager-common mt30">
         	<div class="pager">     
         		<div class="prev mr15">	

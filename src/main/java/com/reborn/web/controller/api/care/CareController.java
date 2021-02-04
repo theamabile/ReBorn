@@ -1,21 +1,14 @@
 package com.reborn.web.controller.api.care;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,30 +18,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.reborn.web.entity.care.AnimalEntityTemp;
+import com.reborn.web.entity.animal.Animal;
 import com.reborn.web.entity.care.Care;
 import com.reborn.web.entity.care.CareReview;
 import com.reborn.web.entity.care.CareReviewView;
 import com.reborn.web.entity.care.CareView;
 import com.reborn.web.entity.care.CareWish;
+import com.reborn.web.entity.member.Member;
+import com.reborn.web.service.animal.AnimalService;
 import com.reborn.web.service.care.CareService;
+import com.reborn.web.service.member.MemberService;
 
 @RestController("apiCareController")
 @RequestMapping("/api/care/")
 public class CareController {
 
 	private CareService careService;
-	// ============================================================
-	// ============================================================
-	// 테스트용 아이디, careService에서도 있음
-	private int memberId = 3;
-	// ============================================================
-	// ============================================================
+	private AnimalService animalService;
+	private MemberService memberService;
 	
 	@Value("${care.animalListUrl}")
 	private String animalListUrl;
@@ -58,8 +47,10 @@ public class CareController {
 	
 	
 	@Autowired
-	public CareController(CareService careService) {
+	public CareController(CareService careService, AnimalService animalService, MemberService memberService) {
 		this.careService = careService;
+		this.animalService = animalService;
+		this.memberService = memberService;
 	}
 
 	@GetMapping("list")
@@ -67,28 +58,73 @@ public class CareController {
 			@RequestParam(name = "p", defaultValue = "1") Integer page,
 			@RequestParam(name = "f", required = false) String field,
 			@RequestParam(name = "q", defaultValue = "") String query,
-			Principal principal){
+			HttpSession session){
 		
 		Map<String, Object> datas = new HashMap<>();
 		int size = 10;
 		
 		// DATA LOAD ==================================================
 		List<CareView> careList = careService.getViewList(page, size, field, query);
-		int count = careService.getCount(field, query);
+		int careCount = careService.getCount(field, query);
 		
 		// WISH LOAD ==================================================
-		if( !careList.isEmpty() && memberId != 0)
-			careService.getWishedList(careList);
+		int memberId = (int) session.getAttribute("id");
+		if( !careList.isEmpty() && memberId != 0) {
+			careService.getWishedList(memberId, careList);
+		}
+			
 		
-		int pageCount = (int)Math.ceil( count / (float)size );
+		int pageCount = (int)Math.ceil( careCount / (float)size );
 
 		datas.put("list", careList);
 		datas.put("currentPage", page);
 		datas.put("pageCount", pageCount);
+		datas.put("careCount", careCount);
+		
+		
+		return datas;
+	}
+
+	@GetMapping("{careRegNo}")
+	public Map<String, Object> detail(
+			@PathVariable("careRegNo") String careRegNo,
+			HttpSession session){
+		Map<String, Object> datas = new HashMap<>();
+		List<CareReviewView> reviewList = new ArrayList<>();
+		int size = 10;
+		
+		Care care = careService.getCareByCareRegNo(careRegNo);		
+		reviewList = careService.getReviewViewList(1, size, careRegNo);
+		double reviewScoreAvg = careService.getReviewAvg(careRegNo); 
+		
+//		List<Animal> animalList = new ArrayList<>();
+		
+		List<Animal> animalList = null;
+		animalList = animalService.getListByCareRegNo(careRegNo);
+
+		String loginId = (String) session.getAttribute("loginId");
+		if(loginId != null && !loginId.equals("")) {
+			Member m = memberService.get(loginId);
+			datas.put("nickname", m.getNickname());
+			datas.put("memberId", m.getId());
+		}
+		
+		int reviewCnt = 0;
+		int reviewPageCnt = 0;
+		reviewCnt = careService.getReviewCount(careRegNo);
+		reviewPageCnt = (int)Math.ceil( reviewCnt / (float)size );
+		
+		datas.put("care", care);
+		datas.put("reviewList", reviewList);
+		datas.put("reviewCnt", reviewCnt);
+		datas.put("reviewPageCnt", reviewPageCnt);
+		datas.put("reviewScoreAvg", reviewScoreAvg);
+		datas.put("animalList", animalList);
 		
 		return datas;
 	}
 	
+	/* API로 받아오는 버전 
 	@GetMapping("{careRegNo}")
 	public Map<String, Object> detail(@PathVariable("careRegNo") String careRegNo) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException{
 		Map<String, Object> datas = new HashMap<>();
@@ -98,58 +134,67 @@ public class CareController {
 		Care care = careService.getCareByCareRegNo(careRegNo);		
 		reviewList = careService.getReviewViewList(1, size, careRegNo);
 		
-		
 		// API 보호동물들 가져오기
 		List<AnimalEntityTemp> animalInfoList = new ArrayList<>();
-//		try {
-//			StringBuilder urlBuilder = new StringBuilder(animalListUrl);
-//		
-//			int getSize = 100;
-//			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + animalApiKey);
-//			urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + getSize);
-//			urlBuilder.append("&" + URLEncoder.encode("care_reg_no","UTF-8") + "=" + careRegNo);
-//			urlBuilder.append("&" + URLEncoder.encode("state","UTF-8") + "=" + "protect");
-//			
-//			// URL로 GET 요청 보냄
-//			Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-//			                                       .parse(urlBuilder.toString());
-//			XPath xpath = XPathFactory.newInstance().newXPath();
-//
-//			// 받은걸로 데이터 추출
-//	        NodeList itemNodes = (NodeList)xpath.evaluate("//body/items/item", document, XPathConstants.NODESET);
-//	        for( int i = 0; i < itemNodes.getLength(); i++ ){
-//	            XPathExpression noticeNoExpression = xpath.compile("noticeNo");
-//	            XPathExpression popfileExpression = xpath.compile("popfile");
-//	            
-//				Node noticeNoNode = (Node) noticeNoExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
-//				Node popfileNode = (Node) popfileExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
-//				
-//				String noticeNo = noticeNoNode.getTextContent();
-//				String popfile = popfileNode.getTextContent();
-//				
-//				AnimalEntityTemp aet = new AnimalEntityTemp();
-//				aet.setNoticeNo(noticeNo);
-//				aet.setPopfile(popfile);
-//				
-//				animalInfoList.add(aet);
-//	        }
-//			
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			StringBuilder urlBuilder = new StringBuilder(animalListUrl);
+		
+			int getSize = 100;
+			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + animalApiKey);
+			urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + getSize);
+			urlBuilder.append("&" + URLEncoder.encode("care_reg_no","UTF-8") + "=" + careRegNo);
+			urlBuilder.append("&" + URLEncoder.encode("state","UTF-8") + "=" + "protect");
+			
+			// URL로 GET 요청 보냄
+			Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+			                                       .parse(urlBuilder.toString());
+			XPath xpath = XPathFactory.newInstance().newXPath();
+
+			// 받은걸로 데이터 추출
+	        NodeList itemNodes = (NodeList)xpath.evaluate("//body/items/item", document, XPathConstants.NODESET);
+	        for( int i = 0; i < itemNodes.getLength(); i++ ){
+	            XPathExpression noticeNoExpression = xpath.compile("noticeNo");
+	            XPathExpression popfileExpression = xpath.compile("popfile");
+	            
+				Node noticeNoNode = (Node) noticeNoExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
+				Node popfileNode = (Node) popfileExpression.evaluate(itemNodes.item(i), XPathConstants.NODE);
+				
+				String noticeNo = noticeNoNode.getTextContent();
+				String popfile = popfileNode.getTextContent();
+				
+				AnimalEntityTemp aet = new AnimalEntityTemp();
+				aet.setNoticeNo(noticeNo);
+				aet.setPopfile(popfile);
+				
+				animalInfoList.add(aet);
+	        }
+			
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		
 //		System.out.println(animalInfoList);
+		int reviewCnt = 0;
+		int reviewPageCnt = 0;
+		reviewCnt = careService.getReviewCount(careRegNo);
+		reviewPageCnt = (int)Math.ceil( reviewCnt / (float)size );
+		
 		datas.put("care", care);
 		datas.put("reviewList", reviewList);
+		datas.put("reviewCnt", reviewCnt);
+		datas.put("reviewPageCnt", reviewPageCnt);
 		datas.put("animalInfoList", animalInfoList);
 		
 		return datas;
 	}
+	*/
 	
 	@PostMapping("{careRegNo}/wish/insert")
 	public Map<String, Object> wishInsert(
-			@PathVariable("careRegNo") String careRegNo){
+			@PathVariable("careRegNo") String careRegNo,
+			HttpSession session){
 		Map<String, Object> datas = new HashMap<>();
+		int memberId = (int) session.getAttribute("id");
 		
 		if(memberId == 0) {
 			datas.put("result", "fail");
@@ -175,8 +220,10 @@ public class CareController {
 
 	@PostMapping("{careRegNo}/wish/delete")
 	public Map<String, Object> wishDelete(
-			@PathVariable("careRegNo") String careRegNo){
+			@PathVariable("careRegNo") String careRegNo,
+			HttpSession session){
 		Map<String, Object> datas = new HashMap<>();
+		int memberId = (int) session.getAttribute("id");
 		
 		if(memberId == 0) {
 			datas.put("result", "fail");
@@ -201,29 +248,41 @@ public class CareController {
 	}
 
 	@GetMapping("{careRegNo}/review/list")
-	public List<CareReviewView> reviewList(
+	public Map<String, Object> reviewList(
 			@PathVariable("careRegNo") String careRegNo,
-			@RequestParam(name = "p", defaultValue = "1") Integer page
+			@RequestParam(name = "p", defaultValue = "1") Integer page,
+			@RequestParam(name = "s", defaultValue = "10") Integer size
 			){
-		List<CareReviewView> list = new ArrayList<>();
-		
+		Map<String, Object> datas = new HashMap<>();
 		if(careRegNo == null || careRegNo.equals("")) {
-			return list;
+			return datas;
 		}
 		
-		int size = 10;
+		List<CareReviewView> list = new ArrayList<>();
+		int reviewCnt = 0;
+		int reviewPageCnt = 0;
+		double reviewScoreAvg = 0; 
 		list = careService.getReviewViewList(page, size, careRegNo);
+		reviewCnt = careService.getReviewCount(careRegNo);
+		reviewPageCnt = (int)Math.ceil( reviewCnt / (float)size );
+		reviewScoreAvg = careService.getReviewAvg(careRegNo);
 		
-		return list;
+		datas.put("reviewList", list);
+		datas.put("reviewCnt", reviewCnt);
+		datas.put("reviewPageCnt", reviewPageCnt);
+		datas.put("reviewScoreAvg", reviewScoreAvg);
+		
+		return datas;
 	}
 
 	@PostMapping("{careRegNo}/review/insert")
 	public Map<String, Object> reviewInsert(
 			@PathVariable("careRegNo") String careRegNo,
+			HttpSession session,
 			String title, String content, int score){
 		Map<String, Object> datas = new HashMap<>();
+		int memberId = (int) session.getAttribute("id");
 		int result = 0;
-		
 		
 		if(memberId == 0) {
 			datas.put("result", "fail");
@@ -246,7 +305,18 @@ public class CareController {
 
 			int size = 10;
 			int page = 1;
+			int reviewCnt = 0;
+			int reviewPageCnt = 0;
+			double reviewScoreAvg = 0;
+			
 			List<CareReviewView> list = careService.getReviewViewList(page, size, careRegNo);
+			reviewCnt = careService.getReviewCount(careRegNo);
+			reviewScoreAvg = careService.getReviewAvg(careRegNo); 
+			reviewPageCnt = (int)Math.ceil( reviewCnt / (float)size);
+			
+			datas.put("reviewCnt", reviewCnt);
+			datas.put("reviewPageCnt", reviewPageCnt);
+			datas.put("reviewScoreAvg", reviewScoreAvg);
 			datas.put("reviewList", list);
 		}
 
@@ -258,8 +328,10 @@ public class CareController {
 	@PostMapping("{careRegNo}/review/{reviewId}/edit")
 	public Map<String, Object> reviewEdit(
 			@PathVariable("reviewId") int reviewId,
-			String title, String content, int score){
+			String title, String content, int score,
+			HttpSession session){
 		Map<String, Object> datas = new HashMap<>();
+		int memberId = (int) session.getAttribute("id");
 		int result = 0;
 
 		if(memberId == 0) {
@@ -278,18 +350,22 @@ public class CareController {
 		if(result == 0)
 			datas.put("result", "fail");
 		else {
+			double reviewScoreAvg = careService.getReviewAvg(origin.getCareRegNo());
 			datas.put("result", "success");
 			datas.put("review", origin);
+			datas.put("reviewScoreAvg", reviewScoreAvg);
 		}
-		
 		
 		return datas;
 	}
 
 	@PostMapping("{careRegNo}/review/{reviewId}/delete")
 	public Map<String, Object> reviewDelete(
-			@PathVariable("reviewId") int reviewId){
+			@PathVariable("careRegNo") String careRegNo,
+			@PathVariable("reviewId") int reviewId,
+			HttpSession session){
 		Map<String, Object> datas = new HashMap<>();
+		int memberId = (int) session.getAttribute("id");
 		int result = 0;
 		
 		if(memberId == 0) {
@@ -299,10 +375,18 @@ public class CareController {
 		
 		result = careService.deleteReview(reviewId);
 		
-		if(result == 0)
+		if(result == 0) {
 			datas.put("result", "fail");
-		else
+		} else {
+			double reviewScoreAvg = careService.getReviewAvg(careRegNo);
+			int reviewCnt = careService.getReviewCount(careRegNo);
+			int reviewPageCnt = (int)Math.ceil( reviewCnt / (float)10);
 			datas.put("result", "success");
+			datas.put("reviewId", reviewId);
+			datas.put("reviewCnt", reviewCnt);
+			datas.put("reviewPageCnt", reviewPageCnt);
+			datas.put("reviewScoreAvg", reviewScoreAvg);
+		}
 		
 		return datas;
 	}

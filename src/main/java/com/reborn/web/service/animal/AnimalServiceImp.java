@@ -6,10 +6,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -79,19 +79,22 @@ public class AnimalServiceImp implements AnimalService{
 		// TODO Auto-generated method stub
 		return animalDao.getList();
 	}
-	
-	public Animal getByDesertionNo(long desertionNo) {
-		// TODO Auto-generated method stub
-		return animalDao.getByDesertionNo(desertionNo);
-	}
-	
 
 	@Override
 	public List<Animal> getList(int page, int size, String upKindCd, String kindCd, Date startDate, Date endDate,
 			String neuter) {
 		// TODO Auto-generated method stub
 		int offset = (page-1) * size;
+		
+		System.out.println("page : "+page+" / size : "+size+" / offset : "+offset);
 		return animalDao.getList(offset, size, upKindCd, kindCd, startDate, endDate, neuter);
+	}
+	
+
+	@Override
+	public List<Animal> getListByCareRegNo(String careRegNo) {
+		// TODO Auto-generated method stub
+		return animalDao.getListByCareRegNo(careRegNo);
 	}
 	
 	
@@ -326,6 +329,8 @@ public class AnimalServiceImp implements AnimalService{
 	}
 	
 
+	
+	
 	// api 받아올 때 int to Date 매번 하기 귀찮아서 만든 함수
 	private Date toDate(int value) {
 		String strValue = String.valueOf(value);
@@ -335,15 +340,10 @@ public class AnimalServiceImp implements AnimalService{
 		String day = strValue.substring(6, 8);
 
 		String strDate = String.format("%s-%s-%s", year, month, day);
-		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date =  new Date();
-		try {
-			date = inputFormat.parse(strDate);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Date date = Date.valueOf(strDate);
+		
 		return date;
 	}
+
 
 }

@@ -3,41 +3,45 @@ package com.reborn.web.entity.name;
 import java.sql.Date;
 
 public class Choice {
-	private int id;
-	private Date regDate;
+	private long animalId;
 	private int memberId;
-	private int nameId;
+	private String name;
+	private Date regDate;
 	
-	public int getId() {
-		return id;
+	
+	public Choice() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Choice(long animalId, int memberId, String name) {
+		super();
+		this.animalId = animalId;
+		this.memberId = memberId;
+		this.name = name;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
+	public long getAnimalId() {
+		return animalId;
 	}
-	
-	public Date getRegDate() {
-		return regDate;
+	public void setAnimalId(long animalId) {
+		this.animalId = animalId;
 	}
-	
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
-	}
-	
 	public int getMemberId() {
 		return memberId;
 	}
-	
 	public void setMemberId(int memberId) {
 		this.memberId = memberId;
 	}
-	
-	public int getNameId() {
-		return nameId;
+	public String getName() {
+		return name;
 	}
-	
-	public void setNameId(int nameId) {
-		this.nameId = nameId;
+	public void setName(String name) {
+		this.name = name;
 	}
-	
+	public Date getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}	
 }

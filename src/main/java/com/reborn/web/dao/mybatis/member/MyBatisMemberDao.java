@@ -49,15 +49,21 @@ public class MyBatisMemberDao implements MemberDao {
 		return mapper.getMember(email,name);
 		}
 
-	@Override
-	public int checkMemberPhone(String loginId, String name, String phone) {
-		// TODO Auto-generated method stub
-		return mapper.checkMemberPhone(loginId,name, phone);
-	}
 
 	@Override
 	public int update(Member m) {
 		// TODO Auto-generated method stub
 		return mapper.update(m);
+	}
+
+	@Override
+	public int checkMemberPhone(String loginId, String name, String phone) {
+		// TODO Auto-generated method stub
+		return mapper.checkMemberPhone(loginId,name, phone);
+	}
+	@Override
+	public int checkMemberEmail(String loginId, String name, String email) {
+		// TODO Auto-generated method stub
+		return mapper.checkMemberEmail(loginId,name, email);
 	}
 }

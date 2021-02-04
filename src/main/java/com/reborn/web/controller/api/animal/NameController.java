@@ -1,5 +1,6 @@
-package com.reborn.web.controller.api;
+package com.reborn.web.controller.api.animal;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,25 +32,25 @@ public class NameController {
 			@RequestParam(name="of", defaultValue = "voteStartDate") String orderField,
 			@RequestParam(name="oq", defaultValue="DESC") String orderQuery,
 			@RequestParam(name="f", required = false) String field,
-			@RequestParam(name="q", defaultValue="") String query) {
+			@RequestParam(name="q", defaultValue="") String query,
+			@RequestParam(name="s", defaultValue="START") String state) {
 		
 		int size = 2;
-		
-		List<VoteView> list = voteService.getViewList(page, size, orderField, orderQuery, field, query);
+		List<VoteView> list = voteService.getViewList(page, size, orderField, orderQuery, field, query, state);
 		
 		// 해당 투표에서 인기 있기 있는 3가지 후보를 가져옴
 		for( VoteView v : list) {
 			List<NameView> n = nameService.getViewListByAnimalId(v.getAnimalId(), 3);
 			v.setRankNameList(n);
 		}
-		int count = voteService.getCount(field, query);
+		
+		int count = voteService.getCount(field, query, state);
 		int pageCount = (int)Math.ceil(count / (float)size);
 		
 		
 		Map<String, Object> dto = new HashMap<>();
 		dto.put("list", list);
-		//dto.put("pageCount", pageCount);
-		dto.put("count", count);
+		dto.put("pageCount", pageCount);
 		
 		return dto;
 	}

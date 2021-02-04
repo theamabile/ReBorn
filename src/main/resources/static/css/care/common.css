@@ -106,6 +106,9 @@ html, body{
 .position-absolute{
     position: absolute;
 }
+.input-disabled{
+    cursor: not-allowed;
+}
 .border-decoration{
     box-sizing: border-box;
     border: 20px solid #ddd;
@@ -113,6 +116,12 @@ html, body{
 }
 .shake{
 	animation: shake 5s ease-in-out infinite
+}
+.pager-info{
+	text-align:center;
+	line-height: 70px;
+	color: #ddd;
+    font-size: 20px;
 }
 @keyframes shake {
   2% {
@@ -234,4 +243,17 @@ html, body{
                 0 0 0 60px rgba(255,255,255, 0.1),
                 0 0 0 80px rgba(255,255,255, 0);
   }
+}
+
+.highlight{
+	animation: highlight 1s ease 1;
+}
+
+@keyframes highlight {
+    0%{
+		background: rgba(238,211,126,0.7);
+    }
+    100%{
+		background: transparent;
+    }
 }

@@ -15,5 +15,9 @@ public interface CareReviewDao {
 	int insert(CareReview cr);
 	int update(CareReview cr);
 	int delete(int id);
+
+	int getReviewCount(String careRegNo);
+
+	double getReviewAvg(String careRegNo);
 	
 }

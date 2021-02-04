@@ -1,5 +1,6 @@
 package com.reborn.web.dao.mybatis.name;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.reborn.web.dao.name.VoteDao;
+import com.reborn.web.entity.name.Choice;
 import com.reborn.web.entity.name.Vote;
 import com.reborn.web.entity.name.VoteView;
 
@@ -71,16 +73,15 @@ public class MyBatisVoteDao implements VoteDao{
 	}
 	
 	@Override
-	public List<VoteView> getViewList(int offset, int size, String orderField, String orderQuery,
-			String field, String query) {
+	public List<VoteView> getViewList(int offset, int size, String orderField, String orderQuery, String field, String query, String state) {
 		// TODO Auto-generated method stub
-		return mapper.getViewList(offset, size, orderField, orderQuery, field, query);
+		return mapper.getViewList(offset, size, orderField, orderQuery, field, query, state);
 	}	
 
 	@Override
-	public int getCount(String field, String query) {
+	public int getCount(String field, String query, String state) {
 		// TODO Auto-generated method stub
-		return mapper.getCount(field, query);
+		return mapper.getCount(field, query, state);
 	}
 
 	@Override
@@ -88,5 +89,18 @@ public class MyBatisVoteDao implements VoteDao{
 		// TODO Auto-generated method stub
 		return mapper.getLast();
 	}
+
+	@Override
+	public List<VoteView> getStartViewList(Date date, String field, String query) {
+		// TODO Auto-generated method stub
+		return mapper.getStartViewList(date, field, query);
+	}
+	
+	@Override
+	public List<VoteView> getEndViewList(Date date, String field, String query) {
+		// TODO Auto-generated method stub
+		return mapper.getEndViewList(date, field, query);
+	}
+
 
 }

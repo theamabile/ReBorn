@@ -14,29 +14,98 @@ class CareDetail extends React.Component{
 		super();
 		
 		this.state = {
+			nickname: "",
+			memberId: 0,
 			care: {},
-			animalInfoList: [],
-			reviewList: [],
+			animalList: [],
 			review: {
+				list: [],
+				cnt: 0,
+				pageCnt:0,
+				scoreAvg:0,
 				faceIcon: "far fa-smile",
-				score: 5,
-				title: "",
-				content: ""
 			}
 		}
 		this.review = {
-			faceIcon: "far fa-smile",
 			score: 5,
 			title: React.createRef(),
-			content: React.createRef()
+			content: React.createRef(),
+			page: 1,
+			range: 5,
+			startNum: 1
 		}
 		this.careRegNo = /([0-9]*)$/.exec(window.location.pathname)[0];
 		
-		this.invalidate();
+		window.onpopstate = (e)=>{
+			this.review.page = e.state?.p || 1;
+			this.reviewInvalidate();
+		}
 		
+		this.invalidate()
+		.then(resolve=>{
+			if(resolve != "sussess")
+				return;
+				
+			this.kakaoMapSearch();
+		});
+		
+//		(async ()=>{
+//			console.log("1111111");
+//		    let temp = await this.invalidate();
+//			console.log("2222222");
+//			console.log(this.state.care.name);
+//		})();
+//		console.log("3333333");
 	}
 	
 	componentDidMount(){
+		
+	}
+	
+	kakaoMapSearch(){
+		var mapContainer = document.querySelector('#kakao-map .map'), // 지도를 표시할 div 
+		    mapOption = {
+		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		        level: 4 // 지도의 확대 레벨
+		    };  
+		// 지도를 생성합니다    
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+		// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new kakao.maps.services.Geocoder();
+		let happenPlace = this.state.care.addr || this.state.care.name;
+		
+		// 주소로 좌표를 검색합니다
+		geocoder.addressSearch(happenPlace, (result, status) => {
+		
+			var infowindow;
+			var coords;
+		
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === kakao.maps.services.Status.OK) {
+		        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		
+		        // 인포윈도우로 장소에 대한 설명을 표시합니다
+		        infowindow = new kakao.maps.InfoWindow({
+		            content: `<div style="width:150px;text-align:center;padding:6px 0;">${this.state.care.name}</div>`
+		        });
+		    } else {
+		       	coords = new kakao.maps.LatLng(37.572078, 126.987300);
+	   			
+				// 인포윈도우로 장소에 대한 설명을 표시합니다
+		        infowindow = new kakao.maps.InfoWindow({
+		            content: '<div style="width:150px;text-align:center;padding:6px 0;color:red;">발견 장소를 찾지 못했습니다</div>'
+		        });
+			}
+			
+			// 결과값으로 받은 위치를 마커로 표시합니다
+	        var marker = new kakao.maps.Marker({
+	            map: map,
+	            position: coords
+	        });
+	        infowindow.open(map, marker);
+	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	        map.setCenter(coords);
+		});
 		
 		
 	}
@@ -44,31 +113,49 @@ class CareDetail extends React.Component{
 	invalidate(){
 		console.log("invalidate");
 		
-		fetch(`/api/care/${this.careRegNo}`)
-		.then((response ) => {
-			return response.json()
-		})
-		.then(({care, animalInfoList, reviewList})=>{
-			this.setState({care, animalInfoList, reviewList});
+		return new Promise((resolve, reject) => {
 			
-			//this.startNum = this.page - ((this.page - 1) % this.range);
+			fetch(`/api/care/${this.careRegNo}`)
+			.then((response ) => {
+				return response.json();
+			})
+			.then(({care, animalList, reviewList, reviewCnt, reviewPageCnt, reviewScoreAvg, nickname, memberId})=>{
+				
+				let review = this.state.review;
+				review.list = reviewList;
+				review.cnt = reviewCnt;
+				review.pageCnt = reviewPageCnt;
+				review.scoreAvg = reviewScoreAvg;
+				
+				this.review.startNum = this.review.page - ((this.review.page - 1) % this.review.range);
+				this.setState({care, animalList, review, nickname, memberId});
+				resolve("sussess");
+			});
 		});
-	}
-	
-	getReviewList(){
-		console.log("getReviewList");
 		
-		fetch(`/api/care/${this.careRegNo}/review/list`)
-		.then((response ) => {
-			return response.json()
-		})
-		.then((reviewList)=>{
-			this.setState({reviewList});
-			
-			//this.startNum = this.page - ((this.page - 1) % this.range);
-		});
 	}
 	
+	reviewInvalidate(){
+		let {page, range} = this.review;
+		
+		console.log("reviewInvalidate");
+		fetch(`/api/care/${this.careRegNo}/review/list?p=${page}`)
+		.then((response ) => {
+			return response.json();
+		})
+		.then(({reviewList, reviewCnt, reviewPageCnt, reviewScoreAvg})=>{
+			let review = this.state.review;
+			review.list = reviewList;
+			review.cnt = reviewCnt;
+			review.pageCnt = reviewPageCnt;
+			review.scoreAvg = reviewScoreAvg;
+			this.review.startNum = page - ((page - 1) % range);
+			this.setState({review});
+			let scrollY = this.review.title.current.offsetTop;
+			console.log(scrollY)
+			window.scrollTo(0, scrollY);
+		});
+	}
 	
 	reviewSubmitHandler(e){
 		e.preventDefault();
@@ -79,8 +166,21 @@ class CareDetail extends React.Component{
 		// formData.append("content", this.review.content.value);
 		// formData.append("score", this.review.score);
 		
+		if( !this.state.memberId ){
+			new ModalBox({content: "로그인을 먼저 해주세요", cancelBtnHide: true});
+			return;
+		}
+		
+		
+		let title = this.review.title.current.value;
+		let content = this.review.content.current.value;
+		if ( title == "" || content == "" ){
+			new ModalBox({content: "제목 또는 내용을 입력해주세요", cancelBtnHide: true});
+			return;			
+		}
+		
 		fetch(`/api/care/${this.careRegNo}/review/insert`, {
-			body: `title=${this.review.title.current.value}&content=${this.review.content.current.value}&score=${this.review.score}`,
+			body: `title=${title}&content=${content}&score=${this.review.score}`,
 		    headers: {
 		        "Content-Type": "application/x-www-form-urlencoded",
 		    },
@@ -89,10 +189,16 @@ class CareDetail extends React.Component{
 		.then((response ) => {
 			return response.json()
 		})
-		.then(({result, reviewList})=>{
+		.then(({result, reviewList, reviewCnt, reviewPageCnt, reviewScoreAvg})=>{
 			if( result == "success" ){
 				this.reviewFormReset();
-				this.setState({reviewList});
+				let review = this.state.review;
+				review.list = reviewList;
+				review.cnt = reviewCnt;
+				review.pageCnt = reviewPageCnt;
+				review.scoreAvg = reviewScoreAvg;
+				
+				this.setState({review});
 			}
 		});
 	}
@@ -129,30 +235,28 @@ class CareDetail extends React.Component{
 		}
 		
 		let faceIcon = this.scoreToFace(this.review.score);
-		
 		let review = this.state.review;
 		
-		review.faceIcon = faceIcon
-		
+		review.faceIcon = faceIcon;
 		this.setState({review});
 	}
 	
 	scoreToFace(score){
-		let face = "";
+		let className = "";
 		switch(score){
 			case 5:
 			case 4:
-				face = "far fa-smile";
+				className = "far fa-smile";
 				break;
 			case 3:
 			case 2:
-				face = "far fa-meh";
+				className = "far fa-meh";
 				break;
 			case 1:
-				face = "far fa-frown";
+				className = "far fa-frown";
 				break;
 		}
-		return face;
+		return className;
 	}
 	
 	reviewClickHandler(e){
@@ -240,14 +344,30 @@ class CareDetail extends React.Component{
 					.then((response ) => {
 						return response.json()
 					})
-					.then(({result, review})=>{
+					.then(({result, review, reviewScoreAvg})=>{
 						if( result == "success" ){
 							console.log(review);
 							
+							let list = this.state.review.list;
+							
+							list = list.map(origin => {
+								if( origin.id == review.id ){
+									origin.title = modalTitle;
+									origin.content = modalContent;
+									return;
+								}
+							});
+							
 							score.innerHTML = resolve.instance.contentNode.querySelector("form .score").innerHTML;
-							title.innerText = modalTitle;
-							content.innerText = modalContent;
 							li.querySelector(".icon i").className = this.scoreToFace(modalScore);
+							
+							li.classList.remove("highlight");
+							setTimeout(()=>{li.classList.add("highlight")})
+							
+							let reviewTemp = this.state.review; 
+							reviewTemp.scoreAvg = reviewScoreAvg;
+							
+							this.setState({reviewTemp});
 							
 						}else {
 							new ModalBox({
@@ -265,7 +385,8 @@ class CareDetail extends React.Component{
 		if(e.target.classList.contains("fa-trash-alt")){
 			
 			let modalBox =  new ModalBox({
-				content: `리뷰를 삭제하겠습니까??`
+				content: `리뷰를 삭제하겠습니까??`,
+				okBtnBackgroundColor: "var(--red-pink)"
 			});
 			
 			// 담아놓지 않으면 promise 기다리는 동안 currentTarget이 삭제된다.
@@ -274,7 +395,7 @@ class CareDetail extends React.Component{
 			modalBox
 			.then(
 				resolve => {
-					console.log(resolve.result)
+					// console.log(resolve.result)
 					if(resolve.result != "ok")
 						return;
 					
@@ -289,16 +410,19 @@ class CareDetail extends React.Component{
 					.then((response) => {
 						return response.json()
 					})
-					.then(({result})=>{
+					.then(({result, reviewCnt, reviewScoreAvg, reviewPageCnt})=>{
 						if( result == "success" ){
 							
-							let {reviewList} = this.state;
+							let reviewTemp = this.state.review;
 							
-							reviewList = reviewList.filter( 
+							reviewTemp.list = reviewTemp.list.filter( 
 								review => review.id != reviewId 
 							);
+							reviewTemp.cnt = reviewCnt;
+							reviewTemp.scoreAvg = reviewScoreAvg;
+							reviewTemp.pageCnt = reviewPageCnt;
 							
-							this.setState({reviewList});
+							this.setState({review: reviewTemp});
 							
 							return "삭제되었습니다";
 						} 
@@ -345,8 +469,22 @@ class CareDetail extends React.Component{
 		editNode.classList.add("d-none");
 	}
 	
+	pagerHandler(e){
+		if( e.target.tagName == "A" ){
+			e.preventDefault();
+			let page = e.target.dataset.page;
+			
+			if( page == undefined ) 
+				return;
+			
+			this.review.page = page;
+			history.pushState({p: page}, "", `?p=${page}`);
+			this.reviewInvalidate();
+		}
+	}
+	
 	render(){
-		console.log("render");
+		console.log(this.state);
 		return <div>
 			<section className="intro-height position-relative" style={{backgroundColor:"transparent", padding: 0}}>
 		        <section className="intro intro-height position-absolute position-top position-left">
@@ -391,19 +529,19 @@ class CareDetail extends React.Component{
 		            <div className="">
 		                <ul>
 		                    {
-		                        this.state.animalInfoList.length == 0
-		                        ? <li style={{flexGrow: 1, fontSize: "3vw"}} className="search-empty"> 테스트중 com.reborn.web.controller.api.care.CareController list()부 주석 풀기<br /> 보호중인 동물 없습니다</li>
-		                        : this.state.animalInfoList.map(
+		                        this.state.animalList?.length > 0
+		                        ? this.state.animalList.map(
 		                            animal => <li key={animal.noticeNo}><div><img src={animal.popfile} alt={animal.noticeNo} /></div><div>{animal.noticeNo}</div></li>
 		                        )
+		                        : <li style={{flexGrow: 1, fontSize: "3vw"}} className="search-empty">보호중인 동물 없습니다</li>
 		                    }
 		                </ul>
 		            </div>
 		        </div>
 		    </section>
-		    <section id="kakao-map" className="map" ref={this.kakaoMapContainer}>
+		    <section id="kakao-map" ref={this.kakaoMapContainer}>
 		        <div className="map-inner box-center section-max-width">
-		            <div className="flex-center">
+		            <div className="flex-center map">
 		            </div>
 		            <div>
 		                <br /><br />
@@ -419,18 +557,19 @@ class CareDetail extends React.Component{
 		    </section>
 		    <section className="review">
 		        <div className="review-inner box-center section-max-width">
-		            <h1>리뷰</h1>
+		            <h1 style={{paddingBottom: "6px"}}>리뷰</h1>
+					<div className="score-avg"><i className="fas fa-star"></i> {(this.state.review.scoreAvg).toFixed(1)}</div>
 		            <ul onClick={this.reviewClickHandler.bind(this)} onMouseOver={this.reviewMouseOverHandler.bind(this)} onMouseOut={this.reviewMouseOutHandler.bind(this)}>
 		                <li onClick={this.scoreClickHandler.bind(this)}>
 		                    <div className="icon"><i className={this.state.review.faceIcon}></i></div>
 		                    <div className="container">
-		                        <div className="writer">신짱나인 #테스트중</div>
+		                        <div className="writer">{this.state.nickname ? this.state.nickname : "로그인을 해주세요"}</div>
 		                        <div className="box">
 		                            <form method="POST" onSubmit={this.reviewSubmitHandler.bind(this)}>
 		                                <div className="score"><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i></div>
-		                                <div className="title"><input required type="text" name="title" ref={this.review.title} placeholder="제목"/></div>
-		                                <div className="content"><textarea required ref={this.review.content} placeholder="내용" ></textarea></div>
-		                                <div className="submit-icon"><label htmlFor="review-submit" className="pointer"><i className="fas fa-arrow-alt-circle-down"></i></label></div>
+		                                <div className="title"><input className={this.state.nickname ? "" : "input-disabled" } disabled={this.state.nickname ? "" : "disabled" } required type="text" name="title" ref={this.review.title} placeholder="제목"/></div>
+		                                <div className="content"><textarea className={this.state.nickname ? "" : "input-disabled" } disabled={this.state.nickname ? "" : "disabled" } required ref={this.review.content} placeholder="내용" ></textarea></div>
+		                                <div className="submit-icon"><label htmlFor="review-submit" className={this.state.nickname ? "pointer" : "input-disabled" }><i className="fas fa-arrow-alt-circle-down"></i></label></div>
 		                                <input id="review-submit" className="d-none" type="submit" value="전송" />
 		                            </form>
 		                        </div>
@@ -438,18 +577,15 @@ class CareDetail extends React.Component{
 		                </li>
 		                <li className="line"></li>
 						{
-							this.state.reviewList.length != 0
-							?this.state.reviewList.map(
+							this.state.review.list.length != 0
+							?this.state.review.list.map(
 								review => <li key={review.id} data-review-id={review.id}>
 			                    <div className="icon"><i className={this.scoreToFace(review.score)}></i></div>
 			                    <div className="container">
 			                        <div className="member">
 										<div className="writer">{review.nickname}</div>
 										{
-											//! 아이디 불러오기 ==========================================================================
-											//! 아이디 불러오기 ==========================================================================
-											//! 아이디 불러오기 ==========================================================================
-											review.memberId == 3
+											review.memberId == this.state.memberId
 											? <div className="edit d-none">
 												<div><i className="far fa-edit"></i></div>
 												<div><i className="far fa-trash-alt"></i></div>
@@ -477,6 +613,44 @@ class CareDetail extends React.Component{
 							:<li><div className="search-empty">리뷰가 없습니다</div></li>
 						}
 		            </ul>
+		            <div className="pager-common mt30">
+		                <div className="pager" onClick={this.pagerHandler.bind(this)}>
+		                
+		                    <div className="prev mr15">
+		
+							{
+								this.review.startNum > 1
+								? <a className="btn btn-prev" data-page={`${parseInt(this.review.startNum) - this.review.range}`} href={`?p=${parseInt(this.review.startNum) - this.review.range}`}>이전</a>
+								: <span className="btn btn-prev" onClick={()=>{new ModalBox({content:"이 페이지가 없습니다.", cancelBtnHide: true})}}>이전</span>
+							}
+		                        
+		                    </div>
+		                    <ul className="btn-center">
+		
+							{
+								this.state.review.cnt != 0
+								? [0, 1, 2, 3, 4].map(
+									i => 
+									this.review.startNum + i <= this.state.review.pageCnt
+									?<li key={i} className={i + this.review.startNum == this.review.page ? "current" : ""}>
+										<a className="bold " data-page={`${parseInt(this.review.startNum) + i}`} href={`?p=${parseInt(this.review.startNum) + i}`}>{i+this.review.startNum}</a>
+									</li>
+									: ""
+								)
+								: <li className="current"><a>1</a></li>
+							}
+		                    </ul>
+		                    
+		                    <div className="next mr15">
+							{
+								this.review.startNum + this.review.range <= this.state.review.pageCnt
+								? <a className="btn btn-next" data-page={`${parseInt(this.review.startNum) + this.review.range}`} href={`?p=${parseInt(this.review.startNum) + this.review.range}`}>다음</a>
+								: <span className="btn btn-next" onClick={()=>{new ModalBox({content:"다음 페이지가 없습니다.", cancelBtnHide: true})}}>다음 </span>
+							}
+							</div>
+		                </div>
+						<div className="pager-info">검색된 리뷰 수: {this.state.review.cnt}, 페이지 수: {this.state.review.pageCnt}</div>
+		            </div>
 		        </div>
 		    </section>
 		</div>;

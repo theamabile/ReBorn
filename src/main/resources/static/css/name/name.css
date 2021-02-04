@@ -85,6 +85,22 @@
 	margin-right: 0.3em;		
 }
 
+.ml-1 {
+	margin-left: 3em;	
+}
+.ml-2 {
+	margin-left: 2em;		
+}
+.ml-3 {
+	margin-left: 1em;		
+}
+.ml-4 {
+	margin-left: 0.5em;		
+}
+.ml-5 {
+	margin-left: 0.3em;		
+}
+
 .mb-1 {
 	margin-bottom: 3em;	
 }
@@ -117,6 +133,30 @@
 
 .gray {
 	color: var(--border); 
+}
+
+.main {
+	color: var(--main); 
+}
+
+.sub {
+	color: var(--sub); 
+}
+
+.bg {
+	color: var(--bg); 
+}
+
+.red-pink {
+	color: #f870ad; 
+}
+
+.w-100 {
+	width: 100%;
+}
+
+.text-center {
+	text-align: center;
 }
 
 .input-wf {
@@ -156,3 +196,5 @@
 	.main-container > section:first-child {
 		margin-top: 0px;
 	}
+
+	

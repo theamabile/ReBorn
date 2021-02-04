@@ -3,6 +3,7 @@ package com.reborn.web.dao.community;
 import java.util.List;
 
 import com.reborn.web.entity.community.Board;
+import com.reborn.web.entity.community.BoardCategory;
 import com.reborn.web.entity.community.BoardView;
 
 public interface BoardDao {
@@ -27,4 +28,5 @@ public interface BoardDao {
 	List<BoardView> getViewList(int offset, int size);
 	List<BoardView> getViewList(int offset, int size, String field, String query);
 	List<BoardView> getViewList(int offset, int view, String field, String query, String option);
+	int insert(BoardCategory category);
 }
