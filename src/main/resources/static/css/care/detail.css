@@ -115,11 +115,11 @@ section h1{
 
 #kakao-map{
     background: var(--background-gray);
-    padding: 100px 100px;
+    padding: 100px 30px;
 }
 
 #kakao-map .map{
-	min-height: 500px;
+	min-height: 60vh;
 }
 
 .map-inner .bold{
