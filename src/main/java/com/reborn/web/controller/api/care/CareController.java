@@ -106,7 +106,7 @@ public class CareController {
 		if(loginId != null && !loginId.equals("")) {
 			Member m = memberService.get(loginId);
 			datas.put("nickname", m.getNickname());
-			datas.put("memberId", m.getId());	
+			datas.put("memberId", m.getId());
 		}
 		
 		int reviewCnt = 0;
