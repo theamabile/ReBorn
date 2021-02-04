@@ -7,12 +7,11 @@
 
 	<insert id="insert">
 		insert into Member
-		(loginId,name,gender,pw,nickname,birthDay,phone,email,authorityId)
-		values(#{loginId},#{name},#{gender},#{pw},#{nickname},#{birthDay},#{phone},#{email},2);
+		(loginId,name,gender,pw,nickname,birthDay,phone,email,authorityId,titleId)
+		values(#{loginId},#{name},#{gender},#{pw},#{nickname},#{birthDay},#{phone},#{email},2,1);
 	</insert>
 
-	<select id="get"
-		resultType="com.reborn.web.entity.member.Member">
+	<select id="get" resultType="com.reborn.web.entity.member.Member">
 		select * from Member
 		where loginId =#{loginId}
 	</select>
@@ -24,7 +23,6 @@
 		#{name}
 	</select>
 
-
 	<!-- 아이디 중복 검사 -->
 	<select id="checkId" parameterType="String" resultType="int">
 		select count(*) from Member where loginid =#{loginId}
@@ -35,11 +33,18 @@
 		select count(*) from Member where email = #{email}
 	</select>
 
-	<!-- 이메일로 멤버 가져오기검사 -->
+	<!-- 아이디, 이름, 휴대폰으로 멤버 검사 -->
 	<select id="checkMemberPhone" parameterType="String"
 		resultType="int">
 		select count(*) from Member where loginId = #{loginId} and
 		name = #{name} and phone = #{phone}
+	</select>
+	
+		<!-- 아이디, 이름, 이메일로 멤버 검사 -->
+	<select id="checkMemberEmail" parameterType="String"
+		resultType="int">
+		select count(*) from Member where loginId = #{loginId} and
+		name = #{name} and email = #{email}
 	</select>
 
 	<update id="update">
@@ -56,7 +61,9 @@
 				phone=#{phone},
 				email=#{email},
 				outDate=#{outDate},
-				authorityId=#{authorityId}
+				authorityId=#{authorityId},
+				profileImg=#{profileImg},
+				titleId=#{titleId}
 			where id=#{id};
 
 	</update>

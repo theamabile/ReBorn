@@ -24,7 +24,6 @@ class Rank extends React.Component {
 }
 
 class VoteList extends React.Component {
-		
 	
 	constructor(props) {
 		super(props);
@@ -50,8 +49,9 @@ class VoteList extends React.Component {
 				voteEndDate:"2021-01-27",
 				choiceSum: 152,
 				nameCnt:3,
-				rankNameList:[]
-			};
+				rankNameList:[],
+				takePercent:0
+		};
 		
 		this.state = {
 			list: [item],
@@ -81,6 +81,12 @@ class VoteList extends React.Component {
 		this.invalidate();
 	}
 	
+	itemClickHandler(animalId) {
+		console.log(`/name/${animalId}`);
+		
+		location.href = `/name/${animalId}`;	
+	}	
+	
 	pageClickHandler(e) {
 		e.preventDefault();	
 				
@@ -89,7 +95,7 @@ class VoteList extends React.Component {
 	}
 	
 	invalidate() {
-		
+		console.log(`url : /api/name/list?p=${this.page}&of=${this.orderField}&oq=${this.orderQuery}&f=${this.field}&q=${this.query}`);
 		fetch(`/api/name/list?p=${this.page}&of=${this.orderField}&oq=${this.orderQuery}&f=${this.field}&q=${this.query}`)
 		.then(response=>{
 			return response.json();
@@ -100,13 +106,29 @@ class VoteList extends React.Component {
 			// 페이지 바뀌었으니 
 			let offset = (this.page-1)%5;
 			this.startNum = this.page - offset;
-			this.pageCount = Math.ceil(data.count/2);  //서버에서 받아와도 되긴함
 
-			data.list[0].rankNameList.map(
-				n=>console.log("ㅎㅎ : "+n.name)
-			);
-			//console.log(data.list[0].rankNameList[0]);
-			console.log(data);
+			let today = new Date();   
+			for(let v of data.list) {
+				let startDate = new Date(v.voteStartDate);
+				let endDate = new Date(v.voteEndDate);
+				
+				
+				//let voteDate = endDate.getDate() - startDate.getDate();
+				//let takeDate = today.getDate() - startDate.getDate();
+				
+				var voteDate = Math.ceil((endDate.getTime()-startDate.getTime())/(1000*3600*24));	
+				var takeDate = Math.ceil((today.getTime()-startDate.getTime())/(1000*3600*24));		
+				
+				let takePercent = Math.round((takeDate / voteDate) * 100);
+				
+				v.takePercent = takePercent;
+				//this.percentList[v.animalId] = takePercent;
+				console.log(`넣어준 퍼센트:${v.takePercent}`);
+				
+				console.log(`takeDate:${takeDate} / voteDate: ${voteDate} / takePercent : ${takePercent}`);
+				//console.log(voteDate + "일 중 " + takeDate+"일 지남 "+takePercent);
+			}
+			
 
 			this.setState(data);
 		});
@@ -114,13 +136,15 @@ class VoteList extends React.Component {
 	
 	render() {
 		console.log("render");
+				
 		return <div className="vote">
 				 	<h1>투표 목록</h1>
 					<form>
 						<div className="filter">
+							<label>품종</label>
 							<select name="of" ref={this.orderFieldInput} onChange={this.orderChangeHandler.bind(this)} className="order-field">
 								<option value="voteStartDate">투표날짜</option>
-								<option value="choiceSum">참여 순</option>
+								<option value="choiceSum">투표 참여 순</option>
 							</select>
 							<select name="oq" ref={this.orderQueryInput} onChange={this.orderChangeHandler.bind(this)} className="order-query">
 								<option value="DESC">내림차순</option>
@@ -132,76 +156,86 @@ class VoteList extends React.Component {
 							{
 								this.state.list.map(
 									v=><div className="item" key={v.animalId}>	
-									        <div className="percent">
-									            <div className="gage"></div>
+									        <div className="progress">
+									            <div className="progress-bar" style={ {width:v.takePercent+"%", height:"100%", background:"var(--main)", transition: "width 2s ease-in-out"} }></div>
 									        </div>
-									        <button className="btn">
+									        <div className="btn" onClick={this.itemClickHandler.bind(this, v.animalId)} >
 									        	<img src={v.popfile} />	        	
 									            <div className="vote-info">
 										        	<div className="regdate">
-											        	<span className="font-xs">
+											        	<span className="font-s">
 											        		{v.voteStartDate}~
 											        		{v.voteEndDate}
 											        	</span>
 											            <img/>
 										        	</div>
-									            	<table className="rank font-l">
+									            	<table className="rank font-xl">
 							            				<tbody>
 															{
 																v.rankNameList.map(
 																	(n, index)=><tr key={index}>
-													            			<th className="bold">
-																				<i className="fas fa-medal font-m"></i>{index+1}위
-																			</th>
-													            			<td>{n.name}</td>
-													            		</tr>
+															            			<th className="bold">
+																						<i className="fas fa-medal font-m"></i>{index+1}위
+																					</th>
+															            			<td>{n.name}</td>
+															            		</tr>
 																)
 															}
 														</tbody>
 									            	</table>
 									            	<div className="count">
 									            		<div className="count-item">
-									            			<span className="font-m">총 투표수</span>
+									            			<span className="font-l">총 투표수</span>
 									            			<span className="font-xl">{v.choiceSum }</span>
 									            		</div>
 									            		<div className="count-item">
-									            			<span className="font-m">후보 수</span>
+									            			<span className="font-l mr-1">후보 수</span>
 									            			<span className="font-xl">{v.nameCnt }</span>
 									            		</div>
 									            		<i className="fas fa-vote-yea font-xl"></i>
 									            	</div>
 									            </div>
-									        </button>
+									        </div>
 								    </div>
 								)
 							}
 						</div>
 					</form>
 					
-					<div className="pager">
-						<div className="prev mr15">                    
-			                <a className="btn btn-prev" href="p=${startNum-5}&of=${param.of}&oq=${param.oq}&f=${param.f}&q=${param.q}"></a>	
-		                    <span className="btn btn-prev" onClick={()=>alert('이전 페이지가 없습니다.')}>이전</span>  
-			            </div>
-						<ul className="btn-center" onClick={this.pageClickHandler.bind(this)}>		
-							{
-								[0,1,2,3,4].map(
-									i=>	this.startNum+i <= this.pageCount &&
-										<li key={this.startNum+i} className={ this.page==this.startNum+i ? "current" : ""}>
-											<a className="bold ">{this.startNum+i}</a>
-										</li>
-								)
-								/*[0,1,2,3,4].map(
-									i=><li key={this.startNum+i} className="${current}">
-											<a className="bold ">{this.startNum+i}</a>
-										</li>
-								)*/
-							}		
-						</ul>
-						<div className="next">
-			            	<a className="btn btn-next" href="?p=${startNum+5}&f=${param.f}&q=${param.p}&v=${param.v}"></a>
-			                <span className="btn btn-next" onClick={()=>alert('다음 페이지가 없습니다.')}>다음 </span>                        	
-			            </div>
+					<div className="pager-common mt30">
+						<div className="pager">
+							<div className="prev mr15">    
+								{ 
+									this.startNum==1 ?
+									<span className="btn btn-prev" onClick={()=>alert('이전 페이지가 없습니다.')}>이전</span>  											
+									:
+									<a className="btn btn-prev" href="p=${startNum-5}&of=${param.of}&oq=${param.oq}&f=${param.f}&q=${param.q}"></a>
+								}    			                    
+				            </div>
+							<ul className="btn-center" onClick={this.pageClickHandler.bind(this)}>		
+								{
+									[0,1,2,3,4].map(
+										i=>	this.startNum+i <= this.state.pageCount &&
+											<li key={this.startNum+i} className={ this.page==this.startNum+i ? "current" : ""}>
+												<a className="bold ">{this.startNum+i}</a>
+											</li>
+									)
+									/*[0,1,2,3,4].map(
+										i=><li key={this.startNum+i} className="${current}">
+												<a className="bold ">{this.startNum+i}</a>
+											</li>
+									)*/
+								}		
+							</ul>
+							<div className="next">
+								{ 
+									this.startNum+5 > this.state.pageCount ?
+									<span className="btn btn-next" onClick={()=>alert('다음 페이지가 없습니다.')}>다음 </span>             
+									:
+				            		<a className="btn btn-next" href="?p=${startNum+5}&f=${param.f}&q=${param.p}&v=${param.v}"></a>  
+								}          	
+				            </div>
+						</div>
 					</div>	
 				</div> ;
 				

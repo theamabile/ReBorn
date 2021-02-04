@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.reborn.web.dao.community.CommentDao">
+
+	<!-- 댓글조회 -->
+	<select id="getViewList" parameterType="int" resultType="com.reborn.web.entity.community.CommentView">
+		SELECT * 
+			FROM CommentView
+				WHERE boardId = #{boardId}			
+	</select>
+	
+	<!-- 댓글작성 -->
+	<insert id="insert" parameterType="com.reborn.web.entity.community.Comment">
+		INSERT INTO Comment(memberId, boardId, content)
+			values(#{memberId}, #{boardId}, #{content})
+	</insert>
+	
+	<!-- 댓글수정 -->
+	<update id="update" parameterType="com.reborn.web.entity.community.Comment">
+		UPDATE Comment 
+			SET content = #{content}		
+				WHERE id = #{id}
+			<!-- AND boardId = #{boardId} -->	
+	</update>
+	
+	<!-- 댓글삭제 -->
+	<delete id="delete" parameterType="com.reborn.web.entity.community.Comment">
+		DELETE FROM Comment 
+			WHERE id = #{id}
+			 	
+	</delete>
+	
+	<!-- 댓글 수 조회 -->
+	<select id="getCount" resultType="int">
+		select count(id) as count from Comment
+		where boardId = #{boardId};
+	</select>
+
+	<select id="commentGet" resultType="com.reborn.web.entity.community.Comment">
+		SELECT * FROM Comment
+  		where id=${id}
+	
+	</select>
+	
+
+
+</mapper>    

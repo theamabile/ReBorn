@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link href="/css/community/reset.css" type="text/css" rel="stylesheet" />
 <link href="/css/community/list.css" type="text/css" rel="stylesheet" />
 
@@ -31,8 +32,7 @@
                         <form class="category-align">
                             <fieldset>
                                 <legend class="hidden">카테고리 정렬 필드</legend>
-                                <select class="select-box" name="c" onchange="this.form.submit()">
-                                    <option>카테고리</option>
+                                <select class="select-box select-category" name="c" onchange="this.form.submit()">
                                     <option value="question">질문</option>
                                     <option value="post">입양후기</option>
                                     <option value="dog">우리집 멍이</option>
@@ -43,7 +43,7 @@
                         <form class="view-align">
                             <fieldset>
                                 <legend class="hidden">View 정렬 필드</legend>
-                                <select class="select-box" name="v" onchange="this.form.submit()">
+                                <select class="select-box select-view" name="v" >
                                     <option>보기</option>
                                     <option value="10">10개씩</option>
                                     <option value="15">15개씩</option>
@@ -55,7 +55,7 @@
                 </div>    
                 <div class="list-common mt30">
                     <h2 class="hidden">목록</h2>
-                    <ul>
+                    <ul class="list-data">
                     	<c:forEach var="n" items="${list}">
 	                        <li class="list-article mt20">
 	                            <a class="list-link" href="${n.id}">
@@ -78,9 +78,20 @@
 	                                        </span>
 	                                    </span>
 	                                </div>
-	                                <div class="post-image">
-	                                    <img src="/images/community/dog.png" alt="">
-	                                </div>
+	                                <c:set var="imageViewType" value="${(empty n.files)?0:1}" />
+	                                
+	                                <c:if test="${imageViewType>0}" >
+		                                <c:forEach var="i" begin="0" end="0" items="${fn:split(n.files, ',')}" varStatus="status" >
+							                <div class="file-image">
+							                 	<img src="/upload/community/2021/${n.id}/${i}" alt="이미지" />
+							                </div>                
+						                </c:forEach>
+					                </c:if>
+					                <c:if test="${imageViewType==0}" >
+					                	<div class="file-image">
+					                	</div>
+					                </c:if>
+					                <%-- imageViewType ${imageViewType} --%>
 	                            </a>
 	                        </li>
                         </c:forEach>                       
@@ -88,12 +99,13 @@
                 </div>
                 <div class="write-common pt15">                
                     <div><span class="text-red bold">1</span> / ${pageCount} pages</div>
-                    <input class="button bold" type="button" value="글쓰기">
+                    <form action="">
+                    	<a class="community-button bold" type="button" href="/community/reg" >글쓰기 </a>
+                    </form>
                 </div>
             </div> <!-- wrapper -->
             <div class="pager-common mt30">
-                <div class="pager">
-                
+                <div class="pager">                
                 
                     <div class="prev mr15">
                     <c:if test="${startNum > 1}">                    
@@ -144,3 +156,5 @@
                 </div>
             </div>
         </section>
+	
+	<script src="/js/community/list.js"></script>

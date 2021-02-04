@@ -6,13 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.community.BoardDao;
+import com.reborn.web.dao.community.CommentDao;
+import com.reborn.web.dao.community.LikeDao;
 import com.reborn.web.entity.community.Board;
+import com.reborn.web.entity.community.BoardCategory;
 import com.reborn.web.entity.community.BoardView;
+import com.reborn.web.entity.community.Comment;
+import com.reborn.web.entity.community.CommentView;
+import com.reborn.web.entity.community.Like;
 
 @Service
 public class BoardServiceImp implements BoardService{
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Autowired
+	private CommentDao commentDao;
+	@Autowired
+	private LikeDao likeDao;
 	
 	@Override
 	public List<Board> getList(int page, int size, String field, String query) {
@@ -44,8 +55,6 @@ public class BoardServiceImp implements BoardService{
 		return boardDao.getViewList(offset, view, field, query, option);
 	}
 
-	
-
 	@Override
 	public int hitUp(int id) {
 		Board board = boardDao.get(id);
@@ -63,7 +72,13 @@ public class BoardServiceImp implements BoardService{
 	public int insert(Board board) {
 		return boardDao.insert(board);
 	}
-
+	
+	@Override
+	public int insert(BoardCategory category) {
+		// TODO Auto-generated method stub
+		return boardDao.insert(category);
+	}
+	
 	@Override
 	public int update(Board board) {
 		int result = 0;
@@ -78,12 +93,19 @@ public class BoardServiceImp implements BoardService{
 		return result;
 	}
 
+//	@Override
+//	public int getLastId() {
+//		Board b = boardDao.getLast();
+//		
+//		return b.getId();
+//	}
+	//board의 마지막 Id값구하기
 	@Override
-	public int getLastId() {
-		Board b = boardDao.getLast();
+	public Board getLastId() {
 		
-		return b.getId();
+		return boardDao.getLast();
 	}
+	
 
 	@Override
 	public int getCount(String field, String query) {
@@ -101,8 +123,69 @@ public class BoardServiceImp implements BoardService{
 	public Board getNext(int id) {
 		return boardDao.getnext(id);
 	}
-
-
+//	댓글 조회
+	@Override
+	public List<CommentView> getCommentViewList(int id) {
 	
+		return commentDao.getViewList(id);
+	}
+	
+	//댓글 등록
+	@Override
+	public int commentInsert(Comment comment) {
+		
+		return commentDao.insert(comment);
+		
+	}
+	@Override
+	public int commentDelete(int id) {
+
+		return commentDao.delete(id);
+	}
+		
+	
+	@Override
+	public int getCommentCount(int id) {
+		
+		return commentDao.getCount(id);
+	}
+	
+	@Override
+	public int update(Comment comment) {
+		int result = 0;
+		commentDao.update(comment);
+		return result;
+	}
+	
+	
+	@Override
+	public int getLikeCount(int id) {
+		// TODO Auto-generated method stub
+		return likeDao.getLikeCount(id);
+	}
+	@Override
+	public void insert(Like like) {	
+		
+		likeDao.insert(like);
+	}
+	
+	@Override
+	public int getCount(int id, int memberId) {
+		
+		return likeDao.getCount(id, memberId);
+	}
+	
+	@Override
+	public void delete(int id, int memberId) {
+			likeDao.delete(id, memberId);
+		
+	}
+	
+	
+	@Override
+	public Comment commentGet(int id) {
+		// TODO Auto-generated method stub
+		return commentDao.commentGet(id);
+	}
 	
 }

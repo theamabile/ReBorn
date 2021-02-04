@@ -1,4 +1,4 @@
-package com.reborn.web.controller.api;
+package com.reborn.web.controller.api.animal;
 
 import java.io.BufferedReader;
 

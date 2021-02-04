@@ -78,13 +78,6 @@ public class MemberServiceImp implements MemberService{
 	}
 
 	@Override
-	public void checkMember(String loginId, String name, String phone, HttpServletResponse response) throws IOException {
-		PrintWriter out = response.getWriter();
-		out.println(memberDao.checkMemberPhone(loginId,name,phone));
-		out.close();
-	}
-
-	@Override
 	public int updatePw(String loginId, String password) {
 		
 		Member m= memberDao.get(loginId);
@@ -95,5 +88,29 @@ public class MemberServiceImp implements MemberService{
 		
 		return memberDao.update(m);
 		
+	}
+	
+	//아이디, 이름 ,휴대폰 확인
+	@Override
+	public void checkMemberPhone(String loginId, String name, String phone, HttpServletResponse response) throws IOException {
+		PrintWriter out = response.getWriter();
+		out.println(memberDao.checkMemberPhone(loginId,name,phone));
+		out.close();
+	}
+
+	//아이디, 이름 , 이메일 확인
+	@Override
+	public void checkMemberEmail(String loginId, String name, String email, HttpServletResponse response)
+			throws IOException {
+		PrintWriter out = response.getWriter();
+		out.println(memberDao.checkMemberEmail(loginId,name,email));
+		out.close();
+		
+	}
+
+	@Override
+	public Member get(String loginId) {
+		
+		return memberDao.get(loginId);
 	}
 }
