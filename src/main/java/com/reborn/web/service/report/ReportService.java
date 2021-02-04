@@ -21,8 +21,13 @@ public interface ReportService {
 	
 	int insert(Missing missing);
 	int insertComment(MissingComment missingComment);
+	int commentDelete(int id);
 	int getLastId();
 	List<String> getEmailList();
+	int commentDeclare(int memberId, int commentId, String reason);
+	int commentModify(int memberId, int commentId, String content);
+	
+	
 	
 	
 

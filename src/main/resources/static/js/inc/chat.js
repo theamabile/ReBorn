@@ -15,38 +15,46 @@ window.addEventListener('load', ()=>{
 	console.log(roomId)
 	//json으로 보내기 사용자아이디, 메시지내용. 전달.
 	let userId ="1"; //임시지정
+	
 	let message ={
 		userId,
 		chatData:"",
 		roomId
 	};
 	
+	
 	chatInput.addEventListener('keydown', (e)=>{
-		
 		if (e.keyCode === 13) {
 			e.preventDefault();
 			console.log("엔터 침");
 		}
 	})
 	
+	
+	
+	
+	
+	
 	chatSend.addEventListener('click', (e)=>{
 		let message = {
-			userId,
+			senderId: userId,
 			chatData:chatInput.value,
 			roomId : roomId
 		}
 		if(socket != undefined){
 			socket.send(JSON.stringify(message));
+		}else{
+			alert("연결이 끊겼습니다 새로고핌 해주세요.")
 		}
 		
 		//html표사ㅣ
-		let chatTemplateLestRight =`
+		/*let chatTemplateLestRight =`
 			<li class="right">
                   <span class="thumb">Q</span>
                   <p class="chat-con">${chatInput.value}</p>
             </li>
 		`
-		chatList.insertAdjacentHTML("beforeend", chatTemplateLestRight);
+		chatList.insertAdjacentHTML("beforeend", chatTemplateLestRight);*/
 		
 		chatInput.value ="";
 		chatScroll();
@@ -59,8 +67,6 @@ window.addEventListener('load', ()=>{
             chatbox.classList.remove('show');
         }else {
             
-
-
 			/*데이터 블러오기 */
 			fetch(`/api/chat/list?id=${userId}`)
 			.then(response =>response.json())
@@ -126,25 +132,44 @@ window.addEventListener('load', ()=>{
 
 
 //====================== 소켓은 바로 연결...======================
-	const socket = new WebSocket(`ws://${localhost}/chatting/${roomId}`);
+	let socket = new WebSocket(`ws://${localhost}/chatting/${roomId}`);
 	console.log(socket)
 	
 	socket.addEventListener('open', function (e) {		
 		console.log("소켓 연결됨!!!");
 	});
 	
+	
+	//메시지 받음
 	socket.addEventListener('message', function (e) {
 		console.log(e.data);
 		let message = JSON.parse(e.data);
-		let {userId, chatData, roomId} = message;
-		let chatTemplateLest =`
-			<li class="left">
-                  <span class="thumb">A</span>
-                  <p class="chat-con">${chatData}</p>
-            </li>
-		`
+		let {senderId, chatData, roomId} = message;
+
+
+
+		if( userId == senderId){
+			li = `
+				<li class="right">
+              		<span class="thumb">Q</span>
+              		<p class="chat-con">
+              		${chatData}
+              		</p>
+      			</li>
+				`
+		}else {
+			li = `
+				<li class="left">
+              		<span class="thumb">A</span>
+              		<p class="chat-con">
+              		${chatData}
+              		</p>
+      			</li>
+			`
+		}
 		
-		chatList.insertAdjacentHTML("beforeend", chatTemplateLest);
+		chatList.insertAdjacentHTML("beforeend", li);
+		chatScroll();
 	});
 
 

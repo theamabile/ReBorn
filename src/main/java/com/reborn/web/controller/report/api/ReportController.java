@@ -52,4 +52,47 @@ public class ReportController {
 		return commentList;
 	}
 	
+	//댓글삭제
+	@RequestMapping("{id}/comment/delete/{comId}")
+	public int CommentList(
+			@PathVariable("id") int missingId,
+			@PathVariable("comId") int id
+			) {
+		int result = service.commentDelete(id);
+		return result;
+	}
+	
+	
+	//댓글신고
+	@PostMapping("{id}/comment/declare/{comId}")
+	public int declare(
+			@PathVariable("comId") int commentId,
+			@PathVariable("id") int missingId,
+			@RequestParam(name = "reason") String reason/*,
+			Principal principal*/) {
+		//임지작성String uid = principal.getId(); //로그인된사용자 정보
+		int memberId= 1; //임시지정
+		
+		int result = service.commentDeclare(memberId, commentId, reason);
+	
+		return result;
+	}
+	
+	
+	//댓글 수정
+	@PostMapping("{id}/comment/modify/{comId}")
+	public int modify(
+			@PathVariable("comId") int commentId,
+			@PathVariable("id") int missingId,
+			@RequestParam(name = "content") String content) {
+		
+		//임지작성String uid = principal.getId(); //로그인된사용자 정보
+		int memberId= 1; //임시지정
+		System.out.println("1");
+		int result = service.commentModify(memberId, commentId, content);
+		System.out.println(result);
+		return result;
+	}
+	
+	
 }

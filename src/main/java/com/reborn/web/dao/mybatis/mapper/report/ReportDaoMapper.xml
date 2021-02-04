@@ -40,9 +40,26 @@
 	 	values(#{memberId}, #{missingId}, #{content})
 	 </insert>
 	 
+	 <delete id="commentDelete">
+	 	delete from MissingComment where id= ${param1}
+	 </delete>
+	 
+	 <insert id="commentDeclare"  parameterType="com.reborn.web.entity.report.MissingCommentReport">
+	 	insert into MissingCommentReport(memberId, commentId,reason)
+	 	values(#{memberId}, #{commentId}, #{reason})
+	 </insert>
+	 <update id="commentModify" parameterType="com.reborn.web.entity.report.MissingComment">
+	 	update MissingComment set content = #{content} where id= ${commentId}
+	 </update>
 	 
 	 <select id="getEmailList" resultType="String">
 	 	select email from Member;
 	 </select>
+	 
+	 
+	 
+	 
+	 
+	 
 	 
 </mapper>

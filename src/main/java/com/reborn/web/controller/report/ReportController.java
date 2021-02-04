@@ -174,7 +174,7 @@ public class ReportController {
 		 * file.getOriginalFilename(); File uploadedFile = new File(uploadedFilePath);
 		 * file.transferTo(uploadedFile);
 		 */
-		
+
 		String subject = "[리본]실종신고 글이 게시되었습니다 (" + title + ")";
 		List<String> emailList= service.getEmailList();
 		

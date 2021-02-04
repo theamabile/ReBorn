@@ -29,29 +29,10 @@ window.addEventListener('load', (e)=>{
 					commentBox.innerHTML="";
 					
 					
-					fetch(`/api/report/comments/${missingId}`)
-					.then(response =>response.json())
-					.then(json =>{
-						commentBox.innerHTML="";
-						for(let n of json){
-							let date = n.regDate.substr( 0, 10);
-							let li = `
-							<li>
-			                    <ol class="comment-info">
-			                        <li>${n.nickname}</li>
-			                        <li>${date}</li>
-			                    </ol>
-			                    <div class="comment-content">
-			                       ${n.content}
-			                    </div>
-			                </li>
-							`
-							
-							commentBox.insertAdjacentHTML('beforeend', li);
-						}
-					})
 					
-					//댓글 가져오가ㅣ
+					
+					//댓글 가져오가
+					commentLoad(missingId, commentBox);
 					})
 					
 
@@ -64,59 +45,41 @@ window.addEventListener('load', (e)=>{
 			}
 			
 		})
-		
-		
-		
-		//수정하기
-		let modifyBtn = document.querySelectorAll('.comment-modify');
-		console.log(modifyBtn);
-		
-		
-		modifyBtn.forEach(item=>{
-			item.addEventListener('click', (e)=>{
-				e.preventDefault();
-				console.log(e.target.dataset.commentid);
-				let modalBox = new ModalBox({
-					content:`수정할 내용을 입력해주세요.`
-				});
-			})
-		});
-		
-		
-		
-		//삭제하기
-		let deleteBtn = document.querySelectorAll('.comment-delete');
-		console.log(modifyBtn);
-		deleteBtn.forEach(item =>{
-			item.addEventListener('click', (e)=>{
-				e.preventDefault();	
-				console.log(e.target.dataset.commentid);
-				let modalBox = new ModalBox({
-					content:`정말로 삭제하시겠습니까?`
-				});
-				
-				modalBox
-				.then((resolve)=>{
-					console.log(resolve)
-					if(resolve.result == "ok"){
-						console.log('취소')
-					}else {
-						
-					}
-				})
-				
-
-			});
-		})
-		
 });		
 
+function commentLoad(missingId, commentBox){
+	fetch(`/api/report/comments/${missingId}`)
+	.then(response =>response.json())
+	.then(json =>{
+		commentBox.innerHTML="";
+		for(let n of json){
+			let date = n.regDate.substr( 0, 10);
+			let li = `
+			<li>
+                <ol class="comment-info">
+                    <li>${n.nickname}</li>
+                    <li>${date}</li>
+					<li class="util-menu">
+                    	<ol>
+                    		<li><a href="#" class="comment-modify " data-commentid="${n.id}" onClick="modifyFn();">수정</a></li>
+                    		<li><a href="#" class="comment-delete" data-commentid="${n.id}" onClick="deleteFn();">삭제</a></li>
+                    		<li><a href="#" class="comment-declare" data-commentid="${n.id}" onClick="declareFn();">신고</a></li>
+                    	</ol>
+                    </li>	
+                </ol>
+                <div class="comment-content">
+                   ${n.content}
+                </div>
+            </li>
+			`
+			
+			commentBox.insertAdjacentHTML('beforeend', li);
+		}
+	})	
+}
 
 
-
-function date_to_str(format)
-
-{
+function date_to_str(format){
 
     var year = format.getFullYear();
 
@@ -141,4 +104,103 @@ function date_to_str(format)
     if(sec10) sec = '0' + sec;
 
     return year + "-" + month + "-" + date;
+}
+
+
+function deleteFn(){
+	let missingId = document.querySelector('.missing-id ').innerHTML;
+	let commentBox = document.querySelector('.comment-box ul');
+	let commentArea = document.querySelector('.comment-area');
+	
+	event.preventDefault();
+	console.log(event.target);
+	let modalBox = new ModalBox({
+		content:`정말로 삭제하시겠습니까?`
+	});
+	let comId = event.target.dataset.commentid;
+	
+	modalBox
+	.then((resolve)=>{
+		if(resolve.result == "ok"){
+			//삭제 값 보내기
+			fetch(`/api/report/${missingId}/comment/delete/${comId}`)
+			.then(()=>{
+				commentArea.value = "";
+				commentBox.innerHTML="";
+			
+			//댓글 가져오가
+			commentLoad(missingId, commentBox);
+				
+			});
+			
+		}else {
+			console.log('취소');
+		}
+	})
+}
+
+
+function declareFn(){
+	event.preventDefault();
+	let missingId = document.querySelector('.missing-id ').innerHTML;
+	let commentBox = document.querySelector('.comment-box ul');
+	let commentArea = document.querySelector('.comment-area');
+	let comId = event.target.dataset.commentid;
+	
+	
+	
+	
+	let reason = prompt("신고 사유를 적어주세요.");
+	if(reason != null && reason !=""){
+		fetch(`/api/report/${missingId}/comment/declare/${comId}`,{
+			body: `reason=${reason}`,
+			headers: {
+				"Content-Type" : "application/x-www-form-urlencoded",
+			},
+			method:'POST',
+		})
+		.then(()=>{
+			let modalBox = new ModalBox({
+				content:`수정되었습니다..`,
+				cancelBtnHide:true
+			});
+			
+			
+			//댓글 가져오가
+			commentLoad(missingId, commentBox);
+			
+		});
+
+	}
+}
+
+function modifyFn(){
+	event.preventDefault();
+	
+	let missingId = document.querySelector('.missing-id ').innerHTML;
+	let comId = event.target.dataset.commentid;
+	let commentBox = document.querySelector('.comment-box ul');
+	
+	
+	let content = prompt("댓글 수정 내용을 적어주세요.");
+	if(content != null && content!=""){
+		
+		fetch(`/api/report/${missingId}/comment/modify/${comId}`,{
+			body: `content=${content}`,
+			headers: {
+				"Content-Type" : "application/x-www-form-urlencoded",
+			},
+			method:'POST',
+		})
+		.then(()=>{
+			let modalBox = new ModalBox({
+				content:`수정되었습니다.`,
+				cancelBtnHide:true
+			});
+			
+			//댓글 가져오가
+			commentLoad(missingId, commentBox);
+			
+		});	
+	}
 }

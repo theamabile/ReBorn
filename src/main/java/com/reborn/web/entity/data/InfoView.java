@@ -7,7 +7,6 @@ public class InfoView {
 	private String title;
 	private String content;
 	private Date regDate;
-	private String files;
 	private int hitCnt;
 	private String cateName;
 
@@ -15,12 +14,11 @@ public class InfoView {
 		 
 	}
 
-	public InfoView(int id, String title, String content, Date regDate, String files, int hitCnt, String cateName) {
+	public InfoView(int id, String title, String content, Date regDate, int hitCnt, String cateName) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.regDate = regDate;
-		this.files = files;
 		this.hitCnt = hitCnt;
 		this.cateName = cateName;
 	}
@@ -57,13 +55,6 @@ public class InfoView {
 		this.regDate = regDate;
 	}
 
-	public String getFiles() {
-		return files;
-	}
-
-	public void setFiles(String files) {
-		this.files = files;
-	}
 
 	public int getHitCnt() {
 		return hitCnt;
@@ -83,9 +74,11 @@ public class InfoView {
 
 	@Override
 	public String toString() {
-		return "InfoView [id=" + id + ", title=" + title + ", content=" + content + ", regDate=" + regDate + ", files="
-				+ files + ", hitCnt=" + hitCnt + ", cateName=" + cateName + "]";
+		return "InfoView [id=" + id + ", title=" + title + ", content=" + content + ", regDate=" + regDate + ", hitCnt="
+				+ hitCnt + ", cateName=" + cateName + "]";
 	}
+
+	
 }
 
 

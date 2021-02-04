@@ -50,6 +50,7 @@
 
 .detail-box-body img {
     display: block;
+    width:400px;
     max-width: 100%;
     margin: 20px 0;
     border: 1px solid #ddd;

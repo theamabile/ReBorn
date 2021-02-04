@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.data.DataDao;
+import com.reborn.web.entity.data.Info;
 import com.reborn.web.entity.data.InfoView;
 
 @Service
@@ -36,6 +37,11 @@ public class DataServiceImp implements DataService {
 	public int updateHit(int id) {
 		return dataDao.updateHit(id);
 		
+	}
+
+	@Override
+	public int write(Info info) {
+		return dataDao.write(info);
 	}
 
 	

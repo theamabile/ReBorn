@@ -2,6 +2,7 @@ package com.reborn.web.service.data;
 
 import java.util.List;
 
+import com.reborn.web.entity.data.Info;
 import com.reborn.web.entity.data.InfoView;
 
 public interface DataService {
@@ -11,6 +12,7 @@ public interface DataService {
 
 	int getCount(int categoryId);
 	int updateHit(int id);
+	int write(Info info);
 
 	
 

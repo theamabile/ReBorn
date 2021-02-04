@@ -100,9 +100,9 @@
                         <li><fmt:formatDate value="${cl.regDate}" pattern="yyyy-MM-dd"/></li>
                         <li class="util-menu">
                         	<ol>
-                        		<li><a href="#" class="comment-modify " data-commentid="${cl.id}">수정</a></li>
-                        		<li><a href="#" class="comment-delete" data-commentid="${cl.id}">삭제</a></li>
-                        		<li><a href="#" class="comment-declare" data-commentid="${cl.id}">신고</a></li>
+                        		<li><a href="#" class="comment-modify " data-commentid="${cl.id}" onClick="modifyFn()">수정</a></li>
+                        		<li><a href="#" class="comment-delete" data-commentid="${cl.id}" onClick="deleteFn()">삭제</a></li>
+                        		<li><a href="#" class="comment-declare" data-commentid="${cl.id}" onClick="declareFn()">신고</a></li>
                         	</ol>
                         </li>
                     </ol>

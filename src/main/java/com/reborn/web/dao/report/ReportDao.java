@@ -24,5 +24,8 @@ public interface ReportDao {
 	int insertComment(MissingComment missingComment);
 	int getLastId();
 	List<String> getEmailList();
+	int commentDelete(int id);
+	int commentDeclare(int memberId, int commentId, String reason);
+	int commentModify(int memberId, int commentId, String content);
 	
 }
