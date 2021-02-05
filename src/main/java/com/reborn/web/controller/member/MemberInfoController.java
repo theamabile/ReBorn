@@ -58,29 +58,24 @@ public class MemberInfoController {
 	}
 
 
-
-	
-//	정보 수정
-	@PostMapping("/edit")
-	public String edit(Member m) {
-		
-		System.out.println(m);
-		
-		Member newMb= new Member();
-		newMb.setLoginId(m.getLoginId());
-		newMb.setName(m.getName());
-		newMb.setGender(m.getGender());
-		newMb.setPw(m.getPw());
-		newMb.setNickname(m.getNickname());
-		newMb.setPhone(m.getPhone());
-		newMb.setAuthorityId(2);
-		
-		newMb.setEmail(null);
-		newMb.setBirthDay(null);
-		
-//		service.insert(newMb);
-		
-		return "redirect:../login";
-	}
+	/*
+	 * 
+	 * // 정보 수정
+	 * 
+	 * @PostMapping("/edit") public String edit(Member m) {
+	 * 
+	 * System.out.println(m);
+	 * 
+	 * Member newMb= new Member(); newMb.setLoginId(m.getLoginId());
+	 * newMb.setName(m.getName()); newMb.setGender(m.getGender());
+	 * newMb.setPw(m.getPw()); newMb.setNickname(m.getNickname());
+	 * newMb.setPhone(m.getPhone()); newMb.setAuthorityId(2);
+	 * 
+	 * newMb.setEmail(null); newMb.setBirthDay(null);
+	 * 
+	 * // service.insert(newMb);
+	 * 
+	 * return "redirect:../login"; }
+	 */
 
 }
