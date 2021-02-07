@@ -42,4 +42,5 @@ public interface BoardService {
 	void delete(int id, int memberId);
 	
 	Comment commentGet(int id);
+	int getCount(String field, String query, String option);
 }

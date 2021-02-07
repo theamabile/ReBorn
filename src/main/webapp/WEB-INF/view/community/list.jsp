@@ -5,6 +5,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link href="/css/community/reset.css" type="text/css" rel="stylesheet" />
 <link href="/css/community/list.css" type="text/css" rel="stylesheet" />
+<script src="/js/community/list.js"></script>
+
 
 <c:set var ="page" value="${param.p}" />
 <c:if test = "${empty param.p}">
@@ -32,7 +34,8 @@
                         <form class="category-align">
                             <fieldset>
                                 <legend class="hidden">카테고리 정렬 필드</legend>
-                                <select class="select-box select-category" name="c" onchange="this.form.submit()">
+                                <select class="select-category select-box" name="c" >
+                                    <option value="">카테고리</option>
                                     <option value="question">질문</option>
                                     <option value="post">입양후기</option>
                                     <option value="dog">우리집 멍이</option>
@@ -43,8 +46,7 @@
                         <form class="view-align">
                             <fieldset>
                                 <legend class="hidden">View 정렬 필드</legend>
-                                <select class="select-box select-view" name="v" >
-                                    <option>보기</option>
+                                <select class="select-view select-box" name="v" >  
                                     <option value="10">10개씩</option>
                                     <option value="15">15개씩</option>
                                     <option value="30">30개씩</option>                            
@@ -56,11 +58,11 @@
                 <div class="list-common mt30">
                     <h2 class="hidden">목록</h2>
                     <ul class="list-data">
-                    	<c:forEach var="n" items="${list}">
+                    <%--AJAX 	<c:forEach var="n" items="${list}">
 	                        <li class="list-article mt20">
 	                            <a class="list-link" href="${n.id}">
 	                                <div class="post-content has-image">
-	                                    <strong class="subject bold">${n.title}</strong>
+	                                    <strong class="subject bold word-color1">${n.title}</strong>
 	                                    <div class="content mt10">${n.content}
 	                                    </div>    
 	                                    <span class="meta pt15">
@@ -88,53 +90,52 @@
 						                </c:forEach>
 					                </c:if>
 					                <c:if test="${imageViewType==0}" >
-					                	<div class="file-image">
-					                	</div>
+					                	<div class="file-image"></div>					                	
 					                </c:if>
-					                <%-- imageViewType ${imageViewType} --%>
 	                            </a>
 	                        </li>
-                        </c:forEach>                       
+                        </c:forEach>  --%>                      
                     </ul>
                 </div>
                 <div class="write-common pt15">                
-                    <div><span class="text-red bold">1</span> / ${pageCount} pages</div>
+                    <%--AJAX <div><span class="text-red bold">1</span> / ${pageCount} pages</div>
                     <form action="">
                     	<a class="community-button bold" type="button" href="/community/reg" >글쓰기 </a>
-                    </form>
+                    </form> --%>
                 </div>
             </div> <!-- wrapper -->
             <div class="pager-common mt30">
                 <div class="pager">                
-                
                     <div class="prev mr15">
-                    <c:if test="${startNum > 1}">                    
-                        <a class="btn btn-prev" href="p=${startNum-5}&f=${param.f}&q=${param.q}&v=${param.v}">이전</a>
-                    </c:if>
-                    <c:if test="${startNum == 1}">                    
-                        <span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</a>
-                    </c:if>    
-                        
+                    	<a class="btn btn-prev">이전</a>
+	                    <%-- <c:if test="${startNum > 1}">                    
+	                        <a class="btn btn-prev" href="p=${startNum-5}&f=${param.f}&q=${param.q}&v=${param.v}">이전</a>
+	                    </c:if>
+	                    <c:if test="${startNum == 1}">                    
+	                        <span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</a>
+	                    </c:if> --%>    
                     </div>
+                    
                     <ul class="btn-center">
-                    <c:forEach var="i" begin="0" end="4" varStatus="st">
-                    	<c:set var="current" value="" />
-                    	<c:if test="${i+startNum == page}">
-                    		<c:set var="current" value="current"></c:set>
-                        </c:if>
-						<c:if test="${i+startNum <= pageCount}">
-                        	<li class="${current}"><a class="bold " href="?p=${i+startNum}&f=${param.f}&q=${param.q}&v=${param.v}">${i+startNum}</a></li>
-						</c:if>
-                    </c:forEach>  
+	                    <%-- <c:forEach var="i" begin="0" end="4" varStatus="st">
+	                    	<c:set var="current" value="" />
+	                    	<c:if test="${i+startNum == page}">
+	                    		<c:set var="current" value="current"></c:set>
+	                        </c:if>
+							<c:if test="${i+startNum <= pageCount}">
+	                        	<li class="${current}"><a class="bold " href="?p=${i+startNum}&f=${param.f}&q=${param.q}&v=${param.v}">${i+startNum}</a></li>
+							</c:if>
+	                    </c:forEach>   --%>
                     </ul>
                     
                     <div class="next">
-                    	<c:if test="${startNum+5 <= pageCount}">
+                    	<a class="btn btn-next">다음</a>
+                    	<%-- <c:if test="${startNum+5 <= pageCount}">
                         	<a class="btn btn-next" href="?p=${startNum+5}&f=${param.f}&q=${param.p}&v=${param.v}"></a>다음</span>
                         </c:if>
                         <c:if test="${startNum+5 > pageCount}">
                         	<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음 </span>                        	
-                        </c:if>
+                        </c:if> --%>
                     </div>
                     
                 </div>
@@ -157,4 +158,3 @@
             </div>
         </section>
 	
-	<script src="/js/community/list.js"></script>

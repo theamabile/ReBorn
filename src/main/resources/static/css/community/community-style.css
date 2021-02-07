@@ -216,6 +216,11 @@ select {
 	display:none;
 }
 
+.word-color1{
+	color: #148354;
+}
+
+
 /* .file-box input[type="file"] { 
 	position: absolute;
 	width: 1px;

@@ -71,6 +71,12 @@ public class MyBatisBoardDao implements BoardDao{
 	
 		return mapper.getCount(field, query);
 	}
+	
+	@Override
+	public int getCount(String field, String query, String option) {
+		
+		return mapper.getCount(field, query, option);
+	}
 
 	@Override
 	public Board getPrev(int id) {

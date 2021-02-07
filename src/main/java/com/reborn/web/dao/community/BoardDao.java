@@ -30,6 +30,7 @@ public interface BoardDao {
 	List<BoardView> getViewList(int offset, int view, String field, String query, String option);
 	int insert(BoardCategory category);
 	int hitUp(int id);
+	int getCount(String field, String query, String option);
 	
 	
 }

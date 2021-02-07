@@ -44,6 +44,11 @@
 	                 		업로드 할 파일을 드롭하세요.
 	                 		<input type="file" />
 	                 	</div>
+	                 	<div class="drop-file-name mt5">
+	                 	
+	                 	</div>
+	                 	
+	                 	
 	                 
 	                 <!-- 파일 첨부 방식 -->
 	                    <div class="file-box mt10">		                    

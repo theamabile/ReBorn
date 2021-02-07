@@ -118,6 +118,12 @@ public class BoardServiceImp implements BoardService{
 		// TODO Auto-generated method stub
 		return boardDao.getCount(field, query);
 	}
+	
+	@Override
+	public int getCount(String field, String query, String option) {
+		
+		return boardDao.getCount(field, query, option);
+	}
 
 	@Override
 	public Board getPrev(int id) {

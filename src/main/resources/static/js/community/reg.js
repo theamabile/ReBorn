@@ -26,12 +26,7 @@ window.addEventListener("load", (e)=>{
 		fileName.innerText = uploadFile.value;
 		
 	})
-	
-	
-	
-	
-	
-	
+		
 	/*파일첨부추가버튼*/
 	addButton.addEventListener("click", (e) =>{
 		console.log("더하기")
@@ -46,6 +41,9 @@ window.addEventListener("load", (e)=>{
 	
 	/* 파일 드래그 앤 드롭 */
 	dropBox.addEventListener("drop", (e)=>{
+		//파일 이름을 jsp에 출력
+		let dropFileName = document.querySelector(".drop-file-name");
+		
 		e.preventDefault();
 		e.stopPropagation();
 		let valid = e.dataTransfer 
@@ -66,28 +64,28 @@ window.addEventListener("load", (e)=>{
 		
 		let request = new XMLHttpRequest();
 		
+		
 		//전송과정에 대한 처리
 		request.upload.addEventListener("progress", (e)=>{
-			console.log(`total is: ${e.total}, loaded: ${e.loaded} `);
-			
+			console.log(`total is: ${e.total}, loaded: ${e.loaded} `);			
 			
 			if(e.lengthComputable){			
 				dropBox.innerText = "진행도: "+ Math.round(e.loaded*100/e.total)+"%";
 				dropBox.style.background = "blue";			
 				dropBox.style.width = Math.round(e.loaded*100/e.total)+ "%";
 			} else
-				dropBox.innerText = "전송크기를 계산할 수 없습니다.";
-			
+				dropBox.innerText = "전송크기를 계산할 수 없습니다.";			
 		});
 		
 		//전송완료시
 		request.addEventListener("load", (e)=>{
 			console.log(e.target.responseText);
 			CSS.set(dropBox, {
-				background : "#f1f1f1",
-				
+				background : "#f1f1f1",				
 			})
 			dropBox.innerText = "업로드할 파일을 드롭하세요.";
+			
+			
 		});
 		
 		//에러발생시
@@ -96,15 +94,16 @@ window.addEventListener("load", (e)=>{
 				
 		});
 		
-		request.open("POST", url);
-		request.send(formData);   //전달할 것:파일
+		
+	
 			
-		
-		
+				
 		console.log(e.dataTransfer.files.length);
 		console.log(e.dataTransfer.files[0].name);
+		dropFileName.innerText = e.dataTransfer.files[0].name+ "이 업로드 되었습니다.";
+		
 		for(let n of e.dataTransfer.files){
-			console.log(n.name);
+			console.log("for of문 파일이름출력"+ n.name);
 		}
 		
 		CSS.set(dropBox, {
@@ -114,8 +113,12 @@ window.addEventListener("load", (e)=>{
 		dropBox.innerText = "파일을 업로드 합니다.";
 		
 		
-	});
+		request.open("POST", url);
+		request.send(formData);   //전달할 것:파일
+		
+	});// drag&drop 완료
 	
+	//droptBox에 드래그오버 될 경우.
 	dropBox.addEventListener("dragover", (e)=>{
 		e.preventDefault();
 		e.stopPropagation();
