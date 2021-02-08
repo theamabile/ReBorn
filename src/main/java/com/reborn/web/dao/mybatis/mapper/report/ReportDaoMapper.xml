@@ -57,6 +57,16 @@
 	 </select>
 	 
 	 
+	 <update id="update" parameterType="com.reborn.web.entity.report.Missing">
+	 	update Missing
+	 	set title=#{title}, content=#{content}, missingDate=#{missingDate}, feature=#{feature}, location=#{location}, breed=#{breed}, files=#{files} 
+	 	where id= ${id}
+	 </update>
+	 
+	  <delete id="delete">
+	 	delete from Missing where id = ${id}
+	 </delete>
+	 
 	 
 	 
 	 

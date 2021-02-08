@@ -26,6 +26,8 @@ public interface ReportService {
 	List<String> getEmailList();
 	int commentDeclare(int memberId, int commentId, String reason);
 	int commentModify(int memberId, int commentId, String content);
+	int update(Missing missing);
+	int delete(int id);
 	
 	
 	

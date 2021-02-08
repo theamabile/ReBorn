@@ -41,7 +41,7 @@
                         <div class="dropdown-menu">
                             <ul>
                                 <li><a href="#">Link 1</a></li>
-                                <li><a href="#">Link 2</a></li>
+                                <li><a href="/report/list">실종신고</a></li>
                                 <li><a href="#">Link 3</a></li>
                             </ul>
                         </div>
@@ -51,6 +51,12 @@
                             <a href="">정보</a>
                         </div>
                         <div class="hover-line"></div>
+                        <div class="dropdown-menu">
+                            <ul>
+                                <li><a href="/data/introduce">리본 소개</a></li>
+                                <li><a href="/data/information">동물 기본 상식</a></li>
+                            </ul>
+                        </div>
                     </li>
                 </ul> 
                 <button>SIGN UP</button>

@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link href="/css/report/list.css" type="text/css" rel="stylesheet" />
+<script src ="/js/report/list.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 
 
 
@@ -52,7 +52,15 @@
     </div>
 
     <div class="report-btn-box">
-        <a href="write" class="main-button-m">실종 신고</a>
+    	<a href="write" class="main-button-m">실종 신고</a>
+    	<%-- <c:if test="${empty sessionScope.id }"> 
+			<a href="#" class="main-button-m no-session-write-btn">실종 신고</a>
+		</c:if>
+		
+		<c:if test="${sessionScope.id > 0}"> 
+			<a href="write" class="main-button-m">실종 신고</a>
+		</c:if> --%>
+        
     </div>
 
     <c:set var="offset" value="${(page-1)%5}" />

@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,11 +32,12 @@ public class ReportController {
 	@PostMapping("{id}/comment/write")
 	public String write(
 			@PathVariable("id") int missingId, 
-			@RequestParam(name = "comment-content") String commetContent/*,
-			Principal principal*/) {
-		//임지작성String uid = principal.getId(); //로그인된사용자 정보
-		int memberId= 1; //임시지정
-		
+			@RequestParam(name = "comment-content") String commetContent,
+			HttpServletRequest HttpRquset) {
+	
+		HttpSession session = HttpRquset.getSession();
+		int memberId = (int)session.getAttribute("id");
+
 		String content = commetContent;
 		System.out.println(content);
 	
@@ -68,13 +72,13 @@ public class ReportController {
 	public int declare(
 			@PathVariable("comId") int commentId,
 			@PathVariable("id") int missingId,
-			@RequestParam(name = "reason") String reason/*,
-			Principal principal*/) {
+			@RequestParam(name = "reason") String reason,
+			HttpServletRequest HttpRquset) {
 		//임지작성String uid = principal.getId(); //로그인된사용자 정보
-		int memberId= 1; //임시지정
-		
+		HttpSession session = HttpRquset.getSession();
+		int memberId = (int)session.getAttribute("id");
+
 		int result = service.commentDeclare(memberId, commentId, reason);
-	
 		return result;
 	}
 	
@@ -84,10 +88,12 @@ public class ReportController {
 	public int modify(
 			@PathVariable("comId") int commentId,
 			@PathVariable("id") int missingId,
-			@RequestParam(name = "content") String content) {
+			@RequestParam(name = "content") String content,
+			HttpServletRequest HttpRquset) {
 		
 		//임지작성String uid = principal.getId(); //로그인된사용자 정보
-		int memberId= 1; //임시지정
+		HttpSession session = HttpRquset.getSession();
+		int memberId = (int)session.getAttribute("id");
 		System.out.println("1");
 		int result = service.commentModify(memberId, commentId, content);
 		System.out.println(result);

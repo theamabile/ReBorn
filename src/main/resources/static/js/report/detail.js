@@ -5,8 +5,9 @@ window.addEventListener('load', (e)=>{
 		let commentBtn = document.querySelector('.comment-btn');
 		
 		let missingId = document.querySelector('.missing-id ').innerHTML;
-		let uid = 1;
+		let uid =  document.querySelector('.session-id').innerHTML;
 		
+		//console.log(<%= session.id%>);
 		commentBtn.addEventListener('click', (e)=>{
 			
 			e.preventDefault();
@@ -37,41 +38,79 @@ window.addEventListener('load', (e)=>{
 					
 
 				}else{
-					alert("댓글창이 비어있습니다. 댓글을 입력해주세요.")
+					 let modelBox = new ModalBox({
+	             		content:`댓글창이 비어있습니다.<br/>댓글을 입력해주세요.`,
+	             		cancelBtnHide:true
+	             	 })
 				}
 			}else {
 				//로그인 필요함
-				alert('로그인 서비스가 필요합니다.')
+				let modelBox = new ModalBox({
+             		content:`로그인 서비스가 필요합니다.`,
+             	 })
+				
+				modalBox
+					.then((resolve)=>{
+					if(resolve.result == "ok"){
+						indow.location.href ="/member/login"
+					}else{
+						
+					}
+				});
+				
+
 			}
 			
 		})
 });		
 
 function commentLoad(missingId, commentBox){
+	let uid =  document.querySelector('.session-id').innerHTML;
 	fetch(`/api/report/comments/${missingId}`)
 	.then(response =>response.json())
 	.then(json =>{
 		commentBox.innerHTML="";
 		for(let n of json){
 			let date = n.regDate.substr( 0, 10);
-			let li = `
-			<li>
-                <ol class="comment-info">
-                    <li>${n.nickname}</li>
-                    <li>${date}</li>
-					<li class="util-menu">
-                    	<ol>
-                    		<li><a href="#" class="comment-modify " data-commentid="${n.id}" onClick="modifyFn();">수정</a></li>
-                    		<li><a href="#" class="comment-delete" data-commentid="${n.id}" onClick="deleteFn();">삭제</a></li>
-                    		<li><a href="#" class="comment-declare" data-commentid="${n.id}" onClick="declareFn();">신고</a></li>
-                    	</ol>
-                    </li>	
-                </ol>
-                <div class="comment-content">
-                   ${n.content}
-                </div>
-            </li>
-			`
+			let li ="";
+			if(uid == n.memberId){
+				li = `
+				<li>
+	                <ol class="comment-info">
+	                    <li>${n.nickname}</li>
+	                    <li>${date}</li>
+						<li class="util-menu">
+						
+	                    	<ol>
+                    			<li><a href="#" class="comment-modify " data-commentid="${n.id}" onClick="modifyFn()">수정</a></li>
+                    			<li><a href="#" class="comment-delete" data-commentid="${n.id}" onClick="deleteFn()">삭제</a></li>
+	                    		<li><a href="#" class="comment-declare" data-commentid="${n.id}" onClick="declareFn();">신고</a></li>
+	                    	</ol>
+	                    </li>	
+	                </ol>
+	                <div class="comment-content">
+	                   ${n.content}
+	                </div>
+	            </li>
+				`
+			}else {
+				li = `
+				<li>
+	                <ol class="comment-info">
+	                    <li>${n.nickname}</li>
+	                    <li>${date}</li>
+						<li class="util-menu">
+	                    	<ol>
+	                    		<li><a href="#" class="comment-declare" data-commentid="${n.id}" onClick="declareFn();">신고</a></li>
+	                    	</ol>
+	                    </li>	
+	                </ol>
+	                <div class="comment-content">
+	                   ${n.content}
+	                </div>
+	            </li>
+				`
+			}
 			
 			commentBox.insertAdjacentHTML('beforeend', li);
 		}
@@ -134,7 +173,7 @@ function deleteFn(){
 			});
 			
 		}else {
-			console.log('취소');
+			//console.log('취소');
 		}
 	})
 }

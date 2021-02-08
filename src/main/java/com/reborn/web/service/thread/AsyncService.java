@@ -25,10 +25,10 @@ public class AsyncService {
     @Async("mailExecutor")
     public void send(String email, String subject, String title, String location, String feature, int id) {
     	//테스트
-    	mailClient.prepareAndSend("hyk1272@gmail.com", subject ,title, location, feature, id);
+    	//mailClient.prepareAndSend("hyk1272@gmail.com", subject ,title, location, feature, id);
  		
     	//실제코드
-    	//mailClient.prepareAndSend(email, subject ,title, location, feature, id);
+    	mailClient.prepareAndSend(email, subject ,title, location, feature, id);
  		
     }
 }

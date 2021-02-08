@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,6 +68,7 @@ public class ReportController {
 					String [] fileArr = files.split(",");
 					n.setFiles(fileArr[0]);
 				}
+				//System.out.println(n.getFiles());
 			}
 			model.addAttribute("list", list);
 			
@@ -99,11 +103,13 @@ public class ReportController {
 			@RequestParam(name="breed", defaultValue = "") String breed,
 			@RequestParam(name="feature", defaultValue = "") String feature,
 			//@RequestParam(name="file", required = false) String files,
-			@RequestParam(name="content", defaultValue = "") String content
+			@RequestParam(name="content", defaultValue = "") String content,
+			HttpServletRequest HttpRquset
 			) throws IllegalStateException, IOException {
 	
 		//임시지정 memid;
-		int memberId = 1;
+		HttpSession session = HttpRquset.getSession();
+		int memberId = (int)session.getAttribute("id");
 		
 		
 		List<String> fileNames = new ArrayList(); //파일이름 담기.
@@ -111,14 +117,13 @@ public class ReportController {
 		for (MultipartFile mf : fileList) {
 			String fileName = mf.getOriginalFilename();//원본 파일 이름
 			if(fileName !="" && fileName != null) {
-				System.out.println("fileName : " + fileName);
+				//System.out.println("fileName : " + fileName);
 				fileNames.add(fileName);
 			}
 		}
 
 		String files = null;
 		files = String.join(",", fileNames); //arrayList -> 문자형으로 변환
-		System.out.println(date);
 		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
 		Date missingDate = null;
 		try {
@@ -128,21 +133,21 @@ public class ReportController {
 			e.printStackTrace();
 		}  
 		
-		System.out.println("aaa1" + files);
-		System.out.println("aaa2" + missingDate);
+		//System.out.println("files" + files);
+		//System.out.println("missingDate" + missingDate);
 		Missing missing = new Missing(memberId, title, content, missingDate, feature, location, breed, files);
 		
 		service.insert(missing);
 		
 		int id = service.getLastId();
-		System.out.println("id :"  + id);
+		//System.out.println("id :"  + id);
 		
 		
 		
 		String url = "/upload/report/" + id;
 		String realPath = mtfRequest.getServletContext().getRealPath(url);
-		System.out.println("mtfRequest" + mtfRequest);
-		System.out.println("realPath : " + realPath);//저장경로
+		//System.out.println("mtfRequest" + mtfRequest);
+		//System.out.println("realPath : " + realPath);//저장경로
 		
 		//다중파일 업로드
 		for (MultipartFile mf : fileList) {
@@ -156,7 +161,7 @@ public class ReportController {
 				String uploadedFilePath = realPath + File.separator + mf.getOriginalFilename();
 				File uploadedFile = new File(uploadedFilePath);
 				mf.transferTo(uploadedFile);
-				System.out.println("업로드 성공");
+				//System.out.println("업로드 성공");
 			}
 		}
 
@@ -190,18 +195,11 @@ public class ReportController {
 	}
 	
 
-	
-	private Date DateFormat(String date) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	@RequestMapping("{id}")
 	public String MissingBoardDetail(@PathVariable("id") int id, Model model) {
 		MissingView missingView = service.getView(id);
 		List<MissingCommentView> commentList = service.getCommentViewList(id);
-		System.out.println(missingView.toString());
+		//System.out.println(missingView.toString());
 		model.addAttribute("missingView", missingView);
 		model.addAttribute("commentList", commentList);
 		
@@ -209,8 +207,127 @@ public class ReportController {
 	}
 	
 	
-	@RequestMapping("edit")
-	public String MissingBoardEdit() {
-		return "home.report.edit";
+	@GetMapping("{id}/edit")
+	public String MissingBoardEdit(
+			@PathVariable("id") int id,
+			Model model,
+			HttpServletRequest HttpRquset
+			) {
+		HttpSession session = HttpRquset.getSession();
+		int memberId = (int)session.getAttribute("id");
+		
+		
+		MissingView missingView = service.getView(id);
+		if(memberId == missingView.getMemberId()) {
+			model.addAttribute("missingView", missingView);
+			return "home.report.edit";
+		}
+		return "redirect:/member/login";
 	}
+	
+	
+	
+	@PostMapping("{id}/edit")
+	public String MissingBoardEdit(
+			@PathVariable("id") int id,
+			@RequestParam(name="title", required = false) String title,
+			@RequestParam(name="missing-date") String date,
+			@RequestParam(name="location", required = false) String location,
+			@RequestParam(name="breed", defaultValue = "") String breed,
+			@RequestParam(name="feature", defaultValue = "") String feature,
+			@RequestParam(name="content", defaultValue = "") String content,
+			@RequestParam(name="at-name", required = false) String atName,
+			HttpServletRequest HttpRquset,
+			Model model,
+			MultipartHttpServletRequest mtfRequest
+			) throws IllegalStateException, IOException {
+		
+		
+		HttpSession session = HttpRquset.getSession();
+		int memberId = (int)session.getAttribute("id");
+		
+		
+		
+		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+		Date missingDate = null;
+		try {
+			missingDate = formatter.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
+		//파일이름 담기.
+		List<String> fileNames = new ArrayList(); 
+
+		
+		if(atName !="" && atName != null ) {
+			String[] array = atName.split(",");
+			
+			for(int i=0;i<array.length;i++) {
+				fileNames.add(array[i]);
+			}
+			
+		}
+		
+
+		List<MultipartFile> fileList = mtfRequest.getFiles("file");
+
+		for (MultipartFile mf : fileList) {
+			String fileName = mf.getOriginalFilename();//원본 파일 이름
+			if(fileName !="" && fileName != null) {
+				//System.out.println("fileName : " + fileName);
+				fileNames.add(fileName);
+			}
+		}
+		
+		
+		String files = String.join("," , fileNames);
+		//System.out.println("files : " +files);
+		Missing missing = new Missing(id, memberId, title, content, missingDate, feature, location, breed, files);
+		
+		service.update(missing);
+		
+		String url = "/upload/report/" + id;
+		String realPath = mtfRequest.getServletContext().getRealPath(url);
+		//System.out.println("mtfRequest" + mtfRequest);
+		//System.out.println("realPath : " + realPath);//저장경로
+		//System.out.println(fileList);
+		//다중파일 업로드
+		for (MultipartFile mf : fileList) {
+			String fileName = mf.getOriginalFilename();//원본 파일 이름
+			if(fileName !="" && fileName != null) {
+			
+				File realPathFile = new File(realPath); 
+				if(!realPathFile.exists()) {
+					realPathFile.mkdirs();
+				}
+				String uploadedFilePath = realPath + File.separator + mf.getOriginalFilename();
+				File uploadedFile = new File(uploadedFilePath);
+				mf.transferTo(uploadedFile);
+				//System.out.println("업로드 성공");
+			}
+		}
+	
+		return "redirect:/report/"+id;
+	}
+	
+	
+	
+	@GetMapping("{id}/delete")
+	public String MissingBoardEdit(
+			@PathVariable("id") int id
+			) {		
+		
+		int result= service.delete(id);
+	
+		return "redirect:/report/list";
+	}
+	
 }

@@ -108,6 +108,19 @@ public class ReportServiceImp implements ReportService {
 	}
 
 
+	@Override
+	public int update(Missing missing) {
+		return reportDao.update(missing);
+	}
+
+
+	@Override
+	public int delete(int id) {
+		// TODO Auto-generated method stub
+		return reportDao.delete(id);
+	}
+
+
 
 	
 }

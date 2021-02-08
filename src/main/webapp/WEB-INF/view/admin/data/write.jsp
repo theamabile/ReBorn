@@ -60,7 +60,6 @@
  			hiddenValue.value = content;
  			hiddenValue.innerHTML = content;
  			console.log(hiddenValue.value);
- 			alert(content);
  			formBox.method="POST";
 			formBox.submit();
  		

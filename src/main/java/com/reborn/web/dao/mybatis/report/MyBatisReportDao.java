@@ -113,6 +113,19 @@ public class MyBatisReportDao implements ReportDao{
 	}
 
 
+	@Override
+	public int update(Missing missing) {
+		return mapper.update(missing);
+	}
+
+
+	@Override
+	public int delete(int id) {
+		// TODO Auto-generated method stub
+		return mapper.delete(id);
+	}
+
+
 
 
 

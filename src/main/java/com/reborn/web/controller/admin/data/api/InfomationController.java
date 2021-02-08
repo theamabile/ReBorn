@@ -26,19 +26,14 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController("apiAdminInfomationController")
 @RequestMapping("/api/admin/data/")
 public class InfomationController {
-	
-	private File uploadedFilePath;	
-	
-	
 
+	
 
 	@PostMapping("upload")
 	public String upload(
 			MultipartHttpServletRequest request
-			// Model model
 			) throws Exception{
-		//ModelAndView mv = new ModelAndView("jsonView");
-		System.out.println(request.getAttribute("imageFile"));
+		//System.out.println(request.getAttribute("imageFile"));
 		
 		
 		List<String> fileNames = new ArrayList(); //파일이름 담기.
@@ -46,18 +41,23 @@ public class InfomationController {
 		for (MultipartFile mf : fileList) {
 			String fileName = mf.getOriginalFilename();//원본 파일 이름
 			if(fileName !="" && fileName != null) {
-				System.out.println("fileName : " + fileName);
+				//System.out.println("fileName : " + fileName);
 				fileNames.add(fileName);
 			}
 		}
 		
-		String url = File.separator + "admin" + File.separator + "data" +File.separator + "image";
+		
+		int max = 100;
+		int random = (int)(Math.random() * max);
+		
+		
+		String url =  File.separator +"upload" + File.separator + "admin" + File.separator + "data" +File.separator + "random" ;
 		String path = null;
 		String realPath = request.getServletContext().getRealPath(url);
-		System.out.println("mtfRequest" + request);
-		System.out.println("realPath : " + realPath);//저장경로
+		//System.out.println("mtfRequest" + request);
+		//System.out.println("realPath : " + realPath);//저장경로
 		
-		System.out.println(fileList);
+		//System.out.println(fileList);
 		
 		String uploadedFilePath = null;
 	   for (MultipartFile mf : fileList) {
@@ -72,13 +72,13 @@ public class InfomationController {
 				uploadedFilePath = realPath + File.separator + mf.getOriginalFilename();
 				File uploadedFile = new File(uploadedFilePath);
 				mf.transferTo(uploadedFile);
-				System.out.println("uploadedFilePath" + uploadedFilePath);
-				System.out.println("업로드 성공");
+				//System.out.println("uploadedFilePath" + uploadedFilePath);
+				//System.out.println("업로드 성공");
 			}
 
 		}
-	   System.out.println("uploadedFilePath :" + uploadedFilePath);
-	   System.out.println(path);
+	  // System.out.println("uploadedFilePath :" + uploadedFilePath);
+	   //System.out.println(path);
 	   //model.addAttribute("path", uploadedFilePath);
 	return path;
 
