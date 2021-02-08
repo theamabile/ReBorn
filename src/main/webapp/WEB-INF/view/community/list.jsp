@@ -3,9 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link href="/css/community/reset.css" type="text/css" rel="stylesheet" />
-<link href="/css/community/list.css" type="text/css" rel="stylesheet" />
 <script src="/js/community/list.js"></script>
+<link href="/css/community/list.css" type="text/css" rel="stylesheet" />
+<link href="/css/community/reset.css" type="text/css" rel="stylesheet" />
 
 
 <c:set var ="page" value="${param.p}" />
@@ -106,7 +106,7 @@
             </div> <!-- wrapper -->
             <div class="pager-common mt30">
                 <div class="pager">                
-                    <div class="prev mr15">
+                    <div class="prev ">
                     	<a class="btn btn-prev">이전</a>
 	                    <%-- <c:if test="${startNum > 1}">                    
 	                        <a class="btn btn-prev" href="p=${startNum-5}&f=${param.f}&q=${param.q}&v=${param.v}">이전</a>

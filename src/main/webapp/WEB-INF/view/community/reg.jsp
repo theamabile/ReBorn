@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <link href="/css/community/reg.css" type="text/css" rel="stylesheet" />
 <link href="/css/community/reset.css" type="text/css" rel="stylesheet" />
-<link href="/css/community/cummunity-style.css" type="text/css" rel="stylesheet" />
+<link href="/css/community/community-style.css" type="text/css" rel="stylesheet" />
 <script type="module" src="/js/community/reg.js"></script>
 
 	<section class="main-container">

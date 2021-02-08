@@ -65,8 +65,19 @@ window.addEventListener("load", (e)=>{
 		load();		
 	}*/
 	
+	function changeHandler(e){
+		page = 1;
+		load();
+		console.log("변경됩니다.");
+	}
 	
+	pagePrev.addEventListener("click", (e)=>{
+		e.preventDefault();
+		
+		
+	});
 	
+	//페이지 번호를 누를때 이동
 	pageList.addEventListener("click", (e)=>{
 		e.preventDefault();
 		if(e.target.innerText == page)
@@ -80,19 +91,15 @@ window.addEventListener("load", (e)=>{
 	});
 	
 	
-	function changeHandler(e){
-		page = 1;
-		load();
-		console.log("변경됩니다.");
-	}		
 	
+	//제목|작성자 검색창
 	searchButton.addEventListener("click", (e)=>{
 		e.preventDefault();
 		console.log("버튼 클릭");
 		let searchField = selectSearch.value;
 		let searchQuery = searchWindow.value;
 		
-		console.log("분류"+searchField+" 검색어:"+ searchQuery)
+		console.log("분류:"+searchField+" 검색어:"+ searchQuery)
 		load();
 		
 	});
@@ -123,7 +130,6 @@ window.addEventListener("load", (e)=>{
 			console.log(list);			
 			
 			for(let n of list) {
-				console.log(n.regDate);
 										
 				if((n.files == null) || (n.files == "")){		
 					let boardList = `<li class="list-article mt20">
@@ -139,11 +145,11 @@ window.addEventListener("load", (e)=>{
 	                                    <span class="num-txt dot bold">${n.like}</span>
 	                                    <span class="hit">조회수</span>
 	                                    <span class="num-txt bold dot">${n.hitCnt}</span>
-	                                    <span class="ico">by</span>
+	                                    <span class="ico">작성자</span>
 	                                    <span class="num-txt bold dot">${n.nickname}</span>
-	                                    <span class="hit">작성일</span>
+	                                    <span class="regdate">작성일</span>
 	                                    <span class="num-txt bold" >
-	                                      	<fmt:formatDate value="${n.regDate}" pattern="yyyy-MM-dd" />
+	                                      	${MMddHHmm(new Date(n.regDate.slice(0,19)))}							
 	                                    </span>
                                        </span>
 		                              </div>
@@ -166,11 +172,11 @@ window.addEventListener("load", (e)=>{
 	                                    <span class="num-txt dot bold">${n.like}</span>
 	                                    <span class="hit">조회수</span>
 	                                    <span class="num-txt bold dot">${n.hitCnt}</span>
-	                                    <span class="ico">by</span>
+	                                    <span class="ico">작성자</span>
 	                                    <span class="num-txt bold dot">${n.nickname}</span>
 	                                    <span class="hit">작성일</span>
 	                                    <span class="num-txt bold" >
-	                                      	<fmt:formatDate value="${n.regDate}" pattern="yyyy-MM-dd" />
+	                                      	${MMddHHmm(new Date(n.regDate.slice(0,19)))}
 	                                    </span>
                                        </span>
 		                              </div>
@@ -182,6 +188,7 @@ window.addEventListener("load", (e)=>{
 						listData.insertAdjacentHTML("beforeEnd", boardList);
 					}
 			}// for end
+			
 			writeCommon.innerHTML = "";
 			pageCount = Math.ceil(count/view);			
 			let itemLine = `
@@ -194,7 +201,8 @@ window.addEventListener("load", (e)=>{
 			offset = (page-1)%5;
 			startNum = page - offset;	
 			
-			console.log("총 페이지수: "+pageCount+"  현재페이지:"+ page+"  startNum: "+startNum);
+			console.log("총 페이지수: "+pageCount+"  현재페이지:"+ page+"  startNum: "+startNum+"    게시물의수: "+count);
+			
 			pageList.innerHTML = "";
 			for(let i=0;i<5; i++){				
 				if(startNum+i == page){
@@ -206,12 +214,14 @@ window.addEventListener("load", (e)=>{
 				if(startNum+i > pageCount){
 					break;			
 				}
+				/*if(pageCount <= 0){
+					pageCount = 1;
+				}*/
 				let itemPage = `
 						<li class="${current}">
 						  <a class="bold" href="?p=${i+startNum}&f=${searchField}&v=${view}&q=${searchQuery}&c=${category}">${i+startNum}</a>
 						</li>`;
 				pageList.insertAdjacentHTML("beforeend", itemPage);
-				console.log("====="+ startNum+"  "+ page);
 			}// for end
 	  })//then end		
 		

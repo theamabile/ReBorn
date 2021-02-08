@@ -208,7 +208,7 @@ public class BoardController {
 	public String reg(@RequestParam(name="title", required=false) String title,
 			@RequestParam(name="content" ,required=false) String content,
 			@RequestParam(name="category", required=false) int category,
-			@RequestParam(name="memberId", required=false ) int member,
+			//@RequestParam(name="memberId", required=false ) int member,
 			@RequestParam(name="file", defaultValue = "", required = false) Part filePart,
 			HttpServletRequest request,
 			HttpSession session) throws IOException, ServletException {
