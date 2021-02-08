@@ -68,11 +68,13 @@ public class AnimalController {
 	@RequestMapping(value = "list")
 	public String list(
 			@RequestParam(name="p", defaultValue="1") int page,
+			@RequestParam(name="s", defaultValue="9") int size,
 			@RequestParam(name="upkind", required=false) String upkind,		//축종 코드
 			@RequestParam(name="kind", required=false) 	 String kind,		//품종 코드
 			@RequestParam(name="bgnde", required=false)	 String bgnde, 	//유기 시작 날짜
 			@RequestParam(name="endde", required=false)	 String endde, 		//유기 종료 날짜
-			@RequestParam(name="neuter", required=false) String neuter) {		//중성화여부
+			@RequestParam(name="neuter", required=false) String neuter,
+			@RequestParam(name="hasName", required=false) String hasName) {		//중성화여부
 	
 		// date format 더해보기 => null & required
 		Date startDate = null;
@@ -85,18 +87,27 @@ public class AnimalController {
 		if(endde != null && !endde.equals("")) {
 			endDate = Date.valueOf(endde);
 		}
+			
 		
-
-		System.out.println("startDate : "+startDate+" / endDate : "+endDate);
+		String field = null;
+		boolean hasFieldData = false;
+		if(hasName != null) {
+			 if(hasName.equals("A") == false) {
+				field = "name";	
+				hasFieldData = hasName.equals("Y") ? true : false;
+			 }	
+		}
 		
-
-		int size = 9;		
-		List<Animal> list = animalService.getList(page, size, upkind, kind, startDate, endDate, neuter);
-		int count =	animalService.getCount(upkind, kind, startDate, endDate, neuter);
-				
+		List<Animal> list = animalService.getList(page, size, upkind, kind, startDate, endDate, neuter, field, hasFieldData); 		
+		int count =	animalService.getCount(upkind, kind, (java.sql.Date)startDate, (java.sql.Date)endDate, neuter, field, hasFieldData);
+		int pageCount = (int)Math.ceil(count / (float)size);
+		if(count < 1) {
+			pageCount = 1;
+		}
 		
 		Map<String, Object> dto = new HashMap<String, Object>();
 		dto.put("count", count);
+		dto.put("pageCount", pageCount);
 		dto.put("list", list);		
 		
 		Gson gson = new Gson();

@@ -131,7 +131,7 @@ select{
 		flex-grow: 1;
 	}
 	
-	.search-box  lable {
+	.search-box label {
 		width: 90px;
 	}
 	
@@ -140,16 +140,21 @@ select{
 		align-items: center;
 		margin-bottom: 15px;
 	}
+		.search-box .box-row input,
+		.search-box .box-row select{
+			flex-grow: 1;
+		}
+		
 		.search-box .box-row:last-child {
 			margin-bottom: 0px;
 		}
 
 
-	.search-box .box-row .breed-box,
+/* 	.search-box .box-row .breed-box,
 	.search-box .box-row .name-box,
 	.search-box .box-row .name-box > input[type="text"] {
 		flex-grow: 1;
-	}
+	} */
 	
 	.search-box .box-row .regdate {
 		flex-grow: 1;
@@ -162,14 +167,6 @@ select{
 		display: flex;
 		align-items: center;
 	}
-		.search-box .box-row .breed-box > *,
-		.search-box .box-row .regdate > input {
-			flex-grow: 1;
-			width: 50%;
-		}
-		.search-box .box-row .regdate > span {
-			margin-right: 10px;
-		}
 	
 	.search-box .box-row .hasName-box,
 	.search-box .box-row .neuter {

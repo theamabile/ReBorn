@@ -53,12 +53,13 @@ public class AnimalController {
 	@RequestMapping("list")
 	public String list(
 			@RequestParam(name="p", defaultValue="1") 	 int page,
+			@RequestParam(name="s", defaultValue="9") 	 int size,
 			@RequestParam(name="upkind", required=false) String upkind,		//축종 코드
 			@RequestParam(name="kind", required=false) 	 String kind,		//품종 코드
 			@RequestParam(name="bgnde", required=false)  String bgnde, 		//유기 시작 날짜
 			@RequestParam(name="endde", required=false)	 String endde, 		//유기 종료 날짜
-			//@RequestParam(name="endde", required=false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endde,	//유기 종료 날짜
-			@RequestParam(name="neuter", required=false) String neuter
+			@RequestParam(name="neuter", required=false) String neuter,
+			@RequestParam(name="hasName", required=false) String hasName
 			, Model model) {
 		
 		Date startDate = null;
@@ -72,20 +73,17 @@ public class AnimalController {
 			endDate = Date.valueOf(endde);
 		}
 		
-
-//		try {
-//			startDate = formatter.parse(bgnde);
-//		} catch (ParseException e) {
-//         // TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}  
-		System.out.println("startDate : "+startDate);
+		String field = null;
+		boolean hasFieldData = false;
+		if(hasName != null) {
+			 if(hasName.equals("A") == false) {
+				field = "name";	
+				hasFieldData = hasName.equals("Y") ? true : false;
+			 }	
+		}
 		
-		
-		int size = 9;		
-		List<Animal> list = animalService.getList(page, size, upkind, kind, startDate, endDate, neuter); 
-		
-		int count =	animalService.getCount(upkind, kind, (java.sql.Date)startDate, (java.sql.Date)endDate, neuter);
+		List<Animal> list = animalService.getList(page, size, upkind, kind, startDate, endDate, neuter, field, hasFieldData); 		
+		int count =	animalService.getCount(upkind, kind, (java.sql.Date)startDate, (java.sql.Date)endDate, neuter, field, hasFieldData);
 				
 		int pageCount = (int)Math.ceil(count / (float)size);
 		model.addAttribute("pageCount", pageCount);

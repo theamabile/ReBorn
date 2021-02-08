@@ -55,7 +55,7 @@ class VoteList extends React.Component {
 		
 		this.state = {
 			list: [item],
-			count: 0
+			pageCount: 0
 		}
 	}
 	
@@ -112,21 +112,12 @@ class VoteList extends React.Component {
 				let startDate = new Date(v.voteStartDate);
 				let endDate = new Date(v.voteEndDate);
 				
-				
-				//let voteDate = endDate.getDate() - startDate.getDate();
-				//let takeDate = today.getDate() - startDate.getDate();
-				
 				var voteDate = Math.ceil((endDate.getTime()-startDate.getTime())/(1000*3600*24));	
 				var takeDate = Math.ceil((today.getTime()-startDate.getTime())/(1000*3600*24));		
 				
 				let takePercent = Math.round((takeDate / voteDate) * 100);
 				
 				v.takePercent = takePercent;
-				//this.percentList[v.animalId] = takePercent;
-				console.log(`넣어준 퍼센트:${v.takePercent}`);
-				
-				console.log(`takeDate:${takeDate} / voteDate: ${voteDate} / takePercent : ${takePercent}`);
-				//console.log(voteDate + "일 중 " + takeDate+"일 지남 "+takePercent);
 			}
 			
 
@@ -154,6 +145,7 @@ class VoteList extends React.Component {
 					
 						<div className="vote-list">
 							{
+								this.state.list.length > 0 ?								
 								this.state.list.map(
 									v=><div className="item" key={v.animalId}>	
 									        <div className="progress">
@@ -198,6 +190,8 @@ class VoteList extends React.Component {
 									        </div>
 								    </div>
 								)
+								:
+								( <span className ="bold m-auto gray fs-1">항목이 존재하지 않습니다</span>)
 							}
 						</div>
 					</form>
@@ -207,7 +201,7 @@ class VoteList extends React.Component {
 							<div className="prev mr15">    
 								{ 
 									this.startNum==1 ?
-									<span className="btn btn-prev" onClick={()=>alert('이전 페이지가 없습니다.')}>이전</span>  											
+									<span className="btn btn-prev" onClick={()=>{new ModalBox({content:"이전 페이지가 없습니다.", cancelBtnHide: true})}} >이전</span>  											
 									:
 									<a className="btn btn-prev" href="p=${startNum-5}&of=${param.of}&oq=${param.oq}&f=${param.f}&q=${param.q}"></a>
 								}    			                    
@@ -230,7 +224,7 @@ class VoteList extends React.Component {
 							<div className="next">
 								{ 
 									this.startNum+5 > this.state.pageCount ?
-									<span className="btn btn-next" onClick={()=>alert('다음 페이지가 없습니다.')}>다음 </span>             
+									<span className="btn btn-next" onClick={()=>{new ModalBox({content:"다음 페이지가 없습니다.", cancelBtnHide: true})}} >다음 </span>             
 									:
 				            		<a className="btn btn-next" href="?p=${startNum+5}&f=${param.f}&q=${param.p}&v=${param.v}"></a>  
 								}          	
@@ -238,13 +232,6 @@ class VoteList extends React.Component {
 						</div>
 					</div>	
 				</div> ;
-				
-				/*
-				 
-							<li className="${current}">
-								<a className="bold " href="?p=${startNum+i}&of=${param.of}&oq=${param.oq}&f=${param.f}&q=${param.q}">1</a>
-							</li>
-				 */
 		
 	}
 	

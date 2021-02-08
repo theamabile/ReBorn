@@ -8,6 +8,7 @@ window.addEventListener("load", e=>{
 	let bgndeInput = container.querySelector(".bgnde");
 	let enddeInput = container.querySelector(".endde");
 	let neuterInput = container.querySelector(".neuterYn");
+	let hasNameSelectBox = container.querySelector(".hasName");
 		
 	let animalList = container.querySelector(".animal-box");
 	let pager = container.querySelector(".pager>ul");
@@ -20,12 +21,14 @@ window.addEventListener("load", e=>{
 	let startNum = page - offset;
 	
 	
+	
 	pagerPrev.addEventListener("click", pageScopeBtnHandler);
 	pagerNext.addEventListener("click", pageScopeBtnHandler);
 	bgndeInput.addEventListener("change", fieldChangeHandler);
 	enddeInput.addEventListener("change", fieldChangeHandler);
 	neuterInput.addEventListener("change", fieldChangeHandler);
 	kindSelectBox.addEventListener("change", fieldChangeHandler);
+	hasNameSelectBox.addEventListener("change", fieldChangeHandler);
 	
 	
 	
@@ -76,13 +79,18 @@ window.addEventListener("load", e=>{
 		
 		if(true == e.target.classList.contains('btn-prev')) {
 			if(startNum == 1) {
-				alert(`이전 페이지가 없습니다.`);		// 모달로 바꾸기
+				new ModalBox(
+					{content:"이전 페이지가 없습니다.", cancelBtnHide: true}
+				);
+				//alert(`이전 페이지가 없습니다.`);		// 모달로 바꾸기
 				return;
 			}	
 			movePage = startNum-5;
 		} else {
 			if(startNum+5 > pageCount){
-				alert(`다음 페이지가 없습니다.`);		// 모달로 바꾸기
+				new ModalBox(
+					{content:"다음 페이지가 없습니다.", cancelBtnHide: true}
+				);
 				return;
 			}
 			movePage = startNum+5;
@@ -98,12 +106,13 @@ window.addEventListener("load", e=>{
 		let neuter = neuterInput.value;
 		let upKind = upkindSelectBox.value;
 		let kind = kindSelectBox.value;
+		let hasName = hasNameSelectBox.value;
 		
 		
 		console.log(`url : /api/animal/list?p=${page}&upkind=${upKind}&kind=${kind}
-		&bgnde=${bgnde}&endde=${endde}&neuter=${neuter}`);
+		&bgnde=${bgnde}&endde=${endde}&neuter=${neuter}&hasName=${hasName}`);
 
-		fetch(`/api/animal/list?p=${page}&upkind=${upKind}&kind=${kind}&bgnde=${bgnde}&endde=${endde}&neuter=${neuter}`)
+		fetch(`/api/animal/list?p=${page}&upkind=${upKind}&kind=${kind}&bgnde=${bgnde}&endde=${endde}&neuter=${neuter}&hasName=${hasName}`)
 		.then(response=>{
 			return response.json();
 		}) 
@@ -113,13 +122,13 @@ window.addEventListener("load", e=>{
 			animalList.innerHTML = "";
 			let count = json.count;
 			let list = json.list;
+			pageCount = json.pageCount;
 			
 			//window.scrollTo( 0, 0 );
 			//console.log("scrollY : "+window.scrollY);
 			
 			if(json.count <= 0) {			
 				animalList.insertAdjacentHTML('beforeend', `<span class="bold m-auto gray fs-1">항목이 존재하지 않습니다</span>`);
-				pageCount = 1;
 			} else {
 				for(let a of list) {				
 					let sexCd = "미상";
@@ -169,9 +178,7 @@ window.addEventListener("load", e=>{
 					
 					itembox.insertAdjacentHTML('beforeend', itemHTML);
 					animalList.insertAdjacentElement('beforeend', itembox);
-				}		
-				
-				pageCount = Math.ceil(count/9);		
+				}			
 			}
 			
 			offset = (page-1)%5;

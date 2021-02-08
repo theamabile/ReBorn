@@ -31,12 +31,10 @@ class AnimalList extends React.Component {
 	
 	componentDidMount() {
 		this.invalidate();
-		console.log("Did Mount");
 	}
 	
 	pageClickHandler(e) {
 		e.preventDefault(); 
-		console.log(e.target.innerText+'클릭했습니다');
 		
 		this.page = e.target.innerText;
 		this.invalidate();
@@ -48,7 +46,6 @@ class AnimalList extends React.Component {
 	
 	searchButtonClickHandler(e) {
 		e.preventDefault();
-		console.log('검색 버튼 클릭 '+this.queryInput.current.value);
 		
 		this.query = this.queryInput.current.value;
 		

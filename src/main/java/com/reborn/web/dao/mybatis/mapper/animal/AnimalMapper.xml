@@ -30,6 +30,15 @@
 	     	<if test="param7 != null and param7 != ''">
 	      		AND neuterYn = #{param7}
 	     	</if> 
+	     	
+	     	<if test="param8 != null and param8 != ''">
+	     		<if test="param9 == true">	     			
+	      			AND ${param8} is not null 
+	     		</if>
+	     		<if test="param9 == false">	     			
+	      			AND ${param8} is null 
+	     		</if>
+	     	</if> 
 		</where>
       order by desertionNo desc
       limit #{param2} offset #{param1}
@@ -90,6 +99,16 @@
 	     	<if test="param5 != null and param5 != ''">
 	      		AND neuterYn = #{param5}
 	     	</if> 
+	     	
+	     	<if test="param6 != null and param6 != ''">
+	     		<if test="param7 == true">	     			
+	      			AND ${param6} is not null 
+	     		</if>
+	     		<if test="param7 == false">	     			
+	      			AND ${param6} is null 
+	     		</if>
+	     	</if> 
+	     	
 		</where>
 	</select>
 	

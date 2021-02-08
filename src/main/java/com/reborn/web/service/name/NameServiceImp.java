@@ -1,5 +1,6 @@
 package com.reborn.web.service.name;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class NameServiceImp implements NameService {
 	
 	@Override
 	public int insert(Name name) {
+		
 		int result = nameDao.insert(name);
 		
 		return result;

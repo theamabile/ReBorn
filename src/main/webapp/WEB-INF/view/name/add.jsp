@@ -7,6 +7,9 @@
 <link rel= "stylesheet" type="text/css" href="/css/name/name.css">
 <link rel= "stylesheet" type="text/css" href="/css/name/detail.css">
 
+
+<!-- 제이쿼리 사용 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="/js/name/add.js"></script>
 		
 	
@@ -15,14 +18,25 @@
             <img src="${animal.popfile}"  class="background-img">
             <div class="flex-column flex-a-center">
 	            <img src="${animal.popfile }" class="circle-img" />
+	            
 	            <div class="summary">
+	            	<c:if  test="${state ne 'END' }">
+						<div class="blank">							
+							<i class="fas fa-quote-left"></i>
+							<i class="fas fa-quote-right"></i>
+						</div>
+					</c:if >	
+					<c:if  test="${state eq 'END' }">
+						<span>${animal.name}</span>
+					</c:if >
+				
 	                <span>${animal.noticeNo}</span>
 	                <span>색상:${animal.colorCd} / 성별:${animal.sexCd} / 나이:${animal.age} / 체중:${animal.weight}</span>
-	                <span class="happenPlace">${animal.happenPlace}</span>
+	                <span>${animal.happenPlace}</span>
 	            </div>
             </div>
         </section>
-   	</section>			
+   	</section>
  	
     <section class="main-container">
     
@@ -63,10 +77,11 @@
 				<span class="m-auto fs-4 mt-2 mb-2 text-center">
 					동물이 평생 간직할 소중한 이름입니다. 애정을 담아 예쁜 이름으로 지어주세요.<br>
 				</span>
-				<input type="text" name="name" class="input-wf mb-3" placeholder="이름">
-				<textarea name="reason" class="textarea-wf flex-grow-1 mb-3" cols="40" rows="5" placeholder="자신의 의견을 간단히 적어주세요."></textarea>
+				<input type="text" name="name" class="nameInput input-wf mb-3" placeholder="이름">
+				<textarea name="reason" class="reasonInput textarea-wf flex-grow-1 mb-3" cols="40" rows="5" placeholder="자신의 의견을 간단히 적어주세요."></textarea>
 				
-				<input type="submit" value="이름 지어주기" class="vote-btn main-button-wf">
+				<input type="button" value="이름 지어주기" class="add-btn main-button-wf">
+				<input type="hidden" class="desertionNo" value="${animal.desertionNo}" />
 			</form>
 		</section>
 		
