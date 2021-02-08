@@ -286,9 +286,7 @@ public class BoardController {
 				fis.close();
 			}
 		}
-		
 			
-	
 		board.setFiles(fileNames);
 				
 		service.insert(board);

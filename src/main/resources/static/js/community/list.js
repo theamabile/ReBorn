@@ -1,13 +1,11 @@
 window.addEventListener("load", (e)=>{
 	let pager = document.querySelector(".pager");
-	let pageBtn = pager.querySelector(".btn-center");
 	let listCommon = document.querySelector(".list-common");
 	let listData = listCommon.querySelector(".list-data");
 	let searchForm = document.querySelector(".search-form");
 	
 	let searchButton = searchForm.querySelector(".btn-search");
-	let listLink = document.querySelector(".list-link");
-	
+		
 	//검색(select)	
 	let selectSearch = searchForm.querySelector(".search-select");
 	//검색어
@@ -24,32 +22,39 @@ window.addEventListener("load", (e)=>{
 	let pageNext = pager.querySelector(".btn-next");
 	let pageList = pager.querySelector(".btn-center");
 	
-	
 	let page = 1;
 	let pageCount = 1;
 	let offSet = (page-1)%5;
 	let startNum = page-offSet;
 	let view = 10;
-	let current = "";
-		
-	load();
-	
+	let category = "";
+	let searchField = "";
+	let searchQuery = "";
+	let current = "";		
+	load();	
 	
 	/*selectView.addEventListener("change", changeHandler);
-	selectCategory.addEventListener("change", changeHandler);
+	selectCategory.addEventListener("change", changeHandler);*/
 	pagePrev.addEventListener("click", pageScopeHandler);
-	pageNext.addEventListener("click", pageScopeHandler);*/
+	pageNext.addEventListener("click", pageScopeHandler);
+	
+	selectCategory.addEventListener("change", changeSelectHandler);	
+	selectView.addEventListener("change", changeSelectHandler);
+	
+	function changeSelectHandler(e){
+		page = 1;
+		load();
+		console.log("변경됩니다.");
+	}
 	
 	
-		
-	
-	/*function pageScopeHandler(e){
+	function pageScopeHandler(e){
 		e.preventDefault();
-		e.stoPropagation();
+		e.stopPropagation();
 		
 		let pageMove = 1;
-		
-		if(e.target.classLis.contains('btn-prev')){
+		//console.log("이전다음: page "+ page +"  pageCount "+pageCount+"  startNum "+startNum)
+		if(e.target.classList.contains('btn-prev')){
 			if(startNum == 1){
 				alert('이전 페이지가 없습니다.');
 				return;
@@ -58,26 +63,16 @@ window.addEventListener("load", (e)=>{
 		} else {
 			if(startNum+5 > pageCount){
 				alert('다음 페이지가 없습니다.')
+				return;
 			}
 			pageMove= startNum+5;			
 		}
-		page = movePage;
-		load();		
-	}*/
-	
-	function changeHandler(e){
-		page = 1;
+		page = pageMove;		
 		load();
-		console.log("변경됩니다.");
+		console.log("[이전|다음] 총 페이지수(pageCount): "+pageCount+"  현재페이지(page):"+ page+"  startNum: "+startNum);		
 	}
-	
-	pagePrev.addEventListener("click", (e)=>{
-		e.preventDefault();
 		
-		
-	});
-	
-	//페이지 번호를 누를때 이동
+	//페이지 번호를 클릭할 때
 	pageList.addEventListener("click", (e)=>{
 		e.preventDefault();
 		if(e.target.innerText == page)
@@ -88,49 +83,51 @@ window.addEventListener("load", (e)=>{
 		load();	
 		
 		console.log("클릭한 페이지: "+e.target.innerText);	
-	});
+	});	
 	
-	
-	
-	//제목|작성자 검색창
+	//제목|작성자 검색할 때
 	searchButton.addEventListener("click", (e)=>{
 		e.preventDefault();
-		console.log("버튼 클릭");
-		let searchField = selectSearch.value;
-		let searchQuery = searchWindow.value;
+		console.log("=====검색시작====");
+		searchField = selectSearch.value;
+		searchQuery = searchWindow.value;
 		
-		console.log("분류:"+searchField+" 검색어:"+ searchQuery)
 		load();
+		console.log("분류:"+searchField+" 검색어:"+ searchQuery);
+		console.log("총 페이지수(pageCount): "+pageCount+"  현재페이지(page):"+ page+"  startNum: "+startNum+"    게시물의수(count): "+count);
 		
 	});
 	
 	
 	function load() {
-		let searchField = selectSearch.value; //검색select
-		let searchQuery = searchWindow.value; //검색어
-		let category = selectCategory.value;  //카테고리select
-		//let view = parse.int(selectView.value);		  //보기select	
+		searchField = selectSearch.value; //검색select
+		searchQuery = searchWindow.value; //검색어
+		category = selectCategory.value;  //카테고리select
+		view = selectView.value;		  //보기select	
 		
 		console.log(`url : /api/community/list?p=${page}&v=${view}&f=${searchField}
 					&q=${searchQuery}&c=${category}`);
 		
 		fetch(`/api/community/list?p=${page}&v=${view}&f=${searchField}
-				&q=${searchQuery}&&c=${category}`)  
+				&q=${searchQuery}&c=${category}`)  
 		.then(response=>{
 			return response.json();
 		})
 		.then(json=>{
 			listData.innerHTML = "";
-						
-			let {pageCount, list, count} = json;
 			
-			console.log("페이지수:  "+pageCount);
+			pageCount = json.pageCount;
+			count = json.count;
+			let list = json.list;	
+			console.log("=============================");
+			console.log(json);					
+				
+			/*console.log("페이지수:  "+pageCount);
 			console.log("게시물의 수:  "+count);
 			console.log("현재페이지:  "+page);
-			console.log(list);			
+			console.log(list);			*/
 			
 			for(let n of list) {
-										
 				if((n.files == null) || (n.files == "")){		
 					let boardList = `<li class="list-article mt20">
 	                              <a class="list-link" href="${n.id}">
@@ -156,8 +153,8 @@ window.addEventListener("load", (e)=>{
 		                             </a>
 		                          </li>
 							      `;				
-						listData.insertAdjacentHTML("beforeEnd", boardList);						
-					} 
+					listData.insertAdjacentHTML("beforeEnd", boardList);						
+				} 
 					else{					
 	   					let boardList = `<li class="list-article mt20">
 	                              <a class="list-link" href="${n.id}">
@@ -186,11 +183,11 @@ window.addEventListener("load", (e)=>{
 		                             </a>
 		                          </li>`;			
 						listData.insertAdjacentHTML("beforeEnd", boardList);
-					}
+				}//if end
 			}// for end
 			
 			writeCommon.innerHTML = "";
-			pageCount = Math.ceil(count/view);			
+			pageCount = Math.ceil(count/parseInt(view));			
 			let itemLine = `
 						<div><span class="text-red bold">${page}</span> / ${pageCount} pages</div>
 	                    <form action="">
@@ -201,16 +198,17 @@ window.addEventListener("load", (e)=>{
 			offset = (page-1)%5;
 			startNum = page - offset;	
 			
-			console.log("총 페이지수: "+pageCount+"  현재페이지:"+ page+"  startNum: "+startNum+"    게시물의수: "+count);
-			
 			pageList.innerHTML = "";
 			for(let i=0;i<5; i++){				
 				if(startNum+i == page){
-				current = "current";
+					current = "current";
+				} else{
+					current = "";
 				}
-				if(startNum+i > page){
-				current = "";
-				}
+				
+				/*if(startNum+i != page){
+					current = "";
+				}*/
 				if(startNum+i > pageCount){
 					break;			
 				}
@@ -222,9 +220,10 @@ window.addEventListener("load", (e)=>{
 						  <a class="bold" href="?p=${i+startNum}&f=${searchField}&v=${view}&q=${searchQuery}&c=${category}">${i+startNum}</a>
 						</li>`;
 				pageList.insertAdjacentHTML("beforeend", itemPage);
+				console.log("총 페이지수(pageCount): "+pageCount+"  현재페이지(page):"+ page+"  startNum: "+startNum+"    게시물의수(count): "+count);	
 			}// for end
-	  })//then end		
-		
+			
+	  });//then end		
 		
 	}//load() end
 	

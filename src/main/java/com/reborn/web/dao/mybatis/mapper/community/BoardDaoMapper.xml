@@ -12,7 +12,7 @@
 	         BINARY ${param3} like '%${param4}%'
 	      </if>      
 	      <if test="param5 != null and param5 != ''">
-	      	 AND category = '%${param5}%' 
+	      	 AND category = '${param5}' 
 	      </if>
 	  </where>
       order by regdate desc
@@ -33,10 +33,10 @@
     SELECT count(id) FROM BoardView
     <where>
 	    <if test="param1 != null and param1 != ''">
-	       BINARY #{param1} like '%${param2}%'
+	       BINARY ${param1} like '%${param2}%'
 	    </if>
 	    <if test= "param3 != null and param3 != ''">
-	    	AND category = #{param3}
+	    	AND category = '${param3}'
 	    </if>
     </where>
  </select> 

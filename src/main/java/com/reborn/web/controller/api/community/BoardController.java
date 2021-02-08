@@ -42,8 +42,8 @@ public class BoardController {
 		List<BoardView> list = service.getViewList(page, view, field, query, option);
 		int count = service.getCount(field, query, option); //전체 게시물의 수.
 		int pageCount = (int) Math.ceil(count/(float)view);
-		System.out.println(field+"  "+query+"  "+option);
-		
+		System.out.println(page+ "   "+view+ "   "+field+"  "+query+"  "+option);
+		System.out.println("count  "+ count+ "pageCount  "+ pageCount);
 		
 		Map<String, Object> dto = new HashMap<>();
 		dto.put("list", list);
