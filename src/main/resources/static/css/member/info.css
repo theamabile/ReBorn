@@ -113,14 +113,10 @@ datalist[open] {
 }
 
 .profile  .profile-img {
-	display: inline-block;
-	border-radius: 100%;
-	width: 100px;
-	height: 100px;
-	background: #DADADA;
 	left: 10px; top : 30px;
 	position: absolute;
 	top: 30px;
+/* 	background: url("/upload/member/profile/11/profile.jpg"); */
 }
 
 .profile  .profile-img ~ span {
@@ -150,4 +146,26 @@ datalist[open] {
 }
 .profile .setting i{
 	color:#689EA1;
+}
+
+ .profile-img {
+     overflow: hidden;
+	display: inline-block;
+	border-radius: 100%;
+	width: 100px;
+	height: 100px;
+	background: #DADADA;
+}
+ .profile-img  img{
+    width: inherit;
+    height: inherit;
+     object-fit: cover;
+ }
+.img-update{
+	text-align: center;
+    padding: 34px;
+}
+.img-update input{
+  
+    margin: 30px 3px;
 }
