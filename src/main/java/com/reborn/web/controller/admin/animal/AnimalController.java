@@ -33,10 +33,7 @@ public class AnimalController {
 	@RequestMapping("list")
 	public String list() {
 		
-		List<Animal> list = animalService.getListByCareRegNo("311300201300001");
-		for(Animal a : list ) {
-			System.out.println(a.getDesertionNo()+" - careNo : "+a.getCareRegNo());
-		}
+		//List<Animal> list = animalService.getList(0, 0, kindUrl, kindUrl, null, null, serviceKey, kindUrl, false)
 		
 		return "admin.animal.list";
 	}

@@ -16,10 +16,11 @@ public interface AnimalService {
 	
 	Animal get(long desertionNo);
 	List<Animal> getList();
-	List<Animal> getList(int page, int size, String upkind, String kind, Date startDate, Date endDate, String neuter);
+	List<Animal> getList(int page, int size, String upkind, String kind, Date startDate, Date endDate, 
+			String neuter, String field, boolean hasFieldData);
 	
-
-	int getCount(String upkind, String kind, Date startDate, Date endDate, String neuter);
+	
+	int getCount(String upkind, String kind, Date startDate, Date endDate, String neuter, String field, boolean hasFieldData);
 	
 	void updateListFromAPI(int page, int size, String upkind, String kind, Date startDate, Date endDate, String neuter);
 

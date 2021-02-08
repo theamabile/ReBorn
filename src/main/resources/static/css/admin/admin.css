@@ -243,8 +243,8 @@ td {
 
 
 .current-page {
-	font-weight: bold;
-	color: var(--main);
+	background: var(--main);
+    color: linen;
 }
 
 .pager {
@@ -261,11 +261,13 @@ td {
 		margin: 0px 10px 0px 10px;
 	}
 	
-	.pager > input[type="button"] {
-		background: none;
-		outline: none;
-		border: none;
-	}
+	.current{
+    }
+	
+	
+	/* .pager > pager-btn {
+		
+	} */
 		.pager > input[type="button"]:hover {
 			color: var(--main);
 			font-weight: bold;

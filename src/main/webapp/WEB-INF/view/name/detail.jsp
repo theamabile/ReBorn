@@ -8,7 +8,31 @@
 
 <script src="/js/name/detail.js"></script>
 
- 	<section>
+	<section>
+   		<section class="img-section">
+            <img src="${animal.popfile}"  class="background-img">
+            <div class="flex-column flex-a-center">
+	            <img src="${animal.popfile }" class="circle-img" />
+	            
+	            <div class="summary">
+	            	<c:if  test="${state ne 'END' }">
+						<div class="blank">							
+							<i class="fas fa-quote-left"></i>
+							<i class="fas fa-quote-right"></i>
+						</div>
+					</c:if >	
+					<c:if  test="${state eq 'END' }">
+						<span><i class="fas fa-registered mr-4 main"></i>${animal.name}</span>
+					</c:if >
+				
+	                <span>${animal.noticeNo}</span>
+	                <span>색상:${animal.colorCd} / 성별:${animal.sexCd} / 나이:${animal.age} / 체중:${animal.weight}</span>
+	                <span>${animal.happenPlace}</span>
+	            </div>
+            </div>
+        </section>
+   	</section>
+ 	<%-- <section>
    		<section class="img-section">
             <img src="${animal.popfile}"  class="background-img">
             <div class="flex-column flex-a-center">
@@ -20,7 +44,7 @@
 	            </div>
             </div>
         </section>
-   	</section>
+   	</section> --%>
    		
    		
     <section class="main-container">

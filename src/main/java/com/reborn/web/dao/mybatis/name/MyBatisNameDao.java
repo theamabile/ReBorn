@@ -1,5 +1,6 @@
 package com.reborn.web.dao.mybatis.name;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -24,7 +25,7 @@ public class MyBatisNameDao implements NameDao{
 	}
 	
 	@Override
-	public int insert(Name name) {
+	public int insert(Name name){
 		// TODO Auto-generated method stub
 		return mapper.insert(name);
 	}
