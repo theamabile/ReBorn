@@ -1,32 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="/css/member/info.css" type="text/css" rel="stylesheet" />
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script src="/js/mypage/info.js" type="text/javascript"></script>
+
 
 <section class="main-container">
 <aside class="profile"><hr>
 
-<div class="profile-img"></div> 
-<div calss="profile-img-btn"></div>
-<a class="setting" href="javascript:void(window.open('./imgInput', '프로필 이미지','width=400px, height=200px,top=400px,left=700px'))"><i class="fas fa-cog"></i></a>
+<div class="profile-img">
+<c:choose>
+<c:when test="${!empty m.profileImg}"><img class="" src="/upload/member/profile/${m.id }/${m.profileImg }" alt="프로필이미지" /></c:when>
+<c:otherwise> <img class="" src="/upload/member/profile/default/logo_Re.svg"  alt="프로필이미지" /> </c:otherwise>
+ </c:choose></div> 
+<div calss="profile-img-btn">
+<a class="setting" href="javascript:void(window.open('./imgInput', '프로필 이미지','width=400px, height=320px,top=400px,left=700px'))"><i class="fas fa-cog"></i></a>
+</div>
+
 <span>${m.nickname}
 </span>
 <div class="profile-info">
-
 <label>타이틀&emsp;&nbsp :</label>
 <span>${title}</span><br>
 <label>작명횟수 &nbsp:</label>
-<span>30번</span><br>
+<span>${m.nameCount}번</span><br>
 <label>포인트&emsp; :</label>
-<span>10500</span><br>
+<span>${m.point}p</span><br>
 </div>
 <hr>
 </aside>
 	<div class="content-box  join-container">
 
 		<h3 class="title">회원 정보</h3>
-		<form action="member-info" name="member" method="post" class="member-info">
+		<form action="info" name="member" method="post" class="info">
 			<div class="form-group">
 				<div class="id-box input-box">
 					<label>아이디<span class="required-text">*</span></label> <input
