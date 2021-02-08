@@ -114,14 +114,7 @@ public class CareServiceImp implements CareService {
 	}
 
 	@Override
-	public void getWishedList(List<CareView> list) {
-		
-		// ============================================================
-		// ============================================================
-		// 테스트용 아이디
-		int memberId = 3;
-		// ============================================================
-		// ============================================================
+	public void getWishedList(int memberId, List<CareView> list) {
 		
 		List<CareWish> wishList = careWishDao.getCareListByMemberId(memberId, list);
 		

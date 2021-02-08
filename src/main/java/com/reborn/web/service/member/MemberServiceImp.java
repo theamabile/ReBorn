@@ -113,4 +113,31 @@ public class MemberServiceImp implements MemberService{
 		
 		return memberDao.get(loginId);
 	}
+
+	@Override
+	public int update(Member m) {
+		
+		return memberDao.update(m);
+	}
+
+	// 회원 포인트 
+	@Override
+	public int pointUp(String loginId, int point) {
+		
+		Member m = get(loginId);
+		int p = m.getPoint();
+		m.setPoint(p+point);
+		
+		return memberDao.update(m);
+	}
+
+	//작명횟수 증가
+	@Override
+	public int nameCountUp(String loginId) {
+		
+		Member m = get(loginId);
+		m.setNameCount(m.getNameCount()+1);
+		
+		return memberDao.update(m);
+	}
 }

@@ -106,6 +106,9 @@ html, body{
 .position-absolute{
     position: absolute;
 }
+.input-disabled{
+    cursor: not-allowed;
+}
 .border-decoration{
     box-sizing: border-box;
     border: 20px solid #ddd;

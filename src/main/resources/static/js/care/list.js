@@ -168,7 +168,7 @@ class CareList extends React.Component{
 		return (
 			fetch(`/api/care/${careRegNo}/wish/${action}`, { method: "POST" })
 			.then((response) => {
-				return response.json();	
+				return response.json();
 			})
 		);
 	}
@@ -196,82 +196,71 @@ class CareList extends React.Component{
 		}
 		let valueChars = this.toKorChars(value).join("");
 		
-		let strTemp = []; 
-		let careNameListTemp = careNameList.slice(); 
-		
-		for(let care of careNameListTemp){
-			let chars = this.toKorChars(care).join("");
-			let match = chars.match(new RegExp("^" + valueChars, "i"));
-			
-//			console.log(valueChars, chars)
-			
-			if( match ){
+		let careNameListFilter = careNameList.filter(
+			care => {
 				if(care[0] != value[0])
-					continue;
-				
-				let searchIndex = care.search(new RegExp(value[0], "i"));
-				let valueTemp = value.split("");
-				let careTemp = care.split("");
-				let j = 0;
-				let k = 0;
-//				console.log(valueTemp, careTemp)
-				for(let i = 0; i < careTemp.length; i++){
-					if( valueTemp[j] && careTemp[i].toUpperCase() == valueTemp[j].toUpperCase() ){
-						j++;
-						continue;
-					}
-					if( j > 0 && careTemp[i] == " "){
-						k++;
-						continue;
-					}
-					// 문자열이 이어지지 않으면 멈춤
-					if( j >= 0 )
-						break;
-				}
-					
-				let str = [];
-				str[0] = (careTemp.splice(0, searchIndex)).join("");
-				str[1] = (careTemp.splice(0, j + k)).join("");
-				str[2] = (careTemp.splice(0, careTemp.length)).join("");
-//				console.log(1,searchIndex,j,k,str);
-				result.push(str);
-				strTemp.push(care);
-			}
-			
-			if( result.length >= 10)
-				break;
-		};
-		
-		if(result.length <= 10){
-			for(let str of strTemp){
-				let index = careNameListTemp.indexOf(str);
-				if( index != -1)
-					careNameListTemp.splice(index, index+1);
-			}
-				
-			
-			for(let care of careNameListTemp){
+					return true;
 				let chars = this.toKorChars(care).join("");
-				let match = (chars.slice(1,chars.length)).match(new RegExp(`${valueChars}`, "i"));
-				if( match ){
-					let searchIndex = care.search(new RegExp(value[0], "i"));
-					let valueTemp = value.split("");
-					let careTemp = care.split("");
+				let match = chars.match(new RegExp("^" + this.escapeStr(valueChars), "i"));
+				
+	//			console.log(valueChars, chars)
+				if( match != null ){
+					let searchIndex = 0;
+					let valueTemp = value.replace(/\s/gi, "").toUpperCase().split("");
+					let careTemp = care.toUpperCase().split("");
 					let j = 0;
 					let k = 0;
 					
 					for(let i = 0; i < careTemp.length; i++){
-						if( valueTemp[j] && careTemp[i].toUpperCase() == valueTemp[j].toUpperCase() ){
+						if( careTemp[i] == valueTemp[j] ){
 							j++;
 							continue;
 						}
-						// 공일 경우 통과
 						if( j > 0 && careTemp[i] == " "){
 							k++;
 							continue;
 						}
 						// 문자열이 이어지지 않으면 멈춤
-						if( j > 0)
+						if( j >= 0 )
+							break;
+					}
+						
+					let str = [];
+					str[0] = (careTemp.splice(0, searchIndex)).join("");
+					str[1] = (careTemp.splice(0, j + k)).join("");
+					str[2] = (careTemp.splice(0, careTemp.length)).join("");
+	//				console.log(1,searchIndex,j,k,str);
+					result.push(str);
+					return false;
+				}
+				
+				if( result.length >= 10)
+					return false;
+			}
+		)
+			
+		
+		if(result.length < 10){
+			for(let care of careNameListFilter){
+				let chars = this.toKorChars(care).join("");
+				let match = (chars.slice(1,chars.length)).match(new RegExp(this.escapeStr(valueChars), "i"));
+				if( match != null ){
+					let searchIndex = care.search(new RegExp(this.escapeStr(value[0]), "i"));
+					let valueTemp = value.replace(/\s/gi, "").toUpperCase().split("");
+					let careTemp = care.toUpperCase().split("");
+					let j = 0;
+					let k = 0;
+					for(let i = searchIndex; i < careTemp.length; i++){
+						if( careTemp[i] == valueTemp[j] ){
+							j++;
+							continue;
+						}
+						if( j > 0 && careTemp[i] == " "){
+							k++;
+							continue;
+						}
+						// 문자열이 이어지지 않으면 멈춤
+						if( j >= 0 )
 							break;
 					}
 					
@@ -280,12 +269,15 @@ class CareList extends React.Component{
 					str[1] = (careTemp.splice(0, j + k)).join("");
 					str[2] = (careTemp.splice(0, careTemp.length)).join("");
 //					console.log(1,searchIndex,j,k,str);
+					console.log(careTemp);
+					console.log(valueTemp);
+					console.log(str);
 					result.push(str);
 				}
 				
 				if( result.length >= 10)
 					break;
-			};
+			}
 		}
 		
 		if( result.length != 0 ){
@@ -344,6 +336,10 @@ class CareList extends React.Component{
         return chars; 
     }
 
+	escapeStr(str){
+		return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	}
+
 	autoCompleteListClickHandler(e){
 		let li = e.target.closest('li');
 		if (!li) return; 
@@ -361,12 +357,12 @@ class CareList extends React.Component{
 	}
 	
 	autoCompleteCloseHandler(e){
-		console.log(e.target)
+//		console.log(e.target);
 		if(this.state.autoCompleteList.length == 0)
 			return;
 		
-		let div = e.target.closest('div.search-inner');
-		console.log(div);
+		let div = e.target.closest('div.search-bar');
+//		console.log(div);
 		if (div) return; 
 		if (e.currentTarget.contains(div)) return;
 		

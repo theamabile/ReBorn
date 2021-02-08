@@ -26,4 +26,10 @@ public interface MemberService {
 
 	Member get(String loginId);
 
+	int update(Member member);
+	
+	int pointUp(String loginId,int point);
+	
+	int nameCountUp(String loginId);
+
 }

@@ -5,7 +5,7 @@
 <script src="/js/member/join.js" type="text/javascript"></script>
 
 <section class="main-container">
-	<div class="content join-container">
+	<div class="content-box  join-container">
 
 		<h3 class="title">회원 가입</h3>
 		<form action="join" name="member" method="post" class="joinForm">

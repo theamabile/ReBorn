@@ -1,12 +1,12 @@
 package com.reborn.web.controller.api.care;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
@@ -26,8 +26,10 @@ import com.reborn.web.entity.care.CareReview;
 import com.reborn.web.entity.care.CareReviewView;
 import com.reborn.web.entity.care.CareView;
 import com.reborn.web.entity.care.CareWish;
+import com.reborn.web.entity.member.Member;
 import com.reborn.web.service.animal.AnimalService;
 import com.reborn.web.service.care.CareService;
+import com.reborn.web.service.member.MemberService;
 
 @RestController("apiCareController")
 @RequestMapping("/api/care/")
@@ -35,12 +37,7 @@ public class CareController {
 
 	private CareService careService;
 	private AnimalService animalService;
-	// ============================================================
-	// ============================================================
-	// 테스트용 아이디, careService에서도 있음
-	private int memberId = 3;
-	// ============================================================
-	// ============================================================
+	private MemberService memberService;
 	
 	@Value("${care.animalListUrl}")
 	private String animalListUrl;
@@ -50,9 +47,10 @@ public class CareController {
 	
 	
 	@Autowired
-	public CareController(CareService careService, AnimalService animalService) {
+	public CareController(CareService careService, AnimalService animalService, MemberService memberService) {
 		this.careService = careService;
 		this.animalService = animalService;
+		this.memberService = memberService;
 	}
 
 	@GetMapping("list")
@@ -60,7 +58,7 @@ public class CareController {
 			@RequestParam(name = "p", defaultValue = "1") Integer page,
 			@RequestParam(name = "f", required = false) String field,
 			@RequestParam(name = "q", defaultValue = "") String query,
-			Principal principal){
+			HttpSession session){
 		
 		Map<String, Object> datas = new HashMap<>();
 		int size = 10;
@@ -70,8 +68,12 @@ public class CareController {
 		int careCount = careService.getCount(field, query);
 		
 		// WISH LOAD ==================================================
-		if( !careList.isEmpty() && memberId != 0)
-			careService.getWishedList(careList);
+		Object memberId_ = session.getAttribute("id");
+		if( !careList.isEmpty() && memberId_ != null) {
+			int memberId = (int) memberId_;
+			careService.getWishedList(memberId, careList);
+		}
+			
 		
 		int pageCount = (int)Math.ceil( careCount / (float)size );
 
@@ -80,11 +82,14 @@ public class CareController {
 		datas.put("pageCount", pageCount);
 		datas.put("careCount", careCount);
 		
+		
 		return datas;
 	}
 
 	@GetMapping("{careRegNo}")
-	public Map<String, Object> detail(@PathVariable("careRegNo") String careRegNo) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException{
+	public Map<String, Object> detail(
+			@PathVariable("careRegNo") String careRegNo,
+			HttpSession session){
 		Map<String, Object> datas = new HashMap<>();
 		List<CareReviewView> reviewList = new ArrayList<>();
 		int size = 10;
@@ -97,6 +102,14 @@ public class CareController {
 		
 		List<Animal> animalList = null;
 		animalList = animalService.getListByCareRegNo(careRegNo);
+
+		Object loginId_ = session.getAttribute("loginId");
+		if( loginId_ != null && !loginId_.equals("") ) {
+			String loginId = (String) loginId_;
+			Member m = memberService.get(loginId);
+			datas.put("nickname", m.getNickname());
+			datas.put("memberId", m.getId());
+		}
 		
 		int reviewCnt = 0;
 		int reviewPageCnt = 0;
@@ -180,14 +193,17 @@ public class CareController {
 	
 	@PostMapping("{careRegNo}/wish/insert")
 	public Map<String, Object> wishInsert(
-			@PathVariable("careRegNo") String careRegNo){
+			@PathVariable("careRegNo") String careRegNo,
+			HttpSession session){
 		Map<String, Object> datas = new HashMap<>();
+		Object memberId_ = session.getAttribute("id");
 		
-		if(memberId == 0) {
+		if(memberId_ == null) {
 			datas.put("result", "fail");
 			return datas;
 		}
 		
+		int memberId = (int) memberId_;
 		CareWish cw = new CareWish();
 		
 		cw.setCareRegNo(careRegNo);
@@ -207,14 +223,17 @@ public class CareController {
 
 	@PostMapping("{careRegNo}/wish/delete")
 	public Map<String, Object> wishDelete(
-			@PathVariable("careRegNo") String careRegNo){
+			@PathVariable("careRegNo") String careRegNo,
+			HttpSession session){
 		Map<String, Object> datas = new HashMap<>();
+		Object memberId_ = session.getAttribute("id");
 		
-		if(memberId == 0) {
+		if(memberId_ == null) {
 			datas.put("result", "fail");
 			return datas;
 		}
 		
+		int memberId = (int) memberId_;
 		CareWish cw = new CareWish();
 		
 		cw.setCareRegNo(careRegNo);
@@ -263,15 +282,19 @@ public class CareController {
 	@PostMapping("{careRegNo}/review/insert")
 	public Map<String, Object> reviewInsert(
 			@PathVariable("careRegNo") String careRegNo,
+			HttpSession session,
 			String title, String content, int score){
 		Map<String, Object> datas = new HashMap<>();
-		int result = 0;
+		Object memberId_ = session.getAttribute("id");
 		
-		if(memberId == 0) {
+		if(memberId_ == null) {
 			datas.put("result", "fail");
 			return datas;
 		}
-
+		
+		int memberId = (int) memberId_;
+		int result = 0;
+		
 		CareReview cr = new CareReview();
 		cr.setCareRegNo(careRegNo);
 		cr.setMemberId(memberId);
@@ -311,14 +334,18 @@ public class CareController {
 	@PostMapping("{careRegNo}/review/{reviewId}/edit")
 	public Map<String, Object> reviewEdit(
 			@PathVariable("reviewId") int reviewId,
-			String title, String content, int score){
+			String title, String content, int score,
+			HttpSession session){
 		Map<String, Object> datas = new HashMap<>();
-		int result = 0;
-
-		if(memberId == 0) {
+		Object memberId_ = session.getAttribute("id");
+		
+		if(memberId_ == null) {
 			datas.put("result", "fail");
 			return datas;
 		}
+		
+		int memberId = (int) memberId_;
+		int result = 0;
 
 		CareReview origin = careService.getReview(reviewId);
 		
@@ -343,14 +370,18 @@ public class CareController {
 	@PostMapping("{careRegNo}/review/{reviewId}/delete")
 	public Map<String, Object> reviewDelete(
 			@PathVariable("careRegNo") String careRegNo,
-			@PathVariable("reviewId") int reviewId){
+			@PathVariable("reviewId") int reviewId,
+			HttpSession session){
 		Map<String, Object> datas = new HashMap<>();
-		int result = 0;
+		Object memberId_ = session.getAttribute("id");
 		
-		if(memberId == 0) {
+		if(memberId_ == null) {
 			datas.put("result", "fail");
 			return datas;
 		}
+		
+		int memberId = (int) memberId_;
+		int result = 0;
 		
 		result = careService.deleteReview(reviewId);
 		
@@ -358,8 +389,12 @@ public class CareController {
 			datas.put("result", "fail");
 		} else {
 			double reviewScoreAvg = careService.getReviewAvg(careRegNo);
+			int reviewCnt = careService.getReviewCount(careRegNo);
+			int reviewPageCnt = (int)Math.ceil( reviewCnt / (float)10);
 			datas.put("result", "success");
 			datas.put("reviewId", reviewId);
+			datas.put("reviewCnt", reviewCnt);
+			datas.put("reviewPageCnt", reviewPageCnt);
 			datas.put("reviewScoreAvg", reviewScoreAvg);
 		}
 		

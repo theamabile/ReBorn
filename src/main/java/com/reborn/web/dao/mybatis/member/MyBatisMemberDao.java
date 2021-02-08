@@ -66,4 +66,5 @@ public class MyBatisMemberDao implements MemberDao {
 		// TODO Auto-generated method stub
 		return mapper.checkMemberEmail(loginId,name, email);
 	}
+	
 }
