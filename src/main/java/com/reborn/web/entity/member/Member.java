@@ -18,14 +18,18 @@ public class Member {
 	   private int authorityId;
 	   private String profileImg;
 	   private int titleId;
+	   private int point;
+	   private int nameCount;
 
 	   public Member() {
 		// TODO Auto-generated constructor stub
 	}
 
 	   
+	   
 	public Member(int id, String loginId, String name, String gender, String pw, Date regDate, String nickname,
-			Date birthDay, String phone, String email, Date outDate, int authorityId, String profileImg, int titleId) {
+			Date birthDay, String phone, String email, Date outDate, int authorityId, String profileImg, int titleId,
+			int point, int nameCount) {
 		super();
 		this.id = id;
 		this.loginId = loginId;
@@ -41,15 +45,22 @@ public class Member {
 		this.authorityId = authorityId;
 		this.profileImg = profileImg;
 		this.titleId = titleId;
+		this.point = point;
+		this.nameCount = nameCount;
 	}
+
+
 
 	public int getId() {
 		return id;
 	}
 
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 
 
 	public String getLoginId() {
@@ -57,9 +68,11 @@ public class Member {
 	}
 
 
+
 	public void setLoginId(String loginId) {
 		this.loginId = loginId;
 	}
+
 
 
 	public String getName() {
@@ -67,9 +80,11 @@ public class Member {
 	}
 
 
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 
 	public String getGender() {
@@ -77,9 +92,11 @@ public class Member {
 	}
 
 
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
 
 
 	public String getPw() {
@@ -87,9 +104,11 @@ public class Member {
 	}
 
 
+
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
+
 
 
 	public Date getRegDate() {
@@ -97,9 +116,11 @@ public class Member {
 	}
 
 
+
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
+
 
 
 	public String getNickname() {
@@ -107,9 +128,11 @@ public class Member {
 	}
 
 
+
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+
 
 
 	public Date getBirthDay() {
@@ -117,9 +140,11 @@ public class Member {
 	}
 
 
+
 	public void setBirthDay(Date birthDay) {
 		this.birthDay = birthDay;
 	}
+
 
 
 	public String getPhone() {
@@ -127,9 +152,11 @@ public class Member {
 	}
 
 
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
 
 
 	public String getEmail() {
@@ -137,9 +164,11 @@ public class Member {
 	}
 
 
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 
 
 	public Date getOutDate() {
@@ -147,9 +176,11 @@ public class Member {
 	}
 
 
+
 	public void setOutDate(Date outDate) {
 		this.outDate = outDate;
 	}
+
 
 
 	public int getAuthorityId() {
@@ -157,9 +188,11 @@ public class Member {
 	}
 
 
+
 	public void setAuthorityId(int authorityId) {
 		this.authorityId = authorityId;
 	}
+
 
 
 	public String getProfileImg() {
@@ -167,9 +200,11 @@ public class Member {
 	}
 
 
+
 	public void setProfileImg(String profileImg) {
 		this.profileImg = profileImg;
 	}
+
 
 
 	public int getTitleId() {
@@ -177,9 +212,35 @@ public class Member {
 	}
 
 
+
 	public void setTitleId(int titleId) {
 		this.titleId = titleId;
 	}
+
+
+
+	public int getPoint() {
+		return point;
+	}
+
+
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
+
+
+	public int getNameCount() {
+		return nameCount;
+	}
+
+
+
+	public void setNameCount(int nameCount) {
+		this.nameCount = nameCount;
+	}
+
 
 
 	@Override
@@ -187,10 +248,10 @@ public class Member {
 		return "Member [id=" + id + ", loginId=" + loginId + ", name=" + name + ", gender=" + gender + ", pw=" + pw
 				+ ", regDate=" + regDate + ", nickname=" + nickname + ", birthDay=" + birthDay + ", phone=" + phone
 				+ ", email=" + email + ", outDate=" + outDate + ", authorityId=" + authorityId + ", profileImg="
-				+ profileImg + ", titleId=" + titleId + "]";
+				+ profileImg + ", titleId=" + titleId + ", point=" + point + ", nameCount=" + nameCount + "]";
 	}
 
-	
+	   
 
 	   
 }

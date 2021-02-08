@@ -68,8 +68,9 @@ public class CareController {
 		int careCount = careService.getCount(field, query);
 		
 		// WISH LOAD ==================================================
-		int memberId = (int) session.getAttribute("id");
-		if( !careList.isEmpty() && memberId != 0) {
+		Object memberId_ = session.getAttribute("id");
+		if( !careList.isEmpty() && memberId_ != null) {
+			int memberId = (int) memberId_;
 			careService.getWishedList(memberId, careList);
 		}
 			
@@ -102,8 +103,9 @@ public class CareController {
 		List<Animal> animalList = null;
 		animalList = animalService.getListByCareRegNo(careRegNo);
 
-		String loginId = (String) session.getAttribute("loginId");
-		if(loginId != null && !loginId.equals("")) {
+		Object loginId_ = session.getAttribute("loginId");
+		if( loginId_ != null && !loginId_.equals("") ) {
+			String loginId = (String) loginId_;
 			Member m = memberService.get(loginId);
 			datas.put("nickname", m.getNickname());
 			datas.put("memberId", m.getId());
@@ -194,13 +196,14 @@ public class CareController {
 			@PathVariable("careRegNo") String careRegNo,
 			HttpSession session){
 		Map<String, Object> datas = new HashMap<>();
-		int memberId = (int) session.getAttribute("id");
+		Object memberId_ = session.getAttribute("id");
 		
-		if(memberId == 0) {
+		if(memberId_ == null) {
 			datas.put("result", "fail");
 			return datas;
 		}
 		
+		int memberId = (int) memberId_;
 		CareWish cw = new CareWish();
 		
 		cw.setCareRegNo(careRegNo);
@@ -223,13 +226,14 @@ public class CareController {
 			@PathVariable("careRegNo") String careRegNo,
 			HttpSession session){
 		Map<String, Object> datas = new HashMap<>();
-		int memberId = (int) session.getAttribute("id");
+		Object memberId_ = session.getAttribute("id");
 		
-		if(memberId == 0) {
+		if(memberId_ == null) {
 			datas.put("result", "fail");
 			return datas;
 		}
 		
+		int memberId = (int) memberId_;
 		CareWish cw = new CareWish();
 		
 		cw.setCareRegNo(careRegNo);
@@ -281,14 +285,16 @@ public class CareController {
 			HttpSession session,
 			String title, String content, int score){
 		Map<String, Object> datas = new HashMap<>();
-		int memberId = (int) session.getAttribute("id");
-		int result = 0;
+		Object memberId_ = session.getAttribute("id");
 		
-		if(memberId == 0) {
+		if(memberId_ == null) {
 			datas.put("result", "fail");
 			return datas;
 		}
-
+		
+		int memberId = (int) memberId_;
+		int result = 0;
+		
 		CareReview cr = new CareReview();
 		cr.setCareRegNo(careRegNo);
 		cr.setMemberId(memberId);
@@ -331,13 +337,15 @@ public class CareController {
 			String title, String content, int score,
 			HttpSession session){
 		Map<String, Object> datas = new HashMap<>();
-		int memberId = (int) session.getAttribute("id");
-		int result = 0;
-
-		if(memberId == 0) {
+		Object memberId_ = session.getAttribute("id");
+		
+		if(memberId_ == null) {
 			datas.put("result", "fail");
 			return datas;
 		}
+		
+		int memberId = (int) memberId_;
+		int result = 0;
 
 		CareReview origin = careService.getReview(reviewId);
 		
@@ -365,13 +373,15 @@ public class CareController {
 			@PathVariable("reviewId") int reviewId,
 			HttpSession session){
 		Map<String, Object> datas = new HashMap<>();
-		int memberId = (int) session.getAttribute("id");
-		int result = 0;
+		Object memberId_ = session.getAttribute("id");
 		
-		if(memberId == 0) {
+		if(memberId_ == null) {
 			datas.put("result", "fail");
 			return datas;
 		}
+		
+		int memberId = (int) memberId_;
+		int result = 0;
 		
 		result = careService.deleteReview(reviewId);
 		

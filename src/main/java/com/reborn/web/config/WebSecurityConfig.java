@@ -24,8 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 		.authorizeRequests()
+				.antMatchers("/name/**","/mypage/*","/report/write","/report/*/edit").hasAnyRole("MEMBER","ADMIN")       //모두검사 
 				.antMatchers("/**").permitAll()           //  어떤 사용자든 다 들어가야하는 곳. `
-				.antMatchers("/name/**").authenticated()        //모두검사 
 				
 				.and()
 			.formLogin()

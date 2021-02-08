@@ -63,9 +63,11 @@
 				outDate=#{outDate},
 				authorityId=#{authorityId},
 				profileImg=#{profileImg},
-				titleId=#{titleId}
+				titleId=#{titleId},
+				point=#{point},
+				nameCount=#{nameCount}
 			where id=#{id};
 
 	</update>
-
+	
 </mapper>
