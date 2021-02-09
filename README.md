@@ -19,7 +19,7 @@
 ### 3. 데이터베이스 설계
 1) 개념적 설계
 2) 물리적 설계
-<img src="https://i.esdrop.com/d/Jy3PwOXzjx.png" width="500" height="400" border="1px solid gray">
+<img src="https://i.esdrop.com/d/Jy3PwOXzjx.png" width="700" height="550" border="1px solid #e9e9e9">
 
 
 
