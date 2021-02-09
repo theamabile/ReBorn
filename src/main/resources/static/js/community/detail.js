@@ -3,10 +3,18 @@ window.addEventListener("load", (e)=>{
 	const boardId = document.querySelector(".board-id");
 	const likeCount = document.querySelector(".like-count");		
 	const commentList = document.querySelector(".comment-list");//댓글수정버튼을 감싼 부모.
+	const writeInfo = document.querySelector(".write-info");
 	
-	
-
-	
+	if(writeInfo.classList.contains(".delete-btn")){
+		const delBtn = document.querySelector(".delete-btn");	
+		delBtn.addEventListener("click", (e)=>{
+			if(confirm("이 글을 삭제 할까요?")==true){
+				delBtn.href = `${boardId.value}/del`;
+			} else{
+				return ;
+			}		
+		});	
+	}
 	
 	console.log(boardId);
 	let boardNumber = boardId.value;  //jsp에서 hidden으로 숨긴 boardId 값
@@ -83,7 +91,7 @@ window.addEventListener("load", (e)=>{
 			})	
 	});
 	
-	
+});	
 	//코멘트 수정.
 	/*commentEditBtn[0].addEventListener("click", (e)=>{
 		for(let i=0;i<commentIds.length;i++)
@@ -131,4 +139,3 @@ window.addEventListener("load", (e)=>{
 
 	
 	
-});
