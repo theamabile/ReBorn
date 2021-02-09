@@ -19,6 +19,10 @@
 ### 3. 데이터베이스 설계
 1) 개념적 설계
 2) 물리적 설계
+<img src="https://i.esdrop.com/d/Jy3PwOXzjx.png" width="500" height="400" border="1px solid gray">
+
+
+
 
 ### 4. Front-End(JavaScript ES6) 코드구성
 
