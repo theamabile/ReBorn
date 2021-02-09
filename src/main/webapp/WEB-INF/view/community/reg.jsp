@@ -2,11 +2,11 @@
     pageEncoding="UTF-8"%>
 <link href="/css/community/reg.css" type="text/css" rel="stylesheet" />
 <link href="/css/community/reset.css" type="text/css" rel="stylesheet" />
-<link href="/css/community/cummunity-style.css" type="text/css" rel="stylesheet" />
+<link href="/css/community/community-style.css" type="text/css" rel="stylesheet" />
 <script type="module" src="/js/community/reg.js"></script>
 
 	<section class="main-container">
-            <section class="item-tool-bar">
+           <!--  <section class="item-tool-bar">
                 <div class="item-toolkit">
                     <span class="image-item mr15">image</span>
                     <span class="video-item mr15">video</span>
@@ -23,7 +23,7 @@
                     <span class="align-center-item">align-center</span>
                     <span class="align-right-item">align-right</span>                    
                 </div>
-            </section>
+            </section> -->
             <section class="wrapper">
                 <form method="post" enctype="multipart/form-data">
 	                <div class="category-option mt60">
@@ -44,11 +44,17 @@
 	                 		업로드 할 파일을 드롭하세요.
 	                 		<input type="file" />
 	                 	</div>
+	                 	<div class="drop-file-name mt5">
+	                 	
+	                 	</div>
+	                 	
+	                 	
 	                 
 	                 <!-- 파일 첨부 방식 -->
 	                    <div class="file-box mt10">		                    
 		                    <span class="upload-button">업로드</span>
-		                    <input type="file" class="upload-file" name="file" />		                    
+		                    <input class="upload-file" type="file" name="file" />
+		                    <span class="file-name"></span>		                    
 	                    </div>
 	                    	                    
 	                    <div>

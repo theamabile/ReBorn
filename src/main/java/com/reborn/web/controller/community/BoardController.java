@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.http.HttpRequest;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,7 @@ import com.reborn.web.entity.community.Like;
 import com.reborn.web.service.community.BoardService;
 
 @Controller
-@RequestMapping("/community")
+@RequestMapping("/community/")
 public class BoardController {
 	
 	@Autowired
@@ -47,14 +49,14 @@ public class BoardController {
 		@RequestParam(name="p", defaultValue ="1") int page,
 		@RequestParam(name="v", defaultValue = "10") int view,		
 		@RequestParam(name="f", defaultValue ="title") String field,
-		@RequestParam(name="q", defaultValue = "") String query, 
-		@RequestParam(name="c", defaultValue = "", required = false) String option,
+		@RequestParam(name="q", required = false) String query, 
+		@RequestParam(name="c", required = false) String option,
 		Model model) {
 		
 		List<BoardView> list = service.getViewList(page, view, field, query, option);
 		System.out.println(page + ","+ view +","+field+","+query+","+option);
-		int count = service.getCount(field, query);
-		
+		int count = service.getCount(field, query, option); //전체 게시물의 수.
+			
 		//int size = view;
 		int pageCount = (int)Math.ceil(count/(float)view);
 		model.addAttribute("list", list);
@@ -62,17 +64,20 @@ public class BoardController {
 		
 		return "home.community.list";
 	}
-	//글 상세 Get 방식
+	
+	//글 상세페이지
 	@GetMapping("{id}")
 	public String detail(Model model, @PathVariable("id") int id,
-			HttpServletRequest httpRequest
-			) {
+			HttpServletRequest request, HttpSession session) {
 //		int memberId = ((Member) httpRequest.getSession().getAttribute("login")).
-				
+		session = request.getSession();
+		int memberId = (Integer) session.getAttribute("id");
+		
 		BoardView board = service.get(id);		
 		model.addAttribute("b", board);
 		
-		System.out.println(board.getId());
+		System.out.println("memberId"+ memberId);
+		System.out.println("보드Id" + board.getId());
 		
 		List<CommentView> comment = service.getCommentViewList(id);
 		model.addAttribute("comment", comment);
@@ -80,63 +85,49 @@ public class BoardController {
 		int commentCount = service.getCommentCount(id);
 		model.addAttribute("commentCount", commentCount);
 		
-//		Like like = new Like();
-//		like.setBoardId(id);
-//		like.setMemberId(memberId);		
 		
 		int likeCount = service.getLikeCount(id);
 		model.addAttribute("likeCount", likeCount);
+				
+		service.hitUp(id);
 		
 		return "home.community.detail";		
 	}
 	
-	//좋아요 토글 방식 +-
+	//좋아요 토글 방식 +- 
 	@PostMapping("{boardId}/like" )
 	@ResponseBody
 	public Map<String, Object> like(Model model, @PathVariable("boardId") int boardId,						
-			HttpServletRequest httpRequest) {
+			HttpServletRequest httpRequest, HttpSession session) {
+		String toggleLike;		
 		
-		
-		String likes;		
+		session = httpRequest.getSession();
+		int memberId = (Integer) session.getAttribute("id");
+		System.out.println(memberId);
 		
 		Like like = new Like();
 		like.setBoardId(boardId);
-		like.setMemberId(1);
+		like.setMemberId(memberId);
 		
-		int result = service.getCount(boardId, 1);
+		int result = service.getCount(boardId, memberId);
 		
 		if(result == 0) { 		
 		  service.insert(like);
-			likes = "insert";
+		  toggleLike = "insert";
 		} else {
-			service.delete(boardId, 1);
-			likes = "delete";
+			service.delete(boardId, memberId);
+			toggleLike = "delete";
 		}		
 		int likeCount = service.getLikeCount(boardId);		
 		Map<String, Object> dto = new HashMap<>();
-		dto.put("likes", likes);
+		dto.put("likes", toggleLike);
 		dto.put("likeCount", likeCount);
 		
 		return dto;		
 	}
 	
 	
-	//댓글 수정 POST
-//	@PostMapping("{id}/commentEdit")
-//	@ResponseBody
-//	public  Map<String, Object> commentEdit(Model model, @PathVariable("id") int id,
-//			HttpServletRequest httpRequest
-//			) {
-//		System.out.println(id);
-//		Map<String, Object> dto = new HashMap<>();
-//		
-//		List<CommentView> comment = service.getCommentViewList(id);
-//		dto.put("comment", comment);
-//		
-//		return  dto;
-//	}
-	
-	//글 수정 요청
+	//글 수정 Get
 	@GetMapping("{id}/edit")
 	public String edit(Model model, @PathVariable("id") int id) {
 		
@@ -206,7 +197,7 @@ public class BoardController {
 		return "redirect:../list";
 	}
 	
-	//글 작성Get
+	//글 등록Get
 	@GetMapping("reg")
 	public String reg() {
 		return "home.community.reg";
@@ -214,14 +205,17 @@ public class BoardController {
 	
 	//글 등록Post
 	@PostMapping("reg")
-	public String reg(@RequestParam(name="title") String title,
-			@RequestParam(name="content") String content,
-			@RequestParam(name="category") int category,
-			@RequestParam(name="memberId", defaultValue = "1" ) int member,
+	public String reg(@RequestParam(name="title", required=false) String title,
+			@RequestParam(name="content" ,required=false) String content,
+			@RequestParam(name="category", required=false) int category,
+			//@RequestParam(name="memberId", required=false ) int member,
 			@RequestParam(name="file", defaultValue = "", required = false) Part filePart,
-			Principal principal, HttpServletRequest request) throws IOException, ServletException {
-//		String uid = principal.getName();
-//		int id = Integer.parseInt(uid);
+			HttpServletRequest request,
+			HttpSession session) throws IOException, ServletException {
+		
+		session = request.getSession();
+		int memberId = (Integer) session.getAttribute("id");
+		System.out.println(memberId);
 		
 		Board board = new Board();
 		board.setTitle(title);
@@ -231,7 +225,7 @@ public class BoardController {
 		int newBoardId = lastId.getId()+1;
 		board.setId(newBoardId);
 		//멤버ID는 멤버가 주는 값으로 수정해야 함.		
-		board.setMemberId(1);
+		board.setMemberId(memberId);
 		
 //		if(filePart != null) {
 //			String fileName = filePart.getSubmittedFileName();
@@ -257,6 +251,8 @@ public class BoardController {
 //			fos.close();
 //			fis.close();
 //		}//end if
+		
+		
 		Collection<Part> fileParts = request.getParts();
 		String fileName = "";
 		String fileNames = "";
@@ -288,12 +284,11 @@ public class BoardController {
 				
 				fos.close();
 				fis.close();
-	}
-}
-	
+			}
+		}
+			
 		board.setFiles(fileNames);
-		System.out.println(fileNames);		
-		
+				
 		service.insert(board);
 		
 		return "redirect:list";
@@ -304,11 +299,14 @@ public class BoardController {
 	public String commentWrite(
 			@PathVariable("id") int id,
 			@RequestParam(name="comment") String commentContent,			
-			Principal principal
-			) {
+			HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		int memberId =  (Integer) session.getAttribute("id");
+		System.out.println("댓글 memberIdId"+ memberId);
+		
 		Comment comment = new Comment();
 		comment.setContent(commentContent);
-		comment.setMemberId(1);
+		comment.setMemberId(memberId);
 		comment.setBoardId(id);
 		
 		service.commentInsert(comment);
@@ -328,12 +326,11 @@ public class BoardController {
 	}
 	
 
-	//드래그 박스
+	//드래그 파일 업로드
 	@PostMapping("upload")
 	@ResponseBody
 	public String upload(MultipartFile file, HttpServletRequest request) throws IllegalStateException, IOException {
-		System.out.println("file upload ok");
-		System.out.println(file.getOriginalFilename());
+		
 
 		Board lastId = service.getLastId();
 		int newBoardId = lastId.getId()+1;
@@ -341,7 +338,6 @@ public class BoardController {
 		String url = "/upload/community/2021/";
 		
 		String realPath = request.getServletContext().getRealPath(url);
-		System.out.println(realPath);
 		
 		File realPathFile = new File(realPath);
 		if(!realPathFile.exists())
@@ -351,11 +347,13 @@ public class BoardController {
 		File uploadedFile = new File(uploadedFilePath);
 		file.transferTo(uploadedFile);
 		
+		System.out.println("file upload ok");
+		System.out.println("파일이름"+file.getOriginalFilename());
+		System.out.println("파일경로"+realPath);
+		//여기에서 파일이름을 어떻게 받지? => file.getOriginalFilename() 으로 받음
 		
 		
 		return "ok";
 	}
 	
-	//간단하게 하면 하나로
-	//ajax로 하면 두개로.
 }

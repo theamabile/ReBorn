@@ -11,7 +11,6 @@ import com.reborn.web.entity.community.Like;
 
 public interface BoardService {
 	
-	int hitUp(int id);
 	BoardView get(int id);
 	int insert(Board board);
 	int insert(BoardCategory category);
@@ -20,6 +19,10 @@ public interface BoardService {
 	int delete(int id);
 	Board getLastId(); 
 //	int getLastId();
+	//조회수 증가
+	BoardView hitUp(int id);
+	
+	
 	int getCount(String field, String query);
 	Board getPrev(int id);
 	Board getNext(int id);
@@ -39,4 +42,5 @@ public interface BoardService {
 	void delete(int id, int memberId);
 	
 	Comment commentGet(int id);
+	int getCount(String field, String query, String option);
 }

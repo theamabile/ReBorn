@@ -1,4 +1,4 @@
-@import url("cummunity-style.css");
+@import url("community-style.css");
 
 .item-tool-bar{
     display: flex;
@@ -80,9 +80,7 @@
         border-bottom: 1px solid  #cccccc ;
 
     }
-    .artice-content{
-        
-    }
+
     .content-place{
         padding: 10px;
         width: 880px;
@@ -125,5 +123,28 @@
 	.drop-box>input[type=file]{
 		display: none;
 	}
+	.file-name{
+		display: inline-block;
+		width: 400px;
+		height: 35px;
+		line-height: normal;
+		vertical-align: middle;
+		background-color: #f3f3f3;
+		cursor: pointer;
+		border: 1px solid #148354;	
+		border-radius: .25em;
+		font-size: 13px;
+	}
+	.drop-file-name{
+		width: 100%;
+		height: 35px;
+		background-color: #f3f3f3;
+		cursor: pointer;
+		border: 1px solid #148354;
+		line-height: 35px;
+		padding-left: 10px;
+		
+	}	
+	
     
     

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.reborn.web.entity.community.BoardView;
 import com.reborn.web.entity.community.Comment;
 import com.reborn.web.entity.community.CommentView;
@@ -28,43 +29,57 @@ public class BoardController {
 
 	@Autowired
 	private BoardService service;
-	
+	//
 	@RequestMapping("list")
-	public List<BoardView> list(
+	public String list(
 			@RequestParam(name="p", defaultValue ="1") int page,
 			@RequestParam(name="v", defaultValue = "10") int view,		
 			@RequestParam(name="f", defaultValue ="title") String field,
-			@RequestParam(name="q", defaultValue = "") String query, 
-			@RequestParam(name="c", defaultValue = "", required = false) String option
+			@RequestParam(name="q", required = false) String query, 
+			@RequestParam(name="c", required = false) String option
 			) {
 		
 		List<BoardView> list = service.getViewList(page, view, field, query, option);
-	
-		return list;				
-	}
-	
-	@RequestMapping("{id}")	
-	public Map<String, Object> detail(@PathVariable("id") int id){
-		
-		/* BoardView board = service.get(id); */
-		/* dto.put("b", board); */
-		List<CommentView> comment = service.getCommentViewList(id);
-		int commentCount = service.getCommentCount(id);
-		
-		
+		int count = service.getCount(field, query, option); //전체 게시물의 수.
+		int pageCount = (int) Math.ceil(count/(float)view);
+		System.out.println(page+ "   "+view+ "   "+field+"  "+query+"  "+option);
+		System.out.println("count  "+ count+ "pageCount  "+ pageCount);
 		
 		Map<String, Object> dto = new HashMap<>();
-		dto.put("comment", comment);
-		dto.put("commentCount", commentCount);
+		dto.put("list", list);
+		dto.put("pageCount", pageCount);
+		dto.put("count", count);
+		dto.put("view", view);
+		dto.put("category", option);
 		
-		return dto;
+		Gson gson = new Gson();
 		
-	}	
+		return gson.toJson(dto);				
+		
+	}
+	
+//	@RequestMapping("{id}")	
+//	public Map<String, Object> detail(@PathVariable("id") int id){
+//		
+//		/* BoardView board = service.get(id); */
+//		/* dto.put("b", board); */
+//		List<CommentView> comment = service.getCommentViewList(id);
+//		int commentCount = service.getCommentCount(id);
+//						
+//		Map<String, Object> dto = new HashMap<>();
+//		dto.put("comment", comment);
+//		dto.put("commentCount", commentCount);
+//		
+//		return dto;
+//		
+//	}	
 	
 	//댓글 수정	
-	@RequestMapping("{id}/commentEdit")							//boardId
+	@RequestMapping("{id}/commentEdit")				//boardId
 	public  List<CommentView> comment(Model model, @PathVariable("id") int id,
-			@RequestParam(name="commentId") int commentId, @RequestParam(name="content") String content) {
+			@RequestParam(name="commentId") int commentId, 
+			@RequestParam(name="content") String content) {
+		
 		System.out.println(id);
 		System.out.println(commentId);
 		System.out.println(content);

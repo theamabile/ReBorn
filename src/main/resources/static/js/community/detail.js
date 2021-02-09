@@ -1,27 +1,23 @@
 window.addEventListener("load", (e)=>{
 	const likeBtn = document.querySelector(".like-btn");
 	const boardId = document.querySelector(".board-id");
-	const likeCount = document.querySelector(".like-count");
-	const commentEditBtn = document.querySelectorAll(".comment-edit");
-	const commentContent = document.querySelector(".comment-content");//코멘트 내용
-	const commentIds = document.querySelectorAll(".comment-id");//코멘트의 글ID	
-	const commentList = document.querySelector(".comment-list");//부모
+	const likeCount = document.querySelector(".like-count");		
+	const commentList = document.querySelector(".comment-list");//댓글수정버튼을 감싼 부모.
+	
 	
 
 	
 	
 	console.log(boardId);
-	let boardValue = boardId.value;  //jsp에서 hidden으로 숨긴 boardId 값
-	let commentValue = commentIds[0].value;
+	let boardNumber = boardId.value;  //jsp에서 hidden으로 숨긴 boardId 값
+	
 	
 	//let win;
-	
+	//좋아요 버튼
 	likeBtn.addEventListener("click", (e)=>{
-				console.log("클릭");
-		
-		fetch(`/community/${boardValue}/like`, {
+						
+		fetch(`/community/${boardNumber}/like`, {
 			method : "post"
-			
 		})
 		.then(function(response){
 
@@ -40,15 +36,23 @@ window.addEventListener("load", (e)=>{
 		})		
 	});
 	
-
 	
+	
+	
+	
+	
+	
+
+		//e.target          //이벤트발생
+		//e.currentTarget   //이벤트를 달아준 객체를 반환
+	//댓글 수정
 	commentList.addEventListener("click", (e)=>{
+		
+		
 		if(!e.target.classList.contains('comment-edit'))
 			return;
 		console.log(e.target.innerText);
 		console.log(e.currentTarget);
-		//e.target          //이벤트발생
-		//e.currentTarget   //이벤트를 달아준 객체를 반환
 		
 		let commentViewBox = e.target.closest('div.comment-view-box'); // (1)	
 	    
@@ -57,12 +61,12 @@ window.addEventListener("load", (e)=>{
 		if (!commentList.contains(commentViewBox)) return; 
 		    
 		let cId = commentViewBox.querySelector("input.comment-id");	
-		    console.log(cId.value);
-		    console.log(boardValue);
+		    console.log("댓글 번호" + cId.value);
+		    console.log("게시글 번호" + boardNumber);
 		let cContent = commentViewBox.querySelector("div.comment-content");
 		let message = prompt('message');
 			
-			fetch(`/api/community/${boardValue}/commentEdit`, {
+			fetch(`/api/community/${boardNumber}/commentEdit`, {
 				method: 'post',
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded'
@@ -78,6 +82,8 @@ window.addEventListener("load", (e)=>{
 				cContent.innerText = message;
 			})	
 	});
+	
+	
 	//코멘트 수정.
 	/*commentEditBtn[0].addEventListener("click", (e)=>{
 		for(let i=0;i<commentIds.length;i++)
