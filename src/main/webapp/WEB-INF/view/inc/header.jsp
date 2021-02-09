@@ -58,8 +58,8 @@
                         </div>
                     </li>
                 </ul> 
-                <button>SIGN UP</button>
-                <button>SIGN IN</button>
+                <button><a href="/member/info/join">SIGN UP</a></button>
+                <button><a href="/member/login">SIGN IN</a></button>
             </div>
         </nav>
 
