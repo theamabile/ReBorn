@@ -42,6 +42,9 @@
 	color:#fff;
 }
 
+.room-list > li > a.active:after {
+	content:none;
+}
 .chat-room {
 	width:calc(100% - 180px);
 	height:500px;
