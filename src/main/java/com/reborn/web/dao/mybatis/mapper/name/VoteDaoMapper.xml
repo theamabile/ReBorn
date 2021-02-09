@@ -99,7 +99,7 @@
 	<select id="getEndViewList" resultType="com.reborn.web.entity.name.VoteView" >
 		SELECT * FROM VoteView
 		WHERE
-			voteEndDate &lt;= #{param1}
+			voteEndDate &lt; #{param1}
 		<if test="param2 != null and param2 != ''">
 				AND ${param2} = #{param3}
 		</if>

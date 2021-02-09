@@ -97,7 +97,8 @@ h3 {
 .bg-button-s, 
 .gray-button-s  {	
  	border:none;
-    outline: none;    
+    outline: none; 
+    cursor: pointer;   
 }
 
 /* width full 사이즈 버튼(크기, 폰트 등)*/

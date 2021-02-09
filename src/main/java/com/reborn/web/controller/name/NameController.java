@@ -54,7 +54,7 @@ public class NameController {
 						@RequestParam(name="q", defaultValue="") String query,
 						@RequestParam(name="s", defaultValue="START") String state) {
 	
-		int size = 2;
+		int size = 5;
 		
 		// name(갖고올때 choice 수 기준으로 order by) + choice 있는지 없는지
 		// vote 날짜

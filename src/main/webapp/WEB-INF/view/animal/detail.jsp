@@ -114,7 +114,7 @@
 					<input type="button" value="이름 지어주기" onclick="location.href='/name/${animal.desertionNo}${nameUrl}'" class="vote-btn main-button-wf ml-3" >
 				</c:if >
     		</div>
-			<input type="button" value="목록" class="vote-btn gray-button-wf">
+			<input type="button" value="목록" class="vote-btn gray-button-wf" onclick="location.href='/animal/list'">
     	</section>
     	
 		<section class="flex-column flex-center">

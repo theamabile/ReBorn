@@ -134,7 +134,7 @@
 
 
 			<div class="button-area ">
-				<input type="submit" value="회원가입"
+				<input type="submit" value="정보 변경"
 					class="disabled submit-button  btn-s">
 			</div>
 
