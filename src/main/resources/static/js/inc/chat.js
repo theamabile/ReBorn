@@ -9,12 +9,13 @@ window.addEventListener('load', ()=>{
 	
    	let chatInput = document.querySelector('.chat-input');
 	let chatSend= document.querySelector('.chat-send-btn');
+	let uid =  document.querySelector('.session-id').innerHTML;
 	
 	let localhost = "localhost:8080";
-	let = roomId = prompt("방번호 입력");
+	let = roomId = uid;
 	console.log(roomId)
 	//json으로 보내기 사용자아이디, 메시지내용. 전달.
-	let userId ="1"; //임시지정
+	let userId =uid;
 	
 	let message ={
 		userId,
@@ -41,10 +42,17 @@ window.addEventListener('load', ()=>{
 			chatData:chatInput.value,
 			roomId : roomId
 		}
-		if(socket != undefined){
+		
+		console.log(socket.readyState);
+		if(socket != undefined && socket.readyState ==1){
 			socket.send(JSON.stringify(message));
+			console.log("메시지 보냄");
+			chatInput.value ="";
+			chatScroll();
 		}else{
-			alert("연결이 끊겼습니다 새로고핌 해주세요.")
+			console.log('재연결')
+			connect();
+			//alert("연결이 끊겼습니다 새로고핌 해주세요.");
 		}
 		
 		//html표사ㅣ
@@ -56,8 +64,7 @@ window.addEventListener('load', ()=>{
 		`
 		chatList.insertAdjacentHTML("beforeend", chatTemplateLestRight);*/
 		
-		chatInput.value ="";
-		chatScroll();
+		
 	});	
 	
 	//chat버튼
@@ -114,15 +121,30 @@ window.addEventListener('load', ()=>{
 	//qna버튼
     chatBot.addEventListener('click', (e)=>{      
         e.preventDefault();
-        if(botQnaBox.classList.contains('show')){
+/*        if(botQnaBox.classList.contains('show')){
             botQnaBox.classList.remove('show');
         }else {
             botQnaBox.classList.add('show');
-        }
-        chatScroll();
+        }*/
+		fetch(`/api/chat/link/list`)
+		.then(response => response.json())
+		.then(result =>{
+			console.log("aaa")
+			let li = `<li class="center"><dl><dt>자주 묻는 질문 Top</dt>`;
+			
+			for(n of result){
+			    li += `<dd><a href="http://${n.address}" target="_blank">${n.title}</a></dd>`
+			}
+			
+			li += `</dl></li>`;
+
+			chatList.insertAdjacentHTML('beforeend', li);
+	        chatScroll();
+		})
     });
 
 	
+
 	
 	//스크롤 제일 아래로..
     function chatScroll (){
@@ -134,10 +156,11 @@ window.addEventListener('load', ()=>{
 //====================== 소켓은 바로 연결...======================
 	let socket = new WebSocket(`ws://${localhost}/chatting/${roomId}`);
 	console.log(socket)
+	connect();
 	
-	socket.addEventListener('open', function (e) {		
+/*	socket.addEventListener('open', function (e) {		
 		console.log("소켓 연결됨!!!");
-	});
+	});*/
 	
 	
 	//메시지 받음
@@ -171,6 +194,18 @@ window.addEventListener('load', ()=>{
 		chatList.insertAdjacentHTML("beforeend", li);
 		chatScroll();
 	});
+	
+	
+		//소캣 재연결
+	function connect(){
+		
+		socket = new WebSocket(`ws://${localhost}/chatting/${roomId}`);
+		console.log(socket)
+		
+		socket.addEventListener('open', function (e) {		
+			console.log("소켓 연결됨!!!");
+		});
+	}
 
 
 	

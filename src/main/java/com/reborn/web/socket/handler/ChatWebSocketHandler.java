@@ -14,7 +14,7 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.reborn.web.controller.chat.ChatController;
+import com.reborn.web.controller.chat.api.ChatController;
 import com.reborn.web.service.chat.ChatService;
 
 
@@ -95,7 +95,7 @@ public class ChatWebSocketHandler implements WebSocketHandler {
 		
 		//System.out.println("service : " +service);
 		service.sendMsg(senderId, chatData, roomId); //데이터 저장
-
+		System.out.println("aaa");
 		
 		HashMap<String, Object> temp = new HashMap<String, Object>();
 		

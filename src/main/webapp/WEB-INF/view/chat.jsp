@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <link rel= "stylesheet" type="text/css" href="/css/reset.css">
-  <link rel= "stylesheet" type="text/css" href="/css/header.css">
- <link rel= "stylesheet" type="text/css" href="/css/chat.css">
- <script src="/js/inc/chat.js"></script>	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${not empty sessionScope.id}">
+<link rel= "stylesheet" type="text/css" href="/css/chat.css">
+<script src="/js/inc/chat.js"></script>	
+
+
  <div class="chat-container">
- 
- 	쳇봇테스트!!
       <div class="chat-btn">
+      	<span class="session-id hide"><%= session.getAttribute("id") %></span>
       </div>
       <div class="chat-box">
           <div class="chat-header">
@@ -18,19 +19,19 @@
                   <span class="tooltip-text">클릭 시, <br> 자주 묻는 질문을 볼 수 있습니다.</span>
               </a>
           </div>
-          <div class="bot-qna-box">
+<!--           <div class="bot-qna-box">
               <ul class="bot-qna-list">
-                 <!--  <li>
+                  <li>
                       <a href="">
                           <span class="icon"></span>
                           <span class="bot-qna">입양 관련</span>
                       </a>
-                  </li> -->
+                  </li>
               </ul>
-          </div>
+          </div> -->
           <div class="chat-body">
               <ul class="chat-list">
-                  <li class="left">
+              <!--     <li class="left">
                       <span class="thumb">A</span>
                       <p class="chat-con">
                           안녕하세요....안녕하세요....안녕하세요....안녕하세요....안녕하세요....
@@ -64,7 +65,7 @@
                   <li class="right">
                       <span class="thumb">Q</span>
                       <p class="chat-con">응답하라~~~</p>
-                  </li>
+                  </li> -->
 
               </ul>
           </div>
@@ -76,3 +77,4 @@
           </div>
       </div>
   </div>
+ </c:if>

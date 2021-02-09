@@ -31,18 +31,27 @@ window.addEventListener('load', (e)=>{
 			chatData:chatInput.value,
 			roomId : roomId
 		}
-		if(socket != undefined){
+		if(socket != undefined ){
 			socket.send(JSON.stringify(message));
+			chatData:chatInput.value="";
 		}
 		
-		chatData:chatInput.value="";
 	})
 	
 	
 	roomList.addEventListener('click', (e)=>{
 		e.preventDefault();
 		if(e.target.tagName ="A"){
+			let roomListArr = roomList.querySelectorAll('li > a');
+			console.log(roomListArr)
+			for(let arr in roomListArr){
+				arr.classList.remove('active');
+			}
+	
+	
 			let target = e.target;
+			
+			target.classList.add('active');
 			roomId = e.target.dataset.room;
 			
 			//처음 값받아오기
@@ -107,32 +116,32 @@ window.addEventListener('load', (e)=>{
 	
 	console.log("socket" + socket)
 	//메시지 받음
-function connect(){
-	console.log("연결함수")
-	socket.addEventListener('message', function (e) {
-		console.log("aaa");
-		console.log(e.data);
-		let message = JSON.parse(e.data);
-		let {senderId, chatData, roomId} = message;
-		if( roomId != senderId){
-				li = `							
-                  <li class="right">
-                      <span class="thumb">A</span>
-                      <p class="chat-con">${chatData}</p>
-                  </li>
+	function connect(){
+		console.log("연결함수")
+		socket.addEventListener('message', function (e) {
+			console.log("aaa");
+			console.log(e.data);
+			let message = JSON.parse(e.data);
+			let {senderId, chatData, roomId} = message;
+			if( roomId != senderId){
+					li = `							
+	                  <li class="right">
+	                      <span class="thumb">A</span>
+	                      <p class="chat-con">${chatData}</p>
+	                  </li>
+						`
+				}else {
+					li = `
+						 <li class="left">
+	                      <span class="thumb">Q</span>
+	                      <p class="chat-con">${chatData}</p>
+	                  	</li>
 					`
-			}else {
-				li = `
-					 <li class="left">
-                      <span class="thumb">Q</span>
-                      <p class="chat-con">${chatData}</p>
-                  	</li>
-				`
-			}
-		chatBox.insertAdjacentHTML('beforeend', li);
-		chatScroll();
-	});
-}	
+				}
+			chatBox.insertAdjacentHTML('beforeend', li);
+			chatScroll();
+		});
+	}	
 			
 			
 	

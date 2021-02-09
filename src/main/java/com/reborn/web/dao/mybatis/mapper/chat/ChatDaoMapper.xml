@@ -25,4 +25,16 @@
 		select distinct roomId from Chatting;
 	</select>
 	
+	
+	<select id="getLinkList" resultType="com.reborn.web.entity.chat.Link">
+		select * from Link;
+	</select>
+	
+	<delete id="linkDelete">
+		delete from Link where id = #{param1}
+	</delete>
+	
+	<insert id="addLink">
+		insert into Link(title, address) values(#{title}, #{address})
+	</insert>
 </mapper>
