@@ -22,7 +22,7 @@ import com.reborn.web.service.member.MemberService;
 public class MemberInfoController {
 
 	@Autowired
-	MemberService service;
+	MemberService Memberservice;
 	
 
 	// 회원가입
@@ -53,8 +53,14 @@ public class MemberInfoController {
 		m.setBirthDay(d);
 		m.setAuthorityId(2); // 회원으로 등록
 
-		service.insert(m);
+		Memberservice.insert(m);
 		return "redirect:../login";
+	}
+	
+	
+	@GetMapping("/message")
+	public String message() {
+		return "home.member.message";
 	}
 
 

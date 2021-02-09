@@ -200,7 +200,7 @@ select {
 }
 
 
-.file-box span {
+.upload-button {
 	display: inline-block;
 	padding: .5em .75em;
 	color: #148354;
@@ -215,6 +215,11 @@ select {
 .file-box>input{
 	display:none;
 }
+
+.word-color1{
+	color: #148354;
+}
+
 
 /* .file-box input[type="file"] { 
 	position: absolute;

@@ -7,32 +7,39 @@
      
 	<select id="getViewList" resultType="com.reborn.web.entity.community.BoardView">
 	  SELECT * FROM BoardView
-      <if test="param3 != null and param3 != ''">
-         where BINARY ${param3} like '%${param4}%'
-      </if>      
-      <if test="param5 != null and param5 != ''">
-      	AND BINARY category = '%${param5}%' 
-      </if>
+	  <where>
+	      <if test="param3 != null and param3 != ''">
+	         BINARY ${param3} like '%${param4}%'
+	      </if>      
+	      <if test="param5 != null and param5 != ''">
+	      	 AND category = '${param5}' 
+	      </if>
+	  </where>
       order by regdate desc
       limit #{param2} offset #{param1}
 	</select>
 	
  <select id="getList">
  	SELECT * FROM Board
- 	  <if test="param3 != null and param3 != ''">
-         where BINARY ${param3} like '%${param4}%'
-      </if>
-      order by regdate desc
-      limit #{param2} offset #{param1}
+	<if test="param3 != null and param3 != ''">
+       where BINARY '${param3}' like '%${param4}%'
+    </if>
+    order by regdate desc
+    limit #{param2} offset #{param1}
    </select>
  
-<!-- 전체 로우 데이터 --> 
+<!-- 전체 게시물의 수--> 
  <select id="getCount" resultType="int">
-      SELECT count(id) FROM BoardView
-      <if test="param1 != null and param1 != ''">
-         where BINARY ${param1} like '%${param2}%'
-      </if>
-   </select> 
+    SELECT count(id) FROM BoardView
+    <where>
+	    <if test="param1 != null and param1 != ''">
+	       BINARY ${param1} like '%${param2}%'
+	    </if>
+	    <if test= "param3 != null and param3 != ''">
+	    	AND category = '${param3}'
+	    </if>
+    </where>
+ </select> 
   <!-- detail 에서 사용할 쿼리: id 값 가져오기 -->
   <select id="get" resultType="com.reborn.web.entity.community.BoardView">
   		SELECT * FROM BoardView
@@ -68,6 +75,12 @@
    		SELECT * FROM Board 
 			WHERE id = (SELECT MAX(id) FROM Board);
    </select>
+   
+   <update id="hitUp" parameterType="int">
+   	UPDATE Board SET
+   		hitCnt = hitCnt+1
+   		WHERE id = #{id}
+   </update>
    
    
 </mapper> 
