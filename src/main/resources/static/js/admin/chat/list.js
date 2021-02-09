@@ -42,9 +42,11 @@ window.addEventListener('load', (e)=>{
 	roomList.addEventListener('click', (e)=>{
 		e.preventDefault();
 		if(e.target.tagName ="A"){
-			let roomListArr = roomList.querySelectorAll('li > a');
-			console.log(roomListArr)
-			for(let arr in roomListArr){
+			let roomListNode = roomList.querySelectorAll('li> a');
+			let roomListArr =Array.prototype.slice.call(roomListNode)
+
+			for(let arr of roomListArr){
+				console.log(arr)
 				arr.classList.remove('active');
 			}
 	
