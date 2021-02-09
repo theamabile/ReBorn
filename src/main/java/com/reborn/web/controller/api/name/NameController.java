@@ -57,7 +57,7 @@ public class NameController {
 			@RequestParam(name="q", defaultValue="") String query,
 			@RequestParam(name="s", defaultValue="START") String state) {
 		
-		int size = 2;
+		int size = 5;
 		List<VoteView> list = voteService.getViewList(page, size, orderField, orderQuery, field, query, state);
 		
 		// 해당 투표에서 인기 있기 있는 3가지 후보를 가져옴
