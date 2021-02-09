@@ -40,13 +40,13 @@ window.addEventListener("load", (e)=>{
 					if(data.success == true) {
 						
 						let infoHTML = `투표가 완료 되었습니다.<br>
-										${newPoint}를 추가적으로 획득하셨습니다.(현재 포인트 : ${point})<br>
+										${data.newPoint}를 추가적으로 획득하셨습니다.(현재 포인트 : ${data.point})<br>
 										참여해주셔서 감사합니다.`;
 						
 						new ModalBox({
 							content: infoHTML,
 							contentPadding: true,
-							okBtnText: " 확인",
+							okBtnText: "확인",
 							cancelBtnHide: true,
 							removeOnBackgroundClick: true
 						})
