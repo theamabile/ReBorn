@@ -37,7 +37,7 @@ public class VoteUpdateScheduler {
 		// 투표 시작 체크 => 투표 시작 일(voteStartDate)이 현재 날짜보다 적거나 같고, state가 NONE(투표 미시작)인 투표들
 		List<VoteView> startList = voteService.getStartViewList(now, "state", "NONE");
 
-		System.out.println("@@@@@@@@@@@@@@@");
+		//System.out.println("@@@@@@@@@@@@@@@");
 		for(VoteView v : startList) {
 			System.out.println(v.getAnimalId()+" : "+v.getNameCnt()+"개");
 			if( v.getNameCnt() <= 1) {
