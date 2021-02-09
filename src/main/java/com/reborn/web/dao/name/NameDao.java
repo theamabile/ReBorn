@@ -1,5 +1,6 @@
 package com.reborn.web.dao.name;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import com.reborn.web.entity.name.Choice;

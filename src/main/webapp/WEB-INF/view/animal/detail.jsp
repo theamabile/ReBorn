@@ -25,7 +25,7 @@
 					</c:if >	
 					<c:if  test="${state eq 'END' }">
 						<%-- <span><i class="fas fa-heart mr-4 red-pink"></i>${animal.name}</span> --%>
-						<span><i class="fas fa-registered mr-4 main"></i>${animal.name}</span>
+						<span>${animal.name}</span>
 					</c:if >
 				
 	                <span>${animal.noticeNo}</span>
@@ -108,7 +108,7 @@
 					<c:set var="nameUrl" value="/add"></c:set>
 				</c:if >
 				<c:if  test="${state eq 'START' }">
-					<c:set var="nameUrl" value="/detail"></c:set>
+					<c:set var="nameUrl" value=""></c:set>
 				</c:if >
 				<c:if  test="${state ne 'END' }">
 					<input type="button" value="이름 지어주기" onclick="location.href='/name/${animal.desertionNo}${nameUrl}'" class="vote-btn main-button-wf ml-3" >
@@ -135,10 +135,15 @@
 			<div id="happen-map" class="mt-3" style="width:100%;height:400px;"></div>
 		</section>
 		
-		<section>
-			<a id="create-kakao-link-btn" >
-				<img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
-			</a>
+		<section class="flex-column flex-center mb-1">
+			<h1>공유하기</h1>
+			<div  class="flex-column flex-center m-auto"> 
+				<span class="text-a-center">소중한 생명의 가족을 되찾아주세요.</span>
+				<span class="text-a-center mb-3">작은 관심이 큰 힘이 됩니다.</span>				
+				<a id="create-kakao-link-btn" class="text-a-center">
+					<img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+				</a>
+			</div>
 		</section>
 		
     	

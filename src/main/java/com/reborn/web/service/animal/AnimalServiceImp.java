@@ -63,9 +63,9 @@ public class AnimalServiceImp implements AnimalService{
 	}
 
 	@Override
-	public int getCount(String upkind, String kind, Date startDate, Date endDate, String neuter) {
+	public int getCount(String upkind, String kind, Date startDate, Date endDate, String neuter, String field, boolean hasFieldData) {
 		// TODO Auto-generated method stub
-		return animalDao.getCount(upkind, kind, startDate, endDate, neuter);
+		return animalDao.getCount(upkind, kind, startDate, endDate, neuter, field, hasFieldData);
 	}
 
 	@Override
@@ -81,13 +81,11 @@ public class AnimalServiceImp implements AnimalService{
 	}
 
 	@Override
-	public List<Animal> getList(int page, int size, String upKindCd, String kindCd, Date startDate, Date endDate,
-			String neuter) {
+	public List<Animal> getList(int page, int size, String upKindCd, String kindCd, Date startDate, Date endDate, 
+			String neuter, String field, boolean hasFieldData) {
 		// TODO Auto-generated method stub
 		int offset = (page-1) * size;
-		
-		System.out.println("page : "+page+" / size : "+size+" / offset : "+offset);
-		return animalDao.getList(offset, size, upKindCd, kindCd, startDate, endDate, neuter);
+		return animalDao.getList(offset, size, upKindCd, kindCd, startDate, endDate, neuter, field, hasFieldData);
 	}
 	
 

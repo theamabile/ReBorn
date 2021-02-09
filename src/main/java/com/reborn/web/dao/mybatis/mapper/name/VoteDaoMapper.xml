@@ -54,7 +54,9 @@
 			<if test="param7 != null and param7 != ''">
 				AND state = #{param7}
 			</if>
-		ORDER BY ${param3} ${param4}
+		<if test="param3 != null and param3 != ''">
+			ORDER BY ${param3} ${param4}
+		</if>
 		LIMIT #{param2} OFFSET #{param1}
 	</select>
 
@@ -85,7 +87,7 @@
 	<!-- &gt; : >   /  &lt; : <   -->
 	
 	<select id="getStartViewList" resultType="com.reborn.web.entity.name.VoteView" >
-		SELECT * FROM Vote
+		SELECT * FROM VoteView
 		WHERE
 			voteStartDate &lt;= #{param1}
 		<if test="param2 != null and param2 != ''">
@@ -95,7 +97,7 @@
 	</select>
 	
 	<select id="getEndViewList" resultType="com.reborn.web.entity.name.VoteView" >
-		SELECT * FROM Vote
+		SELECT * FROM VoteView
 		WHERE
 			voteEndDate &lt;= #{param1}
 		<if test="param2 != null and param2 != ''">

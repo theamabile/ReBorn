@@ -7,12 +7,6 @@
 <link rel= "stylesheet" type="text/css" href="/css/name/name.css">
 <link rel= "stylesheet" type="text/css" href="/css/animal/list.css">
 
-<!-- 리액트 -->
-<!-- <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script type="text/babel" src="/js/animal/list-react.js"></script> -->
-
 <script src="/js/animal/list.js"></script>
 
  	 
@@ -27,29 +21,13 @@
     <section class="main-container">
     	
 		<h1>유기동물 목록 </h1>
-		<section class="search-box">
+		<div class="search-box">				
 				<div class="box-row">
-					<lable>품종</lable>
-					<div class="breed-box">
-						<select name="upkind" class="upkind">	
-							<option value="">전체</option>  
-							<option value="417000">개</option>
-							<option value="422400">고양이</option>
-							<option value="429900">기타</option>
-						</select>
-						<select name="kind" class="kind">	
-							<option value="">선택 없음</option>
-						</select>
-					</div>
-				</div>		
-				<div class="box-row">
-					<lable>유기 날짜</lable>
-					<div class="regdate">
-						<input type="date" name="bgnde" class="bgnde">
-						<span>~</span>
-						<input type="date" name="endde" class="endde">
-					</div>
-					<lable>중성화 여부</lable>
+					<label>유기 날짜</label>
+					<input type="date" name="bgnde" class="bgnde">
+					<span class="mr-4">~</span>
+					<input type="date" name="endde" class="endde">
+					<label class="ml-4">중성화 여부</label>
 					<div class="neuter">
 						<select name="neuter" class="neuterYn">	
 							<option value="">전체</option>  
@@ -59,7 +37,25 @@
 						</select>
 					</div>	
 				</div>
-		</section>
+				<div class="box-row">
+					<label>품종</label>
+					<select name="upkind" class="upkind">	
+						<option value="">전체</option>  
+						<option value="417000">개</option>
+						<option value="422400">고양이</option>
+						<option value="429900">기타</option>
+					</select>
+					<select name="kind" class="kind">	
+						<option value="">선택 없음</option>
+					</select>
+					<label class="ml-4">이름 여부</label>
+					<select name="hasName" class="hasName">	
+						<option value="A">전체</option>  
+						<option value="Y">있음</option>
+						<option value="N">없음</option>
+					</select>
+				</div>		
+		</div>
 		
 		<!-- ---------------------- 목록 ------------------------ -->
 		

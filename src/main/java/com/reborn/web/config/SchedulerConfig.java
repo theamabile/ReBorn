@@ -15,12 +15,8 @@ public class SchedulerConfig implements SchedulingConfigurer{
 
 	@Override
 	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+		// TODO Auto-generated method stub
 		
-		ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
-		
-		threadPoolTaskScheduler.setPoolSize(POOL_SIZE);
-		threadPoolTaskScheduler.setThreadNamePrefix("my-scheduled-task-pool");
-		threadPoolTaskScheduler.initialize();
 	}
 	
 	@Bean

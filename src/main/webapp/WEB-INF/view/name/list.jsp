@@ -7,9 +7,6 @@
  	<link rel= "stylesheet" type="text/css" href="/css/name/name.css">
  	<link rel= "stylesheet" type="text/css" href="/css/name/list.css">
  	
- 	<!-- 바닐라 - 작업중 -->
-   <!--  <script type="text/javascript" src="/js/name/list.js"></script> -->
-
 	<!-- 리액트 한번 해보기 => 태그 안에 태그 추가 -->
 	<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
 	<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>

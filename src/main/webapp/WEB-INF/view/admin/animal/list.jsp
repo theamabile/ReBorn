@@ -3,13 +3,17 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel" src="/js/admin/animal/list.js"></script>
 
 <section class="container">
-	<h1 class="d-none">회원관리</h1>
+	<h1 class="d-none">유기동물 관리</h1>
 
 	<!-- container-item클래스가 꽉 채워진 박스 기준이라 min-width만 설정해주기 위해 member-container를 같이 넣어줌-->
-	<section class="container-item member-container">
-		<h1>회원목록</h1>
+	<%-- <section class="container-item">
+		<h1>유기동물 목록</h1>
 
 		<form method="post" action="delete">
 			<div class="tools">
@@ -102,5 +106,5 @@
 		</form>
 
 
-	</section>
+	</section> --%>
 </section>

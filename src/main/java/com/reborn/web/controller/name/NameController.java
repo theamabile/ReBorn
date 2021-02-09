@@ -1,7 +1,11 @@
 package com.reborn.web.controller.name;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,8 +42,7 @@ public class NameController {
 	@Autowired
 	private AnimalService animalService;
 	
-
-	int memberId = 1;		// 나중에 로그인 구현 되면 받아와서 하기
+	
 	
 	// 이름 투표 목록
 	@GetMapping("list")
@@ -65,6 +68,8 @@ public class NameController {
 
 		int count = voteService.getCount(field, query, state);
 		int pageCount = (int)Math.ceil(count / (float)size);
+		if(pageCount < 1) 
+			pageCount = 1;
 		
 		model.addAttribute("pageCount", pageCount);
 		model.addAttribute("list", list);
@@ -74,7 +79,7 @@ public class NameController {
 	
 	// 이름 투표
 	@GetMapping("{desertionNo}")
-	public String choice(@PathVariable(name="desertionNo")long animalId, Model model) {
+	public String choice(@PathVariable(name="desertionNo")long animalId, Model model, HttpServletRequest request) {
 		// 이름 짓기가 끝났을때 -> 이동X
 		// 이름 투표 중일 때 -> choice;
 		// 이름 투표중이 아닐 때 => add
@@ -85,7 +90,6 @@ public class NameController {
 		int choiceSum = 0;
 		List<NameView> nameList = new ArrayList<NameView>();
 		if(v != null) {	// 후보를 받았던 적이 있음(이미 vote가 있음)
-			System.out.println("String.valueOf(animalId)) : "+String.valueOf(animalId));
 			nameList = nameService.getViewListByAnimalId(animalId, 9999);	
 			
 			for(NameView n : nameList) {	 		// 투표수 합계를 구함
@@ -93,14 +97,9 @@ public class NameController {
 			}
 		}		
 		
-		System.out.println("animalId : "+ animalId+" / memberId : "+memberId);
-		
+		HttpSession session = request.getSession();
+		int memberId = (int)session.getAttribute("id");
 		Choice choice = choiceService.get(animalId, memberId);
-//		if( choice != null ) {
-//			choiced = true;
-//		}
-	
-		///System.out.println("choice-"+choice.getName());
 		
 		model.addAttribute("nameList", nameList);
 		model.addAttribute("animal", a);
@@ -114,11 +113,11 @@ public class NameController {
 
 	@PostMapping("{desertionNo}")
 	public String choice(@PathVariable(name="desertionNo") long animalId,
-						@RequestParam(name="name") String name) {
-		//@@@@@@@@@@@@@@@@@@@@@@@@ 여기 해야함
-
-		//System.out.println("선택된 이름 - " + selectName);
-		System.out.println("선택된 이름@@@@@@@ "+name);
+						@RequestParam(name="name") String name,
+						HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		int memberId = (int)session.getAttribute("id");
 		
 		Choice choice = new Choice(animalId, memberId, name);
 		choiceService.insert(choice);
@@ -134,9 +133,7 @@ public class NameController {
 		
 		List<NameView> nameList = new ArrayList<NameView>();
 		if(v != null) {	// 후보를 받았던 적이 있음(이미 vote가 있음)
-			System.out.println("String.valueOf(animalId)) : "+String.valueOf(animalId));
-			nameList = nameService.getViewListByAnimalId(animalId, 9999);
-			//nameList = nameService.getViewList(1, 999, "animalId", String.valueOf(animalId));			
+			nameList = nameService.getViewListByAnimalId(animalId, 9999);		
 		}		
 
 		Animal a = animalService.get(animalId);
@@ -151,8 +148,13 @@ public class NameController {
 	@PostMapping("{desertionNo}/add")
 	public String add(@PathVariable(name="desertionNo")long animalId,
 					  @RequestParam(name="name") String name,
-					  @RequestParam(name="reason") String reason) {
+					  @RequestParam(name="reason") String reason,
+					  HttpServletRequest request) {
 
+
+		HttpSession session = request.getSession();
+		int memberId = (int)session.getAttribute("id");
+		
 		Animal a = animalService.get(animalId);
 		
 		Vote v = voteService.get(animalId);
@@ -166,17 +168,17 @@ public class NameController {
 		}	
 
 		Name n = new Name(v.getAnimalId(), memberId, name, reason);
-		nameService.insert(n);		// 트랜잭션.,..간절히 필요,,,
-		
-		// redirect:../id
-		//return "redirect:list";
+		nameService.insert(n);
+
 		return "redirect:../"+animalId+"/add";
 	}
 	
 
-	//location.href = `/name/${desertionNo}/revote?name`;
 	@GetMapping("{desertionNo}/revote")
-	public String add(@PathVariable(name="desertionNo")long animalId) {
+	public String add(@PathVariable(name="desertionNo")long animalId, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		int memberId = (int)session.getAttribute("id");
 		
 		Choice choice = choiceService.get(animalId, memberId);
 		if(choice != null) {
