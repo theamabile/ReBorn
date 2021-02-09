@@ -17,12 +17,6 @@
 ### 2. 개발후기
 
 ### 3. 데이터베이스 설계
-1) 개념적 설계
-2) 물리적 설계
-<img src="https://i.esdrop.com/d/Jy3PwOXzjx.png" width="700" height="550" border="1px solid #e9e9e9">
-
-
-
 
 ### 4. Front-End(JavaScript ES6) 코드구성
 
@@ -99,10 +93,10 @@ list 페이지의 모든 작업들 로드, 페이지 이동, 검색, 정렬 그�
 
 ---
 ### 3. 데이터베이스 설계
-1) 개념적 설계(파일 이미지로 첨부합니다.)
 
++ 물리적 설계
 
-2) 물리적 설계(파일 이미지로 첨부합니다.)
+<img src="https://i.esdrop.com/d/Jy3PwOXzjx.png" width="700" height="550" border="1px solid #e9e9e9">
 
 </br>
 </br>
