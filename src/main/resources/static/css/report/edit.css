@@ -48,6 +48,7 @@
 
 .attach-box .attach-box-inner {
     display: flex;
+    margin-bottom:10px;
 }
 
 .attach-btn {
@@ -81,15 +82,24 @@
 
 .data-btn-box {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
 .data-btn-box>* {
     margin-right: 10px;
-    line-height: 40px;
+    line-height: 50px;
     text-align: center;
 }
 
 .data-btn-box>*:last-child {
     margin-right: 0;
+}
+
+.del-btn {
+	margin-right:auto;
+	background-color:#ef4d4d;
+}
+
+.del-btn:hover {
+	background-color:#dc4e4e;
 }

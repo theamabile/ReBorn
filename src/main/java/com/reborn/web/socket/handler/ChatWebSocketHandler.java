@@ -14,7 +14,7 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.reborn.web.controller.chat.ChatController;
+import com.reborn.web.controller.chat.api.ChatController;
 import com.reborn.web.service.chat.ChatService;
 
 
@@ -33,7 +33,7 @@ public class ChatWebSocketHandler implements WebSocketHandler {
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println(roomListSession);
+		System.out.println("연결됨" + session);
 		// 연결되었을떄.
 		String url = session.getUri().toString(); //접속한 사람 url
 		//System.out.println(url); 
@@ -47,10 +47,9 @@ public class ChatWebSocketHandler implements WebSocketHandler {
 		//존재하는 방인지 확인
 		for(int i = 0; i< idx; i++) {
 			//System.out.println(roomListSession.get(i));
-			System.out.println("bb");
 			String roomIdCheck = (String) roomListSession.get(i).get("roomId");
 			if(roomIdCheck.equals(roomId)) {
-				System.out.println("존재하는 방이 있음");
+				//System.out.println("존재하는 방이 있음");
 				flag = true;
 				idx=i;
 				break;
@@ -87,41 +86,46 @@ public class ChatWebSocketHandler implements WebSocketHandler {
 		
 		JSONParser parser = new JSONParser();
 		JSONObject obj = (JSONObject)parser.parse(msg);
-		int userId = Integer.parseInt((String) obj.get("userId"));
-		System.out.println("1"+userId);
+		int senderId = Integer.parseInt((String) obj.get("senderId"));
+		//System.out.println("1"+senderId);
 		int roomId = Integer.parseInt((String) obj.get("roomId"));
-		System.out.println("2"+roomId);
+		//System.out.println("2"+roomId);
 		String chatData = (String) obj.get("chatData");
+		//System.out.println("3"+chatData);
 		
-		
-		System.out.println("3"+chatData);
-		
-		System.out.println("service : " +service);
-		service.sendMsg(userId, chatData, roomId);
-
+		//System.out.println("service : " +service);
+		service.sendMsg(senderId, chatData, roomId); //데이터 저장
+		System.out.println("aaa");
 		
 		HashMap<String, Object> temp = new HashMap<String, Object>();
+		
+		
 		if(roomListSession.size() > 0) {
 			for(int i = 0; i<roomListSession.size(); i++){
 				int sessionRoomId = Integer.parseInt((String) roomListSession.get(i).get("roomId")); //세션리스트의 저장된 방번호를 가져와서
 				if(sessionRoomId == roomId) { //같은값의 방이 존재한다면
-					System.out.println("같은방.");
+					System.out.println("같은방존재함.");
 					temp = roomListSession.get(i); //해당 방번호의 세션리스트의 존재하는 모든 object값을 가져온다.
 					break;
 				}
 			}
 			
+			
+			System.out.println(temp);
+			System.out.println(temp.keySet());
 
 			//해당 방의 세션들만 찾아서 메시지를 발송해준다.
-			for(String k : temp.keySet()) { 
+			for(String k : temp.keySet()) {
+				
 				if(k.equals("roomId")) { //다만 방번호일 경우에는 건너뛴다.
 					continue;
 				}
-				
+				System.out.println("k:"+k);
 				WebSocketSession wss = (WebSocketSession) temp.get(k);
 				if(wss != null) {
 					try {
 						wss.sendMessage(message);
+						System.out.println("메시지 전달");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

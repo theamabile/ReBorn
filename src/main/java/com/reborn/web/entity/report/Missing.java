@@ -41,6 +41,21 @@ public class Missing {
 		this.files = files;
 	}
 
+	public Missing(int id, int memberId, String title, String content, Date missingDate, String feature,
+			String location, String breed, String files) {
+		this.id = id;
+		this.memberId = memberId;
+		this.title = title;
+		this.content = content;
+		this.regDate = regDate;
+		this.hitCnt = hitCnt;
+		this.missingDate = missingDate;
+		this.feature = feature;
+		this.location = location;
+		this.breed = breed;
+		this.files = files;
+	}
+
 	public int getId() {
 		return id;
 	}

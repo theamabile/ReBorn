@@ -146,7 +146,7 @@
 
 .chat-body {
     position: relative;
-    height: 290px;
+    height: 292px;
     background: #6caeb0;
     padding: 20px;
     overflow-y: auto;
@@ -297,4 +297,8 @@
     text-align: center;
     color: #fff;
     background: #43888A;
+}
+
+.hide {
+    display: none;
 }

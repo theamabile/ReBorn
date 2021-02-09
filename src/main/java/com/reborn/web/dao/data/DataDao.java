@@ -2,6 +2,7 @@ package com.reborn.web.dao.data;
 
 import java.util.List;
 
+import com.reborn.web.entity.data.Info;
 import com.reborn.web.entity.data.InfoView;
 
 public interface DataDao {
@@ -14,6 +15,8 @@ public interface DataDao {
 	int getCount(int categoryId);
 
 	int updateHit(int id);
+
+	int write(Info info);
 
 	
 

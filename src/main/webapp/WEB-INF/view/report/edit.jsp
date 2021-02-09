@@ -1,11 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+    
+
 <link href="/css/report/edit.css" type="text/css" rel="stylesheet" />
 
 <section class="main-container">
 	<h1>반려동물 실종 신고 수정</h1>
       <div class="data-table-box">
-        <form action="" class="data-table-form">
+        <form action="/report/${missingView.id}/edit" enctype="multipart/form-data" method="POST" class="data-table-form">
             <table class="data-table">
                 <colgroup>
                     <col style="width:200px;">
@@ -16,7 +21,7 @@
                         <th>제목</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="text" placeholder="제목을 입력해주세요." value="제목">
+                                <input type="text" name="title" placeholder="제목을 입력해주세요." value="${missingView.title}">
                             </div>
                         </td>
                     </tr> 
@@ -24,7 +29,7 @@
                         <th>실종 일자</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="date" value="2011-11-22">
+                                <input name="missing-date" type="date" value="<fmt:formatDate value="${missingView.missingDate}" pattern="yyyy-MM-dd"/>">
                             </div>
                         </td>
                     </tr>
@@ -33,7 +38,7 @@
                         <th>실종 장소</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="text" placeholder="ex) 서울시 마포구 연남동 성산중학교 앞" value="서울시">
+                                <input type="text" name="location" placeholder="ex) 서울시 마포구 연남동 성산중학교 앞" value="${missingView.location}">
                             </div>
                         </td>
                     </tr>
@@ -43,7 +48,7 @@
                         <th>품종</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="text" placeholder="ex)믹스견입니다." value="믹스견">
+                                <input type="text" name="breed" placeholder="ex)믹스견입니다." value="${missingView.breed}">
                             </div>
                         </td>
                     </tr>
@@ -51,7 +56,7 @@
                         <th>특징</th>
                         <td>
                             <div class="data-table-form">
-                                <input type="text" placeholder="ex) 털이 갈색이고 눈색이 갈색이입니다." value="털이 갈색">
+                                <input type="text" name="feature" placeholder="ex) 털이 갈색이고 눈색이 갈색이입니다." value="${missingView.feature}">
                             </div>
                         </td>
                     </tr>
@@ -59,12 +64,18 @@
                         <th>첨부파일</th>
                         <td>
                             <div class="attach-box-list">
-                                <div class="attach-box">
-                                    <div class="attach-box-inner">
-                                        <input class="attach-read" type="text" title="첨부파일명 보기" readonly value="파일명">
-                                        <button class="attach-cancel-btn" type="button" onclick="fileInputDel();">삭제</button>
-                                    </div>
-                                </div>
+                            	<c:if test="${not empty missingView.files}">
+                            		<c:forEach items="${fn:split(missingView.files, ',') }" var="item">
+		                                <div class="attach-box">
+		                                	
+		                                    <div class="attach-box-inner">
+		                                    	<input class="attach-read" type="text" title="첨부파일명 보기" readonly name="at-name" value="${item}">
+		                                        <button class="attach-cancel-btn" type="button" onclick="fileInputDel();">삭제</button>
+		                                    </div>
+			                                  
+		                                </div>
+		                            </c:forEach>
+		                        </c:if>
                             </div>
                             <button class="file-form-add" href="#">추가</button>                           
                         </td>
@@ -73,7 +84,7 @@
                     <tr>
                         <th>내용</th>
                         <td>
-                            <textarea  class="data-table-textarea" class="" name="" id="">테스트</textarea>
+                            <textarea  class="data-table-textarea" class="" name="content" id="">${missingView.content}</textarea>
                         </td>
                     </tr>
                 </tbody>
@@ -81,8 +92,9 @@
         </form>
     </div>
     <div class="data-btn-box">
-        <a href="#" class="main-button-m">수정</a>
-        <a href="#" class="gray-button-m">취소</a>
+    	<a href="#" class="gray-button-m del-btn">삭제</a>
+        <a href="#" class="main-button-m edit-btn">수정</a>
+        <a href="/report/${missingView.id}" class="gray-button-m">취소</a>
     </div>
 </section>
 
@@ -142,7 +154,12 @@ window.addEventListener('load', ()=>{
          attachInput.forEach((item) =>{
              console.log(item.value);
              if(item.value.length == 0){
-                 alert("첨부파일이 비어있는 곳이 있습니다. 비어 있는 곳을 먼저 채워주세요.");
+           
+                 let modelBox = new ModalBox({
+             		content:`첨부파일이 비어있는 곳이 있습니다.<br/>비어 있는 곳을 먼저 채워주세요.`,
+             		cancelBtnHide:true
+             	 })
+             	
                  fileEmpty = true;
                  return;
              }
@@ -151,6 +168,36 @@ window.addEventListener('load', ()=>{
          if(fileEmpty == false){
               attachList.insertAdjacentHTML('beforeend',fileFormTemp);
          }
-     })                    
+     })      
+     
+     
+     
+     let editBtn = document.querySelector('.edit-btn');
+     let dataForm = document.querySelector('.data-table-form');     
+     editBtn.addEventListener('click', (e)=>{
+     	 e.preventDefault();
+     	 dataForm.method="POST";
+		 dataForm.submit();
+     });
+     
+     
+     //삭제
+     let delBtn = document.querySelector('.del-btn');
+	 delBtn.addEventListener('click', (e)=>{
+	 	console.log("a");
+	 	 e.preventDefault();
+	 	 
+           let modelBox = new ModalBox({
+       		content:`정말로 삭제하시겠습니까?<br/> 삭제하면 복구할 수 없습니다.`,
+       	  })
+       	  .then((resolve)=>{
+			if(resolve.result == "ok"){
+				window.location.href ="./delete";
+			}else{
+				
+			}
+		});
+       	 
+	 });     
  })
  </script>	
