@@ -44,13 +44,6 @@ window.addEventListener("load", (e)=>{
 		})		
 	});
 	
-	
-	
-	
-	
-	
-	
-
 		//e.target          //이벤트발생
 		//e.currentTarget   //이벤트를 달아준 객체를 반환
 	//댓글 수정
