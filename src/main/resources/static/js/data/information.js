@@ -91,7 +91,11 @@ window.addEventListener('load', (e)=>{
 				
 				
 				for(let i = 0; i < 5; i++){
-					pageLi = `<li class="active"><a href="?p=${i+startNum}&categroy=${categroy}">${startNum + i}</a></li>`
+					if(page == startNum+i){
+						pageLi = `<li class="current"><a href="?p=${i+startNum}&categroy=${categroy}">${startNum + i}</a></li>`
+					}else {
+						pageLi = `<li class=""><a href="?p=${i+startNum}&categroy=${categroy}">${startNum + i}</a></li>`
+					}
 					if(i+startNum <= pageCount){
 						pagerBtn.insertAdjacentHTML('beforeend', pageLi);
 					}
@@ -172,7 +176,12 @@ window.addEventListener('load', (e)=>{
 				
 				
 				for(let i = 0; i < 5; i++){
-					pageLi = `<li class="active"><a href="?p=${i+startNum}&categroy=${categroy}">${startNum + i}</a></li>`
+					
+					if(page == startNum+i){
+						pageLi = `<li class="current"><a href="?p=${i+startNum}&categroy=${categroy}">${startNum + i}</a></li>`
+					}else {
+						pageLi = `<li class=""><a href="?p=${i+startNum}&categroy=${categroy}">${startNum + i}</a></li>`
+					}
 					if(i+startNum <= pageCount){
 						pagerBtn.insertAdjacentHTML('beforeend', pageLi);
 					}
@@ -260,7 +269,11 @@ window.addEventListener('load', (e)=>{
 							
 							
 							for(let i = 0; i < 5; i++){
-								pageLi = `<li class="active"><a href="?p=${i+startNum}&categroy=${categroy}">${startNum + i}</a></li>`
+									if(page == startNum+i){
+										pageLi = `<li class="current"><a href="?p=${i+startNum}&categroy=${categroy}">${startNum + i}</a></li>`
+									}else {
+										pageLi = `<li class=""><a href="?p=${i+startNum}&categroy=${categroy}">${startNum + i}</a></li>`
+									}
 								if(i+startNum <= pageCount){
 									pagerBtn.insertAdjacentHTML('beforeend', pageLi);
 								}
@@ -347,7 +360,11 @@ window.addEventListener('load', (e)=>{
 							
 							
 							for(let i = 0; i < 5; i++){
-								pageLi = `<li class="active"><a href="?p=${i+startNum}&categroy=${categroy}">${startNum + i}</a></li>`
+									if(page == startNum+i){
+										pageLi = `<li class="current"><a href="?p=${i+startNum}&categroy=${categroy}">${startNum + i}</a></li>`
+									}else {
+										pageLi = `<li class=""><a href="?p=${i+startNum}&categroy=${categroy}">${startNum + i}</a></li>`
+									}
 								if(i+startNum <= pageCount){
 									pagerBtn.insertAdjacentHTML('beforeend', pageLi);
 								}

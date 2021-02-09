@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.reborn.web.dao.data.DataDao;
+import com.reborn.web.entity.data.Info;
 import com.reborn.web.entity.data.InfoView;
 
 @Repository
@@ -38,6 +39,12 @@ public class MyBatisDataDao implements DataDao {
 	public int updateHit(int id) {
 		
 		return mapper.updateHit(id);
+	}
+
+	@Override
+	public int write(Info info) {
+		// TODO Auto-generated method stub
+		return mapper.write(info);
 	}
 
 	

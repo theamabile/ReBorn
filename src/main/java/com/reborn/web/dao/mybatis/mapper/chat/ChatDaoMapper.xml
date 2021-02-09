@@ -13,4 +13,28 @@
 			SELECT * FROM Chatting WHERE roomID = #{param1} ORDER BY regDate DESC LIMIT 100) ChatList 
 			order by regdate;
 	</select>
+	
+	
+	<!-- <select id="getRoomList" resultType="com.reborn.web.entity.chat.Room">
+		SELECT * FROM (
+			SELECT * FROM Chatting WHERE roomID = #{param1} ORDER BY regDate DESC LIMIT 100) ChatList 
+			order by regdate;
+	</select> -->
+	
+	<select id="getRoomList" resultType="int">
+		select distinct roomId from Chatting;
+	</select>
+	
+	
+	<select id="getLinkList" resultType="com.reborn.web.entity.chat.Link">
+		select * from Link;
+	</select>
+	
+	<delete id="linkDelete">
+		delete from Link where id = #{param1}
+	</delete>
+	
+	<insert id="addLink">
+		insert into Link(title, address) values(#{title}, #{address})
+	</insert>
 </mapper>

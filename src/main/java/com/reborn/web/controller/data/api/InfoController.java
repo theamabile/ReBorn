@@ -41,7 +41,8 @@ public class InfoController {
 			if(match.find()) {
 				String imgTag = match.group(0);
 				imgTag = imgTag.replace("<img src=\"", ""); 
-				imgTag = imgTag.replace("\"/>", ""); 		
+				imgTag = imgTag.replace("\">", ""); 	
+				imgTag = imgTag.replace("\\", "/");		
 				//System.out.println("imgTag : "+ imgTag);
 				imgUrlList.put(n.getId(), imgTag);
 			}

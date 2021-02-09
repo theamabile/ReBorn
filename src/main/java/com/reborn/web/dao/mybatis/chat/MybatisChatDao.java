@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.reborn.web.dao.chat.ChatDao;
 import com.reborn.web.dao.data.DataDao;
 import com.reborn.web.entity.chat.Chatting;
+import com.reborn.web.entity.chat.Link;
+import com.reborn.web.entity.chat.Room;
 
 @Repository
 public class MybatisChatDao implements ChatDao {
@@ -30,6 +32,34 @@ public class MybatisChatDao implements ChatDao {
 	@Override
 	public List<Chatting> getList(int id) {
 		return mapper.getList(id);
+	}
+
+
+	@Override
+	public List<Integer> getRoomList() {
+		// TODO Auto-generated method stub
+		return mapper.getRoomList();
+	}
+
+
+	@Override
+	public List<Link> getLinkList() {
+		// TODO Auto-generated method stub
+		return mapper.getLinkList();
+	}
+
+
+	@Override
+	public int linkDelete(int id) {
+		// TODO Auto-generated method stub
+		return mapper.linkDelete(id);
+	}
+
+
+	@Override
+	public int addLink(String title, String address) {
+		// TODO Auto-generated method stub
+		return mapper.addLink(title, address);
 	}
 
 }

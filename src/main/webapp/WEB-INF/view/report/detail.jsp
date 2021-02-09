@@ -9,7 +9,8 @@
 <section class="main-container">
 	<h1>반려동물 실종 신고</h1>
 	        <div class="data-table-box">
-	        <span class="missing-id hide">${missingView.id}</span>	
+	        <span class="missing-id hide">${missingView.id}</span>
+	         <span class="session-id hide"><%= session.getAttribute("id") %></span>	
             <form action="" class="data-table-form">
                 <table class="data-table">
                     <colgroup>
@@ -54,6 +55,7 @@
                             <th>특징</th>
                             <td>
                                 ${missingView.feature}
+                                
                             </td>
                         </tr>
                         
@@ -86,7 +88,12 @@
         </div>
         
         <div class="data-btn-box">
-            <a href="list" class="main-button-m">목록</a>
+          	<a href="list" class="main-button-m">목록</a>
+			
+			<c:if test="${sessionScope.id ==  missingView.memberId}"> 
+				<a href="${missingView.id}/edit" class="gray-button-m">수정</a>
+			</c:if>
+        	
         </div>
 
 
@@ -96,7 +103,19 @@
                 <li>
                     <ol class="comment-info">
                         <li>${cl.nickname}</li>
+ 				
                         <li><fmt:formatDate value="${cl.regDate}" pattern="yyyy-MM-dd"/></li>
+                       
+                        
+                        <li class="util-menu">
+                        	<ol>
+                        		<c:if test="${sessionScope.id == cl.memberId}"> 
+                        			<li><a href="#" class="comment-modify " data-commentid="${cl.id}" onClick="modifyFn()">수정</a></li>
+                        			<li><a href="#" class="comment-delete" data-commentid="${cl.id}" onClick="deleteFn()">삭제</a></li>
+                        		</c:if>
+                        		<li><a href="#" class="comment-declare" data-commentid="${cl.id}" onClick="declareFn()">신고</a></li>
+                        	</ol>
+                        </li>
                     </ol>
                     <div class="comment-content">
                        ${cl.content}

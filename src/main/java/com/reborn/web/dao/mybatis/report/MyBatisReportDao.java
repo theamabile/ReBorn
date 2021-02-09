@@ -92,6 +92,40 @@ public class MyBatisReportDao implements ReportDao{
 	}
 
 
+	@Override
+	public int commentDelete(int id) {
+		// TODO Auto-generated method stub
+		return mapper.commentDelete(id);
+	}
+
+
+	@Override
+	public int commentDeclare(int memberId, int commentId, String reason) {
+		// TODO Auto-generated method stub
+		return  mapper.commentDeclare(memberId, commentId, reason);
+	}
+
+
+	@Override
+	public int commentModify(int memberId, int commentId, String content) {
+		// TODO Auto-generated method stub
+		return mapper.commentModify(memberId, commentId, content);
+	}
+
+
+	@Override
+	public int update(Missing missing) {
+		return mapper.update(missing);
+	}
+
+
+	@Override
+	public int delete(int id) {
+		// TODO Auto-generated method stub
+		return mapper.delete(id);
+	}
+
+
 
 
 

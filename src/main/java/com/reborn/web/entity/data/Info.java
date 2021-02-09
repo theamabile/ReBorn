@@ -7,29 +7,34 @@ public class Info {
 	private String title;
 	private String content;
 	private Date regDate;
-	private String files;
 	private int hitCnt;
-	private int boardCatecoryId;
+	private int infoCategoryId;
 	private int memberId;
 	
 	
 	public Info() {
 		// TODO Auto-generated constructor stub
 	}
+	
 
-
-	public Info(int id, String title, String content, Date regDate, String files, int hitCnt, int boardCatecoryId,
+	public Info(int id, String title, String content, Date regDate, int hitCnt, int infoCategoryId,
 			int memberId) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.regDate = regDate;
-		this.files = files;
 		this.hitCnt = hitCnt;
-		this.boardCatecoryId = boardCatecoryId;
+		this.infoCategoryId = infoCategoryId;
 		this.memberId = memberId;
 	}
 
+
+	public Info(String title, String content, int infoCategoryId, int memberId) {
+		this.title = title;
+		this.content = content;
+		this.infoCategoryId = infoCategoryId;
+		this.memberId = memberId;
+	}
 
 	public int getId() {
 		return id;
@@ -71,16 +76,6 @@ public class Info {
 	}
 
 
-	public String getFiles() {
-		return files;
-	}
-
-
-	public void setFiles(String files) {
-		this.files = files;
-	}
-
-
 	public int getHitCnt() {
 		return hitCnt;
 	}
@@ -91,13 +86,13 @@ public class Info {
 	}
 
 
-	public int getBoardCatecoryId() {
-		return boardCatecoryId;
+	public int infoCategoryId() {
+		return infoCategoryId;
 	}
 
 
-	public void setBoardCatecoryId(int boardCatecoryId) {
-		this.boardCatecoryId = boardCatecoryId;
+	public void setBoardCatecoryId(int infoCategoryId) {
+		this.infoCategoryId = infoCategoryId;
 	}
 
 
@@ -113,8 +108,10 @@ public class Info {
 
 	@Override
 	public String toString() {
-		return "Info [id=" + id + ", title=" + title + ", content=" + content + ", regDate=" + regDate + ", files="
-				+ files + ", hitCnt=" + hitCnt + ", boardCatecoryId=" + boardCatecoryId + ", memberId=" + memberId
-				+ "]";
-	}	
+		return "Info [id=" + id + ", title=" + title + ", content=" + content + ", regDate=" + regDate + ", hitCnt="
+				+ hitCnt + ", boardCatecoryId=" + infoCategoryId + ", memberId=" + memberId + "]";
+	}
+
+
+	
 }

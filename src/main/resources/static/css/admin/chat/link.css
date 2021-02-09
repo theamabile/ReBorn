@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+
+.chat-cover {
+	min-height:350px;
+}
+
+.link-list {
+}
+
+.link-list li {
+	display:block;
+	border:1px solid #777;
+	border-radius:5px;
+	margin-bottom:20px;
+	display:flex;
+	align-items:center;
+	padding:14px 20px;
+	box-sizing:border-box;
+
+}
+
+.link-list li > dl {
+	width:100%;
+	margin-right:20px;
+}
+.link-list li dt {
+	font-size:17px;
+	margin-bottom:8px;
+	color:#43888a;
+	font-weight:600;
+}
+.link-list li dd {
+	word-break: break-all;
+}
+.del-btn {
+	font-size:26px;
+	margin-left:auto;
+}
+.del-btn > .fas {
+	color:#f16f6f;
+}
+
+.link-add-box{
+	padding:14px 20px 14px 0;
+	display:flex;
+	align-items:center;
+}
+.link-tit {
+	margin-right:10px;
+	width:240px;
+	height:40px;
+	padding:0 8px;
+	border-radius:5px;	
+	border:#ddd;
+	border:1px solid #666;
+}
+.link-addr {
+	margin-right:10px;
+	width:100%;
+	height:40px;
+	padding:0 8px;
+	border-radius:5px;
+	border:1px solid #666;
+}
+.link-add-btn {
+	font-size:26px;
+	margin-left:auto;
+	
+}
+.link-add-btn > .fas {
+	color:#43888a;
+}
+
+

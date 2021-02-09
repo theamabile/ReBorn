@@ -1,4 +1,4 @@
-package com.reborn.web.controller.chat;
+package com.reborn.web.controller.chat.api;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reborn.web.entity.chat.Chatting;
+import com.reborn.web.entity.chat.Link;
 import com.reborn.web.service.chat.ChatService;
 
 
@@ -24,5 +25,14 @@ public class ChatController{
 		List<Chatting> list = service.getList(id);
 		return list;
 			
+	}
+	
+	
+	@RequestMapping("link/list")
+	public List<Link> list() {
+		System.out.println("aa");
+		List<Link> linkList= service.getLinkList();
+		return linkList;
+		
 	}
 }

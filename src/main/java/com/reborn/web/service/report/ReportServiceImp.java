@@ -87,6 +87,40 @@ public class ReportServiceImp implements ReportService {
 	}
 
 
+	@Override
+	public int commentDelete(int id) {
+		// TODO Auto-generated method stub
+		return reportDao.commentDelete(id);
+	}
+
+
+	@Override
+	public int commentDeclare(int memberId, int commentId, String reason) {
+		// TODO Auto-generated method stub
+		return reportDao.commentDeclare(memberId, commentId, reason);
+	}
+
+
+	@Override
+	public int commentModify(int memberId, int commentId, String content) {
+		// TODO Auto-generated method stub
+		return reportDao.commentModify(memberId, commentId, content);
+	}
+
+
+	@Override
+	public int update(Missing missing) {
+		return reportDao.update(missing);
+	}
+
+
+	@Override
+	public int delete(int id) {
+		// TODO Auto-generated method stub
+		return reportDao.delete(id);
+	}
+
+
 
 	
 }
