@@ -7,14 +7,14 @@
 	<nav class="main-menu">
 		<h1 class="d-none">메인 메뉴</h1>
 		<div class="menu-container">
-			<img src="/images/logo.svg">
+			<a href="/"><img src="/images/logo.svg"></a>
 			<ul class="menu-list">
-				<li>
+				<!-- <li>
 					<div class="menu-btn">
 						<a href="/main">HOME</a>
 					</div>
 					<div class="hover-line"></div>
-				</li>
+				</li> -->
 				<li>
 					<div class="menu-btn">
 						<span>유기동물</span>

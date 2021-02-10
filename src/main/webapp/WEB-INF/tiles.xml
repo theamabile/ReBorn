@@ -5,9 +5,14 @@
 
 <tiles-definitions>          
 
+	<!--  main -->
+	<definition name="home.index" template="/WEB-INF/view/index.jsp">
+	    <put-attribute name="header" value="/WEB-INF/view/inc/header.jsp" />
+    </definition>
+    
 	<!--  profile Img -->
 	<definition name="home.mypage.imgInput" template="/WEB-INF/view/inc/empty.jsp">
-		    <put-attribute name="title" value="Tiles tutorial homepage" />
+	    <put-attribute name="title" value="Tiles tutorial homepage" />
         <put-attribute name="main" value="/WEB-INF/view/mypage/imgInput.jsp"/>  
     </definition>
     
@@ -37,12 +42,6 @@
 	    <put-attribute name="chat" value="/WEB-INF/view/chat.jsp" />
 	  </definition>
 
-
-    
-
-
-
-	  
 	  <!-- 관리자 페이지 -->
 	  <definition name="admin.*.*" template="/WEB-INF/view/admin/inc/layout.jsp">
 	    <put-attribute name="title" value="관리자 페이지" />
