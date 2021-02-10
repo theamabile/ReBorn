@@ -7,7 +7,7 @@ window.addEventListener('load', (e)=>{
 	
 	
 	let page = 1;
-	let categroy = 1;
+	let categroy = 0;
 	let pageCount = 1;
 	let offset = (page-1)%5;
 	let startNum = page - offset;

@@ -13,7 +13,7 @@
 	<c:set var="page" value="1" />
 </c:if>
 <c:if test ="${empty cate}"> 
-	<c:set var="cate" value="1" />
+	<c:set var="cate" value="0" />
 </c:if>
 
 
@@ -22,10 +22,10 @@
 	<div class="info-tab">
 
         <ul class="info-tab-list">
-        	<li class="${cate==1?'active':''}"><a href="#" data-category="1">공통</a></li>
-            <li class="${cate==2?'active':''}"><a href="#" data-category="2"">강아지</a></li>
-            <li class="${cate==3?'active':''}"><a href="#" data-category="3"">고양이</a></li>
-            <li class="${cate==4?'active':''}"><a href="#" data-category="4">기타</a></li>
+        	<li class="${cate==0?'active':''}"><a href="#" data-category="0">공통</a></li>
+            <li class="${cate==1?'active':''}"><a href="#" data-category="1"">강아지</a></li>
+            <li class="${cate==2?'active':''}"><a href="#" data-category="2"">고양이</a></li>
+            <li class="${cate==3?'active':''}"><a href="#" data-category="3">기타</a></li>
         </ul>
     </div>
     <div class="info-board">
