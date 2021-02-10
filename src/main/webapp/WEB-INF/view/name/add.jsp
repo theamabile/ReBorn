@@ -44,8 +44,7 @@
 			<h1>이름 후보</h1>
 			<c:if test="${nameList.size() != 0}">
 				<div class="vote-info">
-					<span>이름 모집기간 : ${vote.recruitStartDate}~${vote.recruitEndDate}</span>	
-					<a class="report-btn">신고하기</a>			
+					<span>이름 모집기간 : ${vote.recruitStartDate}~${vote.recruitEndDate}</span>			
 				</div>
 			</c:if>
 			<div class="w-100">
