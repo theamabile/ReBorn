@@ -9,17 +9,18 @@ public class HomeController {
 
 	@RequestMapping()
 	public String main() {
-		System.out.println("mainPage");
+//		System.out.println("mainPage");
 		
 		return "home.index";
 //		return "index"; -> /WEB-INF/view/index.jsp";
 	}
 	
-//	@RequestMapping("main")
-//	public String home() {
+	@RequestMapping("main")
+	public String home() {
 //		System.out.println("ㅎㅇㅎㅇ");
+		return "home.index";
 //		return "home.main";
-//	}
+	}
 	
 	
 	@RequestMapping("chat")
