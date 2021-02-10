@@ -20,9 +20,10 @@
 	<main>	 <!-- footer가 main안에 있어야 하므로 메인태그로 감싸줌 -->
 	
 		<tiles:insertAttribute name="main" />
-	
 		
+		<tiles:insertAttribute name="chat" />
 	</main>
-
+	
+	
 </body>
 </html>

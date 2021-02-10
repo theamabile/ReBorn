@@ -61,7 +61,7 @@ window.addEventListener("load", () => {
 					idInput.style["margin-bottom"] = "22px";
 					result.classList.add("d-none");
 					console.log(json);
-					form.action = "./reset-pw?loginId=" + id;
+					//form.action = "./reset-pw?loginId=" + id;
 				}
 			});
 	})
@@ -142,9 +142,12 @@ window.addEventListener("load", () => {
 	})
 
 	//버튼 비활성화
-	singBtn.addEventListener('load', (e) => {
-		if (phoneConf)
+	singBtn.addEventListener('click', (e) => {
+		if (phoneConf){
+			sessionStorage.setItem( "resetPwdId", id );
+			alert(sessionStorage.getItem("resetPwdId"));
 			return;
+			}
 		e.preventDefault();
 		alert("인증번호를 확인해주세요.");
 	})

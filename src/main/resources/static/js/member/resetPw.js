@@ -8,7 +8,10 @@ window.addEventListener("load", () => {
 	const btn = section.querySelector(".sing-btn");
 	const pwReg = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{1,50}).{8,50}$/;
 	let valid = false;
-
+	
+	//session값 꺼내오기
+	idInput.value=sessionStorage.getItem("resetPwdId" );
+	
 	//패스워드 형식 검사
 	pwInput.addEventListener("focusout", () => {
 		if (!pwReg.test(pwInput.value)) {

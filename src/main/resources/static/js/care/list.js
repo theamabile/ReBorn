@@ -7,6 +7,7 @@ class CareList extends React.Component{
 			list: [],
 			careCount: 0,
 			pageCount: 0,
+			memberId: 0,
 			autoCompleteList: []
 		}
 		
@@ -37,9 +38,9 @@ class CareList extends React.Component{
 		.then((response ) => {
 			return response.json();
 		})
-		.then(({list, pageCount, careCount})=>{
+		.then(({list, pageCount, careCount, memberId})=>{
 			this.startNum = this.page - ((this.page - 1) % this.range);
-			this.setState({list, pageCount, careCount, autoCompleteList: []});
+			this.setState({list, pageCount, careCount, memberId});
 		});
 		
 	}
@@ -136,6 +137,11 @@ class CareList extends React.Component{
 		if( e.target.tagName != "I" || !e.target.classList.contains("fa-heart") )
 			return; 
 			
+		if( !this.state.memberId ){
+			new ModalBox({content: "로그인을 먼저 해주세요", cancelBtnHide: true});
+			return;
+		}
+		
 		let li = e.target.closest('li');
 		if (!li) return; 
 		if (!e.currentTarget.contains(li)) return;
@@ -269,9 +275,9 @@ class CareList extends React.Component{
 					str[1] = (careTemp.splice(0, j + k)).join("");
 					str[2] = (careTemp.splice(0, careTemp.length)).join("");
 //					console.log(1,searchIndex,j,k,str);
-					console.log(careTemp);
-					console.log(valueTemp);
-					console.log(str);
+//					console.log(careTemp);
+//					console.log(valueTemp);
+//					console.log(str);
 					result.push(str);
 				}
 				
@@ -408,7 +414,7 @@ class CareList extends React.Component{
 	}
 	
 	render(){
-		console.log("render");
+		//console.log("render");
 		return <section onClick={this.autoCompleteCloseHandler.bind(this)}>
 			<section className="search-box">
 		        <div className="search-inner section-max-width position-relative">
@@ -448,7 +454,14 @@ class CareList extends React.Component{
 								cv => <li key={cv.careRegNo} data-care-reg-no={cv.careRegNo}>
 				                    <div>
 				                        <div className="thumb">
-				                            <a href={cv.careRegNo}><img src="/images/care/thumb/1d47dc4b58bd0023f49152347e221051_20160513111715_srgxlzpg.jpg" /></a>
+				                            <a href={cv.careRegNo}>
+												{
+													cv.thumb
+													? <img src={`../images/care/thumb/${cv.careRegNo}/${cv.thumb}`} /> 
+													: <img className="thumb-none" src="../images/care/search-back.png"/>
+														
+												}
+											</a>
 				                        </div>
 				                        <div className="name">
 				                            <div className="bold"><a href={cv.careRegNo}>{cv.name}</a>{cv.auth ? <i className="fas fa-check"></i> : ``}</div>

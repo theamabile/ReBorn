@@ -47,7 +47,7 @@ public class InfomationController {
 		}
 		
 		
-		int max = 100;
+		int max = 10000;
 		int random = (int)(Math.random() * max);
 		
 		

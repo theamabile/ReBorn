@@ -20,10 +20,9 @@
 			</div>
 			<div class="form-each">
 				<select name ="category">
-					<option value ="1" selected>공통</option>
-					<option value ="2">강아지</option>	
-					<option value ="3">고양이</option>	
-					<option value ="4">기타</option>	
+					<option value ="1">강아지</option>	
+					<option value ="2">고양이</option>	
+					<option value ="3">기타</option>	
 				</select>
 			</div>
 			
