@@ -80,7 +80,7 @@ section h1{
     font-size: 24px;
 }
 .animal-list{
-    background: var(--background-pink);
+    background: var(--background-color);
     padding-bottom: 70px;
 }
 
