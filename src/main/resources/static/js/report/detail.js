@@ -9,13 +9,14 @@ window.addEventListener('load', (e)=>{
 		
 		//console.log(<%= session.id%>);
 		commentBtn.addEventListener('click', (e)=>{
-			
+	console.log("a : " +uid)
 			e.preventDefault();
-			if(uid){
+			if(uid != null && uid != 'null' && uid!=''){
+					console.log(uid)
 				if(commentArea.value != null && commentArea.value != ""){
 					//commentForm.method = "POST"
 					//commentForm.submit();
-		
+				
 					//값 보내기
 					let commentContent = commentArea.value;
 					fetch(`/api/report/${missingId}/comment/write`,{
@@ -44,15 +45,16 @@ window.addEventListener('load', (e)=>{
 	             	 })
 				}
 			}else {
+				console.log('로그인 필요함')
 				//로그인 필요함
 				let modelBox = new ModalBox({
              		content:`로그인 서비스가 필요합니다.`,
              	 })
 				
-				modalBox
-					.then((resolve)=>{
+				modelBox
+				.then(resolve=>{
 					if(resolve.result == "ok"){
-						indow.location.href ="/member/login"
+						window.location.href ="/member/login"
 					}else{
 						
 					}
@@ -199,16 +201,21 @@ function declareFn(){
 			method:'POST',
 		})
 		.then(()=>{
-			let modalBox = new ModalBox({
-				content:`수정되었습니다..`,
+
+		});
+		
+		let modalBox = new ModalBox({
+				content:`신고되었습니다.`,
 				cancelBtnHide:true
 			});
 			
-			
-			//댓글 가져오가
-			commentLoad(missingId, commentBox);
-			
-		});
+			modalBox
+			.then(resolve=>{
+				if(resolve.result == "ok"){
+					//신고완료
+					commentLoad(missingId, commentBox);
+				}
+			});
 
 	}
 }
@@ -236,9 +243,14 @@ function modifyFn(){
 				content:`수정되었습니다.`,
 				cancelBtnHide:true
 			});
+			modalBox
+			.then(resolve=>{
+				if(resolve.result == "ok"){
+					//댓글 가져오가
+					commentLoad(missingId, commentBox);
+				}
+			});
 			
-			//댓글 가져오가
-			commentLoad(missingId, commentBox);
 			
 		});	
 	}

@@ -13,13 +13,19 @@
 	<select id="getViewList" resultType="com.reborn.web.entity.data.InfoView">
 		select I.id, I.title, I.content, I.regDate, I.hitCnt, IC.name as cateName
 		from Info I left join InfoCategory IC 
-		on I.infoCategoryId = IC.id 
-        where infoCategoryId = #{param3} order by I.regDate desc 
+		on I.infoCategoryId = IC.id
+		<if test="param3 != 0"> 
+        where infoCategoryId = #{param3} 
+        </if>
+        order by I.regDate desc 
         limit #{param2} offset #{param1};
 	</select>
 	
 	<select id="getCount" resultType="int">
-		select count(id) from Info where infoCategoryId = #{param1};
+		select count(id) from Info
+		<if test="param3 != 0"> 
+			where infoCategoryId = #{param1};
+		</if>
 	</select>
 	
 	<update id="updateHit">

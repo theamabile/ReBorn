@@ -9,7 +9,20 @@ window.addEventListener('load', (e)=>{
 		if (e.keyCode === 13) {
 			e.preventDefault();
 			console.log("엔터 침");
+			
+			let event = new MouseEvent('click', {
+	        'view':window,
+	        'bubbles': true,
+	        'cancelable': true
+		    });
+		
+		    chatSendBtn.dispatchEvent(event);
+
 		}
+		
+		
+		 
+
 	})
 	
 	
