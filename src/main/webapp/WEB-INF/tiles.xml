@@ -20,6 +20,7 @@
 	    <put-attribute name="title" value="Tiles tutorial homepage" />
 	    <put-attribute name="header" value="/WEB-INF/view/inc/header.jsp" />
 	    <put-attribute name="main" value="/WEB-INF/view/{1}/{2}.jsp" />
+	    <put-attribute name="chat" value="/WEB-INF/view/chat.jsp" />
 	    <put-attribute name="footer" value="/WEB-INF/view/inc/footer.jsp" />
 	  </definition>
 	  
@@ -28,14 +29,16 @@
 	    <put-attribute name="title" value="Tiles tutorial homepage" />
 	    <put-attribute name="header" value="/WEB-INF/view/inc/header.jsp" />
 	    <put-attribute name="main" value="/WEB-INF/view/{1}.jsp" />
+	    <put-attribute name="chat" value="/WEB-INF/view/chat.jsp" />
 	    <put-attribute name="footer" value="/WEB-INF/view/inc/footer.jsp" />
 	  </definition>
 	  
-	 <!-- 로그인관련 레이아웃  -->
+		 <!-- 로그인관련 레이아웃  -->
 	  <definition name="member.*" template="/WEB-INF/view/member/inc/layout.jsp">
 	    <put-attribute name="title" value="Tiles tutorial homepage" />
 	    <put-attribute name="header" value="/WEB-INF/view/inc/header.jsp" />
 	    <put-attribute name="main" value="/WEB-INF/view/member/{1}.jsp" />
+	    <put-attribute name="chat" value="/WEB-INF/view/chat.jsp" />
 	  </definition>
 
 	  <!-- 관리자 페이지 -->

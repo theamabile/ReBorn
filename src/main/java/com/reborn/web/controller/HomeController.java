@@ -15,11 +15,11 @@ public class HomeController {
 //		return "index"; -> /WEB-INF/view/index.jsp";
 	}
 	
-	@RequestMapping("main")
-	public String home() {
-		System.out.println("ㅎㅇㅎㅇ");
-		return "home.main";
-	}
+//	@RequestMapping("main")
+//	public String home() {
+//		System.out.println("ㅎㅇㅎㅇ");
+//		return "home.main";
+//	}
 	
 	
 	@RequestMapping("chat")
