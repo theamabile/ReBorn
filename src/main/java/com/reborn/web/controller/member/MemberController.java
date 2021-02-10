@@ -49,8 +49,9 @@ public class MemberController {
 	}
 
 	@RequestMapping("reset-pw")
-	public String findPwResult(@RequestParam(value = "loginId") String loginId) {
-		return "member.reset-pw";
+//	public String findPwResult(@RequestParam(value = "loginId") String loginId) {
+	public String findPwResult() {
+	return "member.reset-pw";
 	}
 
 	// 패스워드 재설정

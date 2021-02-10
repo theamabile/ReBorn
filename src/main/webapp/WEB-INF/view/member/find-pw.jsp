@@ -3,7 +3,7 @@
 <script src="/js/member/findPw.js" type="text/javascript"></script>
 
 <section class="find-pw">
-	<form action="dddd" method="post" class="form">
+	<form action="reset-pw" method="post" class="form">
 		<div class="logo"></div>
 		<div class="container">
 			<div class="checkboxs">

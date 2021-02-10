@@ -10,8 +10,8 @@
 			<div class="users input-icon">
 				<i class="fas fa-users"></i>
 			</div>
-			<input type="text" name="loginId"class="id input" placeholder="아이디"
-				value="${param.loginId}" readonly> <span class="result d-none">숫자,
+			<input type="text" name="loginId"class="id input"
+				value="${session.resetPwdId}" readonly> <span class="result d-none">숫자,
 				영문, 특수문자를 조합한 8자리 이상의 문자를 입력하세요.</span>
 			<div class="key input-icon">
 				<i class="fas fa-key"></i>
