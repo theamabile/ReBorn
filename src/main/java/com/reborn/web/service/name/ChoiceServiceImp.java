@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.name.ChoiceDao;
 import com.reborn.web.entity.name.Choice;
+import com.reborn.web.entity.name.VoteView;
 
 @Service
 public class ChoiceServiceImp implements ChoiceService {
@@ -42,6 +43,23 @@ public class ChoiceServiceImp implements ChoiceService {
 	public List<Choice> getList() {
 		// TODO Auto-generated method stub
 		return choiceDao.getList();
+	}
+	
+	@Override
+	public void getChoicedListByMemberId(int memberId, List<VoteView> list) {
+
+		List<Long> animalIdList = choiceDao.getChoicedIdsByMemberId(memberId, list);
+		
+		for(VoteView v : list) {			
+			for(long choicedId : animalIdList) {				
+				long voteId = v.getAnimalId();
+				if( voteId == choicedId ) {
+					v.setChoiced(true);
+					animalIdList.remove(choicedId);
+					break;
+				}
+			}
+		}
 	}
 
 }

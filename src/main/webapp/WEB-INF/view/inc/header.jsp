@@ -7,14 +7,14 @@
 	<nav class="main-menu">
 		<h1 class="d-none">메인 메뉴</h1>
 		<div class="menu-container">
-			<img src="/images/logo.svg">
+			<a href="/"><img src="/images/logo.svg"></a>
 			<ul class="menu-list">
-				<li>
+				<!-- <li>
 					<div class="menu-btn">
 						<a href="/main">HOME</a>
 					</div>
 					<div class="hover-line"></div>
-				</li>
+				</li> -->
 				<li>
 					<div class="menu-btn">
 						<span>유기동물</span>
@@ -22,7 +22,8 @@
 					<div class="hover-line"></div>
 					<div class="dropdown-menu">
 						<ul>
-							<li><a href="/animal/list">유기동물 조회</a></li>
+							<li><a href="/animal/list">유기동물 목록</a></li>
+                            <li><a href="/name/recruit">이름 지어주기</a></li>
 							<li><a href="/name/list">이름 투표</a></li>
 						</ul>
 					</div>

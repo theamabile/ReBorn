@@ -3,6 +3,7 @@ package com.reborn.web.dao.name;
 import java.util.Date;
 import java.util.List;
 
+import com.reborn.web.entity.care.CareView;
 import com.reborn.web.entity.name.Choice;
 import com.reborn.web.entity.name.Vote;
 import com.reborn.web.entity.name.VoteView;
@@ -19,7 +20,7 @@ public interface VoteDao {
 	List<Vote> getList(int offset, int size, String field, String query);
 	
 	VoteView getView(long animalId);
-	List<VoteView> getViewList(int offset, int size, String orderField, String orderQuery, String field, String query, String state);
+	List<VoteView> getViewList(int offset, int size, String orderField, String orderQuery, String field, String query, String state, int nameCnt);
 	
 	int getCount(String field, String query, String state);
 	Vote getLast();

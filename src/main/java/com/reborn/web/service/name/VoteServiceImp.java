@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.name.VoteDao;
+import com.reborn.web.entity.care.CareView;
+import com.reborn.web.entity.care.CareWish;
 import com.reborn.web.entity.name.Choice;
 import com.reborn.web.entity.name.Vote;
 import com.reborn.web.entity.name.VoteView;
@@ -47,6 +49,7 @@ public class VoteServiceImp implements VoteService{
 
 	@Override
 	public Vote get(long animalId) {
+		System.out.println("vote get - "+animalId);
 		return voteDao.get(animalId);
 	}
 	
@@ -69,13 +72,13 @@ public class VoteServiceImp implements VoteService{
 	}
 	
 	@Override
-	public List<VoteView> getViewList(int page, int size, String orderField, String orderQuery, String field, String query, String state) {
+	public List<VoteView> getViewList(int page, int size, String orderField, String orderQuery, String field, String query, String state, int nameCnt) {
 		List<VoteView> list = null;
 		
 		// offset 계산 => limit 사용
 		int offset = (page-1)*size;
 		
-		list = voteDao.getViewList(offset, size, orderField, orderQuery, field, query, state);
+		list = voteDao.getViewList(offset, size, orderField, orderQuery, field, query, state, nameCnt);
 		
 		return list;
 	}

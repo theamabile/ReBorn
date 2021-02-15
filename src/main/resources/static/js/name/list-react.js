@@ -112,12 +112,9 @@ class VoteList extends React.Component {
 				let startDate = new Date(v.voteStartDate);
 				let endDate = new Date(v.voteEndDate);
 				
-				console.log("vote Date : "+(endDate.getTime()-startDate.getTime())/(1000*3600*24));
-				console.log("take Date : "+(today.getTime()-startDate.getTime())/(1000*3600*24));
-				
-				var voteDate = (endDate.getTime()-startDate.getTime())/(1000*3600*24);	
-				var takeDate = (today.getTime()-startDate.getTime())/(1000*3600*24);		
-				
+				var voteDate = 1 + Math.round( (endDate.getTime()-startDate.getTime())/(1000*3600*24) );	
+				var takeDate = 1 + Math.round( (today.getTime()-startDate.getTime())/(1000*3600*24) );		
+								
 				let takePercent = Math.round((takeDate / voteDate) * 100);
 				
 				v.takePercent = takePercent;
@@ -132,7 +129,7 @@ class VoteList extends React.Component {
 		console.log("render");
 				
 		return <div className="vote">
-				 	<h1>투표 목록</h1>
+				 	<h1>이름 투표</h1>
 					<form>
 						<div className="filter">
 							<label>정렬</label>
@@ -187,7 +184,13 @@ class VoteList extends React.Component {
 									            			<span className="font-l mr-1">후보 수</span>
 									            			<span className="font-xl">{v.nameCnt }</span>
 									            		</div>
-									            		<i className="fas fa-vote-yea font-xl"></i>
+														{
+															v.choiced ?
+															<i className="fas fa-vote-yea font-xl red-pink"></i>
+															:
+															<i className="fas fa-vote-yea font-xl gray"></i>
+														}
+														
 									            	</div>
 									            </div>
 									        </div>

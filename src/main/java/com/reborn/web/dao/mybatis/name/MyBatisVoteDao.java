@@ -73,9 +73,9 @@ public class MyBatisVoteDao implements VoteDao{
 	}
 	
 	@Override
-	public List<VoteView> getViewList(int offset, int size, String orderField, String orderQuery, String field, String query, String state) {
+	public List<VoteView> getViewList(int offset, int size, String orderField, String orderQuery, String field, String query, String state, int nameCnt) {
 		// TODO Auto-generated method stub
-		return mapper.getViewList(offset, size, orderField, orderQuery, field, query, state);
+		return mapper.getViewList(offset, size, orderField, orderQuery, field, query, state, nameCnt);
 	}	
 
 	@Override
@@ -101,6 +101,5 @@ public class MyBatisVoteDao implements VoteDao{
 		// TODO Auto-generated method stub
 		return mapper.getEndViewList(date, field, query);
 	}
-
 
 }
