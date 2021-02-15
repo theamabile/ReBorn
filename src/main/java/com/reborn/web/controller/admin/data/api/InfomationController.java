@@ -51,7 +51,7 @@ public class InfomationController {
 		int random = (int)(Math.random() * max);
 		
 		
-		String url =  File.separator +"upload" + File.separator + "admin" + File.separator + "data" +File.separator + "random" ;
+		String url =  File.separator +"upload" + File.separator + "admin" + File.separator + "data" +File.separator + random;
 		String path = null;
 		String realPath = request.getServletContext().getRealPath(url);
 		//System.out.println("mtfRequest" + request);
