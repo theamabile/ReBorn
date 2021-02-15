@@ -31,6 +31,7 @@ window.addEventListener("load", () => {
 	})*/
 	confBtn.onclick = () => {
 
+
 		let request = new XMLHttpRequest();
 		request.onload = () => {
 			confirmResult = JSON.parse(request.responseText);
