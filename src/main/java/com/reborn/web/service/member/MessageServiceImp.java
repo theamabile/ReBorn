@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.member.MessageDao;
 import com.reborn.web.entity.member.Message;
+import com.reborn.web.entity.member.MessageView;
 @Service
 public class MessageServiceImp implements MessageService {
 
@@ -23,6 +24,19 @@ public class MessageServiceImp implements MessageService {
 	public List<Message> receive(int id) {
 
 		return messageDao.getReceive(id);
+	}
+
+	@Override
+	public List<MessageView> getReceiveList(int id, int page, int size, String field, String query) {
+		
+		int offset= (page-1)*size;
+		return messageDao.getReceiveList(id,offset,size,field,query);
+	}
+
+	@Override
+	public int getReceiveCount(int id, String field, String query) {
+		// TODO Auto-generated method stub
+		return messageDao.getReceiveCount(id,field,query);
 	}
 
 }

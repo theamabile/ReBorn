@@ -127,7 +127,7 @@ header{
 	            width: 100%;
 	        } 
 	
-	    .menu-container > button {
+	    .menu-container  button {
 	        width: 80px;
 	        height: 35px;
 	        color: var(--text);

@@ -70,8 +70,10 @@
 			
 			<s:authorize access="isAuthenticated()">
 			<div>
-			<div><a href="/member/info/message">쪽지함</a>  /  <a href="/mypage/info">내 정보</a></div>
-
+	<!-- 		<div><a href="/member/info/message">쪽지함</a>  /   --><button><a href="/mypage/info">${loginId}</a></button><!-- </div> -->
+				<button>
+					<a href="/member/logout">LOGOUT</a>
+				</button>
 			</div>
 			</s:authorize>
 		</div>

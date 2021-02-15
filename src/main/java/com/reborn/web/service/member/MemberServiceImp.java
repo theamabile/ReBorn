@@ -2,6 +2,7 @@ package com.reborn.web.service.member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -139,5 +140,11 @@ public class MemberServiceImp implements MemberService{
 		m.setNameCount(m.getNameCount()+1);
 		
 		return memberDao.update(m);
+	}
+
+	@Override
+	public List<Member> getList() {
+		// TODO Auto-generated method stub
+		return memberDao.getList();
 	}
 }

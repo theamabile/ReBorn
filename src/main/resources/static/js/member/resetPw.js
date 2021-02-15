@@ -42,10 +42,12 @@ window.addEventListener("load", () => {
 	//버튼 이벤트 
 	btn.addEventListener("click", (e) => {
 		if (pwInput.value == confirmInput.value){
+			//session값 지워주기
+			sessionStorage.removeItem("resetPwdId" );
 			return;
 		}
 		e.preventDefault();
 		console.log(confirmInput);
-		alert("비밀번호를 확인해주세요");
+		new ModalBox({content: "비밀번호를 확인해주세요.",	cancelBtnHide: true});
 	})
 })

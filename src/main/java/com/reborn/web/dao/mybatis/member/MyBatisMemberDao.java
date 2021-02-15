@@ -1,5 +1,7 @@
 package com.reborn.web.dao.mybatis.member;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -65,6 +67,12 @@ public class MyBatisMemberDao implements MemberDao {
 	public int checkMemberEmail(String loginId, String name, String email) {
 		// TODO Auto-generated method stub
 		return mapper.checkMemberEmail(loginId,name, email);
+	}
+
+	@Override
+	public List<Member> getList() {
+		// TODO Auto-generated method stub
+		return mapper.getList();
 	}
 	
 }

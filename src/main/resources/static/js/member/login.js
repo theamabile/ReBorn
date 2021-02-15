@@ -45,7 +45,7 @@ window.addEventListener("load", () => {
 	loginBtn.addEventListener("click", (e) => {
 		if (!idReg.test(id.value) || !pwReg.test(password.value)) {
 			e.preventDefault();
-			alert("아이디와 비밀번호를 확인해주세요.");
+			new ModalBox({content: "아이디와 비밀번호를 확인해주세요.",	cancelBtnHide: true});
 			return;
 		}
 	});

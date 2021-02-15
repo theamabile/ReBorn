@@ -98,7 +98,7 @@ window.addEventListener("load", () => {
 
 
 		if (!isValid) {
-			alert("등록된 회원정보가 아닙니다.");
+			new ModalBox({content: "등록된 회원정보가 아닙니다.",	cancelBtnHide: true});
 			return;
 		}
 		//휴대폰 인증
@@ -132,7 +132,6 @@ window.addEventListener("load", () => {
 			phoneConf = false;
 			singBtn.classList.remove("able");
 			singBtn.classList.add("disabled");
-			console.log("인증번호가 다릅");
 		}
 		else {
 			phoneConf = true;
@@ -149,6 +148,6 @@ window.addEventListener("load", () => {
 			return;
 			}
 		e.preventDefault();
-		alert("인증번호를 확인해주세요.");
+		new ModalBox({content: "인증번호를 확인해주세요.",	cancelBtnHide: true});
 	})
 });

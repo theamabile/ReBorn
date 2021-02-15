@@ -15,6 +15,10 @@
 		select * from Member
 		where loginId =#{loginId}
 	</select>
+	
+		<select id="getList" resultType="com.reborn.web.entity.member.Member">
+		select * from Member
+	</select>
 
 	<!-- 이메일로 멤버 가져오기검사 -->
 	<select id="getMember"

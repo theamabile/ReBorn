@@ -13,7 +13,7 @@ window.addEventListener("load", () => {
 		let id = idInput.value;
 		if (!idReg.test(id)) {
 			idInput.style.border = '#ff9d9d 2px solid';
-			alert("아이디는 영문자로 시작하는 6~14자 영문자 또는 숫자입니다.");
+			new ModalBox({content: "아이디는 영문자로 시작하는 6~14자 영문자 또는 숫자입니다.",	cancelBtnHide: true});
 			return;
 		}
 
@@ -24,7 +24,7 @@ window.addEventListener("load", () => {
 			if (result > 0) {
 				idInput.style.border = '#ff9d9d 2px solid';
 				idConf = false;
-				alert("이미 사용중인 아이디 입니다.");
+			    new ModalBox({content: "이미 사용중인 아이디 입니다.",	cancelBtnHide: true});
 			}
 			else {
 				idConf = true;
@@ -85,7 +85,7 @@ window.addEventListener("load", () => {
 	})
 
 	//버튼 비활성화
-	subBtn.addEventListener('load', (e) => {
+	subBtn.addEventListener('click', (e) => {
 		if (!idConf || !pwConf || !phoneConf) {
 			e.preventDefault();
 
@@ -100,7 +100,7 @@ window.addEventListener("load", () => {
 			else if (!phoneConf) {
 				alertMS = "인증번호를 확인해주세요.";
 			}
-			alert(alertMS);
+		     new ModalBox({content: alertMS,	cancelBtnHide: true});
 
 		}
 		else {
