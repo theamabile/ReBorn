@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.logout()
 				.logoutUrl("/member/logout")
-				.logoutSuccessUrl("/index")
+				.logoutSuccessUrl("/main")
 				.invalidateHttpSession(true)        //사용자가 쓰던 세션을 모두 유효하지 않도록 바꿔준다.
 				.and()
 			.csrf()       //cross site Request 설정

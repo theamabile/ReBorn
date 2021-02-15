@@ -5,8 +5,33 @@
 
 <mapper namespace="com.reborn.web.dao.member.MessageDao">
 
-	<select id="getReceive" resultType="com.reborn.web.entity.member.Message">
-			select * from Message
+	<select id="getReceive"
+		resultType="com.reborn.web.entity.member.Message">
+		select * from Message
 		where receiverId =#{id}
+	</select>
+
+	<select id="getReceiveList"
+		resultType="com.reborn.web.entity.member.MessageView">
+		select * from MessageView
+		<where>
+			receiverId =${param1}
+			<if test="param4 != null and param4 !=''">
+				BINARY ${param4} like '%${param5}%'
+			</if>
+		</where>
+		order by regdate desc
+		limit #{param3} offset #{param2}
+	</select>
+
+	<select id="getReceiveCount" resultType="int">
+		select count(id) from Message
+
+		<where>
+			receiverId =${param1}
+			<if test="param2 != null and param2 != ''">
+				BINARY ${param2} like %${param3}% </if>
+		</where>
+
 	</select>
 </mapper>

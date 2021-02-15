@@ -398,7 +398,7 @@ class CareList extends React.Component{
 			}
 		}
 		
-		this.queryInput.current.value = current.innerText;
+//		this.queryInput.current.value = current.innerText;
 		current.classList.add("active");
 	}
 	
@@ -409,7 +409,7 @@ class CareList extends React.Component{
 		
 		this.autoCompleteIndex = 0;
 		
-		this.queryInput.current.value = this.queryInputValueTemp;
+//		this.queryInput.current.value = this.queryInputValueTemp;
 		current.classList.remove("active");
 	}
 	

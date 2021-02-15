@@ -2,7 +2,7 @@ import * as THREE from "https://threejsfundamentals.org/threejs/resources/threej
 import { OrbitControls } from "https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/loaders/GLTFLoader.js';
 import { SkeletonUtils } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/utils/SkeletonUtils.js';
-
+import * as TWEEN from 'https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js';
 
 class AnimalIsland {
 
@@ -19,15 +19,22 @@ class AnimalIsland {
     island;
     islandModels;
 
+    cloudModels;
+
     constructor(parent, name){
-        this.canvas = document.querySelector("#animalIsland");
-        this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
+        this.canvas = document.querySelector("#reborn-island");
+        this.renderer = new THREE.WebGLRenderer({ 
+			canvas: this.canvas, 
+  			logarithmicDepthBuffer: true, 
+			antialias: true
+		});
         this.parentScene = parent;
         this.manager = new THREE.LoadingManager();
         this.then = 0;
         this.mixers = [];
         this.mixerInfos = [];
         this.islandModels = {};
+        this.cloudModels = [];
 
         const fov = 45;
         const aspect = 2; // the canvas default
@@ -35,10 +42,12 @@ class AnimalIsland {
         const far = 20000;
         this.camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
         this.camera.position.set(15, 25, 35);
+//        this.camera.position.set(150, 125, 175);
         
         const controls = new OrbitControls(this.camera, this.renderer.domElement);
-        controls.target.set(0, 0, 0);
+        controls.target.set(0, 4, 0);
         controls.update();
+		this.camera.position.set(15+90, 25+90, 35+180);
 
         const light1  = new THREE.AmbientLight(0xffffff, 0.3);
         light1.position.set(1.5, 2, 1.866); // ~60º
@@ -55,14 +64,14 @@ class AnimalIsland {
         this.renderer.outputEncoding = THREE.sRGBEncoding;
 
         this.models = {
-            pig:    { url: '../models/animals/Pig.gltf' },
-            cow:    { url: '../models/animals/Cow.gltf' },
-            llama:  { url: '../models/animals/Llama.gltf' },
-            pug:    { url: '../models/animals/Pug.gltf' },
-            sheep:  { url: '../models/animals/Sheep.gltf' },
-            zebra:  { url: '../models/animals/Zebra.gltf' },
-            horse:  { url: '../models/animals/Horse.gltf' },
-            // knight: { url: '/res/models/knight/KnightCharacter.gltf' },
+            pig:    { url: '/models/animals/Pig.gltf' },
+            cow:    { url: '/models/animals/Cow.gltf' },
+            llama:  { url: '/models/animals/Llama.gltf' },
+            pug:    { url: '/models/animals/Pug.gltf' },
+            sheep:  { url: '/models/animals/Sheep.gltf' },
+            zebra:  { url: '/models/animals/Zebra.gltf' },
+            horse:  { url: '/models/animals/Horse.gltf' },
+            // knight: { url: '/models/knight/KnightCharacter.gltf' },
         };
         {
             const gltfLoader = new GLTFLoader(this.manager);
@@ -74,9 +83,8 @@ class AnimalIsland {
                 });
             }
 
-            gltfLoader.load('../models/easter_island_low_poly/scene.gltf', (gltf) => {
+            gltfLoader.load('/models/easter_island_low_poly/scene.gltf', (gltf) => {
                 let model = gltf.scene;
-                // console.log(model.scene)
                 model.scale.set(1,1,1);
                 model.position.set(-2, -5, -2);
 
@@ -93,17 +101,46 @@ class AnimalIsland {
                     cloudObject.position.x = (Math.random() * 75) - 40;
                     cloudObject.position.z = (Math.random() * 60) - 30;
                 }
-
                 this.parentScene.add(model);
             });
         }
 
+        {
+            let loader = new THREE.TextureLoader();
+            loader.load("/images/smoke-1.png", (texture)=>{
+                let cloudGeo = new THREE.PlaneBufferGeometry(500,500);
+                let cloudMaterial = new THREE.MeshLambertMaterial({
+                    map: texture,
+                    transparent: true
+                });
+
+                for(let i=0; i<10; i++) {
+                    let cloud = new THREE.Mesh(cloudGeo, cloudMaterial);
+                    cloud.position.set(
+                        Math.random()*25 + 25,
+                        Math.random()*10 + 50,
+                        Math.random()*2 + 20
+                    );
+                    cloud.rotation.x = THREE.Math.degToRad(-45);
+                    cloud.rotation.y = 0.5;
+                    cloud.rotation.z = Math.random() * 2 * Math.PI;
+                    cloud.material.opacity = 1;
+					cloud.name = `cloudModel${i}`;
+                    this.cloudModels.push(cloud);
+                    this.parentScene.add(cloud);
+                }
+            });
+        }
+
         this.manager.onLoad = this.init.bind(this);
-        
-        const progressbarElem = document.querySelector('#progressbar');
+        const progressbarElem = document.querySelector('.progress');
         this.manager.onProgress = (url, itemsLoaded, itemsTotal) => {
-            progressbarElem.style.width = `${ itemsLoaded / itemsTotal * 100 | 0 }%`;
+            progressbarElem.innerText = `${ itemsLoaded / itemsTotal * 100 | 0 }%`;
         };
+//        const progressbarElem = document.querySelector('#progressbar');
+//        this.manager.onProgress = (url, itemsLoaded, itemsTotal) => {
+//            progressbarElem.style.width = `${ itemsLoaded / itemsTotal * 100 | 0 }%`;
+//        };
     }
 
 
@@ -128,10 +165,47 @@ class AnimalIsland {
 
     init(){
         const loadingElem = document.querySelector('#loading');
+		const greetingElem = document.querySelector('#animal');
         
-        // setTimeout(()=>{
-        // }, 2000);
-        loadingElem.style.display = "none";
+        setTimeout(()=>{
+			loadingElem.style = {
+				"-webkit-backdrop-filter": "blur(0)",
+				"backdropFilter": "blur(0)"
+			}
+			loadingElem.style.opacity = "0";
+			greetingElem.style.opacity = "0";
+			let repeat = 180;
+			let cnt = 0;
+			let interval = setInterval(()=>{
+//				console.log(cnt);
+				
+				this.cloudModels.forEach(
+					(cloud, ndx) => {
+						if( ndx % 2 == 0)
+							cloud.position.x += 2;
+						else 
+							cloud.position.x -= 2;
+                    	cloud.material.opacity = 1-cnt/repeat;
+					}
+				)
+				if( cnt >= repeat ){
+					this.cloudModels.forEach(
+						cloud => this.parentScene.remove(cloud)	
+					)
+					greetingElem.classList.remove("d-none");
+					setTimeout(()=>{
+						greetingElem.style.opacity = "1";
+					},10);		
+					loadingElem.remove("d-none");
+					this.cloudModels = [];
+					clearInterval(interval);
+				}
+				let {x, y, z} = this.camera.position;
+				this.camera.position.set(x - 0.5, y - 0.5 , z - 1);
+				
+				cnt++;
+			}, 1000/60);
+		},2000);
         this.prepModelsAndAnimations();
 
         let modelScenes = [];
@@ -185,10 +259,7 @@ class AnimalIsland {
             }
             this.playNextAction(mixerInfo);
         });
-        // console.log(this.mixerInfos);
-        // window.addEventListener("resize", this.resizeRendererToDisplaySize.bind(this)); 
         this.render();
-        // this.resizeRendererToDisplaySize();
     }
 
     degToVector(deg){
@@ -235,23 +306,31 @@ class AnimalIsland {
             this.camera.updateProjectionMatrix();
         }
 
+		if(this.cloudModels.length != 0){
+			this.cloudModels.forEach(
+				cloud => {
+					cloud.rotation.z += 0.003;
+				}
+			)
+		}
+
         for (const { mixer } of this.mixerInfos) {
             mixer.update(deltaTime);
         }
-
-        this.animalModels.map(
+        // this.camera.position.x += 0.1;
+        this.animalModels.forEach(
             scene => {
                 
                 let originDeg = THREE.Math.radToDeg(scene.rotation.y);
                 let {x: originX, y: originY, z: originZ} = scene.position;
 
                 let {x: newX, z: newZ} = this.degToVector(originDeg);
-                newX = newX * 0.01 + originX;
-                newZ = newZ * 0.01 + originZ;
+                newX = newX * 0.015 + originX;
+                newZ = newZ * 0.015 + originZ;
 
 
                 if( newX < -16 || 18 < newX || newZ < -5 || 22 < newZ ){
-                    console.log("out");
+//                    console.log("out");
                     scene.rotation.y = THREE.Math.degToRad(Math.floor(Math.random() * 360));
                     return;
                 }
@@ -312,10 +391,8 @@ class AnimalIsland {
 
 }
 
-export default AnimalIsland;
-
 let scene = new THREE.Scene();
-let mainCanvas = new AnimalIsland(scene, 'animalIsland');
+export default new AnimalIsland(scene, 'animalIsland');
 
 // function main() {
 //     const canvas = document.querySelector("#c");

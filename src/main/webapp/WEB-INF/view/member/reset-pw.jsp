@@ -16,11 +16,11 @@
 			<div class="key input-icon">
 				<i class="fas fa-key"></i>
 			</div>
-			<input type="text" class="pw-input input" placeholder="패스워드">
+			<input type="password" class="pw-input input" placeholder="패스워드">
 			<div class="key2 input-icon">
 				<i class="fas fa-key"></i>
 			</div>
-			<input type="text" name="password" class="pw-confirm input" placeholder="패스워드 확인">
+			<input type="password" name="password" class="pw-confirm input" placeholder="패스워드 확인">
 			<input type="submit" value="확인" class="button sing-btn disabled">
 		</div>
 	</form>

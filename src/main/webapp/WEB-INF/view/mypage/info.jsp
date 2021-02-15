@@ -5,7 +5,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="/js/mypage/info.js" type="text/javascript"></script>
 
-
 <section class="main-container">
 <aside class="profile"><hr>
 
