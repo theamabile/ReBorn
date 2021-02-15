@@ -4,17 +4,17 @@
 
 class ModalBox {
 	
-	#content;
-	#targetNode;
-	#contentNode;
-	#position;
-	#screen;
-	#frame;
-	#footer;
-	#btnInner;
-	#cancelBtn;
-	#okBtn;
-	#autoClose;
+	content;
+	targetNode;
+	contentNode;
+	position;
+	screen;
+	frame;
+	footer;
+	btnInner;
+	cancelBtn;
+	okBtn;
+	autoClose;
 
 		// 1. 기본기능만 쓰기 -> confirm 같은 역할
 		// let modalBox = new ModalBox({
@@ -144,20 +144,20 @@ class ModalBox {
 						//console.log(e.target);
 						if( autoClose )
 							this.close();
-						return resolve(this.#result("cancel"));
+						return resolve(this.result("cancel"));
 					}
 					if( e.target.classList.contains("modal-btn")){
 						if( autoClose )
 							this.close();
 						switch(e.target.dataset.action){
 							case "cancel":{
-								return resolve(this.#result("cancel"));
+								return resolve(this.result("cancel"));
 							}
 							case "ok":{
-								return resolve(this.#result("ok"));
+								return resolve(this.result("ok"));
 							}
 							default:{
-								return resolve(this.#result("cancel"));
+								return resolve(this.result("cancel"));
 							}
 						}
 					}
@@ -196,26 +196,26 @@ class ModalBox {
 				screen.classList.add("active");	
 			});
 
-			this.#content = content;
-			this.#targetNode = targetNode;
-			this.#contentNode = contentNode;
-			this.#position = position;
-			this.#screen = screen;
-			this.#frame = frame;
-			this.#footer = footer;
-			this.#btnInner = btnInner;
-			this.#cancelBtn = cancelBtn;
-			this.#okBtn = okBtn;
-			this.#autoClose = autoClose;
+			this.content = content;
+			this.targetNode = targetNode;
+			this.contentNode = contentNode;
+			this.position = position;
+			this.screen = screen;
+			this.frame = frame;
+			this.footer = footer;
+			this.btnInner = btnInner;
+			this.cancelBtn = cancelBtn;
+			this.okBtn = okBtn;
+			this.autoClose = autoClose;
 		});
 	}
 	
 	close(){
 		document.body.classList.remove("scroll-none");
-		this.#screen.remove();
+		this.screen.remove();
 	}
 	
-	#result(action){
+	result(action){
 		return {
 			result: action,
 			instance: this
@@ -223,12 +223,12 @@ class ModalBox {
 	}
 	
 	setContent(content){
-		this.#contentNode.innerHTML = "";
-		this.#contentNode.insertAdjacentHTML("beforeend", content);
+		this.contentNode.innerHTML = "";
+		this.contentNode.insertAdjacentHTML("beforeend", content);
 	}
 
 	get contentNode(){
-		return this.#contentNode;
+		return this.contentNode;
 	}
 
 }

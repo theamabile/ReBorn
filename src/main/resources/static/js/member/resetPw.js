@@ -8,7 +8,10 @@ window.addEventListener("load", () => {
 	const btn = section.querySelector(".sing-btn");
 	const pwReg = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{1,50}).{8,50}$/;
 	let valid = false;
-
+	
+	//session값 꺼내오기
+	idInput.value=sessionStorage.getItem("resetPwdId" );
+	
 	//패스워드 형식 검사
 	pwInput.addEventListener("focusout", () => {
 		if (!pwReg.test(pwInput.value)) {
@@ -39,10 +42,12 @@ window.addEventListener("load", () => {
 	//버튼 이벤트 
 	btn.addEventListener("click", (e) => {
 		if (pwInput.value == confirmInput.value){
+			//session값 지워주기
+			sessionStorage.removeItem("resetPwdId" );
 			return;
 		}
 		e.preventDefault();
 		console.log(confirmInput);
-		alert("비밀번호를 확인해주세요");
+		new ModalBox({content: "비밀번호를 확인해주세요.",	cancelBtnHide: true});
 	})
 })

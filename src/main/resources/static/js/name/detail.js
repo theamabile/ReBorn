@@ -40,13 +40,13 @@ window.addEventListener("load", (e)=>{
 					if(data.success == true) {
 						
 						let infoHTML = `투표가 완료 되었습니다.<br>
-										${newPoint}를 추가적으로 획득하셨습니다.(현재 포인트 : ${point})<br>
+										포인트 ${data.newPoint}점이 증가 되었습니다.(현재 포인트 : ${data.point})<br>
 										참여해주셔서 감사합니다.`;
 						
 						new ModalBox({
 							content: infoHTML,
 							contentPadding: true,
-							okBtnText: " 확인",
+							okBtnText: "확인",
 							cancelBtnHide: true,
 							removeOnBackgroundClick: true
 						})
@@ -70,7 +70,7 @@ window.addEventListener("load", (e)=>{
 	if(revoteBtn != null) {
 		revoteBtn.addEventListener("click", (e)=>{			
 			modalBox =  new ModalBox({
-				content: "정말 다시 투표 하시겠습니까?",
+				content: "투표 취소 시 획득 한 포인트 10점이 감소됩니다.<br>다시 투표 하시겠습니까?",
 				contentPadding: true,
 				okBtnText: " 예",
 				cancelBtnText: "아니오",

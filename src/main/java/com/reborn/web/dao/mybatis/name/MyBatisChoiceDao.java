@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.reborn.web.dao.name.ChoiceDao;
 import com.reborn.web.dao.name.NameDao;
 import com.reborn.web.entity.name.Choice;
+import com.reborn.web.entity.name.VoteView;
 
 @Repository
 public class MyBatisChoiceDao implements ChoiceDao{
@@ -50,6 +51,12 @@ public class MyBatisChoiceDao implements ChoiceDao{
 	public List<Choice> getList() {
 		// TODO Auto-generated method stub
 		return mapper.getList();
+	}
+
+	@Override
+	public List<Long> getChoicedIdsByMemberId(int memberId, List<VoteView> list) {
+		// TODO Auto-generated method stub
+		return mapper.getChoicedIdsByMemberId(memberId, list);
 	}
 
 

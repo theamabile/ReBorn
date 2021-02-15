@@ -68,15 +68,16 @@ public class CareController {
 		int careCount = careService.getCount(field, query);
 		
 		// WISH LOAD ==================================================
+		int memberId = 0;
 		Object memberId_ = session.getAttribute("id");
 		if( !careList.isEmpty() && memberId_ != null) {
-			int memberId = (int) memberId_;
+			memberId = (int) memberId_;
 			careService.getWishedList(memberId, careList);
 		}
 			
 		
 		int pageCount = (int)Math.ceil( careCount / (float)size );
-
+		datas.put("memberId", memberId);
 		datas.put("list", careList);
 		datas.put("currentPage", page);
 		datas.put("pageCount", pageCount);

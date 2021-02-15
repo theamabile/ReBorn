@@ -484,16 +484,15 @@ class CareDetail extends React.Component{
 	}
 	
 	render(){
-		console.log(this.state);
 		return <div>
 			<section className="intro-height position-relative" style={{backgroundColor:"transparent", padding: 0}}>
 		        <section className="intro intro-height position-absolute position-top position-left">
-		            <div className="intro-blur-image position-absolute position-top position-left" style={{backgroundImage: "url('/images/care/info/1/1d47dc4b58bd0023f49152347e221051_20160513111715_srgxlzpg.jpg')"}}>
+		            <div className="intro-blur-image position-absolute position-top position-left" style={{backgroundImage: this.state.care.thumb ? `url('../images/care/thumb/${this.state.care.careRegNo}/${this.state.care.thumb}')` : `url('../images/care/search-back.png')` }}>
 		                {
 		                    // <!-- <img src="/images/1d47dc4b58bd0023f49152347e221051_20160513111715_srgxlzpg.jpg"> -->
 		                }
 		            </div>
-		            <div className="intro-image position-absolute position-center section-max-width" style={{backgroundImage: "url('/images/care/info/1/1d47dc4b58bd0023f49152347e221051_20160513111715_srgxlzpg.jpg')"}}>
+		            <div className="intro-image position-absolute position-center section-max-width" style={{backgroundImage: this.state.care.thumb ? `url('../images/care/thumb/${this.state.care.careRegNo}/${this.state.care.thumb}')` : `url('../images/care/search-back.png')` }}>
 		                {
 		                    // <!-- <img src="/images/1d47dc4b58bd0023f49152347e221051_20160513111715_srgxlzpg.jpg"> -->
 		                }
@@ -510,7 +509,7 @@ class CareDetail extends React.Component{
 		            </svg>
 		        </div>
 		    </section>
-		    <section className="greeting">
+		    { /* <section className="greeting">
 		        <div className="greeting-inner box-center section-max-width">
 		            <div><img className="greeting-logo"src="/images/care/info/1/카라동물권교육로고.75a97ef1.png" alt="" /></div>
 		            <h1>인권을 넘어 생명권으로!</h1>
@@ -522,7 +521,7 @@ class CareDetail extends React.Component{
 		                보다 강력하고 효율적인 동물권 활동의 발판을 만들게 되었습니다.<br />
 		            </div>
 		        </div>
-		    </section>
+		    </section> */ }
 		    <section className="animal-list">
 		        <div className="animal-list-inner box-center section-max-width">
 		            <h1>보호중인 동물</h1>
@@ -545,13 +544,13 @@ class CareDetail extends React.Component{
 		            </div>
 		            <div>
 		                <br /><br />
-		                {this.state.care.addr}<br />
+		                <span className="bold">Addr.</span> {this.state.care.addr}<br />
 		                <br /><br />
 		                <span className="bold">Tel.</span> {this.state.care.tel}<br />
-		                <br />
+		                { /* <br />
 		                <span className="bold">Email.</span> info@ekara.org<br />
 		                <br />
-		                <span className="bold">Page.</span> <a href="http://ekara.org/">http://ekara.org/</a><br />
+		                <span className="bold">Page.</span> <a href="http://ekara.org/">http://ekara.org/</a><br />*/ }
 		            </div>
 		        </div>
 		    </section>

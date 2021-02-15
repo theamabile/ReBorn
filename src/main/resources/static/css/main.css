@@ -1,12 +1,26 @@
-@charset "UTF-8";
-
-/*-------------------- 메인 화면--------------------*/
-html,
-body {
-    width: 100%;
-    height: 100%;
+:root{
+	--text-shadow: 1px 2px 3px rgb(0, 0, 0, 0.3);
 }
 
+body, html, canvas{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+header {
+	position: fixed;
+	-webkit-backdrop-filter: blur(20px);
+	backdrop-filter: blur(20px);
+}
+
+#loading *, #animal * {
+    color: var(--bg);
+}
+
+.main-menu {
+	background: transparent;
+}
 main {
     width: 100%;
     height: 100%;
@@ -16,67 +30,139 @@ main {
         height: 100%;
         --position: relative;
     }
+
         main #animal {
             --background: lightgreen;
         }
-
-        main #vote {
-            background: var(--sub);
-        }
-
-        main #center {
-            background: white;
-        }
-
-        main #lost {
-            background: var(--sub);
-        }
-
-
+        
 #animal {
-    display: flex;
+	position: fixed;
+	top: 0;
+	left: 0;
+    width: 100%;
+    height: 100%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     overflow: hidden;     
+   	pointer-events: none;
+    transition: opacity 1s;
 }
     #animal > .background-img {   
         width: 100%;
         height: 100%;  
-        background: center / cover no-repeat url('../../images/kiki.JPG');
+        background: center / cover no-repeat url('../images/kiki.JPG');
         z-index: -1;
         transition: 0.5s; 
     }
 
     #animal > .animal-box {
-        position: absolute;  
-        margin: auto;
         display: flex;
         flex-direction: column;
-        align-items: center;   
-    }
-
-    #animal > .animal-box * {
-        color: var(--bg);
+	    align-items: center;
+	    text-align: center;
+	    justify-content: center;
+	    height: 100%;
     }
 
     #animal > .animal-box > span {
         font-size: 40px;
         margin-bottom: 40px;
+        text-shadow: var(--text-shadow);
     }
 
     #animal > .animal-box > .animal-btn {
         width: 230px;
-        height: 80px;
+        line-height: 80px;
         background-color: transparent;
         border: solid 2px var(--bg);
         border-radius: 10px;
+        box-sizing: border-box;
         font-size: 20px;
         outline: none;
+        text-decoration: none;
+    	pointer-events: auto;
+        text-shadow: var(--text-shadow);
     }
     #animal > .animal-box > .animal-btn:hover{
         color: var(--main);
         background-color: var(--bg);
         border: solid 2px var(--bg);
+        text-shadow: none;
         transition: 0.5s;
     }
+        
+canvas{
+    display: block;
+    outline: none;
+}
+
+#loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: xx-large;
+  font-family: sans-serif;
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+  transition: backdrop-filter 1s, opacity 1s;
+}
+#loading > div{
+	text-shadow: var(--text-shadow);
+}
+.progress {
+  width: 50vw;
+/* border: 1px solid black; */
+}
+#progressbar {
+  width: 0;
+  transition: width ease-out .5s;
+  height: 1em;
+  background-color: #888;
+  background-image: linear-gradient(
+    -45deg, 
+    rgba(255, 255, 255, .5) 25%, 
+    transparent 25%, 
+    transparent 50%, 
+    rgba(255, 255, 255, .5) 50%, 
+    rgba(255, 255, 255, .5) 75%, 
+    transparent 75%, 
+    transparent
+  );
+  background-size: 50px 50px;
+  animation: progressanim 2s linear infinite;
+}
+ 
+@keyframes progressanim {
+  0% {
+    background-position: 50px 50px;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+.ripple{
+	animation: ripple 0.6s linear infinite;
+}
+
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255,255,255, 0.2),
+                0 0 0 5px rgba(255,255,255, 0.2),
+                0 0 0 10px rgba(255,255,255, 0.2),
+                0 0 0 15px rgba(255,255,255, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 5px rgba(255,255,255, 0.2),
+                0 0 0 10px rgba(255,255,255, 0.2),
+                0 0 0 15px rgba(255,255,255, 0.2),
+                0 0 0 20px rgba(255,255,255, 0);
+  }
+}

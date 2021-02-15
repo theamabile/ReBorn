@@ -16,9 +16,8 @@
                           리본의 뜻을 아시나요?
                       </span>
                       <p class="introduce-txt">
-                          Lorem ipsum dolor sit <span>들어갈 내용 추천 받아용~</span><br/>
-                          optio animi tempore aliquid voluptatem obcaecati elique veniam<br/>
-                          Reprehenderit, quisquam! Nostrum odio veniam nisi doloremque.
+                          리본은 버려지는 유기 동물들의 이름을 지어주고<br/>
+                          <span>새로운 주인과의 인연을 이어주어 역할</span>을 하기 위해 만들어졌습니다.
                       </p>
                   </div>
               </li>
@@ -30,12 +29,12 @@
                   </div>
                   <div class="introduce-txt-box">
                       <span class="introduce-tit">
-                          리본이 바라는 기대효과는 무엇인가요?
+                          유기견 문제와 실태를 아시나요?
                       </span>
                       <p class="introduce-txt">
-                          내용 임시 입력내용 임시 입력내용 임시 입력내용 임시 입력내용 임시 입력<br/>
-                          내용 임시 입력내용 임시<span>들어갈 내용 추천 받아용~</span> 입력<br/>
-                          내용 임시 입력내용 임시 입력내용 임시 입력내용 임시 입력.
+                           일부 애견인들의 바람직하지 못한 가치관으로 인해 수많은 유기견들이 발생하고<br>
+                           열흘간 새로운 주인이 나타나기를 기다리며,<br>
+                           그중 <span>절반 가까운 수의 동물들은 보호소에서 생을 마감</span>합니다.<br>
                       </p>
                   </div>
               </li>
@@ -47,12 +46,12 @@
                   </div>
                   <div class="introduce-txt-box">
                       <span class="introduce-tit">
-                          리본의 뜻을 아시나요?
+                          리본이 바라는 기대효과는 무엇인가요?
                       </span>
                       <p class="introduce-txt">
-                          내용 임시 입력내용 임시 입력내용 임시 입력내용 임시 입력내용 임시 입력<br/>
-                          내용 임시 입력내용 임시 <span>강조강조강종</span> 임시 입력<br/>
-                          내용 임시 입력내용 임시 입력내용 임시 입력내용 임시 입력.
+                         해마다 증가하는 유기 동물과 <br>
+                         수용의 한계로 인해 안락하는 문제를 줄이고<br>
+                         <span>올바른 반려동물 문화에 기여</span>하기를 기대합니다.
                       </p>
                   </div>
               </li>

@@ -11,6 +11,7 @@ import com.reborn.web.dao.name.NameDao;
 import com.reborn.web.entity.name.Choice;
 import com.reborn.web.entity.name.Name;
 import com.reborn.web.entity.name.NameView;
+import com.reborn.web.entity.name.VoteView;
 
 @Repository
 public class MyBatisNameDao implements NameDao{
@@ -67,9 +68,9 @@ public class MyBatisNameDao implements NameDao{
 	}
 
 	@Override
-	public List<NameView> getViewList(int offset, int size, String field, String query) {
+	public List<NameView> getViewList(int offset, int size, String orderField, String orderQuery, String field, String query) {
 		// TODO Auto-generated method stub
-		return mapper.getViewList(offset, size, field, query);
+		return mapper.getViewList(offset, size, orderField, orderQuery, field, query);
 	}
 
 	@Override
@@ -79,15 +80,15 @@ public class MyBatisNameDao implements NameDao{
 	}
 
 	@Override
-	public List<NameView> getViewListByAnimalId(long animalId, int size) {
-		// TODO Auto-generated method stub
-		return mapper.getViewListByAnimalId(animalId, size);
-	}
-
-	@Override
 	public NameView getBestName(long animalId) {
 		// TODO Auto-generated method stub
 		return mapper.getBestName(animalId);
+	}
+
+	@Override
+	public List<Long> getAddedIdsByMemberId(int memberId, List<VoteView> list) {
+		// TODO Auto-generated method stub
+		return mapper.getAddedIdsByMemberId(memberId, list);
 	}
 	
 }

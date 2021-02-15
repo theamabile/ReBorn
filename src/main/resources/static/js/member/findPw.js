@@ -61,7 +61,7 @@ window.addEventListener("load", () => {
 					idInput.style["margin-bottom"] = "22px";
 					result.classList.add("d-none");
 					console.log(json);
-					form.action = "./reset-pw?loginId=" + id;
+					//form.action = "./reset-pw?loginId=" + id;
 				}
 			});
 	})
@@ -98,7 +98,7 @@ window.addEventListener("load", () => {
 
 
 		if (!isValid) {
-			alert("등록된 회원정보가 아닙니다.");
+			new ModalBox({content: "등록된 회원정보가 아닙니다.",	cancelBtnHide: true});
 			return;
 		}
 		//휴대폰 인증
@@ -132,7 +132,6 @@ window.addEventListener("load", () => {
 			phoneConf = false;
 			singBtn.classList.remove("able");
 			singBtn.classList.add("disabled");
-			console.log("인증번호가 다릅");
 		}
 		else {
 			phoneConf = true;
@@ -142,10 +141,13 @@ window.addEventListener("load", () => {
 	})
 
 	//버튼 비활성화
-	singBtn.addEventListener('load', (e) => {
-		if (phoneConf)
+	singBtn.addEventListener('click', (e) => {
+		if (phoneConf){
+			sessionStorage.setItem( "resetPwdId", id );
+			alert(sessionStorage.getItem("resetPwdId"));
 			return;
+			}
 		e.preventDefault();
-		alert("인증번호를 확인해주세요.");
+		new ModalBox({content: "인증번호를 확인해주세요.",	cancelBtnHide: true});
 	})
 });

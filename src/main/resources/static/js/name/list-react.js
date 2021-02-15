@@ -112,9 +112,9 @@ class VoteList extends React.Component {
 				let startDate = new Date(v.voteStartDate);
 				let endDate = new Date(v.voteEndDate);
 				
-				var voteDate = Math.ceil((endDate.getTime()-startDate.getTime())/(1000*3600*24));	
-				var takeDate = Math.ceil((today.getTime()-startDate.getTime())/(1000*3600*24));		
-				
+				var voteDate = 1 + Math.round( (endDate.getTime()-startDate.getTime())/(1000*3600*24) );	
+				var takeDate = 1 + Math.round( (today.getTime()-startDate.getTime())/(1000*3600*24) );		
+								
 				let takePercent = Math.round((takeDate / voteDate) * 100);
 				
 				v.takePercent = takePercent;
@@ -129,10 +129,10 @@ class VoteList extends React.Component {
 		console.log("render");
 				
 		return <div className="vote">
-				 	<h1>투표 목록</h1>
+				 	<h1>이름 투표</h1>
 					<form>
 						<div className="filter">
-							<label>품종</label>
+							<label>정렬</label>
 							<select name="of" ref={this.orderFieldInput} onChange={this.orderChangeHandler.bind(this)} className="order-field">
 								<option value="voteStartDate">투표날짜</option>
 								<option value="choiceSum">투표 참여 순</option>
@@ -166,10 +166,10 @@ class VoteList extends React.Component {
 															{
 																v.rankNameList.map(
 																	(n, index)=><tr key={index}>
-															            			<th className="bold">
+															            			<th>
 																						<i className="fas fa-medal font-m"></i>{index+1}위
 																					</th>
-															            			<td>{n.name}</td>
+															            			<td className="bold">{n.name}</td>
 															            		</tr>
 																)
 															}
@@ -184,7 +184,13 @@ class VoteList extends React.Component {
 									            			<span className="font-l mr-1">후보 수</span>
 									            			<span className="font-xl">{v.nameCnt }</span>
 									            		</div>
-									            		<i className="fas fa-vote-yea font-xl"></i>
+														{
+															v.choiced ?
+															<i className="fas fa-vote-yea font-xl red-pink"></i>
+															:
+															<i className="fas fa-vote-yea font-xl gray"></i>
+														}
+														
 									            	</div>
 									            </div>
 									        </div>

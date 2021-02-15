@@ -85,8 +85,8 @@
    		 <section class="vote">
 			<h1>투표하기</h1>
 			<div class="vote-info">
-				<span>이름 모집기간 : ${vote.recruitStartDate}~${vote.recruitEndDate}</span>	
-				<a class="report-btn">신고하기</a>			
+				<span>투표 기간 : ${vote.voteStartDate}~${vote.voteEndDate}</span>	
+				<!-- <a class="report-btn">신고하기</a>	 -->		
 			</div>
 			<form method="post" class="w-100">
 				<div class="vote-box">

@@ -71,9 +71,14 @@ window.addEventListener("load", e=>{
 		document.execCommand('copy');
 		container.removeChild(createInput);
 		
- 		// document.body.removeChild(tempElem);
 
-		alert("클립보드에 복사되었습니다.");
+		new ModalBox({
+			content: "연락처가 클립보드에 복사되었습니다.",
+			contentPadding: true,
+			okBtnText: "확인",
+			cancelBtnHide: true,
+			removeOnBackgroundClick: true
+		});
 	});
 	
 	function loadMap(elementId, markText, addr) {

@@ -1,5 +1,7 @@
 package com.reborn.web.dao.member;
 
+import java.util.List;
+
 import com.reborn.web.entity.member.Member;
 
 public interface MemberDao {
@@ -18,5 +20,7 @@ public interface MemberDao {
 	int update(Member m);
 
 	int checkMemberEmail(String loginId, String name, String email);
+
+	List<Member> getList();
 
 }

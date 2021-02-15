@@ -5,7 +5,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="/js/mypage/info.js" type="text/javascript"></script>
 
-
 <section class="main-container">
 <aside class="profile"><hr>
 
@@ -134,7 +133,7 @@
 
 
 			<div class="button-area ">
-				<input type="submit" value="회원가입"
+				<input type="submit" value="정보 변경"
 					class="disabled submit-button  btn-s">
 			</div>
 

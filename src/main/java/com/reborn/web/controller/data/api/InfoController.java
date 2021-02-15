@@ -26,9 +26,9 @@ public class InfoController {
 	@RequestMapping("information")
 	public Map<String, Object> information(
 			@RequestParam(name="p", defaultValue="1") int page,
-			@RequestParam(name="categroy", defaultValue="1") int categoryId,
+			@RequestParam(name="categroy", defaultValue="0") int categoryId,
 			Model model){
-		int size = 4; //한페이지 출력할 개수
+		int size = 3; //한페이지 출력할 개수
 		
 		List<InfoView> list = service.getViewList(page, size, categoryId);
 		//System.out.println(list);
