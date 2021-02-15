@@ -37,19 +37,14 @@
 	<select id="getViewList" resultType="com.reborn.web.entity.name.NameView">
 		SELECT * FROM NameView
 		<where>
-			<if test="param3 != null and param3.equals('')">
-				BINARY ${param3} LIKE '%${param4}%'
+			<if test="param5 != null and param5 != ''">
+				${param5} = #{param6}
 			</if>
 		</where>
-		ORDER BY regDate DESC
+		<if test="param3 != null and param3 != ''">
+			ORDER BY ${param3} ${param4}
+		</if>
 		LIMIT #{param2} OFFSET #{param1}
-	</select>
-	
-	<select id="getViewListByAnimalId" resultType="com.reborn.web.entity.name.NameView">
-		SELECT * FROM NameView
-		where animalId = #{param1}
-		ORDER BY regDate DESC
-		LIMIT #{param2}
 	</select>
 	
 	<select id="getBestName" resultType="com.reborn.web.entity.name.NameView">
@@ -59,5 +54,31 @@
 		ORDER BY choiceCnt DESC
 		LIMIT 1;
 	</select>
+	
+	<select id="getViewListByMemberId" resultType="com.reborn.web.entity.name.NameView">
+		SELECT * FROM NameView
+		<where>
+			memberId = #{param1}
+			AND animalId IN
+			<foreach item="v" index="index" collection="list"
+				open="(" separator="," close=")">
+				#{v.animalId}
+			</foreach>
+		</where>
+	</select>
+	
+	<select id="getAddedIdsByMemberId" resultType="long">
+		SELECT DISTINCT animalId 
+		FROM NameView
+		<where>
+			memberId = #{param1}
+			AND animalId IN
+			<foreach item="v" index="index" collection="list"
+				open="(" separator="," close=")">
+				#{v.animalId}
+			</foreach>
+		</where>
+	</select>
+	
 	
 </mapper>

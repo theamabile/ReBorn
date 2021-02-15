@@ -149,12 +149,11 @@ select{
 			margin-bottom: 0px;
 		}
 
-
-/* 	.search-box .box-row .breed-box,
-	.search-box .box-row .name-box,
-	.search-box .box-row .name-box > input[type="text"] {
+	
+	.search-box .kind {
+		max-width: 234px;
 		flex-grow: 1;
-	} */
+	}	
 	
 	.search-box .box-row .regdate {
 		flex-grow: 1;

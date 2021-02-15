@@ -40,18 +40,23 @@ public class VoteUpdateScheduler {
 		//System.out.println("@@@@@@@@@@@@@@@");
 		for(VoteView v : startList) {
 			System.out.println(v.getAnimalId()+" : "+v.getNameCnt()+"개");
-			if( v.getNameCnt() <= 1) {
-				// 단일 후보면 동물에게 이름 넣어주고 바로 투표 종료				
-				Name resultName = nameService.getBestName(v.getAnimalId());		// 이 동물의 가장 인기 있는 이름을 갖고옴
-				Animal animal = animalService.get(v.getAnimalId());
-				animal.setName(resultName.getName());
-				animalService.update(animal);		// 이름 지어주기
-				v.setState("END");					
-			} else {	
-				System.out.println("start : "+v.getAnimalId());
-				v.setState("START");		// 후보가 여러개면 투표 상태를 시작으로 변경
+			if(v.getNameCnt() == 0) {		// 신고나 기타 등의 이유로 이름 후보가 모두 사라졌을 때
+				voteService.delete(v.getAnimalId());		// 투표를 수행 할 수 없으므로 삭제
+			} else {
+				if( v.getNameCnt() == 1) {
+					// 단일 후보면 동물에게 이름 넣어주고 바로 투표 종료	
+					System.out.println("1개짜리 = "+v.getAnimalId());
+					Name resultName = nameService.getBestName(v.getAnimalId());		// 이 동물의 가장 인기 있는 이름을 갖고옴
+					Animal animal = animalService.get(v.getAnimalId());
+					animal.setName(resultName.getName());
+					animalService.update(animal);		// 이름 지어주기
+					v.setState("END");					
+				} else {	
+					System.out.println("start : "+v.getAnimalId());
+					v.setState("START");		// 후보가 여러개면 투표 상태를 시작으로 변경
+				}		
+				voteService.update(v);	
 			}
-			voteService.update(v);			
 		}
 		
 		
@@ -67,8 +72,7 @@ public class VoteUpdateScheduler {
 			
 			v.setState("END");			
 			voteService.update(v);				// 투표 상태를 종료로 변경
-		}
-				
+		}	
 	}
 	
 	
