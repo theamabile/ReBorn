@@ -9,9 +9,9 @@
 						  , recruitStartDate, recruitEndDate
 						  , voteStartDate, voteEndDate)
       	VALUES( #{animalId}, #{memberId}
-      			, current_date(), DATE_ADD(current_date(), INTERVAL 2 DAY) 
-				, DATE_ADD(current_date(), INTERVAL 3 DAY)
-				, DATE_ADD(current_date(), INTERVAL 9 DAY) 
+      			, CURRENT_TIMESTAMP(), DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL 2 DAY) 
+				, DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL 3 DAY)
+				, DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL 9 DAY) 
 				)
 	</insert>
 	
@@ -23,6 +23,11 @@
 		WHERE animalId = #{animalId}
 	</update>
 	
+	<delete id="delete">
+		DELETE FROM Vote 
+		WHERE animalId = #{param1}
+	</delete>
+
 	<select id="get" resultType="com.reborn.web.entity.name.Vote">
 		SELECT * FROM Vote
 		WHERE animalId = #{animalId}
@@ -47,7 +52,7 @@
 	<select id="getViewList" resultType="com.reborn.web.entity.name.VoteView">
 		SELECT * FROM VoteView
 		WHERE
-			nameCnt > 0 				<!-- 이름이 1개 이상이여야함.(신고로 인해서 지워질 수도 있으니 조건 처리) AND sysdate() &lt;= date(voteEndDate) -->
+				nameCnt > #{param8}		<!-- param8은 nameCnt로 정수여서 기본 0으로 넘어올것. -->
 			<if test="param5 != null and param5 != ''">
 				AND BINARY ${param5} LIKE '%${param6}%'
 			</if>
@@ -59,7 +64,7 @@
 		</if>
 		LIMIT #{param2} OFFSET #{param1}
 	</select>
-
+	
 	<select id="getView" resultType="com.reborn.web.entity.name.VoteView">
 		SELECT * FROM VoteView
 		WHERE animalId = #{animalId}

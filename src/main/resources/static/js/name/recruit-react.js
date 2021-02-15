@@ -1,28 +1,4 @@
 
-// VoteList에 추가 되는 순위 아이템
-class Rank extends React.Component {
-	constructor(props) {
-		super(props);
-		
-		this.vote = this.props.vote;	// 외부에서 보내준 데이터(Rank안에서 사용할 데이터) 
-	}
-	
-	
-	componentDidMount() {
-		console.log("rank - componentDidMount");
-		console.log("rank " + this.vote);
-		this.invalidate();		// 처음에 로드 해야함
-	}
-	
-	render() {
-		return <tr>
-	    			<th className="bold"><i className="fas fa-medal font-m"></i>위</th>
-	    			<td>{this.vote}</td>
-	    	   </tr>;
-	}
-	
-}
-
 class VoteList extends React.Component {
 	
 	constructor(props) {
@@ -82,9 +58,7 @@ class VoteList extends React.Component {
 	}
 	
 	itemClickHandler(animalId) {
-		console.log(`/name/${animalId}`);
-		
-		location.href = `/name/${animalId}`;	
+		location.href = `/name/${animalId}/add`;		
 	}	
 	
 	pageClickHandler(e) {
@@ -95,8 +69,8 @@ class VoteList extends React.Component {
 	}
 	
 	invalidate() {
-		console.log(`url : /api/name/list?p=${this.page}&of=${this.orderField}&oq=${this.orderQuery}&f=${this.field}&q=${this.query}`);
-		fetch(`/api/name/list?p=${this.page}&of=${this.orderField}&oq=${this.orderQuery}&f=${this.field}&q=${this.query}`)
+		console.log(`url : /api/name/recruit?p=${this.page}&of=${this.orderField}&oq=${this.orderQuery}&f=${this.field}&q=${this.query}`);
+		fetch(`/api/name/recruit?p=${this.page}&of=${this.orderField}&oq=${this.orderQuery}&f=${this.field}&q=${this.query}`)
 		.then(response=>{
 			return response.json();
 		})
@@ -109,13 +83,15 @@ class VoteList extends React.Component {
 
 			let today = new Date();   
 			for(let v of data.list) {
-				let startDate = new Date(v.voteStartDate);
-				let endDate = new Date(v.voteEndDate);
-				
-				var voteDate = 1 + Math.round( (endDate.getTime()-startDate.getTime())/(1000*3600*24) );	
+				let startDate = new Date(v.recruitStartDate);
+				let endDate = new Date(v.recruitEndDate);
+
+				var recruitDate = 1 + Math.round( (endDate.getTime()-startDate.getTime())/(1000*3600*24) );	
 				var takeDate = 1 + Math.round( (today.getTime()-startDate.getTime())/(1000*3600*24) );		
 								
-				let takePercent = Math.round((takeDate / voteDate) * 100);
+				let takePercent = Math.round((takeDate / recruitDate) * 100);
+				
+				//console.log(`recruitDate:${recruitDate} / takeDate: ${takeDate} / takePercent: ${takePercent}`);
 				
 				v.takePercent = takePercent;
 			}
@@ -126,16 +102,20 @@ class VoteList extends React.Component {
 	}
 	
 	render() {
-		console.log("render");
-				
+	
+		/*<div className="section-info">
+			<span>이름을 정하기 위해 이름 후보를 기다리고 있는 동물들입니다.</span>
+			<span>관심과 애정을 담아 동물에게 이름을 선사해주세요.</span>
+		</div>*/
+		
 		return <div className="vote">
-				 	<h1>이름 투표</h1>
+				 	<h1>이름 지어주기</h1>
 					<form>
 						<div className="filter">
 							<label>정렬</label>
 							<select name="of" ref={this.orderFieldInput} onChange={this.orderChangeHandler.bind(this)} className="order-field">
-								<option value="voteStartDate">투표날짜</option>
-								<option value="choiceSum">투표 참여 순</option>
+								<option value="recruitStartDate">등록 날짜</option>
+								<option value="nameCnt">이름 갯수</option>
 							</select>
 							<select name="oq" ref={this.orderQueryInput} onChange={this.orderChangeHandler.bind(this)} className="order-query">
 								<option value="DESC">내림차순</option>
@@ -156,19 +136,22 @@ class VoteList extends React.Component {
 									            <div className="vote-info">
 										        	<div className="regdate">
 											        	<span className="font-s">
-											        		{v.voteStartDate}~
-											        		{v.voteEndDate}
+											        		{v.recruitStartDate}~
+											        		{v.recruitEndDate}
 											        	</span>
 											            <img/>
 										        	</div>
-									            	<table className="rank font-xl">
+									            	<table className="font-xl name">
 							            				<tbody>
 															{
 																v.rankNameList.map(
 																	(n, index)=><tr key={index}>
-															            			<th>
-																						<i className="fas fa-medal font-m"></i>{index+1}위
-																					</th>
+																					<td>
+																						<i className="fas fa-user fs-4"></i>
+																					</td>
+																					<td>
+																						{n.writerNickname}
+																					</td>
 															            			<td className="bold">{n.name}</td>
 															            		</tr>
 																)
@@ -177,20 +160,15 @@ class VoteList extends React.Component {
 									            	</table>
 									            	<div className="count">
 									            		<div className="count-item">
-									            			<span className="font-l">총 투표수</span>
-									            			<span className="font-xl">{v.choiceSum }</span>
-									            		</div>
-									            		<div className="count-item">
 									            			<span className="font-l mr-1">후보 수</span>
 									            			<span className="font-xl">{v.nameCnt }</span>
 									            		</div>
 														{
-															v.choiced ?
-															<i className="fas fa-vote-yea font-xl red-pink"></i>
+															v.added?
+															<i className="fab fa-gratipay font-xl red-pink"></i>
 															:
-															<i className="fas fa-vote-yea font-xl gray"></i>
+															<i className="fab fa-gratipay font-xl gray"></i>
 														}
-														
 									            	</div>
 									            </div>
 									        </div>
@@ -246,7 +224,6 @@ class VoteList extends React.Component {
 ReactDOM.render(
 	<VoteList />
 	// VoteList가 사용할 rankItem을 동적으로 넣어줌. 
-	// rankItem에는 Rank 컴포넌트가 들어감
 	, document.querySelector(".main-container")
 );
 

@@ -7,6 +7,8 @@ public class VoteView extends Vote{
 	private int choiceSum;
 	private String popfile;
 	private List<NameView> rankNameList;
+	private boolean choiced;
+	private boolean added;
 	
 	public int getNameCnt() {
 		return nameCnt;
@@ -40,9 +42,27 @@ public class VoteView extends Vote{
 		this.rankNameList = rankNameList;
 	}
 
+	public boolean getChoiced() {
+		return choiced;
+	}
+
+	public void setChoiced(boolean choiced) {
+		this.choiced = choiced;
+	}
+
+	public boolean getAdded() {
+		return added;
+	}
+
+	public void setAdded(boolean added) {
+		this.added = added;
+	}
+
 	@Override
 	public String toString() {
-		return "VoteView [nameCnt=" + nameCnt + ", choiceSum=" + choiceSum + "]";
+		return "VoteView [nameCnt=" + nameCnt + ", choiceSum=" + choiceSum + ", popfile=" + popfile + ", rankNameList="
+				+ rankNameList + ", choiced=" + choiced + ", added=" + added + "]";
 	}
+
 	
 }

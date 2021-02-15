@@ -23,4 +23,17 @@
 			and memberId = #{param2}
 	</delete>
 	
+	<select id="getChoicedIdsByMemberId" resultType="long">
+		SELECT DISTINCT animalId 
+		FROM Choice
+		<where>
+			memberId = #{param1}
+			AND animalId IN
+			<foreach item="v" index="index" collection="list"
+				open="(" separator="," close=")">
+				#{v.animalId}
+			</foreach>
+		</where>
+	</select>
+	
 </mapper>

@@ -11,7 +11,7 @@
 	<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
 	<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
 	<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>	
-	<script type="text/babel" src="/js/name/list-react.js"></script>
+	<script type="text/babel" src="/js/name/recruit-react.js"></script>
 	 
 	<c:set var="page" value="${param.p}"/>
 	<c:if test="${empty param.p}"> <!-- page 인자 없이 리스트에 왔을 때 -->

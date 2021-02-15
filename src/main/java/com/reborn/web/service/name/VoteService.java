@@ -17,11 +17,13 @@ public interface VoteService {
 	Vote get(long animalId);
 	List<Vote> getList(int page, int size, String field, String query);
 	VoteView getView(long animalId);
-	List<VoteView> getViewList(int page, int size, String orderField, String orderQuery, String field, String query, String state);
+	List<VoteView> getViewList(int page, int size, String orderField, String orderQuery, 
+			String field, String query, String state, int nameCnt);
 	
 	List<VoteView> getStartViewList(Date date, String field, String query);
 	List<VoteView> getEndViewList(Date date, String field, String query);
 	
 	int getCount(String field, String query, String state);
 	Vote getLast();
+
 }
