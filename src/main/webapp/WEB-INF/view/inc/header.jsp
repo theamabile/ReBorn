@@ -22,7 +22,8 @@
 					<div class="hover-line"></div>
 					<div class="dropdown-menu">
 						<ul>
-							<li><a href="/animal/list">유기동물 조회</a></li>
+							<li><a href="/animal/list">유기동물 목록</a></li>
+                            <li><a href="/name/recruit">이름 지어주기</a></li>
 							<li><a href="/name/list">이름 투표</a></li>
 						</ul>
 					</div>

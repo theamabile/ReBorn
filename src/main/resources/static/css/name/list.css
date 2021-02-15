@@ -119,8 +119,30 @@
 					    .item .btn .vote-info .rank tr:nth-child(3)> th:first-child > i{		    	
 					    	color: #dbbc8e;
 					    }
+					    
+			 .item .btn .vote-info .name {
+		    	width: 70%;
+		    	--font-size: 24px;
+		    	margin: 0px auto;
+		    }   
+			    .item .btn .vote-info .name tr{		    	
+			    	height: 40px;
+			    }
+				    .item .btn .vote-info .name tr > td:first-child *{		    	
+				    	text-align: right;
+				    }
 				    
-    
+				    .item .btn .vote-info .name tr > td:nth-child(2) *{		    	
+				    	text-align: left;
+				    }
+				    
+				    .item .btn .vote-info .name tr > td:last-child *{		    	
+				    	text-align: center;
+				    	width: 30%;
+				    }
+				    
+
+		    
     			.count {
     				width:100%;
 				    justify-content: space-around;

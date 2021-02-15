@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reborn.web.dao.name.NameDao;
+import com.reborn.web.entity.care.CareView;
+import com.reborn.web.entity.care.CareWish;
 import com.reborn.web.entity.name.Choice;
 import com.reborn.web.entity.name.Name;
 import com.reborn.web.entity.name.NameView;
+import com.reborn.web.entity.name.VoteView;
 
 @Service
 public class NameServiceImp implements NameService {
@@ -67,12 +70,12 @@ public class NameServiceImp implements NameService {
 	}
 
 	@Override
-	public List<NameView> getViewList(int page, int size, String field, String query) {
+	public List<NameView> getViewList(int page, int size, String orderField, String orderQuery, String field, String query) {
 		List<NameView> list = null;
 		
 		// offset 계산 => limit 사용
 		int offset = (page-1)*size;
-		list = nameDao.getViewList(offset, size, field, query);
+		list = nameDao.getViewList(offset, size, orderField, orderQuery, field, query);
 		
 		return list;
 	}
@@ -84,16 +87,27 @@ public class NameServiceImp implements NameService {
 	}
 
 	@Override
-	public List<NameView> getViewListByAnimalId(long animalId, int size) {
-		// TODO Auto-generated method stub
-		return nameDao.getViewListByAnimalId(animalId, size);
-	}
-
-	@Override
 	public NameView getBestName(long animalId) {
 		// TODO Auto-generated method stub
 		return nameDao.getBestName(animalId);
 	}
 
+	@Override
+	public void getAddedListByMemberId(int memberId, List<VoteView> list) {
+		
+		List<Long> animalIdList = nameDao.getAddedIdsByMemberId(memberId, list);
+		
+		for(VoteView v : list) {			
+			for(long addedId : animalIdList) {				
+				long voteId = v.getAnimalId();
+				if( voteId == addedId ) {
+					v.setAdded(true);
+					animalIdList.remove(addedId);
+					break;
+				}
+			}
+		}
+		
+	}
 
 }
