@@ -1,6 +1,7 @@
 package com.reborn.web.service.member;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,5 +32,7 @@ public interface MemberService {
 	int pointUp(String loginId,int point);
 	
 	int nameCountUp(String loginId);
+
+	List<Member> getList();
 
 }

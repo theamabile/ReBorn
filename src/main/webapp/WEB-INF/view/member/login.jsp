@@ -22,7 +22,7 @@
 			<div class="key input-icon">
 				<i class="fas fa-key"></i>
 			</div>
-			<input type="text" class="password input" placeholder="패스워드" name="password">
+			<input type="password" class="password input" placeholder="패스워드" name="password">
 			<div class="find-info">
 				<a href="find-id">아이디 찾기</a>/ <a href="find-pw">비밀번호 재설정</a>
 			</div>
