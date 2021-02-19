@@ -38,15 +38,15 @@ REBORN은 유기 동물에 대한 관심을 재고시키기 위해 동물들의 
 
 ## ⚙ 개발환경
 
- 1. IDE
+ ### 1. IDE
 
     - Spring Boot suite, VsCode
 
- 2. 형상 관리 툴
+ ### 2. 형상 관리 툴
 
     - Git
 
- 3. 기획, 설계, 일정관리
+ ### 3. 기획, 설계, 일정관리
  
     - google presentation, ER-win, Trello
 
@@ -55,9 +55,13 @@ REBORN은 유기 동물에 대한 관심을 재고시키기 위해 동물들의 
 ## 🎞 주요기능
 
 ### 1. 유기동물
-  - OPEN API 기반 유기동물 정보를 제공합니다. 조건 필터를 통해 유기동물 목록 조회가 가능하며, 상세 조회 시 유기동물 정보 및 동물 발견 위치/보호 위치 등을 카카오 MAP으로 전시합니다. 또한 카카오 공유 기능을 통해 유기동물 정보를 지인들에게 공유 할 수 있습니다.
+  - OPEN API 기반 유기동물 정보를 제공합니다. 
+  - 조건 필터를 통해 유기동물 목록 조회가 가능하며, 상세 조회 시 유기동물 정보 및 동물 발견 위치/보호 위치 등을 카카오 MAP으로 전시합니다. 
+  - 또한 카카오 공유 기능을 통해 유기동물 정보를 지인들에게 공유 할 수 있습니다.
 
-[![2021 02 15 15 45 26 mp4_20210215_162759 349](https://user-images.githubusercontent.com/74892930/107917181-d85c8e80-6faa-11eb-8817-a472245cdfe0.jpg)](https://user-images.githubusercontent.com/74892930/107915267-8a925700-6fa7-11eb-856a-1bb3c162a796.mp4)
+<a href="https://user-images.githubusercontent.com/67853050/107921833-730c9b80-6fb2-11eb-9db6-c8d029c06c25.mp4"><img src="https://user-images.githubusercontent.com/67853050/108490579-3c05f500-72e6-11eb-8bb3-358d52c570f6.jpg" width="750px" height="350px" /></a>
+
+[![2021 02 15 15 45 26 mp4_20210215_162759 349](https://user-images.githubusercontent.com/67853050/108490579-3c05f500-72e6-11eb-8bb3-358d52c570f6.jpg)](https://user-images.githubusercontent.com/67853050/107921833-730c9b80-6fb2-11eb-9db6-c8d029c06c25.mp4)
 
   - 유기동물들에게 이름을 지어주고, 투표를 통해 동물에게 가장 어울리는 이름을 선정 합니다.
 
