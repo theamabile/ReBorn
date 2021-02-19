@@ -1,6 +1,6 @@
 # ReBorn
 
-## 프로젝트 소개
+## 📑 프로젝트 소개
 
 REBORN은 유기 동물에 대한 관심을 재고시키기 위해 동물들의 이름을 지어주는 웹사이트입니다.
 
@@ -54,38 +54,58 @@ REBORN은 유기 동물에 대한 관심을 재고시키기 위해 동물들의 
 ## 🎞 주요기능
 
 ### 1. 유기동물
-  ✅ OPEN API 기반 유기동물 정보를 제공합니다. 
+
+  ✅ OPEN API를 기반으로 유기동물 정보를 제공합니다. 
+  
   ✅ 조건 필터를 통해 유기동물 목록 조회가 가능하며, 상세 조회 시 동물 정보 및 발견 위치/보호 위치를 카카오 MAP으로 전시합니다. 
+  
   ✅ 또한 카카오 공유 기능을 통해 유기동물 정보를 지인들에게 공유 할 수 있습니다.
 
-<a href="https://user-images.githubusercontent.com/67853050/107921833-730c9b80-6fb2-11eb-9db6-c8d029c06c25.mp4"><img src="https://user-images.githubusercontent.com/67853050/108490579-3c05f500-72e6-11eb-8bb3-358d52c570f6.jpg" width="750px" height="350px" alt="유기동물 목록 이미지, 클릭 시 영상이 재생 됩니다"/></a>
+<a href="https://user-images.githubusercontent.com/67853050/107921833-730c9b80-6fb2-11eb-9db6-c8d029c06c25.mp4"><img src="https://user-images.githubusercontent.com/67853050/108490579-3c05f500-72e6-11eb-8bb3-358d52c570f6.jpg" width="750px" height="350px" alt="클릭 시 유기동물 목록 데모 영상이 재생 됩니다"/></a>
 
-  ✅ 유기동물들에게 이름을 지어주고, 투표를 통해 동물에게 가장 어울리는 이름을 선정 합니다.
+  ✅ 유기동물들에게 이름을 지어주고, 투표를 통해 동물에게 가장 어울리는 이름을 선정 합니다. 
+  
+  ✅ 투표는 스프링 스케쥴러를 통해 이름 모집일자, 투표 기간을 판단하여 투표 상태를 실시간으로 업데이트 합니다.
 
-<a href="https://user-images.githubusercontent.com/67853050/108488174-6bffc900-72e3-11eb-866f-eab5cda8ab0c.mp4"><img src="https://user-images.githubusercontent.com/67853050/108490493-242e7100-72e6-11eb-9ccb-55bbbc22e6e5.jpg" width="750px" height="350px" alt="유기동물 목록 이미지, 클릭 시 영상이 재생 됩니다"/></a>
+<a href="https://user-images.githubusercontent.com/67853050/108488174-6bffc900-72e3-11eb-866f-eab5cda8ab0c.mp4"><img src="https://user-images.githubusercontent.com/67853050/108490493-242e7100-72e6-11eb-9ccb-55bbbc22e6e5.jpg" width="750px" height="350px" alt="클릭 시 이름 지어주기 데모 영상이 재생 됩니다"/></a>
 
 
 
 ### 2. 보호소
 
+  ✅ OPEN API를 기반으로 동물 보호소 정보를 제공합니다.
+  
+  ✅ 보호소 검색 시 자동완성 기능을 제공합니다.
+  
 [![2021 02 15 15 47 45 mp4_20210215_160338 365](https://user-images.githubusercontent.com/74892930/107915352-ab5aac80-6fa7-11eb-9356-b9b81396480e.jpg)](https://user-images.githubusercontent.com/74892930/107915269-8c5c1a80-6fa7-11eb-8d6f-ba56724806fb.mp4)
+
+  ✅ 보호소 정보와 함께 보호 중인 동물 목록을 전시하고, 평가 및 리뷰가 등록이 가능합니다. 
 
 [![2021 02 15 15 51 24 mp4_20210215_160359 572](https://user-images.githubusercontent.com/74892930/107915353-ab5aac80-6fa7-11eb-9203-f41559210c68.jpg)](https://user-images.githubusercontent.com/74892930/107915271-8cf4b100-6fa7-11eb-81fe-75c949e986f5.mp4)
 
+
+
 ### 3. 커뮤니티
-</br>
-![image](https://i.esdrop.com/d/b086WqGLyH.png)
-![image](https://i.esdrop.com/d/z6zwjmAFPf.png)
+
+  ✅ 회원 간 정보 교류 및 소통을 위한 커뮤니티(게시판) 기능을 제공합니다.
+  
+  ✅ 게시글 작성을 위한 등록, 수정, 삭제, 좋아요 기능을 제공 합니다.
+  
+  <img src="https://i.esdrop.com/d/b086WqGLyH.png" width="750px" height="350px"/></a>
+
+  ✅ 댓글 작성/수정/삭제 기능을 통해 회원간 정보를 자유롭게 주고 받을 수 있습니다.
+  
+  <img src="https://i.esdrop.com/d/z6zwjmAFPf.png" width="750px" height="350px"/></a>
 
 
-### 4. 보호소
+### 4. 회원
 ![image](https://user-images.githubusercontent.com/73972924/107926036-8cb0e180-6fb8-11eb-8bc4-7be51cdea57b.png)
 ![image](https://user-images.githubusercontent.com/73972924/107926174-b538db80-6fb8-11eb-891c-9bafc84750dd.png)
 
 https://user-images.githubusercontent.com/73972924/107925596-fda3c980-6fb7-11eb-8045-41c9c438e345.mp4
 
 
-### 5. 보호소
+### 5. 동물 정보 제공
 
 [![2021 02 15 15 45 26 mp4_20210215_162759 349](https://user-images.githubusercontent.com/41726750/107926179-b66a0880-6fb8-11eb-8626-f70611e043d1.png)](https://user-images.githubusercontent.com/41726750/107925530-e9f86300-6fb7-11eb-902d-c78e93f45955.mp4)
 
