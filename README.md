@@ -63,6 +63,8 @@ REBORN은 유기 동물에 대한 관심을 재고시키기 위해 동물들의 
 
 <a href="https://user-images.githubusercontent.com/67853050/107921833-730c9b80-6fb2-11eb-9db6-c8d029c06c25.mp4"><img src="https://user-images.githubusercontent.com/67853050/108490579-3c05f500-72e6-11eb-8bb3-358d52c570f6.jpg" width="750px" height="350px" alt="클릭 시 유기동물 목록 데모 영상이 재생 됩니다"/></a>
 
+<br>
+
   ✅ 유기동물들에게 이름을 지어주고, 투표를 통해 동물에게 가장 어울리는 이름을 선정 합니다. 
   
   ✅ 투표는 스프링 스케쥴러를 통해 이름 모집일자, 투표 기간을 판단하여 투표 상태를 실시간으로 업데이트 합니다.
@@ -75,12 +77,13 @@ REBORN은 유기 동물에 대한 관심을 재고시키기 위해 동물들의 
 
   ✅ OPEN API를 기반으로 동물 보호소 정보를 제공합니다.
   
-  ✅ 보호소 검색 시 자동완성 기능을 제공합니다.
+  ✅ 보호소 검색 시 관련 검색어 전시, 검색어 자동완성 등의 기능을 통해 편리한 보호소 검색이 가능합니다.
   
   <a href="https://user-images.githubusercontent.com/74892930/107915269-8c5c1a80-6fa7-11eb-8d6f-ba56724806fb.mp4"><img src="https://user-images.githubusercontent.com/74892930/107915352-ab5aac80-6fa7-11eb-9356-b9b81396480e.jpg" width="750px" height="350px" alt="클릭 시 보호소 검색 데모 영상이 재생 됩니다"/></a>
  
+ <br>
 
-  ✅ 보호소 정보와 함께 보호 중인 동물 목록을 전시하고, 평가 및 리뷰가 등록이 가능합니다. 
+  ✅ 보호소 정보와 함께 보호 중인 동물 목록을 전시하고, 평가 및 리뷰를 등록 할 수 있습니다. 
 
   <a href="https://user-images.githubusercontent.com/74892930/107915271-8cf4b100-6fa7-11eb-81fe-75c949e986f5.mp4"><img src="https://user-images.githubusercontent.com/74892930/107915353-ab5aac80-6fa7-11eb-9203-f41559210c68.jpg" width="750px" height="350px" alt="클릭 시 보호소 검색 데모 영상이 재생 됩니다"/></a>
  
