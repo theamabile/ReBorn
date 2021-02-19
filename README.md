@@ -7,11 +7,8 @@ REBORN은 유기 동물에 대한 관심을 재고시키기 위해 동물들의 
 -본 프로젝트는 풀스택 개발과정 수업의 복습을 위해 Spring boot 기반으로 개발되었습니다.-
 
 [![2021 02 15 15 45 26 mp4_20210215_162759 349](https://user-images.githubusercontent.com/74892930/107917181-d85c8e80-6faa-11eb-8817-a472245cdfe0.jpg)](https://user-images.githubusercontent.com/74892930/107915267-8a925700-6fa7-11eb-856a-1bb3c162a796.mp4)
-(클릭하면 Demo 영상 재생이 가능합니다😊)
-
-<iframe width="640" height="360" src="https://user-images.githubusercontent.com/74892930/107915267-8a925700-6fa7-11eb-856a-1bb3c162a796.mp4" frameborder="0" gesture="media" allowfullscreen=""></iframe>
-
-
+<b>(클릭하면 Demo 영상 재생이 가능합니다😊)</b>
+<img src="https://user-images.githubusercontent.com/74892930/107915267-8a925700-6fa7-11eb-856a-1bb3c162a796.mp4" width="700" height="370">
 
 ## 📆 기간 
 
