@@ -69,7 +69,7 @@ REBORN은 유기 동물에 대한 관심을 재고시키기 위해 동물들의 
 
 <a href="https://user-images.githubusercontent.com/67853050/108488174-6bffc900-72e3-11eb-866f-eab5cda8ab0c.mp4"><img src="https://user-images.githubusercontent.com/67853050/108490493-242e7100-72e6-11eb-9ccb-55bbbc22e6e5.jpg" width="750px" height="350px" alt="클릭 시 이름 지어주기 데모 영상이 재생 됩니다"/></a>
 
-
+<br>
 
 ### 2. 보호소
 
@@ -77,26 +77,24 @@ REBORN은 유기 동물에 대한 관심을 재고시키기 위해 동물들의 
   
   ✅ 보호소 검색 시 자동완성 기능을 제공합니다.
   
-[![2021 02 15 15 47 45 mp4_20210215_160338 365](https://user-images.githubusercontent.com/74892930/107915352-ab5aac80-6fa7-11eb-9356-b9b81396480e.jpg)](https://user-images.githubusercontent.com/74892930/107915269-8c5c1a80-6fa7-11eb-8d6f-ba56724806fb.mp4)
+  <a href="https://user-images.githubusercontent.com/74892930/107915269-8c5c1a80-6fa7-11eb-8d6f-ba56724806fb.mp4"><img src="https://user-images.githubusercontent.com/74892930/107915352-ab5aac80-6fa7-11eb-9356-b9b81396480e.jpg" width="750px" height="350px" alt="클릭 시 보호소 검색 데모 영상이 재생 됩니다"/></a>
+ 
 
   ✅ 보호소 정보와 함께 보호 중인 동물 목록을 전시하고, 평가 및 리뷰가 등록이 가능합니다. 
 
-[![2021 02 15 15 51 24 mp4_20210215_160359 572](https://user-images.githubusercontent.com/74892930/107915353-ab5aac80-6fa7-11eb-9203-f41559210c68.jpg)](https://user-images.githubusercontent.com/74892930/107915271-8cf4b100-6fa7-11eb-81fe-75c949e986f5.mp4)
-
-
+  <a href="https://user-images.githubusercontent.com/74892930/107915271-8cf4b100-6fa7-11eb-81fe-75c949e986f5.mp4"><img src="https://user-images.githubusercontent.com/74892930/107915353-ab5aac80-6fa7-11eb-9203-f41559210c68.jpg" width="750px" height="350px" alt="클릭 시 보호소 검색 데모 영상이 재생 됩니다"/></a>
+ 
+<br>
 
 ### 3. 커뮤니티
 
   ✅ 회원 간 정보 교류 및 소통을 위한 커뮤니티(게시판) 기능을 제공합니다.
   
-  ✅ 게시글 작성을 위한 등록, 수정, 삭제, 좋아요 기능을 제공 합니다.
+  ✅ 게시글 작성을 위한 등록/수정/삭제/좋아요 기능을 제공하며, 댓글 작성/수정/삭제 기능을 통해 회원간 정보를 자유롭게 주고 받을 수 있습니다.
   
-  <img src="https://i.esdrop.com/d/b086WqGLyH.png" width="750px" height="350px"/></a>
+  <a href="https://user-images.githubusercontent.com/62827205/107926203-bf5ada00-6fb8-11eb-9b17-f8961da7f91c.mp4"><img src="https://i.esdrop.com/d/b086WqGLyH.png" width="750px" height="350px" alt="클릭 시 커뮤니티 데모 영상이 재생 됩니다"/></a>
 
-  ✅ 댓글 작성/수정/삭제 기능을 통해 회원간 정보를 자유롭게 주고 받을 수 있습니다.
-  
-  <img src="https://i.esdrop.com/d/z6zwjmAFPf.png" width="750px" height="350px"/></a>
-
+ 
 
 ### 4. 회원
 ![image](https://user-images.githubusercontent.com/73972924/107926036-8cb0e180-6fb8-11eb-8bc4-7be51cdea57b.png)
