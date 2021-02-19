@@ -65,7 +65,7 @@ REBORN은 유기 동물에 대한 관심을 재고시키기 위해 동물들의 
   
   ✅ 또한 카카오 공유 기능을 통해 유기동물 정보를 지인들에게 공유 할 수 있습니다.
 
-<a href="https://user-images.githubusercontent.com/67853050/107921833-730c9b80-6fb2-11eb-9db6-c8d029c06c25.mp4"><img src="https://user-images.githubusercontent.com/67853050/108490579-3c05f500-72e6-11eb-8bb3-358d52c570f6.jpg" width="750px" height="350px" alt="클릭 시 유기동물 목록 데모 영상이 재생 됩니다"/></a>
+<a href="https://user-images.githubusercontent.com/67853050/107921833-730c9b80-6fb2-11eb-9db6-c8d029c06c25.mp4"><img src="https://user-images.githubusercontent.com/67853050/108501040-06680880-72f4-11eb-8d35-b83078f42930.jpg" width="750px" height="350px" alt="클릭 시 유기동물 목록 데모 영상이 재생 됩니다"/></a>
 
 <br>
 
