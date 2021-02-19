@@ -1,7 +1,8 @@
+
+# REBORN
+
 <img width="400" alt="logo" align="center" src="https://user-images.githubusercontent.com/67853050/108499597-e20b2c80-72f1-11eb-80b0-4e668cb6bdfb.png">
 
----
-# EBORN
 
 ## 📑 프로젝트 소개
 
