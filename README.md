@@ -55,9 +55,12 @@ REBORN은 유기 동물에 대한 관심을 재고시키기 위해 동물들의 
 ✅ 유기동물
   - 유기동물들에게 이름을 지어주고, 투표를 통해 동물에게 가장 어울리는 이름을 선정 합니다.
   - 대표적인 
-[![2021 02 15 15 45 26 mp4_20210215_162759 349](https://user-images.githubusercontent.com/74892930/107917181-d85c8e80-6faa-11eb-8817-a472245cdfe0.jpg)](https://user-images.githubusercontent.com/74892930/107915267-8a925700-6fa7-11eb-856a-1bb3c162a796.mp4){: width="300px" height="300px"}
+[![2021 02 15 15 45 26 mp4_20210215_162759 349](https://user-images.githubusercontent.com/74892930/107917181-d85c8e80-6faa-11eb-8817-a472245cdfe0.jpg)](https://user-images.githubusercontent.com/74892930/107915267-8a925700-6fa7-11eb-856a-1bb3c162a796.mp4)
 
-// 이름 추가 및 투표
+[![2021 02 15 15 45 26 mp4_20210215_162759 349](https://user-images.githubusercontent.com/74892930/107917181-d85c8e80-6faa-11eb-8817-a472245cdfe0.jpg)](https://user-images.githubusercontent.com/74892930/107915267-8a925700-6fa7-11eb-856a-1bb3c162a796.mp4)
+
+<a href="https://user-images.githubusercontent.com/74892930/107915267-8a925700-6fa7-11eb-856a-1bb3c162a796.mp4" ><img src="https://user-images.githubusercontent.com/73972924/107926174-b538db80-6fb8-11eb-891c-9bafc84750dd.png" width="300px" height="180px" /></a>
+
 
 ✅ 보호소
 
